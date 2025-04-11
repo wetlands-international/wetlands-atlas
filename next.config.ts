@@ -1,7 +1,7 @@
 import { NextConfig } from "next";
 import { withPayload } from "@payloadcms/next/withPayload";
 
-// Import env here to validate during build. Using jiti@^1 we can import .ts files :)
+// Import env here to validate during build.
 import "./src/env";
 
 const nextConfig = {
