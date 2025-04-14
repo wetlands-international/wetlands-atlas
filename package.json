@@ -25,6 +25,7 @@
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
     "next": "15.2.3",
+    "next-intl": "^4.0.2",
     "payload": "3.31.0",
     "postcss": "8.5.3",
     "react": "19.0.0",
