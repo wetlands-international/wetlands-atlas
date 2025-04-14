@@ -1,4 +1,5 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
@@ -28,10 +29,12 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider>
-          <Header />
-          {children}
-        </NextIntlClientProvider>
+        <NuqsAdapter>
+          <NextIntlClientProvider>
+            <Header />
+            {children}
+          </NextIntlClientProvider>
+        </NuqsAdapter>
       </body>
     </html>
   );
