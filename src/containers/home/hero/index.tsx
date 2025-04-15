@@ -1,6 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -9,12 +11,24 @@ export const Hero = () => {
 
   return (
     <div className="grid min-h-svh items-center justify-items-center">
-      <div className="container space-y-2 text-center">
-        <h1 className="text-5xl">{t("home-hero-title")}</h1>
-        <p className="text-sm">{t("home-hero-description")}</p>
-        <Button size="lg" variant="link">
-          <Link href="/admin">Admin &rarr;</Link>
-        </Button>
+      <div className="container space-y-8 text-center">
+        <header className="space-y-2">
+          <h1 className="text-5xl">{t("home.hero.title")}</h1>
+          <p className="text-sm">{t("home.hero.description")}</p>
+        </header>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button size="lg" variant="secondary">
+              <Link href="/admin">Admin &rarr;</Link>
+            </Button>
+          </TooltipTrigger>
+
+          <TooltipPortal>
+            <TooltipContent side="bottom" align="center">
+              <p>{t("home.hero.tooltip")}</p>
+            </TooltipContent>
+          </TooltipPortal>
+        </Tooltip>
       </div>
     </div>
   );

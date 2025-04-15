@@ -1,9 +1,16 @@
 {
-  "header-title": "Wetlands!",
-  "header-home": "Home",
-  "header-admin": "Admin",
-  "home-hero-title": "Wetlands!",
-  "home-hero-description": "A simple web app to visualize the wetlands in the world.",
+  "header": {
+    "title": "Wetlands!",
+    "home": "Home",
+    "admin": "Admin"
+  },
+  "home": {
+    "hero": {
+      "title": "Wetlands!",
+      "description": "A simple web app to visualize the wetlands in the world.",
+      "tooltip": "Get started"
+    }
+  },
   "metadata": {
     "home": {
       "title": "Wetlands",
