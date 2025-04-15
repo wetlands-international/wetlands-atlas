@@ -6,10 +6,13 @@ import { useTranslations } from "next-intl";
 
 export const Header = () => {
   const t = useTranslations();
+
   return (
     <header className="w-full p-4">
       <div className="container flex items-center justify-between">
-        <Link href="/">{t("header-title")}</Link>
+        <h1>
+          <LocaleLink href="/">{t("header-title")}</LocaleLink>
+        </h1>
         <nav>
           <ul className="flex space-x-4">
             <li>

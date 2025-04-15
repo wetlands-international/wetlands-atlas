@@ -13,7 +13,9 @@
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-    "test": "cross-env NODE_OPTIONS=--no-deprecation vitest"
+    "test": "cross-env NODE_OPTIONS=--no-deprecation vitest",
+    "check-types": "cross-env NODE_OPTIONS=--no-deprecation tsc",
+    "prepare": "husky"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.31.0",
@@ -50,6 +52,7 @@
     "eslint-config-prettier": "10.1.1",
     "eslint-plugin-prettier": "5.2.6",
     "eslint-plugin-react-hooks": "5.2.0",
+    "husky": "^9.1.7",
     "jsdom": "^26.0.0",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "0.6.11",
