@@ -2,6 +2,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { Provider as JotaiProvider } from "jotai";
 
 import "@/styles/index.css";
 import { Header } from "@/containers/header";
@@ -31,8 +32,10 @@ export default async function LocaleLayout({
       <body>
         <NuqsAdapter>
           <NextIntlClientProvider>
-            <Header />
-            {children}
+            <JotaiProvider>
+              <Header />
+              {children}
+            </JotaiProvider>
           </NextIntlClientProvider>
         </NuqsAdapter>
       </body>
