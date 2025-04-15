@@ -1,9 +1,16 @@
 {
-  "header-title": "Wetlands!",
-  "header-home": "Home",
-  "header-admin": "Admin",
-  "home-hero-title": "Zonas húmedas!",
-  "home-hero-description": "Una simple aplicacion web para visualizar las zonas humedas en el mundo.",
+  "header": {
+    "title": "Zonas húmedas!",
+    "home": "Inicio",
+    "admin": "Administración"
+  },
+  "home": {
+    "hero": {
+      "title": "Zonas húmedas!",
+      "description": "Una aplicación web sencilla para visualizar las zonas húmedas del mundo.",
+      "tooltip": "Comenzar"
+    }
+  },
   "metadata": {
     "home": {
       "title": "Zonas húmedas",
