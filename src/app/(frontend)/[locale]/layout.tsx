@@ -4,9 +4,32 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Provider as JotaiProvider } from "jotai";
 
-import "@/styles/index.css";
+import localFont from "next/font/local";
+
+import "./styles/index.css";
 import { Header } from "@/containers/header";
 import { setRequestLocale } from "next-intl/server";
+
+const Aller = localFont({
+  src: [
+    {
+      path: "./styles/fonts/Aller.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./styles/fonts/Aller-Light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./styles/fonts/Aller-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-aller",
+});
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -28,7 +51,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={`${Aller.variable} font-sans`}>
       <body>
         <NuqsAdapter>
           <NextIntlClientProvider>
