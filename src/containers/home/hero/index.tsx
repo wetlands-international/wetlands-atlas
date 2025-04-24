@@ -13,8 +13,8 @@ export const Hero = () => {
     <div className="grid min-h-svh items-center justify-items-center">
       <div className="container space-y-8 text-center">
         <header className="space-y-2">
-          <h1 className="text-5xl">{t("home.hero.title")}</h1>
-          <p className="text-sm">{t("home.hero.description")}</p>
+          <h1 className="text-5xl font-bold">{t("home.hero.title")}</h1>
+          <p className="text-sm font-light">{t("home.hero.description")}</p>
         </header>
         <Tooltip>
           <TooltipTrigger asChild>
