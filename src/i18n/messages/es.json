@@ -2,7 +2,8 @@
   "header": {
     "title": "Zonas húmedas!",
     "home": "Inicio",
-    "admin": "Administración"
+    "admin": "Administración",
+    "playground": "Zona de juegos"
   },
   "home": {
     "hero": {
@@ -15,6 +16,10 @@
     "home": {
       "title": "Zonas húmedas",
       "description": "Zonas húmedas es una aplicación web que te ayuda a gestionar tus zonas húmedas."
+    },
+    "playground": {
+      "title": "Zona de juegos | Wetlands",
+      "description": "Un lugar para jugar con los datos de las zonas húmedas."
     }
   }
 }
