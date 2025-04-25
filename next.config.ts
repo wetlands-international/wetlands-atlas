@@ -7,7 +7,7 @@ import "./src/env";
 const nextConfig = {
   output: "standalone",
   // Add the packages in transpilePackages
-  transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core"],
+  transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core", "three"],
 } satisfies NextConfig;
 
 const withNextIntl = createNextIntlPlugin();

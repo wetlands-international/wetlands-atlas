@@ -10,7 +10,7 @@ export const Hero = () => {
   const t = useTranslations();
 
   return (
-    <div className="grid min-h-svh items-center justify-items-center">
+    <div className="grid min-h-[calc(100svh_-_theme(spacing.16))] items-center justify-items-center">
       <div className="container space-y-8 text-center">
         <header className="space-y-2">
           <h1 className="text-5xl font-bold">{t("home.hero.title")}</h1>

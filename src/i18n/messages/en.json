@@ -2,7 +2,8 @@
   "header": {
     "title": "Wetlands!",
     "home": "Home",
-    "admin": "Admin"
+    "admin": "Admin",
+    "playground": "Playground"
   },
   "home": {
     "hero": {
@@ -15,6 +16,10 @@
     "home": {
       "title": "Wetlands",
       "description": "Wetlands is a web application that helps you to manage your wetlands."
+    },
+    "playground": {
+      "title": "Playground | Wetlands",
+      "description": "A place to play with the wetlands data."
     }
   }
 }
