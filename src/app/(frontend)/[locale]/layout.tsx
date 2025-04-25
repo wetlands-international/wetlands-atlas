@@ -9,6 +9,7 @@ import localFont from "next/font/local";
 import "./styles/index.css";
 import { Header } from "@/containers/header";
 import { setRequestLocale } from "next-intl/server";
+import { ThemeProvider } from "@/containers/providers/theme-provider";
 
 const Aller = localFont({
   src: [
@@ -51,16 +52,23 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${Aller.variable} font-sans`}>
+    <html lang={locale} className={`${Aller.variable} font-sans`} suppressHydrationWarning>
       <body>
-        <NuqsAdapter>
-          <NextIntlClientProvider>
-            <JotaiProvider>
-              <Header />
-              {children}
-            </JotaiProvider>
-          </NextIntlClientProvider>
-        </NuqsAdapter>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NuqsAdapter>
+            <NextIntlClientProvider>
+              <JotaiProvider>
+                <Header />
+                {children}
+              </JotaiProvider>
+            </NextIntlClientProvider>
+          </NuqsAdapter>
+        </ThemeProvider>
       </body>
     </html>
   );
