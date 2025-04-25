@@ -4,6 +4,7 @@ import { Link as LocaleLink } from "@/i18n/navigation";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LuWheat } from "react-icons/lu";
+import { ThemeToogle } from "@/containers/header/theme-toggle";
 
 export const Header = () => {
   const t = useTranslations();
@@ -17,26 +18,30 @@ export const Header = () => {
             <span className="text-2xl uppercase">{t("header.title")}</span>
           </LocaleLink>
         </h1>
-        <nav>
-          <ul className="flex space-x-4">
-            <li>
-              <LocaleLink href="/">{t("header.home")}</LocaleLink>
-            </li>
-            <li>
-              <Link href="/admin">{t("header.admin")}</Link>
-            </li>
-            <li>
-              <LocaleLink href="/" locale="en">
-                English
-              </LocaleLink>
-            </li>
-            <li>
-              <LocaleLink href="/" locale="es">
-                Español
-              </LocaleLink>
-            </li>
-          </ul>
-        </nav>
+        <div className="flex gap-2">
+          <nav>
+            <ul className="flex space-x-4">
+              <li>
+                <LocaleLink href="/">{t("header.home")}</LocaleLink>
+              </li>
+              <li>
+                <Link href="/admin">{t("header.admin")}</Link>
+              </li>
+              <li>
+                <LocaleLink href="/" locale="en">
+                  English
+                </LocaleLink>
+              </li>
+              <li>
+                <LocaleLink href="/" locale="es">
+                  Español
+                </LocaleLink>
+              </li>
+            </ul>
+          </nav>
+
+          <ThemeToogle />
+        </div>
       </div>
     </header>
   );
