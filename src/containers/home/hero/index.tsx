@@ -13,7 +13,7 @@ export const Hero = () => {
     <div className="grid min-h-[calc(100svh_-_theme(spacing.16))] items-center justify-items-center">
       <div className="container space-y-8 text-center">
         <header className="space-y-2">
-          <h1 className="text-5xl font-bold">{t("home.hero.title")}</h1>
+          <h1 className="text-5xl font-semibold">{t("home.hero.title")}</h1>
           <p className="text-sm font-light">{t("home.hero.description")}</p>
         </header>
         <Tooltip>

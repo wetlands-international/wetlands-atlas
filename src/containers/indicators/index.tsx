@@ -19,9 +19,9 @@ export const Indicators = async () => {
         <div className="flex flex-col gap-4">
           {indicators.docs.map((indicator) => (
             <div key={indicator.id}>
-              <h2 className="text-xl font-bold uppercase">{indicator.name}</h2>
+              <h2 className="text-sm font-semibold uppercase">{indicator.name}</h2>
               {!!indicator.description && (
-                <div className="prose dark:prose-invert">
+                <div className="prose dark:prose-invert prose-sm">
                   <Lexical
                     data={indicator.description}
                     variables={{
@@ -32,6 +32,9 @@ export const Indicators = async () => {
                   />
                 </div>
               )}
+              <ul>
+                <li className="font-display text-2xl">60%</li>
+              </ul>
             </div>
           ))}
         </div>

@@ -4,32 +4,25 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Provider as JotaiProvider } from "jotai";
 
-import localFont from "next/font/local";
+import { Work_Sans, Aboreto } from "next/font/google";
 
 import "./styles/index.css";
 import { Header } from "@/containers/header";
 import { setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/containers/providers/theme-provider";
 
-const Aller = localFont({
-  src: [
-    {
-      path: "./styles/fonts/Aller.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "./styles/fonts/Aller-Light.woff2",
-      weight: "300",
-      style: "normal",
-    },
-    {
-      path: "./styles/fonts/Aller-Bold.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  variable: "--font-aller",
+const workSans = Work_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: "normal",
+  variable: "--font-worksans",
+});
+
+const aboreto = Aboreto({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: "normal",
+  variable: "--font-aboreto",
 });
 
 export function generateStaticParams() {
@@ -52,7 +45,11 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${Aller.variable} font-sans`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${workSans.variable} ${aboreto.variable} font-sans`}
+      suppressHydrationWarning
+    >
       <body>
         <ThemeProvider
           attribute="class"
