@@ -1,4 +1,4 @@
-import { Hero } from "@/containers/home/hero";
+import { Indicators } from "@/containers/indicators";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
@@ -12,5 +12,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  return <Hero />;
+  return (
+    <>
+      {/* <Hero /> */}
+      <Indicators />
+    </>
+  );
 }
