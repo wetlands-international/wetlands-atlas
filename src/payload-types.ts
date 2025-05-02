@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
+    layers: Layer;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -79,6 +80,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    layers: LayersSelect<false> | LayersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -167,6 +169,43 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "layers".
+ */
+export interface Layer {
+  /**
+   * This field is automatically generated from the name field. It is used to create a URL-friendly version of the name.
+   */
+  id: string;
+  name: string;
+  /**
+   * Describe how to render the layer on the map. Two keys are mandatory: "source" and "styles". "source" follows this specification: https://docs.mapbox.com/style-spec/reference/sources/. Only vector and raster sources are supported. "styles" follows this specification: https://docs.mapbox.com/style-spec/reference/layers/. Only vector and raster layers are supported. Parameters may be injected, for example to control the opacity and visibility of the layer.
+   */
+  layer_config:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  params_config: {
+    key: string;
+    default: string | number | boolean;
+  }[];
+  legend_config: {
+    type: 'basic' | 'choropleth' | 'gradient';
+    items: {
+      color: string;
+      value?: string | number;
+    }[];
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -183,6 +222,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'layers';
+        value: string | Layer;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -267,6 +310,19 @@ export interface CategoriesSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "layers_select".
+ */
+export interface LayersSelect<T extends boolean = true> {
+  id?: T;
+  name?: T;
+  layer_config?: T;
+  params_config?: T;
+  legend_config?: T;
   updatedAt?: T;
   createdAt?: T;
 }
