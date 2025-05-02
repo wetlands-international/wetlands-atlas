@@ -17,9 +17,16 @@ export const Layers: CollectionConfig = {
       localized: true,
     },
     {
-      name: "layer_config",
+      name: "config",
       label: "Rendering",
       type: "json",
+      jsonSchema: {
+        uri: "a://b/layer_config.json", // required
+        fileMatch: ["a://b/layer_config.json"], // required
+        schema: {
+          type: "object",
+        },
+      },
       required: true,
       defaultValue: {},
       admin: {

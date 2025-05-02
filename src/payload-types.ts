@@ -177,18 +177,9 @@ export interface Layer {
    */
   id: string;
   name: string;
-  /**
-   * Describe how to render the layer on the map. Two keys are mandatory: "source" and "styles". "source" follows this specification: https://docs.mapbox.com/style-spec/reference/sources/. Only vector and raster sources are supported. "styles" follows this specification: https://docs.mapbox.com/style-spec/reference/layers/. Only vector and raster layers are supported. Parameters may be injected, for example to control the opacity and visibility of the layer.
-   */
-  layer_config:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
+  config: {
+    [k: string]: unknown;
+  };
   params_config: {
     key: string;
     default: string | number | boolean;
@@ -320,7 +311,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface LayersSelect<T extends boolean = true> {
   id?: T;
   name?: T;
-  layer_config?: T;
+  config?: T;
   params_config?: T;
   legend_config?: T;
   updatedAt?: T;
