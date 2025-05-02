@@ -122,12 +122,11 @@ export const Layers: CollectionConfig = {
           'Describe how to render the legend of the layer. It is an object containing two keys: "type" and "items". "type" is the type of legend. "items" is an array of objects containing two keys: "color" and "value". "color" is the color of the item. "value" is the value associated with the color. The value may be a string or a number.',
       },
     },
-
-    // {
-    //   name: 'indicator',
-    //   type: 'join',
-    //   collection: 'indicators',
-    //   on: 'layer',
-    // },
+    {
+      name: "indicator",
+      type: "relationship",
+      relationTo: "indicators",
+      hasMany: false,
+    },
   ],
 };
