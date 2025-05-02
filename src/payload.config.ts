@@ -11,6 +11,7 @@ import { Users } from "./cms/collections/Users";
 import { Media } from "./cms/collections/Media";
 import { Categories } from "./cms/collections/Categories";
 import { Layers } from "@/cms/collections/Layers";
+import { Indicators } from "@/cms/collections/Indicators";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -22,7 +23,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Layers],
+  collections: [Users, Media, Categories, Indicators, Layers],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   localization: {

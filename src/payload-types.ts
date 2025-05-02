@@ -70,16 +70,22 @@ export interface Config {
     users: User;
     media: Media;
     categories: Category;
+    indicators: Indicator;
     layers: Layer;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    indicators: {
+      layers: 'layers';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    indicators: IndicatorsSelect<false> | IndicatorsSelect<true>;
     layers: LayersSelect<false> | LayersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -169,6 +175,43 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "indicators".
+ */
+export interface Indicator {
+  /**
+   * This field is automatically generated from the name field. It is used to create a URL-friendly version of the name.
+   */
+  id: string;
+  name: string;
+  /**
+   * Formatted data values can be injected using a special syntax. If the widget type is Percentage bar, then you can use "{value}". If it is Range bar, then you can use "{min}", "{max}" and "{average}". If it is Pie, you can use "{value[0]}", "{value[1]}", and so on.
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  category: string | Category;
+  layers?: {
+    docs?: (string | Layer)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "layers".
  */
 export interface Layer {
@@ -192,6 +235,7 @@ export interface Layer {
     }[];
     [k: string]: unknown;
   };
+  indicator?: (string | null) | Indicator;
   updatedAt: string;
   createdAt: string;
 }
@@ -213,6 +257,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'categories';
         value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'indicators';
+        value: string | Indicator;
       } | null)
     | ({
         relationTo: 'layers';
@@ -306,6 +354,19 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "indicators_select".
+ */
+export interface IndicatorsSelect<T extends boolean = true> {
+  id?: T;
+  name?: T;
+  description?: T;
+  category?: T;
+  layers?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "layers_select".
  */
 export interface LayersSelect<T extends boolean = true> {
@@ -314,6 +375,7 @@ export interface LayersSelect<T extends boolean = true> {
   config?: T;
   params_config?: T;
   legend_config?: T;
+  indicator?: T;
   updatedAt?: T;
   createdAt?: T;
 }
