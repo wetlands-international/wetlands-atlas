@@ -24,6 +24,7 @@ import { Indicators } from "@/cms/collections/Indicators";
 import { BLOCK_VALUE } from "@/cms/blocks/value";
 import { BLOCK_PERCENTAGE } from "@/cms/blocks/percentage";
 import { BLOCK_LOCATION } from "@/cms/blocks/location";
+import { NumberBlock } from "@/cms/blocks/number";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -44,7 +45,7 @@ export default buildConfig({
       UnorderedListFeature(),
       OrderedListFeature(),
       BlocksFeature({
-        inlineBlocks: [BLOCK_VALUE, BLOCK_PERCENTAGE, BLOCK_LOCATION],
+        inlineBlocks: [BLOCK_VALUE, BLOCK_PERCENTAGE, BLOCK_LOCATION, NumberBlock],
       }),
     ],
   }),

@@ -28,6 +28,8 @@ export const Indicators = async () => {
                       value: "11M km²",
                       percentage: "7%",
                       location: "World",
+                      total: 1000000,
+                      totalPercentage: 0.3897,
                     }}
                   />
                 </div>

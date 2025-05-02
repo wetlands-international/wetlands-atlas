@@ -1,8 +1,9 @@
 import React, { HTMLAttributes, JSX } from "react";
 import { JSXConverters, JSXConvertersFunction, RichText } from "@payloadcms/richtext-lexical/react";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
-import { DefaultNodeTypes } from "@payloadcms/richtext-lexical";
-import { InlineVariable } from "@/components/ui/lexical/blocks/inline-block";
+import { DefaultNodeTypes, SerializedInlineBlockNode } from "@payloadcms/richtext-lexical";
+import { VariableBlock } from "@/components/ui/lexical/blocks/variable-block";
+import { NumberBlock } from "@/components/ui/lexical/blocks/number-block";
 
 export type LexicalProps = {
   variables?: Record<string, number | string | boolean>;
@@ -41,9 +42,18 @@ export const Lexical = (props: LexicalProps) => {
     ...defaultConverters,
     blocks: {},
     inlineBlocks: {
+      number: ({
+        node,
+      }: {
+        node: SerializedInlineBlockNode<{
+          variable: string;
+          format: "number" | "percentage";
+        }>;
+      }) => <NumberBlock {...node} variables={props.variables} />,
+
       ...Object.keys(props.variables ?? {}).reduce(
         (acc, key) => {
-          acc[key] = () => <InlineVariable slug={key} variables={props.variables} />;
+          acc[key] = () => <VariableBlock slug={key} variables={props.variables} />;
           return acc;
         },
         {} as Record<string, () => JSX.Element>,
