@@ -10,6 +10,7 @@ import sharp from "sharp";
 import { Users } from "./cms/collections/Users";
 import { Media } from "./cms/collections/Media";
 import { Categories } from "./cms/collections/Categories";
+import { Layers } from "@/cms/collections/Layers";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -21,7 +22,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories],
+  collections: [Users, Media, Categories, Layers],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   localization: {
