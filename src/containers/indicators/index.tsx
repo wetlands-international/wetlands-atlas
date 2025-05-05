@@ -1,8 +1,10 @@
 import { Lexical } from "@/components/ui/lexical";
 import payloadConfig from "@/payload.config";
+import { getLocale } from "next-intl/server";
 import { getPayload } from "payload";
 
 export const Indicators = async () => {
+  const locale = await getLocale();
   const payload = await getPayload({ config: payloadConfig });
 
   const indicators = await payload.find({
@@ -11,6 +13,7 @@ export const Indicators = async () => {
     limit: 100,
     page: 1,
     sort: "-createdAt",
+    locale,
   });
 
   return (

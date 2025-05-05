@@ -7,14 +7,14 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export const Hero = () => {
-  const t = useTranslations();
+  const t = useTranslations("home");
 
   return (
     <div className="grid min-h-[calc(100svh_-_theme(spacing.16))] items-center justify-items-center">
       <div className="container space-y-8 text-center">
         <header className="space-y-2">
-          <h1 className="text-5xl font-semibold">{t("home.hero.title")}</h1>
-          <p className="text-sm font-light">{t("home.hero.description")}</p>
+          <h1 className="text-5xl font-semibold">{t("hero.title")}</h1>
+          <p className="text-sm font-light">{t("hero.description")}</p>
         </header>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -25,7 +25,7 @@ export const Hero = () => {
 
           <TooltipPortal>
             <TooltipContent side="bottom" align="center">
-              <p>{t("home.hero.tooltip")}</p>
+              <p>{t("hero.tooltip")}</p>
             </TooltipContent>
           </TooltipPortal>
         </Tooltip>
