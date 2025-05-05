@@ -10,6 +10,7 @@ import "./styles/index.css";
 import { Header } from "@/containers/header";
 import { setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/containers/providers/theme-provider";
+import { QueryProvider } from "@/containers/providers/query-provider";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
@@ -59,10 +60,12 @@ export default async function LocaleLayout({
         >
           <NuqsAdapter>
             <NextIntlClientProvider>
-              <JotaiProvider>
-                <Header />
-                {children}
-              </JotaiProvider>
+              <QueryProvider>
+                <JotaiProvider>
+                  <Header />
+                  {children}
+                </JotaiProvider>
+              </QueryProvider>
             </NextIntlClientProvider>
           </NuqsAdapter>
         </ThemeProvider>
