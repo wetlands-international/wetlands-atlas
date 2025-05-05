@@ -11,6 +11,8 @@ import {
   FixedToolbarFeature,
 } from "@payloadcms/richtext-lexical";
 
+import { openapi } from "payload-oapi";
+
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
@@ -65,6 +67,7 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    openapi({ openapiVersion: "3.0", metadata: { title: "Dev API", version: "0.0.1" } }),
     // storage-adapter-placeholder
   ],
 });
