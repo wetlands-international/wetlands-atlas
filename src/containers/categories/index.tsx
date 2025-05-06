@@ -1,17 +1,24 @@
-"use client";
+import payloadConfig from "@/payload.config";
+import { getLocale } from "next-intl/server";
+import { getPayload } from "payload";
 
-import { DEFAULT_CATEGORIES_OPTIONS } from "@/services/prefetches";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useLocale } from "next-intl";
+export const Categories = async () => {
+  const locale = await getLocale();
 
-export const Categories = () => {
-  const locale = useLocale();
+  const payload = await getPayload({ config: payloadConfig });
 
-  const { data } = useSuspenseQuery(DEFAULT_CATEGORIES_OPTIONS(locale));
+  const categories = await payload.find({
+    collection: "categories",
+    depth: 0,
+    limit: 100,
+    page: 1,
+    sort: "name",
+    locale,
+  });
 
   return (
     <div className="container grid gap-4">
-      {data.docs.map((category) => (
+      {categories.docs.map((category) => (
         <div key={category.id} className="flex flex-col gap-2">
           <h2 className="text-sm font-semibold uppercase">{category.name}</h2>
           {!!category.description && (
