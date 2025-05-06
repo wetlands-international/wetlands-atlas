@@ -52,23 +52,23 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <NuqsAdapter>
-            <NextIntlClientProvider>
-              <QueryProvider>
+        <QueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <NuqsAdapter>
+              <NextIntlClientProvider>
                 <JotaiProvider>
                   <Header />
                   {children}
                 </JotaiProvider>
-              </QueryProvider>
-            </NextIntlClientProvider>
-          </NuqsAdapter>
-        </ThemeProvider>
+              </NextIntlClientProvider>
+            </NuqsAdapter>
+          </ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

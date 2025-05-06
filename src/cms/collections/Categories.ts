@@ -1,4 +1,6 @@
 import { slugField } from "@/cms/fields/slug";
+import { revalidateTag } from "next/cache";
+// import { revalidateTag } from "next/cache";
 import { CollectionConfig } from "payload";
 
 export const Categories: CollectionConfig = {
@@ -18,4 +20,14 @@ export const Categories: CollectionConfig = {
       localized: true,
     },
   ],
+  access: {
+    read: () => true,
+  },
+  hooks: {
+    afterChange: [
+      async () => {
+        revalidateTag("categories");
+      },
+    ],
+  },
 };

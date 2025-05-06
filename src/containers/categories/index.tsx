@@ -1,26 +1,16 @@
 "use client";
 
-import API from "@/services/api";
+import { DEFAULT_CATEGORIES_OPTIONS } from "@/services/prefetches";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 
 export const Categories = () => {
   const locale = useLocale();
 
-  const { data } = API.useQuery("get", "/api/categories", {
-    params: {
-      query: {
-        locale,
-        sort: "name",
-      },
-    },
-  });
-
-  if (!data) {
-    return null;
-  }
+  const { data } = useSuspenseQuery(DEFAULT_CATEGORIES_OPTIONS(locale));
 
   return (
-    <div className="grid gap-4">
+    <div className="container grid gap-4">
       {data.docs.map((category) => (
         <div key={category.id} className="flex flex-col gap-2">
           <h2 className="text-sm font-semibold uppercase">{category.name}</h2>
