@@ -1,5 +1,7 @@
+import { prefetch } from "@/app/(frontend)/[locale]/cache";
 import { Categories } from "@/containers/categories";
 import { Indicators } from "@/containers/indicators";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
@@ -13,11 +15,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
+  const { queryClient } = await prefetch();
+
   return (
-    <>
-      {/* <Hero /> */}
-      <Categories />
-      <Indicators />
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className="flex flex-col gap-20">
+        {/* <Hero /> */}
+        <Categories />
+        <Indicators />
+      </div>
+    </HydrationBoundary>
   );
 }
