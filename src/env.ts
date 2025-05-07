@@ -16,7 +16,9 @@ export const env = createEnv({
    *
    * 💡 You'll get type errors if these are not prefixed with NEXT_PUBLIC_.
    */
-  client: {},
+  client: {
+    NEXT_PUBLIC_MAPBOX_TOKEN: z.string().min(1),
+  },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
    * we need to manually destructure them to make sure all are included in bundle.
@@ -26,5 +28,6 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URI: process.env.DATABASE_URI,
     PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
+    NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
   },
 });

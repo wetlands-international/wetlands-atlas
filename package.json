@@ -47,7 +47,7 @@
     "graphql": "^16.8.1",
     "jotai": "2.12.3",
     "lucide-react": "^0.488.0",
-    "mapbox": "1.0.0-beta10",
+    "mapbox-gl": "3.11.1",
     "next": "15.3.0",
     "next-intl": "^4.0.2",
     "next-themes": "^0.4.6",
