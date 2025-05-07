@@ -54,4 +54,11 @@ function TooltipContent({
   );
 }
 
-export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+function TooltipArrow({
+  className,
+  ...props
+}: React.ComponentProps<typeof TooltipPrimitive.Arrow>) {
+  return <TooltipPrimitive.Arrow className={cn("fill-primary", className)} {...props} />;
+}
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipArrow, TooltipProvider };
