@@ -11,8 +11,8 @@ export const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="flex h-16 w-full items-center">
-      <div className="container flex items-center justify-between">
+    <header className="flex h-16 w-full items-center px-4">
+      <div className="flex w-full items-center justify-between">
         <h1>
           <LocaleLink href="/" className="inline-flex items-center space-x-2">
             <LuWheat className="h-6 w-6" />
