@@ -1,5 +1,6 @@
 import { Categories } from "@/containers/categories";
 import { Indicators } from "@/containers/indicators";
+import { MapContainer } from "@/containers/map";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
@@ -14,10 +15,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   return (
-    <div className="flex flex-col gap-20">
-      {/* <Hero /> */}
-      <Categories />
-      <Indicators />
-    </div>
+    <main className="relative flex h-[calc(100svh_-_theme(spacing.16))] flex-col gap-20 overflow-hidden">
+      <aside className="bg-background absolute top-0 left-0 z-10 flex h-screen w-full max-w-lg flex-col p-4">
+        {/* <Hero /> */}
+        <Categories />
+        <Indicators />
+      </aside>
+
+      <MapContainer />
+    </main>
   );
 }

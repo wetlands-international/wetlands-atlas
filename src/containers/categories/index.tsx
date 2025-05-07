@@ -17,7 +17,7 @@ export const Categories = async () => {
   });
 
   return (
-    <div className="container grid gap-4">
+    <div className="grid gap-4">
       {categories.docs.map((category) => (
         <div key={category.id} className="flex flex-col gap-2">
           <h2 className="text-sm font-semibold uppercase">{category.name}</h2>
