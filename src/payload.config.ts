@@ -66,6 +66,8 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || "",
     },
     extensions: ["postgis"],
+    migrationDir: path.resolve(dirname, "migrations"),
+    push: false,
   }),
   sharp,
   plugins: [
