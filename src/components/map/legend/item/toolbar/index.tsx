@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { PopoverArrow } from "@radix-ui/react-popover";
-import { FiX } from "react-icons/fi";
+import { LuEye, LuEyeClosed, LuInfo, LuX } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
@@ -12,7 +12,6 @@ import { Tooltip, TooltipArrow, TooltipContent, TooltipTrigger } from "@/compone
 
 import LegendItemButton from "./button";
 import Slider from "./slider";
-import { LucideEye, LucideEyeClosed, LucideInfo } from "lucide-react";
 
 export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
   InfoContent,
@@ -44,7 +43,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                       "pointer-events-none": popoverOpen,
                     })}
                   >
-                    <LegendItemButton Icon={LucideEye} value={opacity} selected />
+                    <LegendItemButton Icon={LuEye} value={opacity} selected />
                   </TooltipTrigger>
                 </PopoverTrigger>
 
@@ -95,7 +94,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                   if (onChangeVisibility) onChangeVisibility(!visibility);
                 }}
               >
-                <LegendItemButton Icon={visibility ? LucideEye : LucideEyeClosed} />
+                <LegendItemButton Icon={visibility ? LuEye : LuEyeClosed} />
               </TooltipTrigger>
 
               <TooltipContent side="top" align="end" alignOffset={-10}>
@@ -119,7 +118,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                       "pointer-events-none": popoverOpen,
                     })}
                   >
-                    <LegendItemButton Icon={LucideInfo} />
+                    <LegendItemButton Icon={LuInfo} />
                   </TooltipTrigger>
                 </DialogTrigger>
 
@@ -150,7 +149,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                   if (onRemove) onRemove();
                 }}
               >
-                <LegendItemButton Icon={FiX} />
+                <LegendItemButton Icon={LuX} />
               </TooltipTrigger>
 
               <TooltipContent side="top" align="end" alignOffset={-10}>

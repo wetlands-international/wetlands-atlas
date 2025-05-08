@@ -2,10 +2,9 @@
 
 import { FC, useCallback, MouseEvent, HTMLAttributes } from "react";
 
-import { useMap } from "react-map-gl/mapbox";
-
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { FiZoomIn, FiZoomOut } from "react-icons/fi";
+import { LuZoomIn, LuZoomOut } from "react-icons/lu";
+import { useMap } from "react-map-gl/mapbox";
 
 import { cn } from "@/lib/utils";
 
@@ -56,7 +55,7 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProp
             disabled={zoom === maxZoom}
             onClick={increaseZoom}
           >
-            <FiZoomIn className="h-full w-full" />
+            <LuZoomIn className="h-full w-full" />
           </button>
         </TooltipTrigger>
 
@@ -82,7 +81,7 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProp
             disabled={zoom === minZoom}
             onClick={decreaseZoom}
           >
-            <FiZoomOut className="h-full w-full" />
+            <LuZoomOut className="h-full w-full" />
           </button>
         </TooltipTrigger>
 

@@ -1,7 +1,10 @@
-import { Lexical } from "@/components/ui/lexical";
-import payloadConfig from "@/payload.config";
-import { getLocale } from "next-intl/server";
 import { getPayload } from "payload";
+
+import { getLocale } from "next-intl/server";
+
+import { Lexical } from "@/components/ui/lexical";
+
+import payloadConfig from "@/payload.config";
 
 export const Indicators = async () => {
   const locale = await getLocale();

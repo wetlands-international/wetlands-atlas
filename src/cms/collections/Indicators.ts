@@ -1,5 +1,6 @@
-import { slugField } from "@/cms/fields/slug";
 import { CollectionConfig } from "payload";
+
+import { slugField } from "@/cms/fields/slug";
 
 export const Indicators: CollectionConfig = {
   slug: "indicators",

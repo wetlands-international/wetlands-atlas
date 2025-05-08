@@ -1,7 +1,7 @@
 import React from "react";
 
-import { cn } from "@/lib/utils";
 import { formatNumber } from "@/lib/formats";
+import { cn } from "@/lib/utils";
 
 import { LegendTypeProps } from "../../types";
 

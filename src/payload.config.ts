@@ -1,4 +1,9 @@
 // storage-adapter-import-placeholder
+import path from "path";
+import { fileURLToPath } from "url";
+
+import { buildConfig } from "payload";
+
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import {
@@ -12,21 +17,18 @@ import {
 } from "@payloadcms/richtext-lexical";
 
 import { openapi } from "payload-oapi";
-
-import path from "path";
-import { buildConfig } from "payload";
-import { fileURLToPath } from "url";
 import sharp from "sharp";
 
-import { Users } from "./cms/collections/Users";
-import { Media } from "./cms/collections/Media";
-import { Categories } from "./cms/collections/Categories";
-import { Layers } from "@/cms/collections/Layers";
-import { Indicators } from "@/cms/collections/Indicators";
-import { BLOCK_VALUE } from "@/cms/blocks/value";
-import { BLOCK_PERCENTAGE } from "@/cms/blocks/percentage";
 import { BLOCK_LOCATION } from "@/cms/blocks/location";
 import { NumberBlock } from "@/cms/blocks/number";
+import { BLOCK_PERCENTAGE } from "@/cms/blocks/percentage";
+import { BLOCK_VALUE } from "@/cms/blocks/value";
+import { Indicators } from "@/cms/collections/Indicators";
+import { Layers } from "@/cms/collections/Layers";
+
+import { Categories } from "./cms/collections/Categories";
+import { Media } from "./cms/collections/Media";
+import { Users } from "./cms/collections/Users";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -63,8 +65,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || "",
     },
-    migrationDir: path.resolve(dirname, "migrations"),
-    push: false,
+    extensions: ["postgis", "uuid-ossp"],
   }),
   sharp,
   plugins: [

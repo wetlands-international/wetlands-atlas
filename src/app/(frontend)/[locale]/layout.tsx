@@ -1,16 +1,19 @@
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
-import { Provider as JotaiProvider } from "jotai";
-
 import { Work_Sans, Aboreto } from "next/font/google";
+import { notFound } from "next/navigation";
 
-import "./styles/index.css";
-import { Header } from "@/containers/header";
+import { Provider as JotaiProvider } from "jotai";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
-import { ThemeProvider } from "@/containers/providers/theme-provider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+
+import { Header } from "@/containers/header";
 import { QueryProvider } from "@/containers/providers/query-provider";
+import { ThemeProvider } from "@/containers/providers/theme-provider";
+
+import { routing } from "@/i18n/routing";
+
+import "mapbox-gl/dist/mapbox-gl.css";
+import "@/styles/index.css";
 
 const workSans = Work_Sans({
   subsets: ["latin"],

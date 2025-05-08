@@ -1,9 +1,11 @@
 import React, { HTMLAttributes, JSX } from "react";
-import { JSXConverters, JSXConvertersFunction, RichText } from "@payloadcms/richtext-lexical/react";
-import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+
 import { DefaultNodeTypes, SerializedInlineBlockNode } from "@payloadcms/richtext-lexical";
-import { VariableBlock } from "@/components/ui/lexical/blocks/variable-block";
+import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
+import { JSXConverters, JSXConvertersFunction, RichText } from "@payloadcms/richtext-lexical/react";
+
 import { NumberBlock } from "@/components/ui/lexical/blocks/number-block";
+import { VariableBlock } from "@/components/ui/lexical/blocks/variable-block";
 
 export type LexicalProps = {
   variables?: Record<string, number | string | boolean>;

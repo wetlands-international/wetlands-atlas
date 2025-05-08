@@ -3,7 +3,7 @@
 import { FC, HTMLAttributes, PropsWithChildren } from "react";
 
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { FiLayers } from "react-icons/fi";
+import { LuLayers } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
@@ -39,7 +39,7 @@ export const LegendControl: FC<PropsWithChildren<LegendControlProps>> = ({
             type="button"
             onClick={onClick}
           >
-            <FiLayers className="h-6 w-6" />
+            <LuLayers className="h-6 w-6" />
           </button>
         </TooltipTrigger>
         {/* </PopoverTrigger> */}
