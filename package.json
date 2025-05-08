@@ -17,7 +17,9 @@
     "test": "cross-env NODE_OPTIONS=--no-deprecation vitest",
     "check-types": "cross-env NODE_OPTIONS=--no-deprecation tsc",
     "openapi": "node ./src/openapi.js && pnpm lint --fix",
-    "prepare": "husky"
+    "prepare": "husky",
+    "heroku-postbuild": "echo '{\"presets\": [\"next/babel\"]}' > .babelrc && npm run build",
+    "heroku-cleanup": "rm -rf .next/cache && find node_modules/@next -depth -maxdepth 1 -type d -name 'swc*' -exec rm -rf {} \\; -prune #Remove cache and SWC binaries to reduce heroku slug size"
   },
   "dependencies": {
     "@dnd-kit/core": "6.3.1",
