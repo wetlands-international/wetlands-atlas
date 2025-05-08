@@ -78,12 +78,7 @@ export const MapContainer = () => {
         <Controls>
           <SettingsControl>
             <div className="flex flex-col space-y-0.5">
-              <button
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-black"
-                type="button"
-              >
-                <span>Basemap</span>
-              </button>
+              <span>Basemap</span>
             </div>
           </SettingsControl>
           <ZoomControl />

@@ -4,7 +4,7 @@ import { FC, HTMLAttributes, PropsWithChildren } from "react";
 
 import { PopoverArrow } from "@radix-ui/react-popover";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { FiSettings } from "react-icons/fi";
+import { LuSettings } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
@@ -39,7 +39,7 @@ export const SettingsControl: FC<PropsWithChildren<SettingsControlProps>> = ({
                 aria-label="Map settings"
                 type="button"
               >
-                <FiSettings className="h-full w-full" />
+                <LuSettings className="h-full w-full" />
               </button>
             </TooltipTrigger>
           </PopoverTrigger>
@@ -52,7 +52,7 @@ export const SettingsControl: FC<PropsWithChildren<SettingsControlProps>> = ({
 
           <PopoverContent side="left" align="start">
             {children}
-            <PopoverArrow className="fill-white" width={10} height={5} />
+            <PopoverArrow className="fill-background" width={10} height={5} />
           </PopoverContent>
         </Tooltip>
       </Popover>

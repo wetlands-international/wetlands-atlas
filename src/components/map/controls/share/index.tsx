@@ -4,7 +4,7 @@ import { FC, HTMLAttributes, PropsWithChildren } from "react";
 
 import { PopoverArrow } from "@radix-ui/react-popover";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { FiShare2 } from "react-icons/fi";
+import { LuShare } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
@@ -39,7 +39,7 @@ export const ShareControl: FC<PropsWithChildren<ShareControlProps>> = ({
                 aria-label="Map settings"
                 type="button"
               >
-                <FiShare2 className="relative h-full w-full -translate-x-px" />
+                <LuShare className="relative h-full w-full -translate-x-px" />
               </button>
             </TooltipTrigger>
           </PopoverTrigger>
