@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { Metadata } from "next";
 
 import { getTranslations } from "next-intl/server";
@@ -27,7 +29,9 @@ export default async function HomePage() {
           <Indicators />
         </aside>
 
-        <MapContainer />
+        <Suspense>
+          <MapContainer />
+        </Suspense>
       </main>
     </ClientProviders>
   );
