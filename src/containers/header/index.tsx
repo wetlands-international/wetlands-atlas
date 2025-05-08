@@ -1,10 +1,13 @@
 "use client";
 
-import { Link as LocaleLink, usePathname } from "@/i18n/navigation";
 import Link from "next/link";
+
 import { useTranslations } from "next-intl";
 import { LuWheat } from "react-icons/lu";
+
 import { ThemeToogle } from "@/containers/header/theme-toggle";
+
+import { Link as LocaleLink, usePathname } from "@/i18n/navigation";
 
 export const Header = () => {
   const t = useTranslations();

@@ -1,14 +1,18 @@
 "use client";
 
+import { useCallback, useEffect } from "react";
+
+import { useAtom } from "jotai";
+import Map, { LngLatBoundsLike, useMap } from "react-map-gl/mapbox";
+import { useDebounceCallback } from "usehooks-ts";
+
 import { tmpBboxAtom, useSyncBbox } from "@/app/(frontend)/[locale]/store";
+
 import Controls from "@/components/map/controls";
 import SettingsControl from "@/components/map/controls/settings";
 import ZoomControl from "@/components/map/controls/zoom";
+
 import { env } from "@/env";
-import { useAtom } from "jotai";
-import { useCallback, useEffect } from "react";
-import Map, { LngLatBoundsLike, useMap } from "react-map-gl/mapbox";
-import { useDebounceCallback } from "usehooks-ts";
 
 export const MapContainer = () => {
   const [bbox, setBbox] = useSyncBbox();

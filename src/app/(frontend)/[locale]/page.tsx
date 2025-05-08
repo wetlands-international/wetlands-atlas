@@ -1,9 +1,12 @@
+import { Metadata } from "next";
+
+import { getTranslations } from "next-intl/server";
+
 import { ClientProviders } from "@/app/(frontend)/[locale]/providers";
+
 import { Categories } from "@/containers/categories";
 import { Indicators } from "@/containers/indicators";
 import { MapContainer } from "@/containers/map";
-import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("metadata");

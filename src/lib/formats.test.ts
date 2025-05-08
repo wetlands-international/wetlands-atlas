@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+
 import { formatHA, formatNumber, formatPercentage } from "./formats";
 
 describe("formatNumber", () => {

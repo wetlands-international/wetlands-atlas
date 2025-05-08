@@ -2,10 +2,9 @@
 
 import { FC, useCallback, MouseEvent, HTMLAttributes } from "react";
 
-import { useMap } from "react-map-gl/mapbox";
-
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { FiZoomIn, FiZoomOut } from "react-icons/fi";
+import { useMap } from "react-map-gl/mapbox";
 
 import { cn } from "@/lib/utils";
 

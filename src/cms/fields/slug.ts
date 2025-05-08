@@ -1,5 +1,6 @@
-import formatSlug from "@/cms/utils/formatSlug";
 import type { Field } from "payload";
+
+import formatSlug from "@/cms/utils/formatSlug";
 
 type Slug = (fieldToUse?: string, overrides?: Partial<Field>) => Field;
 

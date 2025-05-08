@@ -1,10 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import Link from "next/link";
+
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const Hero = () => {
   const t = useTranslations("home");

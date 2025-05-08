@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { PopoverArrow } from "@radix-ui/react-popover";
+import { LucideEye, LucideEyeClosed, LucideInfo } from "lucide-react";
 import { FiX } from "react-icons/fi";
 
 import { cn } from "@/lib/utils";
@@ -12,7 +13,6 @@ import { Tooltip, TooltipArrow, TooltipContent, TooltipTrigger } from "@/compone
 
 import LegendItemButton from "./button";
 import Slider from "./slider";
-import { LucideEye, LucideEyeClosed, LucideInfo } from "lucide-react";
 
 export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
   InfoContent,

@@ -1,6 +1,8 @@
-import payloadConfig from "@/payload.config";
-import { getLocale } from "next-intl/server";
 import { getPayload } from "payload";
+
+import { getLocale } from "next-intl/server";
+
+import payloadConfig from "@/payload.config";
 
 export const Categories = async () => {
   const locale = await getLocale();

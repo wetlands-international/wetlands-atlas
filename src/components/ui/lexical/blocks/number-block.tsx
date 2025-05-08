@@ -1,7 +1,8 @@
 "use client";
 
-import { formatNumber, formatPercentage } from "@/lib/formats";
 import { SerializedInlineBlockNode } from "@payloadcms/richtext-lexical";
+
+import { formatNumber, formatPercentage } from "@/lib/formats";
 
 export type NumberBlockProps = SerializedInlineBlockNode<{
   variable: string;
