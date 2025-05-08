@@ -39,6 +39,7 @@ export const LegendControl: FC<PropsWithChildren<LegendControlProps>> = ({
             type="button"
             onClick={onClick}
           >
+
             <LuLayers className="h-6 w-6" />
           </button>
         </TooltipTrigger>
