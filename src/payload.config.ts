@@ -65,9 +65,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || "",
     },
-    extensions: ["postgis"],
-    migrationDir: path.resolve(dirname, "migrations"),
-    push: false,
+    extensions: ["postgis", "uuid-ossp"],
   }),
   sharp,
   plugins: [
