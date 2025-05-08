@@ -6,11 +6,13 @@ import { Provider as JotaiProvider } from "jotai";
 
 import { Work_Sans, Aboreto } from "next/font/google";
 
-import "./styles/index.css";
 import { Header } from "@/containers/header";
 import { setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/containers/providers/theme-provider";
 import { QueryProvider } from "@/containers/providers/query-provider";
+
+import "mapbox-gl/dist/mapbox-gl.css";
+import "@/styles/index.css";
 
 const workSans = Work_Sans({
   subsets: ["latin"],
