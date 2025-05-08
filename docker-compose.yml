@@ -1,0 +1,10 @@
+services:
+  database:
+    image: postgis/postgis:16-3.4
+    container_name: wetlands-db
+    environment:
+      POSTGRES_USER: wetlands-db
+      POSTGRES_PASSWORD: wetlands-db
+      POSTGRES_DB: wetlands-db
+    ports:
+      - "5432:5432"
