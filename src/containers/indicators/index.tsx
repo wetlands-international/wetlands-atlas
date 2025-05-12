@@ -25,7 +25,7 @@ export const Indicators = async () => {
         <div key={indicator.id}>
           <h2 className="text-sm font-semibold uppercase">{indicator.name}</h2>
           {!!indicator.description && (
-            <div className="prose dark:prose-invert prose-sm">
+            <div className="prose prose-invert prose-sm">
               <Lexical
                 data={indicator.description}
                 variables={{

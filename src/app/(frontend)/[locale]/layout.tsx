@@ -8,7 +8,6 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { Header } from "@/containers/header";
 import { QueryProvider } from "@/containers/providers/query-provider";
-import { ThemeProvider } from "@/containers/providers/theme-provider";
 
 import { routing } from "@/i18n/routing";
 
@@ -49,28 +48,17 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html
-      lang={locale}
-      className={`${workSans.variable} ${aboreto.variable} font-sans`}
-      suppressHydrationWarning
-    >
+    <html lang={locale} className={`${workSans.variable} ${aboreto.variable} font-sans`}>
       <body>
         <QueryProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <NuqsAdapter>
-              <NextIntlClientProvider>
-                <JotaiProvider>
-                  <Header />
-                  {children}
-                </JotaiProvider>
-              </NextIntlClientProvider>
-            </NuqsAdapter>
-          </ThemeProvider>
+          <NuqsAdapter>
+            <NextIntlClientProvider>
+              <JotaiProvider>
+                <Header />
+                {children}
+              </JotaiProvider>
+            </NextIntlClientProvider>
+          </NuqsAdapter>
         </QueryProvider>
       </body>
     </html>
