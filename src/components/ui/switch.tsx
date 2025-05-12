@@ -13,7 +13,7 @@ function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimi
       className={cn(
         "peer focus-visible:border-ring focus-visible:ring-ring/50 inline-flex h-4 w-8 shrink-0 cursor-pointer items-center rounded-full outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
         "data-[state=checked]:from-accent data-[state=checked]:to-border data-[state=checked]:bg-linear-to-r",
-        "data-[state=unchecked]:bg-primary dark:data-[state=unchecked]:bg-input/80",
+        "data-[state=unchecked]:bg-input dark:data-[state=unchecked]:bg-input/80",
         className,
       )}
       {...props}

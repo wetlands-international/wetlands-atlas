@@ -73,6 +73,7 @@ export const MapContainer = () => {
         }}
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/mapbox/dark-v10"
+        minZoom={2}
         onMove={handleMovedDebounced}
       >
         <Controls>

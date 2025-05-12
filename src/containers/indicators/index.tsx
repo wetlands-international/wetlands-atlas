@@ -20,7 +20,7 @@ export const Indicators = async () => {
   });
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       {indicators.docs.map((indicator) => (
         <IndicatorsItem key={indicator.id} {...indicator} />
       ))}
