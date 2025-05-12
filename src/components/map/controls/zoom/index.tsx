@@ -1,10 +1,11 @@
 "use client";
 
-import { FC, useCallback, MouseEvent, HTMLAttributes } from "react";
+import { FC, useCallback, MouseEvent, HTMLAttributes, useEffect, useState } from "react";
 
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { LuZoomIn, LuZoomOut } from "react-icons/lu";
 import { useMap } from "react-map-gl/mapbox";
+import { useDebounceCallback } from "usehooks-ts";
 
 import { cn } from "@/lib/utils";
 
@@ -18,7 +19,8 @@ interface ZoomControlProps {
 
 export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProps) => {
   const { current: mapRef } = useMap();
-  const zoom = mapRef?.getZoom();
+  const [zoom, setZoom] = useState<number>(Math.round(mapRef?.getZoom() ?? 0));
+  // const zoom = Math.round(mapRef?.getZoom() ?? 0);
   const minZoom = mapRef?.getMinZoom();
   const maxZoom = mapRef?.getMaxZoom();
 
@@ -37,6 +39,24 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProp
     },
     [mapRef],
   );
+
+  const handleZoom = useDebounceCallback(() => {
+    if (mapRef) {
+      const newZoom = Math.round(mapRef.getZoom());
+      setZoom(newZoom);
+    }
+  }, 100);
+
+  useEffect(() => {
+    if (mapRef) {
+      mapRef.on("zoom", handleZoom);
+    }
+    return () => {
+      if (mapRef) {
+        mapRef.off("zoom", handleZoom);
+      }
+    };
+  }, [handleZoom, mapRef]);
 
   return (
     <div className={cn("flex flex-col", className)}>

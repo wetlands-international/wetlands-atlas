@@ -48,6 +48,28 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* 1.1 Custom Colors */
+  --color-blue-50: hsl(198 52% 94%);
+  --color-blue-100: hsl(196 49% 82%);
+  --color-blue-200: hsl(196 49% 70%);
+  --color-blue-300: hsl(196 49% 58%);
+  --color-blue-400: hsl(196 56% 46%);
+  --color-blue-500: hsl(196 91% 35%);
+  --color-blue-600: hsl(197 87% 28%);
+  --color-blue-700: hsl(198 80% 20%);
+  --color-blue-800: hsl(201 69% 14%);
+  --color-blue-900: hsl(200 71% 7%);
+  --color-green-50: hsl(69 60% 93%);
+  --color-green-100: hsl(69 61% 91%);
+  --color-green-200: hsl(69 60% 84%);
+  --color-green-300: hsl(69 61% 80%);
+  --color-green-400: hsl(69 61% 73%);
+  --color-green-500: hsl(69 61% 64%);
+  --color-green-600: hsl(69 61% 55%);
+  --color-green-700: hsl(67 51% 49%);
+  --color-green-800: hsl(64 51% 43%);
+  --color-green-900: hsl(57 53% 33%);
 }
 
 :root {
@@ -82,28 +104,6 @@
   --secondary: hsl(201 69% 14%);
   --secondary-foreground: hsl(0 0 100%);
   --radius: 0.625rem;
-
-  /* 1.1 Custom Colors */
-  --blue-50: hsl(198 52% 94%);
-  --blue-100: hsl(196 49% 82%);
-  --blue-200: hsl(196 49% 70%);
-  --blue-300: hsl(196 49% 58%);
-  --blue-400: hsl(196 56% 46%);
-  --blue-500: hsl(196 91% 35%);
-  --blue-600: hsl(197 87% 28%);
-  --blue-700: hsl(198 80% 20%);
-  --blue-800: hsl(201 69% 14%);
-  --blue-900: hsl(200 71% 7%);
-  --green-50: hsl(69 60% 93%);
-  --green-100: hsl(69 61% 91%);
-  --green-200: hsl(69 60% 84%);
-  --green-300: hsl(69 61% 80%);
-  --green-400: hsl(69 61% 73%);
-  --green-500: hsl(69 61% 64%);
-  --green-600: hsl(69 61% 55%);
-  --green-700: hsl(67 51% 49%);
-  --green-800: hsl(64 51% 43%);
-  --green-900: hsl(57 53% 33%);
 }
 
 @layer base {

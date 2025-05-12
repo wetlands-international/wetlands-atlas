@@ -9,7 +9,7 @@ type ControlsProps = PropsWithChildren<{
 }>;
 
 export const Controls: FC<ControlsProps> = ({
-  className = "absolute top-4 right-4",
+  className = "absolute bottom-8 right-4",
   children,
 }: ControlsProps) => (
   <div
