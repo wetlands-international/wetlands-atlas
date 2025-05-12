@@ -13,9 +13,9 @@ export const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="flex h-16 w-full items-center px-4">
+    <header className="absolute top-4 left-0 z-20 flex w-full items-center px-4">
       <div className="flex w-full items-center justify-between">
-        <h1 className="flex size-14 items-center justify-center rounded-full bg-white/10">
+        <h1 className="flex items-center justify-center rounded-full bg-white/10 p-2">
           <LocaleLink
             href="/"
             className="block items-center space-x-2"

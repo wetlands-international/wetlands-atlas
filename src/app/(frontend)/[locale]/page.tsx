@@ -6,7 +6,6 @@ import { getTranslations } from "next-intl/server";
 
 import { ClientProviders } from "@/app/(frontend)/[locale]/providers";
 
-import { Categories } from "@/containers/categories";
 import { Indicators } from "@/containers/indicators";
 import { MapContainer } from "@/containers/map";
 
@@ -22,10 +21,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   return (
     <ClientProviders>
-      <main className="relative flex h-[calc(100svh_-_theme(spacing.16))] flex-col gap-20 overflow-hidden">
-        <aside className="bg-background absolute top-0 left-0 z-10 flex h-screen w-full max-w-lg flex-col gap-10 p-4">
+      <main className="relative flex h-[100svh] flex-col gap-20 overflow-hidden">
+        <aside className="absolute top-24 left-4 z-10 flex w-full max-w-md flex-col gap-10">
           {/* <Hero /> */}
-          <Categories />
           <Indicators />
         </aside>
 

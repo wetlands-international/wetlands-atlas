@@ -2,7 +2,7 @@ import { getPayload } from "payload";
 
 import { getLocale } from "next-intl/server";
 
-import { Lexical } from "@/components/ui/lexical";
+import { IndicatorsItem } from "@/containers/indicators/item";
 
 import payloadConfig from "@/payload.config";
 
@@ -22,26 +22,7 @@ export const Indicators = async () => {
   return (
     <div className="flex flex-col gap-4">
       {indicators.docs.map((indicator) => (
-        <div key={indicator.id}>
-          <h2 className="text-sm font-semibold uppercase">{indicator.name}</h2>
-          {!!indicator.description && (
-            <div className="prose prose-invert prose-sm">
-              <Lexical
-                data={indicator.description}
-                variables={{
-                  value: "11M km²",
-                  percentage: "7%",
-                  location: "World",
-                  total: 1000000,
-                  totalPercentage: 0.3897,
-                }}
-              />
-            </div>
-          )}
-          <ul>
-            <li className="font-display text-2xl">60%</li>
-          </ul>
-        </div>
+        <IndicatorsItem key={indicator.id} {...indicator} />
       ))}
     </div>
   );
