@@ -5,8 +5,6 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LuWheat } from "react-icons/lu";
 
-import { ThemeToogle } from "@/containers/header/theme-toggle";
-
 import { Link as LocaleLink, usePathname } from "@/i18n/navigation";
 
 export const Header = () => {
@@ -46,8 +44,6 @@ export const Header = () => {
               </li>
             </ul>
           </nav>
-
-          <ThemeToogle />
         </div>
       </div>
     </header>
