@@ -24,8 +24,6 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProp
   const minZoom = mapRef?.getMinZoom();
   const maxZoom = mapRef?.getMaxZoom();
 
-  console.log(zoom);
-
   const increaseZoom = useCallback(
     (e: MouseEvent<HTMLButtonElement>) => {
       e.stopPropagation();
