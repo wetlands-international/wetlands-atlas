@@ -1,4 +1,4 @@
-import { ThreeElement } from "@react-three/fiber";
+import { extend, ThreeElement } from "@react-three/fiber";
 import * as THREE from "three";
 
 import simulationFragmentShader from "./fragment.glsl";
@@ -97,5 +97,7 @@ declare module "@react-three/fiber" {
     simulationMaterial: ThreeElement<typeof SimulationMaterial>;
   }
 }
+
+extend({ SimulationMaterial: SimulationMaterial });
 
 export default SimulationMaterial;

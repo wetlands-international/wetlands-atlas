@@ -1,13 +1,9 @@
 "use client";
 
 import { OrbitControls } from "@react-three/drei";
-import { Canvas, extend } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 
 import { Ring } from "@/containers/playground/ring";
-
-import SimulationMaterial from "./ring/materials/simulation";
-
-extend({ SimulationMaterial: SimulationMaterial });
 
 export const Playground = () => {
   return (
@@ -16,8 +12,8 @@ export const Playground = () => {
         <ambientLight intensity={0.5} />
 
         <Ring color="#FF00FF" size={128} radius={0.25} innerRadius={0} outerRadius={0.25} />
-        <Ring color="#00FF00" size={128} radius={0.5} innerRadius={0.25} outerRadius={0.75} />
-        <Ring color="#1166EE" size={128} radius={1} innerRadius={0.75} outerRadius={1} />
+        <Ring color="#00FF00" size={254} radius={0.5} innerRadius={0.25} outerRadius={0.75} />
+        <Ring color="#1166EE" size={512} radius={1} innerRadius={0.75} outerRadius={1} />
 
         <OrbitControls />
       </Canvas>
