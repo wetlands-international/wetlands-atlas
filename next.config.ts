@@ -10,6 +10,15 @@ const nextConfig = {
   output: "standalone",
   // Add the packages in transpilePackages
   transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core", "three"],
+
+  turbopack: {
+    rules: {
+      "*.glsl": {
+        loaders: ["raw-loader"],
+        as: "*.js",
+      },
+    },
+  },
 } satisfies NextConfig;
 
 const withNextIntl = createNextIntlPlugin();
