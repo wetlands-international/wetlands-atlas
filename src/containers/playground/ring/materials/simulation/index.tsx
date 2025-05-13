@@ -1,4 +1,4 @@
-import { extend, ThreeElement } from "@react-three/fiber";
+import { ThreeElement } from "@react-three/fiber";
 import * as THREE from "three";
 
 import simulationFragmentShader from "./fragment.glsl";
@@ -56,7 +56,7 @@ export const getRandomDataRing = ({
     // Radio aleatorio entre 0 y 1
     data[stride] = radius * Math.cos(angle); // x
     data[stride + 1] = radius * Math.sin(angle); // y
-    data[stride + 2] = 1.0; // z
+    data[stride + 2] = (Math.random() - 0.5) * 0.2; // z
     data[stride + 3] = 1.0;
   }
 
@@ -97,7 +97,5 @@ declare module "@react-three/fiber" {
     simulationMaterial: ThreeElement<typeof SimulationMaterial>;
   }
 }
-
-extend({ SimulationMaterial: SimulationMaterial });
 
 export default SimulationMaterial;
