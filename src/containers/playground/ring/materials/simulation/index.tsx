@@ -45,18 +45,18 @@ export const getRandomDataRing = ({
 }): Float32Array => {
   const width = size;
   const height = size;
-  const length = width * height * 4;
+  const length = width * height * 3;
   const data = new Float32Array(length);
 
   for (let i = 0; i < length; i++) {
-    const stride = i * 4;
+    const stride = i * 3;
     const angle = Math.random() * Math.PI * 2;
     // Radio aleatorio entre inner y outer radius
     const radius = innerRadius + Math.random() * (outerRadius - innerRadius);
     // Radio aleatorio entre 0 y 1
     data[stride] = radius * Math.cos(angle); // x
     data[stride + 1] = radius * Math.sin(angle); // y
-    data[stride + 2] = 0; // z
+    data[stride + 2] = 1.0; // z
     data[stride + 3] = 1.0;
   }
 

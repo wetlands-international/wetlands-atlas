@@ -19,6 +19,20 @@ const nextConfig = {
       },
     },
   },
+  webpack: (config) => {
+    // Add glsl-loader to the webpack config
+    config.module?.rules.push({
+      test: /\.(glsl|vs|fs)$/,
+      exclude: /node_modules/,
+      use: [
+        {
+          loader: "raw-loader",
+        },
+      ],
+    });
+
+    return config;
+  },
 } satisfies NextConfig;
 
 const withNextIntl = createNextIntlPlugin();
