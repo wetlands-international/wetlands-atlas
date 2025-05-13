@@ -1,14 +1,43 @@
 "use client";
-import {
-  GradientTexture,
-  GradientType,
-  OrbitControls,
-  OrthographicCamera,
-} from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { OrbitControls, OrthographicCamera, shaderMaterial } from "@react-three/drei";
+import { Canvas, extend, ThreeElement } from "@react-three/fiber";
 import { EffectComposer, DotScreen } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
+import { Color, DoubleSide } from "three";
 import { useWindowSize } from "usehooks-ts";
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    ringGradientMaterial: ThreeElement<typeof RingGradientMaterial>;
+  }
+}
+const RingGradientMaterial = shaderMaterial(
+  {
+    uColor1: new Color("#ffffff"),
+    uColor2: new Color("#ff0080"),
+  },
+  // Vertex Shader
+  /*glsl*/ `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  // Fragment Shader
+  /*glsl*/ `
+    varying vec2 vUv;
+    uniform vec3 uColor1;
+    uniform vec3 uColor2;
+
+    void main() {
+      float dist = length(vUv - 0.5) * 2.0; // radial distance
+      vec3 color = mix(uColor1, uColor2, dist);
+      gl_FragColor = vec4(color, 1.0 - smoothstep(1.0, 1.05, dist)); // optional fade
+    }
+  `,
+);
+
+extend({ RingGradientMaterial });
 
 export const Playground = () => {
   const { width, height } = useWindowSize();
@@ -19,21 +48,17 @@ export const Playground = () => {
         <directionalLight position={[1, 2, 5]} />
 
         <mesh>
-          <circleGeometry args={[4, 64, 0]} />
-          <meshStandardMaterial>
-            <GradientTexture
-              stops={[0, 0.3, 0.35, 0.65, 0.67, 1]} // As many stops as you want
-              colors={["aquamarine", "aquamarine", "hotpink", "hotpink", "yellow", "yellow"]} // Colors need to match the number of stops
-              size={1024} // Size (height) is optional, default = 1024
-              width={1024} // Width of the canvas producing the texture, default = 16
-              type={GradientType.Radial} // The type of the gradient, default = GradientType.Linear
-              innerCircleRadius={0} // Optional, the radius of the inner circle of the gradient, default = 0
-              outerCircleRadius={"auto"} // Optional, the radius of the outer circle of the gradient, default = auto
-            />
-          </meshStandardMaterial>
+          <ringGeometry args={[0, 2, 64]} />
+          <ringGradientMaterial
+            uColor1={"navajowhite"}
+            uColor2={"silver"}
+            side={DoubleSide}
+            transparent
+            // wireframe
+          />
         </mesh>
         <EffectComposer>
-          <DotScreen blendFunction={BlendFunction.MULTIPLY} scale={1} opacity={1} />
+          <DotScreen blendFunction={BlendFunction.MULTIPLY} scale={20} opacity={1} />
         </EffectComposer>
 
         <OrthographicCamera
