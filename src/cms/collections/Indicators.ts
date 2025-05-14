@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 import { CollectionConfig } from "payload";
 
 import { slugField } from "@/cms/fields/slug";
@@ -9,6 +11,13 @@ export const Indicators: CollectionConfig = {
     defaultColumns: ["id", "name", "category", "layers"],
   },
   defaultSort: ["name"],
+  hooks: {
+    afterChange: [
+      async () => {
+        revalidatePath("/", "layout");
+      },
+    ],
+  },
   fields: [
     slugField(),
     {
