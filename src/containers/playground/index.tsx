@@ -8,6 +8,12 @@ import { useWindowSize } from "usehooks-ts";
 
 import { Disc } from "@/containers/playground/disc";
 
+const DATA = [
+  { id: 1, name: "Disc 1", color: "#FF0000", value: 0.25 },
+  { id: 2, name: "Disc 2", color: "#00FF00", value: 0.5 },
+  { id: 3, name: "Disc 3", color: "#0000FF", value: 0.25 },
+];
+
 export const Playground = () => {
   const { width, height } = useWindowSize();
   return (
@@ -23,12 +29,35 @@ export const Playground = () => {
         <Rong color="#00CC33" innerRadius={0.25} outerRadius={0.75} />
         <Rong color="#1166EE" innerRadius={0.75} outerRadius={1} /> */}
 
-        <Disc />
+        {DATA.map((disc, i, arr) => {
+          const startRadius = arr
+            .filter((_, j) => j <= i)
+            .reduce((acc, curr) => {
+              // sum only the previous value but not the current one
+              if (curr.id === disc.id) return acc;
+              return acc + curr.value;
+            }, 0);
+          const endRadius = startRadius + disc.value;
+          const radius = endRadius - startRadius;
+
+          console.log({ startRadius, endRadius, radius });
+
+          return (
+            <Disc
+              key={disc.id}
+              color={disc.color}
+              startRadius={startRadius}
+              endRadius={endRadius}
+            />
+          );
+        })}
+
+        {/* <Disc /> */}
 
         <OrbitControls />
 
         <OrthographicCamera
-          makeDefault
+          // makeDefault
           position={[0, 0, 1]}
           zoom={200}
           left={-width / 2}

@@ -1,22 +1,28 @@
 import { useMemo, useRef } from "react";
 
+import { useTexture } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
-import { BackSide } from "three";
 
 import DiscMaterial from "@/containers/playground/disc/material";
 
 export type DiscProps = {
   size?: number;
   color?: string;
+  startRadius?: number;
+  endRadius?: number;
 };
 
 extend({ DiscMaterial: DiscMaterial });
 
 export const Disc = (props: DiscProps) => {
-  const size = props.size ?? 100;
+  const size = props.size ?? 40;
   const color = props.color || "#34c9eb";
+  const startRadius = props.startRadius ?? 0;
+  const endRadius = props.endRadius ?? 1;
 
   const discMaterialRef = useRef<DiscMaterial>(null);
+
+  const normalTexture = useTexture("/textures/sphere-normal.webp");
 
   const buffers = useMemo(() => {
     const positions = new Float32Array(size * size * 3);
@@ -43,31 +49,38 @@ export const Disc = (props: DiscProps) => {
   });
 
   return (
-    <points>
-      <bufferGeometry>
-        <bufferAttribute
-          args={[buffers.positions, 3]}
-          attach="attributes-position"
-          count={buffers.positions.length / 3}
+    <>
+      {/* <mesh>
+        <torusGeometry args={[1, 0.1, 32, 32]} />
+        <meshStandardMaterial color={color} transparent opacity={0.25} />
+      </mesh> */}
+      <points>
+        <bufferGeometry>
+          <bufferAttribute
+            args={[buffers.positions, 3]}
+            attach="attributes-position"
+            count={buffers.positions.length / 3}
+          />
+          <bufferAttribute
+            args={[buffers.randoms, 3]}
+            attach="attributes-aRandom"
+            count={buffers.randoms.length / 3}
+          />
+          <bufferAttribute
+            args={[buffers.sizes, 1]}
+            attach="attributes-aSize"
+            count={buffers.sizes.length}
+          />
+        </bufferGeometry>
+        <discMaterial
+          ref={discMaterialRef}
+          attach="material"
+          args={[color, startRadius, endRadius, normalTexture]}
+          transparent
+          depthWrite={false}
+          depthTest={false}
         />
-        <bufferAttribute
-          args={[buffers.randoms, 3]}
-          attach="attributes-aRandom"
-          count={buffers.randoms.length / 3}
-        />
-        <bufferAttribute
-          args={[buffers.sizes, 1]}
-          attach="attributes-aSize"
-          count={buffers.sizes.length}
-        />
-      </bufferGeometry>
-      <discMaterial
-        ref={discMaterialRef}
-        attach="material"
-        args={[color]}
-        transparent
-        side={BackSide}
-      />
-    </points>
+      </points>
+    </>
   );
 };
