@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 import { CollectionConfig } from "payload";
 
 import { slugField } from "@/cms/fields/slug";
@@ -43,4 +45,11 @@ export const Indicators: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    afterChange: [
+      async () => {
+        revalidatePath("/", "layout");
+      },
+    ],
+  },
 };

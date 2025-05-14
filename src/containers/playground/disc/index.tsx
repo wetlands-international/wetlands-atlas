@@ -1,0 +1,73 @@
+import { useMemo, useRef } from "react";
+
+import { extend, useFrame } from "@react-three/fiber";
+import { BackSide } from "three";
+
+import DiscMaterial from "@/containers/playground/disc/material";
+
+export type DiscProps = {
+  size?: number;
+  color?: string;
+};
+
+extend({ DiscMaterial: DiscMaterial });
+
+export const Disc = (props: DiscProps) => {
+  const size = props.size ?? 100;
+  const color = props.color || "#34c9eb";
+
+  const discMaterialRef = useRef<DiscMaterial>(null);
+
+  const buffers = useMemo(() => {
+    const positions = new Float32Array(size * size * 3);
+    const randoms = new Float32Array(size * size * 3);
+    const sizes = new Float32Array(size * size);
+
+    for (let i = 0; i < size * size; i++) {
+      const stride = i * 3;
+      positions[stride] = Math.random() - 0.5; // x
+      positions[stride + 1] = Math.random() - 0.5; // y
+      positions[stride + 2] = Math.random() - 0.5; // z
+      randoms[stride] = Math.random();
+      randoms[stride + 1] = Math.random();
+      randoms[stride + 2] = Math.random();
+      sizes[i] = 0.5 + Math.random() * 0.5;
+    }
+    return { positions, randoms, sizes };
+  }, [size]);
+
+  useFrame(({ clock }) => {
+    if (discMaterialRef.current) {
+      discMaterialRef.current.uniforms.uTime.value = clock.getElapsedTime();
+    }
+  });
+
+  return (
+    <points>
+      <bufferGeometry>
+        <bufferAttribute
+          args={[buffers.positions, 3]}
+          attach="attributes-position"
+          count={buffers.positions.length / 3}
+        />
+        <bufferAttribute
+          args={[buffers.randoms, 3]}
+          attach="attributes-aRandom"
+          count={buffers.randoms.length / 3}
+        />
+        <bufferAttribute
+          args={[buffers.sizes, 1]}
+          attach="attributes-aSize"
+          count={buffers.sizes.length}
+        />
+      </bufferGeometry>
+      <discMaterial
+        ref={discMaterialRef}
+        attach="material"
+        args={[color]}
+        transparent
+        side={BackSide}
+      />
+    </points>
+  );
+};

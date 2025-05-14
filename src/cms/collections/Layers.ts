@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 import { CollectionConfig } from "payload";
 
 import { slugField } from "@/cms/fields/slug";
@@ -130,4 +132,11 @@ export const Layers: CollectionConfig = {
       hasMany: false,
     },
   ],
+  hooks: {
+    afterChange: [
+      async () => {
+        revalidatePath("/", "layout");
+      },
+    ],
+  },
 };
