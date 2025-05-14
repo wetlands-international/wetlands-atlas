@@ -1,71 +1,69 @@
-# To use this Dockerfile, you have to set `output: 'standalone'` in your next.config.mjs file.
-# From https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile
+# ============================
+# 🛠️ Build Stage for Node.js
+# ============================
+FROM node:18-slim AS node-build
 
-FROM node:22.12.0-alpine AS base
+# Install pnpm
+RUN npm install -g pnpm
 
-# Install dependencies only when needed
-FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+# Copy and build Node.js app
 WORKDIR /app
+COPY nodeapp/ ./
+RUN pnpm install --frozen-lockfile && pnpm build
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# ============================
+# 🐍 Build Stage for Titiler
+# ============================
+FROM python:3.11-slim AS python-build
 
+# Install GDAL and compiler dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        g++ \
+        gcc \
+        libgdal-dev \
+        build-essential \
+        && rm -rf /var/lib/apt/lists/*
 
-# Rebuild the source code only when needed
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+# Set env vars for rasterio/GDAL
+ENV CPLUS_INCLUDE_PATH=/usr/include/gdal
+ENV C_INCLUDE_PATH=/usr/include/gdal
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during the build.
-# ENV NEXT_TELEMETRY_DISABLED 1
+# Install Python dependencies
+WORKDIR /titiler
+COPY titiler/ ./
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-RUN \
-  if [ -f yarn.lock ]; then yarn run build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# ============================
+# 🧼 Final Production Stage
+# ============================
+FROM python:3.11-slim AS final
 
-# Production image, copy all the files and run next
-FROM base AS runner
-WORKDIR /app
+# Install only minimal runtime deps
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        nginx supervisor curl nodejs npm && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+# Add pnpm for running Node app
+RUN npm install -g pnpm
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+# Install only runtime Python deps for Titiler
+COPY --from=python-build /usr/local/lib/python3.11 /usr/local/lib/python3.11
+COPY --from=python-build /usr/local/bin /usr/local/bin
+COPY --from=python-build /titiler /titiler
 
-# Remove this line if you do not have this folder
-COPY --from=builder /app/public ./public
+# Copy built Node app
+COPY --from=node-build /app /nodeapp
 
-# Set the correct permission for prerender cache
-RUN mkdir .next
-RUN chown nextjs:nodejs .next
+# Copy config files
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY supervisord.conf /etc/supervisord.conf
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Set env vars
+ENV PORT=80
+EXPOSE 80
 
-USER nextjs
-
-EXPOSE 3000
-
-ENV PORT 3000
-
-# server.js is created by next build from the standalone output
-# https://nextjs.org/docs/pages/api-reference/next-config-js/output
-CMD HOSTNAME="0.0.0.0" node server.js
+# Start all services
+CMD ["supervisord", "-c", "/etc/supervisord.conf"]
