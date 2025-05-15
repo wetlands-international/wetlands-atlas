@@ -10,6 +10,7 @@ export type DiscProps = {
   color?: string;
   startRadius?: number;
   endRadius?: number;
+  speed?: number;
 };
 
 extend({ DiscMaterial: DiscMaterial });
@@ -19,6 +20,7 @@ export const Disc = (props: DiscProps) => {
   const color = props.color || "#34c9eb";
   const startRadius = props.startRadius ?? 0;
   const endRadius = props.endRadius ?? 1;
+  const speed = props.speed ?? 1;
 
   const discMaterialRef = useRef<DiscMaterial>(null);
 
@@ -75,7 +77,7 @@ export const Disc = (props: DiscProps) => {
         <discMaterial
           ref={discMaterialRef}
           attach="material"
-          args={[color, startRadius, endRadius, normalTexture]}
+          args={[color, startRadius, endRadius, speed, normalTexture]}
           transparent
           depthWrite={false}
           depthTest={false}

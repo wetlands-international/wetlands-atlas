@@ -9,9 +9,9 @@ import { useWindowSize } from "usehooks-ts";
 import { Disc } from "@/containers/playground/disc";
 
 const DATA = [
-  { id: 1, name: "Disc 1", color: "#FF0000", value: 0.25 },
-  { id: 2, name: "Disc 2", color: "#00FF00", value: 0.5 },
-  { id: 3, name: "Disc 3", color: "#0000FF", value: 0.25 },
+  { id: 1, name: "Disc 1", color: "#4287f5", value: 0.25, speed: 0.5 },
+  { id: 2, name: "Disc 2", color: "#7f77e6", value: 0.5, speed: 1 },
+  { id: 3, name: "Disc 3", color: "#7f77e6", value: 0.25, speed: 1.5 },
 ];
 
 export const Playground = () => {
@@ -48,6 +48,7 @@ export const Playground = () => {
               color={disc.color}
               startRadius={startRadius}
               endRadius={endRadius}
+              speed={disc.speed}
             />
           );
         })}

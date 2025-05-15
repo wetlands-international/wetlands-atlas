@@ -27,5 +27,5 @@ void main() {
   float diffuse = max(dot(normal, lightPos), 0.0);
 
   // Set the final fragment color, modulating the alpha by the diffuse lighting intensity
-  gl_FragColor = vec4(vec3(color), alpha * diffuse * 0.5); 
+  gl_FragColor = vec4(vec3(color), alpha * diffuse * 0.75); 
 }

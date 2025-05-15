@@ -4,6 +4,7 @@ attribute float aSize;
 uniform float uTime;
 uniform float uStartRadius;
 uniform float uEndRadius;
+uniform float uSpeed;
 
 varying vec2 vUv;
 
@@ -36,7 +37,7 @@ vec3 getNormal(float progress) {
 }
 
 void main() {
-  float progress = fract(aRandom.x + (uTime * aSize * 0.025));
+  float progress = fract(aRandom.x + (uTime * aSize * uSpeed * 0.025));
   vec3 pos = getPos(progress);
 
   // Calculate the tangent and normal vectors
@@ -47,8 +48,8 @@ void main() {
   vec3 binormal = normalize(cross(normal, tangent));
 
   float radius = 0.05 + (aSize * 0.05);
-  float cx = radius * cos(aSize * uTime * 2.0 * PI * 0.15 + (aRandom.z * 7.0));
-  float cy = radius * sin(aSize * uTime * 2.0 * PI * 0.15 + (aRandom.z * 7.0));
+  float cx = radius * cos(aSize * uTime * 2.0 * PI * 0.1 + (aRandom.z * 7.0));
+  float cy = radius * sin(aSize * uTime * 2.0 * PI * 0.1 + (aRandom.z * 7.0));
 
   vec3 offset = (normal * cx) + (binormal * cy);
 

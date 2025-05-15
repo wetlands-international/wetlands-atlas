@@ -5,12 +5,19 @@ import fragmentShader from "./fragment.glsl";
 import vertexShader from "./vertex.glsl";
 
 class DiscMaterial extends THREE.ShaderMaterial {
-  constructor(color: string, startRadius: number, endRadius: number, normalTexture: THREE.Texture) {
+  constructor(
+    color: string,
+    startRadius: number,
+    endRadius: number,
+    speed: number,
+    normalTexture: THREE.Texture,
+  ) {
     const uniforms = {
       uTime: { value: 0 },
       uColor: { value: new THREE.Color(color) },
       uStartRadius: { value: startRadius },
       uEndRadius: { value: endRadius },
+      uSpeed: { value: speed },
       uNormalTexture: { value: normalTexture },
     };
 
