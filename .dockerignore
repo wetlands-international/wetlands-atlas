@@ -1,0 +1,28 @@
+# Node.js artifacts
+#node_modules
+**/node_modules
+npm-debug.log
+pnpm-lock.yaml
+
+# Next.js build/cache
+.next
+out
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv
+
+# Env and OS files
+.env
+.DS_Store
+
+# Git and editor stuff
+.git
+.vscode
+.idea
+
+# Docker cache
+.docker
+docker-compose.override.yml
