@@ -1,27 +1,25 @@
 # Node.js artifacts
-#node_modules
 **/node_modules
-npm-debug.log
-pnpm-lock.yaml
+**/npm-debug.log
 
 # Next.js build/cache
-.next
-out
+**/.next
+**/out
 
 # Python artifacts
-__pycache__/
-*.py[cod]
-*.egg-info/
-.venv
+**/__pycache__/
+**/*.py[cod]
+**/*.egg-info/
+**/.venv
 
 # Env and OS files
-.env
-.DS_Store
+**/.env
+**/.DS_Store
 
 # Git and editor stuff
-.git
-.vscode
-.idea
+**/.git
+**/.vscode
+**/.idea
 
 # Docker cache
 .docker

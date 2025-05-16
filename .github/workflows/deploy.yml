@@ -1,0 +1,58 @@
+name: Deploy to Heroku via Docker
+
+on:
+  push:
+    branches:
+      - test-infra
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ 'staging' || github.ref_name }}
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_APP_NAME: ${{ vars.HEROKU_APP_NAME }}
+    steps:
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🧪 Fetch Heroku config vars
+        id: heroku-vars
+        run: |
+          echo "Fetching Heroku config vars..."
+          response=$(curl -s -n -H "Authorization: Bearer $HEROKU_API_KEY" \
+            -H "Accept: application/vnd.heroku+json; version=3" \
+            https://api.heroku.com/apps/$HEROKU_APP_NAME/config-vars)
+
+          echo "DATABASE_URI=$(echo $response | jq -r '.DATABASE_URI')" >> $GITHUB_ENV
+          echo "PAYLOAD_SECRET=$(echo $response | jq -r '.PAYLOAD_SECRET')" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_MAPBOX_TOKEN=$(echo $response | jq -r '.NEXT_PUBLIC_MAPBOX_TOKEN')" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_API_URL=$(echo $response | jq -r '.NEXT_PUBLIC_API_URL')" >> $GITHUB_ENV
+
+      - name: 🔐 Log in to Heroku Container Registry
+        run: echo "${{ env.HEROKU_API_KEY }}" | docker login --username=_ --password-stdin registry.heroku.com
+
+      - name: 🏗 Build Docker image
+        run: |
+          docker buildx build --platform=linux/amd64 \
+            --build-arg PAYLOAD_SECRET=$PAYLOAD_SECRET \
+            --build-arg DATABASE_URI=$DATABASE_URI \
+            --build-arg NEXT_PUBLIC_MAPBOX_TOKEN=$NEXT_PUBLIC_MAPBOX_TOKEN \
+            --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+            -t registry.heroku.com/$HEROKU_APP_NAME/web .
+
+      - name: 📤 Push image to Heroku
+        run: docker push registry.heroku.com/$HEROKU_APP_NAME/web
+
+      - name: 🚀 Release to Heroku
+        run: |
+          curl -n -X PATCH https://api.heroku.com/apps/$HEROKU_APP_NAME/formation \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+            -H "Authorization: Bearer $HEROKU_API_KEY" \
+            -d '{
+              "updates": [{
+                "type": "web",
+                "docker_image": "'"$(docker inspect --format={{.Id}} registry.heroku.com/$HEROKU_APP_NAME/web)"'"
+              }]
+            }'

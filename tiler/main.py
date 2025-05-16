@@ -5,9 +5,9 @@ from titiler.core.factory import TilerFactory
 
 load_dotenv()
 
-TITILER_BASE_URL = os.getenv("TITILER_BASE_URL", "/tiler")
+tiler_BASE_URL = os.getenv("tiler_BASE_URL", "/tiler")
 
-app = FastAPI(title="Mini Titiler", root_path=TITILER_BASE_URL)
+app = FastAPI(title="Mini tiler", root_path=tiler_BASE_URL)
 
 # Create a tiler (COG = Cloud-Optimized GeoTIFF)
 cog_tiler = TilerFactory()
