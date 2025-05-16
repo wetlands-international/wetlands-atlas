@@ -68,7 +68,7 @@ vec3 getNormal(float progress) {
 }
 
 void main() {
-  float progress = fract(aRandom.x + (uTime * aSize * uSpeed * 0.025));
+  float progress = fract(aRandom.x + (uTime * aSize * uSpeed * 0.0075));
   
   float t = (sin(uTime * 0.1) * 2.0 - 1.0);
 
@@ -99,7 +99,7 @@ void main() {
 
   gl_Position = projectedPosition;
 
-  gl_PointSize = 8.0 * (1. - aSize + 0.5);
+  gl_PointSize = 6.0 * (1. - aSize + 0.5);
   // Size attenuation;
   gl_PointSize *= step(1.0 - (1.0/64.0), position.x) + 1.0;
 }

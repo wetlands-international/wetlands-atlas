@@ -36,6 +36,8 @@ uniform float uTime;
 uniform float uStartRadius;
 uniform float uEndRadius;
 
+varying float vProgress;
+
 float PI = 3.14159265358979323846;
 
 vec3 getPos(float progress) {
@@ -61,10 +63,11 @@ void main() {
   float waveOffset = waveIndex / waveCount;
 
   // Animate shared time
-  float baseTime = mod(uTime * 0.2, 1.0);
+  float baseTime = mod(uTime * 0.1, 1.0);
 
   // Each wave progresses through its band (0–1)
   float progress = fract(baseTime + waveOffset);
+  vProgress = progress;
   // float progress = fract(uTime * aRandom.x * 0.2 + aRandom.z * 20.); ;
 
   vec3 pos = getPos(progress);

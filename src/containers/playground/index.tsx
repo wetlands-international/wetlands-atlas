@@ -1,5 +1,7 @@
 "use client";
 
+import { Fragment } from "react";
+
 import { OrbitControls, OrthographicCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, DotScreen } from "@react-three/postprocessing";
@@ -7,7 +9,7 @@ import { BlendFunction } from "postprocessing";
 import { useWindowSize } from "usehooks-ts";
 
 import { Disc } from "@/containers/playground/disc";
-import { Rong } from "@/containers/playground/rong";
+import { Wave } from "@/containers/playground/wave";
 
 const DATA = [
   { id: 1, name: "Disc 1", color: "#4287f5", value: 0.25, speed: 0.5 },
@@ -22,33 +24,45 @@ export const Playground = () => {
       <Canvas camera={{ position: [0, 0, 2.5] }}>
         <ambientLight intensity={0.5} />
 
-        {DATA.map((disc, i, arr) => {
-          const startRadius = arr
-            .filter((_, j) => j <= i)
-            .reduce((acc, curr) => {
-              // sum only the previous value but not the current one
-              if (curr.id === disc.id) return acc;
-              return acc + curr.value;
-            }, 0);
-          const endRadius = startRadius + disc.value;
+        <group>
+          {DATA.map((disc, i, arr) => {
+            const startRadius = arr
+              .filter((_, j) => j <= i)
+              .reduce((acc, curr) => {
+                // sum only the previous value but not the current one
+                if (curr.id === disc.id) return acc;
+                return acc + curr.value;
+              }, 0);
+            const endRadius = startRadius + disc.value;
 
-          return (
-            <group key={disc.id}>
-              <Disc
-                color={disc.color}
-                startRadius={startRadius}
-                endRadius={endRadius}
-                speed={disc.speed}
-              />
-              <Rong
-                //
-                color={disc.color}
-                innerRadius={startRadius}
-                outerRadius={endRadius}
-              />
-            </group>
-          );
-        })}
+            return (
+              <Fragment key={disc.id}>
+                <Disc
+                  color={disc.color}
+                  startRadius={startRadius}
+                  endRadius={endRadius}
+                  speed={disc.speed}
+                />
+                <Wave
+                  //
+                  color={arr[i - 1]?.color || disc.color}
+                  innerRadius={startRadius}
+                  outerRadius={endRadius}
+                />
+              </Fragment>
+            );
+          })}
+          <mesh>
+            <circleGeometry args={[1, 64]} scale={[1, 1, 0.01]} />
+            <meshStandardMaterial
+              color="#000000"
+              transparent
+              opacity={0.25}
+              depthWrite={false}
+              depthTest={false}
+            />
+          </mesh>
+        </group>
 
         {/* <Disc /> */}
 

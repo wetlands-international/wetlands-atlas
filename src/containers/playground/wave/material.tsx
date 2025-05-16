@@ -4,7 +4,7 @@ import * as THREE from "three";
 import fragmentShader from "./fragment.glsl";
 import vertexShader from "./vertex.glsl";
 
-class RongMaterial extends THREE.ShaderMaterial {
+class WaveMaterial extends THREE.ShaderMaterial {
   constructor(color: string, startRadius: number, endRadius: number, normalTexture: THREE.Texture) {
     const uniforms = {
       uTime: { value: 0 },
@@ -24,8 +24,8 @@ class RongMaterial extends THREE.ShaderMaterial {
 
 declare module "@react-three/fiber" {
   interface ThreeElements {
-    rongMaterial: ThreeElement<typeof RongMaterial>;
+    waveMaterial: ThreeElement<typeof WaveMaterial>;
   }
 }
 
-export default RongMaterial;
+export default WaveMaterial;

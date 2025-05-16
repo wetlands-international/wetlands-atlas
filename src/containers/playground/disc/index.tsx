@@ -16,7 +16,7 @@ export type DiscProps = {
 extend({ DiscMaterial: DiscMaterial });
 
 export const Disc = (props: DiscProps) => {
-  const size = props.size ?? 40;
+  const size = props.size ?? 25;
   const color = props.color || "#34c9eb";
   const startRadius = props.startRadius ?? 0;
   const endRadius = props.endRadius ?? 1;

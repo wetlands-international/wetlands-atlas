@@ -4,24 +4,24 @@ import { useTexture } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
 
 import { getRandomDataRing } from "@/containers/playground/ring/materials/simulation";
-import RongMaterial from "@/containers/playground/rong/material";
+import WaveMaterial from "@/containers/playground/wave/material";
 
-export type RongProps = {
+export type WaveProps = {
   size?: number;
   color?: string;
   innerRadius?: number;
   outerRadius?: number;
 };
 
-extend({ RongMaterial: RongMaterial });
+extend({ WaveMaterial: WaveMaterial });
 
-export const Rong = (props: RongProps) => {
+export const Wave = (props: WaveProps) => {
   const size = props.size ?? 50;
   const innerRadius = props.innerRadius ?? 0.5;
   const outerRadius = props.outerRadius ?? 1;
   const color = props.color || "#FF00FF";
 
-  const rongMaterialRef = useRef<RongMaterial>(null);
+  const waveMaterialRef = useRef<WaveMaterial>(null);
 
   const normalTexture = useTexture("/textures/sphere-normal.webp");
 
@@ -46,8 +46,8 @@ export const Rong = (props: RongProps) => {
   }, [size, innerRadius, outerRadius]);
 
   useFrame(({ clock }) => {
-    if (rongMaterialRef.current) {
-      rongMaterialRef.current.uniforms.uTime.value = clock.getElapsedTime();
+    if (waveMaterialRef.current) {
+      waveMaterialRef.current.uniforms.uTime.value = clock.getElapsedTime();
     }
   });
 
@@ -70,8 +70,8 @@ export const Rong = (props: RongProps) => {
           count={buffers.sizes.length}
         />
       </bufferGeometry>
-      <rongMaterial
-        ref={rongMaterialRef}
+      <waveMaterial
+        ref={waveMaterialRef}
         attach="material"
         args={[color, innerRadius, outerRadius, normalTexture]}
         transparent

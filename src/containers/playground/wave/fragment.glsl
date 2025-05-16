@@ -3,6 +3,8 @@ uniform vec3 uColor;
 
 uniform sampler2D uNormalTexture;
 
+varying float vProgress;
+
 void main() {
   vec3 color = uColor.rgb;
   // Get the UV coordinates of the current fragment within the point
@@ -27,5 +29,5 @@ void main() {
   float diffuse = max(dot(normal, lightPos), 0.0);
 
 
-  gl_FragColor = vec4(color, alpha * diffuse * 0.75); 
+  gl_FragColor = vec4(color, alpha * diffuse * 0.75 * (0.75 - (vProgress * 0.75))); 
 }
