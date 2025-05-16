@@ -7,11 +7,12 @@ import { BlendFunction } from "postprocessing";
 import { useWindowSize } from "usehooks-ts";
 
 import { Disc } from "@/containers/playground/disc";
+import { Rong } from "@/containers/playground/rong";
 
 const DATA = [
   { id: 1, name: "Disc 1", color: "#4287f5", value: 0.25, speed: 0.5 },
-  { id: 2, name: "Disc 2", color: "#7f77e6", value: 0.5, speed: 1 },
-  { id: 3, name: "Disc 3", color: "#7f77e6", value: 0.25, speed: 1.5 },
+  { id: 2, name: "Disc 2", color: "#77bbe6", value: 0.5, speed: 1 },
+  { id: 3, name: "Disc 3", color: "#77d9e6", value: 0.25, speed: 1.5 },
 ];
 
 export const Playground = () => {
@@ -20,14 +21,6 @@ export const Playground = () => {
     <div className="grid min-h-[100svh] items-center justify-items-center">
       <Canvas camera={{ position: [0, 0, 2.5] }}>
         <ambientLight intensity={0.5} />
-
-        {/* <Ring color="#FF00FF" size={128} radius={0.25} innerRadius={0} outerRadius={0.25} />
-        <Ring color="#00FF00" size={254} radius={0.5} innerRadius={0.25} outerRadius={0.75} />
-        <Ring color="#1166EE" size={512} radius={1} innerRadius={0.75} outerRadius={1} /> */}
-
-        {/* <Rong color="#DDDD49" innerRadius={0} outerRadius={0.25} />
-        <Rong color="#00CC33" innerRadius={0.25} outerRadius={0.75} />
-        <Rong color="#1166EE" innerRadius={0.75} outerRadius={1} /> */}
 
         {DATA.map((disc, i, arr) => {
           const startRadius = arr
@@ -38,18 +31,22 @@ export const Playground = () => {
               return acc + curr.value;
             }, 0);
           const endRadius = startRadius + disc.value;
-          const radius = endRadius - startRadius;
-
-          console.log({ startRadius, endRadius, radius });
 
           return (
-            <Disc
-              key={disc.id}
-              color={disc.color}
-              startRadius={startRadius}
-              endRadius={endRadius}
-              speed={disc.speed}
-            />
+            <group key={disc.id}>
+              <Disc
+                color={disc.color}
+                startRadius={startRadius}
+                endRadius={endRadius}
+                speed={disc.speed}
+              />
+              <Rong
+                //
+                color={disc.color}
+                innerRadius={startRadius}
+                outerRadius={endRadius}
+              />
+            </group>
           );
         })}
 

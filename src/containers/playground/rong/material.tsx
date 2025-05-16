@@ -5,10 +5,13 @@ import fragmentShader from "./fragment.glsl";
 import vertexShader from "./vertex.glsl";
 
 class RongMaterial extends THREE.ShaderMaterial {
-  constructor(color: string) {
+  constructor(color: string, startRadius: number, endRadius: number, normalTexture: THREE.Texture) {
     const uniforms = {
       uTime: { value: 0 },
+      uStartRadius: { value: startRadius },
+      uEndRadius: { value: endRadius },
       uColor: { value: new THREE.Color(color) },
+      uNormalTexture: { value: normalTexture },
     };
 
     super({

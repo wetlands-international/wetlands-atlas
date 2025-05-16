@@ -29,19 +29,58 @@ float snoise(vec2 v){
   return 130.0 * dot(m, g);
 }
 
+attribute vec3 aRandom;
+attribute float aSize;
+
 uniform float uTime;
+uniform float uStartRadius;
+uniform float uEndRadius;
+
+float PI = 3.14159265358979323846;
+
+vec3 getPos(float progress) {
+  float angle = aRandom.y * 20.0 * PI + progress * 0.1 * 2.0 * PI;
+  
+  float radius = mix(uStartRadius, uEndRadius, progress);
+
+  float x = cos(angle) * radius;
+  float y = sin(angle) * radius;
+  float z = 0.01;
+
+  return vec3(x, y, z);
+}
 
 void main() {
-  float t = (sin(uTime * 0.5) * 2.0 - 1.0);
-  float noise = snoise(position.xy + t) * 0.02;
-  vec3 pos = vec3(position.x + noise, position.y + noise, position.z + noise);
+  // Number of simultaneous waves
+  const float waveCount = 3.0;
+
+  // Which wave does this point belong to?
+  float waveIndex = floor(aRandom.z * waveCount);  // 0, 1, or 2
+
+  // Offset each wave evenly within the total animation range
+  float waveOffset = waveIndex / waveCount;
+
+  // Animate shared time
+  float baseTime = mod(uTime * 0.2, 1.0);
+
+  // Each wave progresses through its band (0–1)
+  float progress = fract(baseTime + waveOffset);
+  // float progress = fract(uTime * aRandom.x * 0.2 + aRandom.z * 20.); ;
+
+  vec3 pos = getPos(progress);
+  float noise = snoise(pos.xy) * 0.01 * progress;
+  pos += noise * 2.5;
+
+  // pos = vec3(progress);
+
+
   vec4 modelPosition = modelMatrix * vec4(pos, 1.0);
   vec4 viewPosition = viewMatrix * modelPosition;
   vec4 projectedPosition = projectionMatrix * viewPosition;
 
   gl_Position = projectedPosition;
 
-  gl_PointSize = 3.0;
+  gl_PointSize = 5.0 * aSize * (1. - progress);
   // Size attenuation;
   gl_PointSize *= step(1.0 - (1.0/64.0), position.x) + 1.0;
 }
