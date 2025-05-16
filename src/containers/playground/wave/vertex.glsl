@@ -54,10 +54,10 @@ vec3 getPos(float progress) {
 
 void main() {
   // Number of simultaneous waves
-  const float waveCount = 3.0;
+  const float waveCount = 4.0;
 
   // Which wave does this point belong to?
-  float waveIndex = floor(aRandom.z * waveCount);  // 0, 1, or 2
+  float waveIndex = floor(aRandom.z * 4.0);  // 0, 1, or 2
 
   // Offset each wave evenly within the total animation range
   float waveOffset = waveIndex / waveCount;
@@ -71,8 +71,8 @@ void main() {
   // float progress = fract(uTime * aRandom.x * 0.2 + aRandom.z * 20.); ;
 
   vec3 pos = getPos(progress);
-  float noise = snoise(pos.xy) * 0.01 * progress;
-  pos += noise * 2.5;
+  float noise = snoise(pos.xy * aRandom.y * progress);
+  pos += noise * 0.1 * aSize * (1. - progress);
 
   // pos = vec3(progress);
 
