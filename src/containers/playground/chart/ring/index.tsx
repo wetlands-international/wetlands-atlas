@@ -3,9 +3,9 @@ import { useMemo, useRef } from "react";
 import { useTexture } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
 
-import DiscMaterial from "@/containers/playground/disc/material";
+import RingMaterial from "@/containers/playground/chart/ring/material";
 
-export type DiscProps = {
+export type RingProps = {
   size?: number;
   color?: string;
   startRadius?: number;
@@ -13,16 +13,16 @@ export type DiscProps = {
   speed?: number;
 };
 
-extend({ DiscMaterial: DiscMaterial });
+extend({ RingMaterial: RingMaterial });
 
-export const Disc = (props: DiscProps) => {
+export const Ring = (props: RingProps) => {
   const size = props.size ?? 25;
   const color = props.color || "#34c9eb";
   const startRadius = props.startRadius ?? 0;
   const endRadius = props.endRadius ?? 1;
   const speed = props.speed ?? 1;
 
-  const discMaterialRef = useRef<DiscMaterial>(null);
+  const ringMaterialRef = useRef<RingMaterial>(null);
 
   const normalTexture = useTexture("/textures/sphere-normal.webp");
 
@@ -45,8 +45,9 @@ export const Disc = (props: DiscProps) => {
   }, [size]);
 
   useFrame(({ clock }) => {
-    if (discMaterialRef.current) {
-      discMaterialRef.current.uniforms.uTime.value = clock.getElapsedTime();
+    if (ringMaterialRef.current) {
+      ringMaterialRef.current.uniforms.uTime.value = clock.getElapsedTime();
+      ringMaterialRef.current.uniforms.uDpr.value = window.devicePixelRatio;
     }
   });
 
@@ -74,8 +75,8 @@ export const Disc = (props: DiscProps) => {
             count={buffers.sizes.length}
           />
         </bufferGeometry>
-        <discMaterial
-          ref={discMaterialRef}
+        <ringMaterial
+          ref={ringMaterialRef}
           attach="material"
           args={[color, startRadius, endRadius, speed, normalTexture]}
           transparent

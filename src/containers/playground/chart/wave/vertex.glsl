@@ -33,6 +33,7 @@ attribute vec3 aRandom;
 attribute float aSize;
 
 uniform float uTime;
+uniform float uDpr;
 uniform float uStartRadius;
 uniform float uEndRadius;
 
@@ -83,7 +84,7 @@ void main() {
 
   gl_Position = projectedPosition;
 
-  gl_PointSize = 5.0 * aSize * (1. - progress);
+  gl_PointSize = 5.0 * aSize * (1. - progress) * uDpr;
   // Size attenuation;
   gl_PointSize *= step(1.0 - (1.0/64.0), position.x) + 1.0;
 }

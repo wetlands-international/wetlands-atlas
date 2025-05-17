@@ -3,8 +3,7 @@ import { useMemo, useRef } from "react";
 import { useTexture } from "@react-three/drei";
 import { extend, useFrame } from "@react-three/fiber";
 
-import { getRandomDataRing } from "@/containers/playground/ring/materials/simulation";
-import WaveMaterial from "@/containers/playground/wave/material";
+import WaveMaterial from "@/containers/playground/chart/wave/material";
 
 export type WaveProps = {
   size?: number;
@@ -26,16 +25,16 @@ export const Wave = (props: WaveProps) => {
   const normalTexture = useTexture("/textures/sphere-normal.webp");
 
   const buffers = useMemo(() => {
-    const positions = getRandomDataRing({
-      size,
-      innerRadius,
-      outerRadius,
-    });
+    const positions = new Float32Array(size * size * 3);
 
     const randoms = new Float32Array(size * size * 3);
     const sizes = new Float32Array(size * size);
     for (let i = 0; i < size * size; i++) {
       const stride = i * 3;
+      positions[stride] = Math.random() - 0.5; // x
+      positions[stride + 1] = Math.random() - 0.5; // y
+      positions[stride + 2] = Math.random() - 0.5; // z
+
       randoms[stride] = Math.random();
       randoms[stride + 1] = Math.random();
       randoms[stride + 2] = Math.random();
@@ -43,11 +42,12 @@ export const Wave = (props: WaveProps) => {
       sizes[i] = 0.5 + Math.random() * 0.5;
     }
     return { positions, randoms, sizes };
-  }, [size, innerRadius, outerRadius]);
+  }, [size]);
 
   useFrame(({ clock }) => {
     if (waveMaterialRef.current) {
       waveMaterialRef.current.uniforms.uTime.value = clock.getElapsedTime();
+      waveMaterialRef.current.uniforms.uDpr.value = window.devicePixelRatio;
     }
   });
 

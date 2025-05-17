@@ -5,6 +5,7 @@ uniform float uTime;
 uniform float uStartRadius;
 uniform float uEndRadius;
 uniform float uSpeed;
+uniform float uDpr;
 
 varying vec2 vUv;
 
@@ -99,7 +100,7 @@ void main() {
 
   gl_Position = projectedPosition;
 
-  gl_PointSize = 6.0 * (1. - aSize + 0.5);
+  gl_PointSize = 6.0 * (1. - aSize + 0.5) * uDpr;
   // Size attenuation;
   gl_PointSize *= step(1.0 - (1.0/64.0), position.x) + 1.0;
 }

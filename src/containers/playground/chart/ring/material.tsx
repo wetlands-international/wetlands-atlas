@@ -4,14 +4,22 @@ import * as THREE from "three";
 import fragmentShader from "./fragment.glsl";
 import vertexShader from "./vertex.glsl";
 
-class WaveMaterial extends THREE.ShaderMaterial {
-  constructor(color: string, startRadius: number, endRadius: number, normalTexture: THREE.Texture) {
+class RingMaterial extends THREE.ShaderMaterial {
+  constructor(
+    color: string,
+    startRadius: number,
+    endRadius: number,
+    speed: number,
+    normalTexture: THREE.Texture,
+  ) {
     const uniforms = {
       uTime: { value: 0 },
+      uColor: { value: new THREE.Color(color) },
       uStartRadius: { value: startRadius },
       uEndRadius: { value: endRadius },
-      uColor: { value: new THREE.Color(color) },
+      uSpeed: { value: speed },
       uNormalTexture: { value: normalTexture },
+      uDpr: { value: window.devicePixelRatio },
     };
 
     super({
@@ -24,8 +32,8 @@ class WaveMaterial extends THREE.ShaderMaterial {
 
 declare module "@react-three/fiber" {
   interface ThreeElements {
-    waveMaterial: ThreeElement<typeof WaveMaterial>;
+    ringMaterial: ThreeElement<typeof RingMaterial>;
   }
 }
 
-export default WaveMaterial;
+export default RingMaterial;
