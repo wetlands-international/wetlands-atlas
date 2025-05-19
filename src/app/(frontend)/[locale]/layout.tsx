@@ -1,4 +1,4 @@
-import { Work_Sans, Aboreto } from "next/font/google";
+import { Work_Sans, Philosopher } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { Provider as JotaiProvider } from "jotai";
@@ -20,11 +20,11 @@ const workSans = Work_Sans({
   variable: "--font-worksans",
 });
 
-const aboreto = Aboreto({
+const philosopher = Philosopher({
   subsets: ["latin"],
   weight: ["400"],
   style: "normal",
-  variable: "--font-aboreto",
+  variable: "--font-philosopher",
 });
 
 export function generateStaticParams() {
@@ -47,7 +47,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${workSans.variable} ${aboreto.variable} font-sans`}>
+    <html lang={locale} className={`${workSans.variable} ${philosopher.variable} font-sans`}>
       <body>
         <QueryProvider>
           <NuqsAdapter>
