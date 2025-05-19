@@ -25,7 +25,7 @@ export default async function StoriesPage() {
         </Header>
       </aside>
 
-      <aside className="absolute bottom-12 left-4 z-10 flex w-full flex-col gap-2.5">
+      <aside className="absolute bottom-12 left-4 z-10 flex w-[calc(100%_-_theme(spacing.8))] flex-col gap-2.5 overflow-hidden">
         <Stories />
       </aside>
     </>

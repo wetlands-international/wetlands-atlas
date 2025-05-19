@@ -1,5 +1,7 @@
 import { StoriesListItem } from "@/containers/stories/item";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 const STORIES = [
   {
     id: 1,
@@ -55,7 +57,7 @@ const STORIES = [
 
 export const StoriesList = () => {
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-25 duration-300">
+    <ScrollArea className="w-full" orientation="horizontal">
       <ul className="flex w-full items-stretch gap-2">
         <li className="bg-background w-96 shrink-0 space-y-4 rounded-4xl p-6">
           <h1 className="font-display text-4xl text-blue-500">Highlighted stories</h1>
@@ -65,12 +67,13 @@ export const StoriesList = () => {
             quam animi vel. Et, nihil!
           </p>
         </li>
+
         {STORIES.map((story) => (
-          <li key={story.id}>
+          <li key={story.id} className="animate-in fade-in-0 slide-in-from-bottom-25 duration-300">
             <StoriesListItem {...story} />
           </li>
         ))}
       </ul>
-    </div>
+    </ScrollArea>
   );
 };

@@ -28,7 +28,7 @@ export const Header = ({ children }: { children: React.ReactNode }) => {
         </Link>
       </h1>
 
-      <div className="animate-in fade-in slide-in-from-top-20 w-full rounded-4xl bg-white/10 backdrop-blur-lg duration-500">
+      <div className="animate-in fade-in zoom-in-90 w-full rounded-4xl bg-white/10 backdrop-blur-lg duration-300">
         {children}
       </div>
     </header>
