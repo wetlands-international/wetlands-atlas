@@ -52,4 +52,11 @@ export const Indicators: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    afterChange: [
+      async () => {
+        revalidatePath("/", "layout");
+      },
+    ],
+  },
 };
