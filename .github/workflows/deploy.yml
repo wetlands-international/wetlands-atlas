@@ -3,12 +3,24 @@ name: Deploy to Heroku via Docker
 on:
   push:
     branches:
-      - test-infra
+      - main
+      - staging
 
 jobs:
-  deploy:
+  set_environment_name:
+    name: Set Environment
     runs-on: ubuntu-latest
-    environment: ${{ 'staging' || github.ref_name }}
+    outputs:
+      env_name: ${{ steps.set_env.outputs.env_name }}
+    steps:
+      - id: set_env
+        run: echo "env_name=${{ github.ref_name == 'main' && 'production' || github.ref_name }}" >> $GITHUB_OUTPUT
+
+  deploy:
+    needs: [set_environment_name]
+    environment:
+      name: ${{ needs.set_environment_name.outputs.env_name }}
+    runs-on: ubuntu-latest
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_APP_NAME: ${{ vars.HEROKU_APP_NAME }}
