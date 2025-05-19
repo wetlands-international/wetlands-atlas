@@ -6,7 +6,6 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-import { Header } from "@/containers/header";
 import { QueryProvider } from "@/containers/providers/query-provider";
 
 import { routing } from "@/i18n/routing";
@@ -53,10 +52,7 @@ export default async function LocaleLayout({
         <QueryProvider>
           <NuqsAdapter>
             <NextIntlClientProvider>
-              <JotaiProvider>
-                <Header />
-                {children}
-              </JotaiProvider>
+              <JotaiProvider>{children}</JotaiProvider>
             </NextIntlClientProvider>
           </NuqsAdapter>
         </QueryProvider>

@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import Map, { LngLatBoundsLike, useMap } from "react-map-gl/mapbox";
 import { useDebounceCallback } from "usehooks-ts";
 
-import { tmpBboxAtom, useSyncBbox } from "@/app/(frontend)/[locale]/store";
+import { tmpBboxAtom, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
 
 import Controls from "@/components/map/controls";
 import SettingsControl from "@/components/map/controls/settings";

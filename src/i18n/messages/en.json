@@ -17,6 +17,10 @@
       "title": "Wetlands",
       "description": "Wetlands is a web application that helps you to manage your wetlands."
     },
+    "stories": {
+      "title": "Stories | Wetlands",
+      "description": "A collection of stories about wetlands."
+    },
     "playground": {
       "title": "Playground | Wetlands",
       "description": "A place to play with the wetlands data."
