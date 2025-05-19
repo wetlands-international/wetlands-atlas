@@ -140,11 +140,4 @@ export const Layers: CollectionConfig = {
       hasMany: false,
     },
   ],
-  hooks: {
-    afterChange: [
-      async () => {
-        revalidatePath("/", "layout");
-      },
-    ],
-  },
 };

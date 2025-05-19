@@ -72,7 +72,7 @@ export const MapContainer = () => {
           },
         }}
         style={{ width: "100%", height: "100%" }}
-        mapStyle="mapbox://styles/mapbox/dark-v10"
+        mapStyle="mapbox://styles/wetlands-vizzuality/cmaoz7mg901l701qoaj2a6v0h"
         minZoom={2}
         onMove={handleMovedDebounced}
       >
