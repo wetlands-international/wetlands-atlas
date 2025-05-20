@@ -1,4 +1,4 @@
-import { Work_Sans, Aboreto } from "next/font/google";
+import { Work_Sans, Philosopher } from "next/font/google";
 import { notFound } from "next/navigation";
 
 import { Provider as JotaiProvider } from "jotai";
@@ -6,7 +6,6 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 
-import { Header } from "@/containers/header";
 import { QueryProvider } from "@/containers/providers/query-provider";
 
 import { routing } from "@/i18n/routing";
@@ -21,11 +20,11 @@ const workSans = Work_Sans({
   variable: "--font-worksans",
 });
 
-const aboreto = Aboreto({
+const philosopher = Philosopher({
   subsets: ["latin"],
   weight: ["400"],
   style: "normal",
-  variable: "--font-aboreto",
+  variable: "--font-philosopher",
 });
 
 export function generateStaticParams() {
@@ -48,15 +47,12 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${workSans.variable} ${aboreto.variable} font-sans`}>
+    <html lang={locale} className={`${workSans.variable} ${philosopher.variable} font-sans`}>
       <body>
         <QueryProvider>
           <NuqsAdapter>
             <NextIntlClientProvider>
-              <JotaiProvider>
-                <Header />
-                {children}
-              </JotaiProvider>
+              <JotaiProvider>{children}</JotaiProvider>
             </NextIntlClientProvider>
           </NuqsAdapter>
         </QueryProvider>

@@ -13,7 +13,7 @@ const compat = new FlatCompat({
 
 const eslintConfig = defineConfig([
   ...compat.extends("next/core-web-vitals", "next/typescript", "plugin:prettier/recommended"),
-  globalIgnores(["src/app/(payload)/admin/importMap.js", "src/migrations/**"]),
+  globalIgnores(["src/app/(payload)/admin/importMap.js"]),
   {
     rules: {
       "import/order": [

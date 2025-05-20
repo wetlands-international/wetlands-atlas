@@ -1,54 +1,35 @@
 "use client";
 
-import Link from "next/link";
-
 import { useTranslations } from "next-intl";
+
+import { cn } from "@/lib/utils";
 
 import { Logo } from "@/containers/logo";
 
-import { Link as LocaleLink, usePathname } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 
-export const Header = () => {
+export const Header = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations();
-  const pathname = usePathname();
 
   return (
-    <header className="absolute top-4 left-0 z-20 flex w-full items-center px-4">
-      <div className="flex w-full items-center justify-between">
-        <h1 className="flex items-center justify-center rounded-full bg-white/10 p-2">
-          <LocaleLink
-            href="/"
-            className="block items-center space-x-2"
-            aria-label={t("header.title")}
-          >
-            <Logo />
-          </LocaleLink>
-        </h1>
-        <div className="flex items-center gap-4">
-          <nav>
-            <ul className="flex space-x-4">
-              <li>
-                <LocaleLink href="/">{t("header.home")}</LocaleLink>
-              </li>
-              <li>
-                <LocaleLink href="/playground">{t("header.playground")}</LocaleLink>
-              </li>
-              <li>
-                <Link href="/admin">{t("header.admin")}</Link>
-              </li>
-              <li>
-                <LocaleLink href={`${pathname}`} locale="en">
-                  English
-                </LocaleLink>
-              </li>
-              <li>
-                <LocaleLink href={`${pathname}`} locale="es">
-                  Español
-                </LocaleLink>
-              </li>
-            </ul>
-          </nav>
-        </div>
+    <header className="flex items-center gap-2.5">
+      <h1
+        className={cn(
+          "relative flex size-16 shrink-0 items-center justify-center rounded-full",
+          "after:absolute after:top-0 after:left-0 after:-z-10 after:h-full after:w-full after:rounded-full after:bg-white/10 after:backdrop-blur-lg",
+        )}
+      >
+        <Link
+          href="/"
+          className="relative z-10 block items-center space-x-2"
+          aria-label={t("header.title")}
+        >
+          <Logo className="size-14" />
+        </Link>
+      </h1>
+
+      <div className="animate-in fade-in zoom-in-90 w-full rounded-4xl bg-white/10 backdrop-blur-lg duration-300">
+        {children}
       </div>
     </header>
   );
