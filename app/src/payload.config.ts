@@ -67,20 +67,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || "",
     },
     extensions: ["postgis", "uuid-ossp"],
-    // afterSchemaInit: [
-    //   async ({ schema }) => {
-    //     console.log("Schema initialized");
-    //     const ast = await openapiTS(
-    //       new URL("http://localhost:3000/api/openapi.json", import.meta.url),
-    //     );
-    //     const contents = astToString(ast);
-
-    //     // (optional) write to file
-    //     fs.writeFileSync("./src/payload-api.ts", contents);
-
-    //     return schema;
-    //   },
-    // ],
+    migrationDir: path.resolve(dirname, "migrations"),
   }),
   sharp,
   plugins: [
