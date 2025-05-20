@@ -1,1 +1,1 @@
-pnpm check-types && pnpm lint --fix && pnpm test --run
+cd ./app && pnpm check-types && pnpm lint --fix && pnpm test --run
