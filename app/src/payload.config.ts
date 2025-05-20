@@ -64,7 +64,8 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || "",
+      connectionString: process.env.DATABASE_URI,
+      ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
     },
     extensions: ["postgis", "uuid-ossp"],
     migrationDir: path.resolve(dirname, "migrations"),
