@@ -9,3 +9,8 @@ export const useSyncBbox = () => {
 };
 
 export const tmpBboxAtom = atom<number[]>();
+
+export const locationsAtom = atom({
+  search: "",
+  enabled: false,
+});
