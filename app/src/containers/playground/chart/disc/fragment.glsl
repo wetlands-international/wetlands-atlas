@@ -3,17 +3,27 @@ uniform vec3 uColor;
 
 uniform float uDpr;
 
+uniform vec2 uValues[3];
+uniform vec3 uColors[3];
+
 varying vec2 vUv;
 
 void main() {
   // radial gradient
-  float dist = distance(vUv, vec2(0.5));
-  float wave = sin(uTime * 2.0 + dist * -80.0) * 0.5 + 0.5;
+  float dist = distance(vUv, vec2(0.5)) * 2.0;
+  // normalize distance to 0-1
+  dist = 1.0 - dist;
+  
+  // loop through the values and asign one color per range of values, be sure that you don't assign the same color to two ranges. Loop please
+  vec3 color = vec3(0.0);
+  for (int i = 0; i < 3; i++) {
+    if (dist <= uValues[i].y && dist > uValues[i].x) {
+      color = uColors[i];
+      break;
+    }
+  }
 
-  vec3 color = mix(uColor.rgb, vec3(0.0), wave);
-  // color += vec3(0.5, 0.0, 0.5) * wave;
-
-  gl_FragColor = vec4(color, wave * 0.1);
+  gl_FragColor = vec4(uColors[0], dist * 0.25);
 }
   
   

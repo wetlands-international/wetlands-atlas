@@ -8,13 +8,26 @@ class DiscMaterial extends THREE.ShaderMaterial {
   constructor() {
     const uniforms = {
       uTime: { value: 0 },
+      uColor: { value: new THREE.Color(0x4287f5) },
       uDpr: { value: window.devicePixelRatio },
+      uValues: {
+        value: [
+          new THREE.Vector2(0, 0.25),
+          new THREE.Vector2(0.25, 0.5),
+          new THREE.Vector2(0.5, 1),
+        ],
+      },
+      uColors: {
+        value: [new THREE.Color(0x4287f5), new THREE.Color(0x77bbe6), new THREE.Color(0x77d9e6)],
+      },
     };
 
     super({
       uniforms,
       vertexShader,
       fragmentShader,
+      transparent: true,
+      // blending: THREE.SubtractiveBlending,
     });
   }
 }

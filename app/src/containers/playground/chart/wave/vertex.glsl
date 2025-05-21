@@ -66,14 +66,16 @@ void main() {
   // Animate shared time
   float baseTime = mod(uTime * 0.1, 1.0);
 
-  // Each wave progresses through its band (0–1)
+  // Each wave progresses through its band (0–1-0)
   float progress = fract(baseTime + waveOffset);
   vProgress = progress;
   // float progress = fract(uTime * aRandom.x * 0.2 + aRandom.z * 20.); ;
 
   vec3 pos = getPos(progress);
-  float noise = snoise(pos.xy * aRandom.y * progress);
-  pos += noise * 0.1 * aSize * (1. - progress);
+
+  float noise = snoise(pos.xy * aRandom.z);
+  float noisea = snoise(vec2(aRandom.x, aRandom.y)) * (1.0 - progress);
+  pos += (noise * 0.02) + (noisea * 0.02);
 
   // pos = vec3(progress);
 
