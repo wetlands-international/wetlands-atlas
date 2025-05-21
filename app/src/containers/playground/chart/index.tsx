@@ -30,34 +30,43 @@ export const RingChart = () => {
 
   return (
     <group>
-      {DATA.map((disc, i, arr) => {
+      {DATA.map((d, i, arr) => {
         const startRadius = arr
           .filter((_, j) => j <= i)
           .reduce((acc, curr) => {
             // sum only the previous value but not the current one
-            if (curr.id === disc.id) return acc;
+            if (curr.id === d.id) return acc;
             return acc + curr.value;
           }, 0);
-        const endRadius = startRadius + disc.value;
+        const endRadius = startRadius + d.value;
 
         return (
-          <Fragment key={disc.id}>
-            <Ring
-              color={disc.color}
-              startRadius={startRadius}
-              endRadius={endRadius}
-              speed={disc.speed}
-            />
+          <Fragment key={d.id}>
+            <Ring color={d.color} startRadius={startRadius} endRadius={endRadius} speed={d.speed} />
             <Wave
               //
-              color={arr[i - 1]?.color || disc.color}
+              color={d.color}
               innerRadius={startRadius}
               outerRadius={endRadius}
             />
           </Fragment>
         );
       })}
-      <Disc />
+      <Disc
+        values={DATA.map((d, i, arr) => {
+          const startRadius = arr
+            .filter((_, j) => j <= i)
+            .reduce((acc, curr) => {
+              // sum only the previous value but not the current one
+              if (curr.id === d.id) return acc;
+              return acc + curr.value;
+            }, 0);
+          const endRadius = startRadius + d.value;
+
+          return [startRadius, endRadius];
+        })}
+        colors={DATA.map((d) => d.color)}
+      />
     </group>
   );
 };
