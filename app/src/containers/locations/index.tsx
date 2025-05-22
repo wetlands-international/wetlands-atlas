@@ -18,7 +18,7 @@ export const Locations = ({ children }: PropsWithChildren) => {
   return (
     <section
       className={cn(
-        "fill-mode-forwards bg-foreground absolute w-full rounded-4xl px-6 py-4 duration-300",
+        "fill-mode-forwards bg-foreground absolute w-full rounded-4xl p-6 duration-300",
         {
           "animate-in fade-in slide-in-from-left-25 pointer-events-auto": enabled,
           "animate-out fade-out slide-out-to-left-25 pointer-events-none": !enabled,

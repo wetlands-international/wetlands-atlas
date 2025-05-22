@@ -1,6 +1,6 @@
 import { getPayload } from "payload";
 
-import { CommandGroup, CommandList } from "cmdk";
+import { CommandEmpty, CommandGroup, CommandList } from "cmdk";
 import { getLocale } from "next-intl/server";
 
 import { LocationsItem } from "@/containers/locations/item";
@@ -22,15 +22,27 @@ export const LocationsList = async () => {
 
   return (
     <CommandList>
-      <CommandGroup heading="Hydrobasins" className="text-background text-bold">
-        <LocationsItem>Worldwide</LocationsItem>
-        <LocationsItem>Tirori</LocationsItem>
-        <LocationsItem>Tirori 2</LocationsItem>
-        <LocationsItem>Tirori 3</LocationsItem>
+      <CommandEmpty>
+        <span className="text-muted-foreground">No locations found</span>
+      </CommandEmpty>
+      <CommandGroup
+        heading="All regions"
+        className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-bold [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:uppercase"
+      >
+        <div className="py-2">
+          <LocationsItem>Worldwide</LocationsItem>
+          <LocationsItem>Location</LocationsItem>
+          <LocationsItem>Location 2</LocationsItem>
+          <LocationsItem>Location 3</LocationsItem>
+          <LocationsItem>Location 4</LocationsItem>
+          <LocationsItem>Location 5</LocationsItem>
+          <LocationsItem>Location 6</LocationsItem>
+          <LocationsItem>Location 7</LocationsItem>
 
-        {indicators.docs.map((indicator) => (
-          <LocationsItem key={indicator.id}>{indicator.name}</LocationsItem>
-        ))}
+          {indicators.docs.map((indicator) => (
+            <LocationsItem key={indicator.id}>{indicator.name}</LocationsItem>
+          ))}
+        </div>
       </CommandGroup>
     </CommandList>
   );

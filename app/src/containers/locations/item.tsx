@@ -3,13 +3,24 @@
 import { PropsWithChildren } from "react";
 
 import { CommandItem } from "cmdk";
+import { useSetAtom } from "jotai";
+
+import { locationsAtom, useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
 
 export const LocationsItem = ({ children }: PropsWithChildren) => {
+  const [, setLocation] = useSyncLocation();
+  const setLocations = useSetAtom(locationsAtom);
+
   return (
     <CommandItem
-      className="text-background data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground text-left"
+      className="text-background data-[selected=true]:bg-accent data-[selected=true]:text-background cursor-pointer px-3 py-1 text-left data-[selected=true]:indent-1"
       onSelect={(v) => {
-        console.log(v);
+        setLocation(v);
+
+        setLocations({
+          search: undefined,
+          enabled: false,
+        });
       }}
     >
       {children}

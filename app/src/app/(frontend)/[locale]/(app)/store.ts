@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { useQueryState } from "nuqs";
 
-import { bboxParser } from "./parsers";
+import { bboxParser, locationParser } from "./parsers";
 
 // MAP
 export const useSyncBbox = () => {
@@ -10,7 +10,15 @@ export const useSyncBbox = () => {
 
 export const tmpBboxAtom = atom<number[]>();
 
-export const locationsAtom = atom({
+// LOCATIONS
+export const useSyncLocation = () => {
+  return useQueryState("location", locationParser);
+};
+
+export const locationsAtom = atom<{
+  search?: string;
+  enabled: boolean;
+}>({
   search: "",
   enabled: false,
 });
