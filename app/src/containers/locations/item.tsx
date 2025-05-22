@@ -13,7 +13,7 @@ export const LocationsItem = ({ children }: PropsWithChildren) => {
 
   return (
     <CommandItem
-      className="text-background data-[selected=true]:bg-accent data-[selected=true]:text-background cursor-pointer px-3 py-1 text-left data-[selected=true]:indent-1"
+      className="text-background data-[selected=true]:bg-accent data-[selected=true]:text-background cursor-pointer px-3 py-1 text-left transition-colors duration-150 data-[selected=true]:indent-1"
       onSelect={(v) => {
         setLocation(v);
 

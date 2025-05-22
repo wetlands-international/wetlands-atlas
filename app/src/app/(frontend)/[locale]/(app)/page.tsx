@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { Metadata } from "next";
 
 import { Command } from "cmdk";
@@ -22,21 +24,23 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AppPage() {
   return (
     <aside className="absolute top-4 left-4 z-10 w-full max-w-md">
-      <Command className="flex w-full flex-col gap-2.5">
-        <Header>
-          <LocationsSearch />
-        </Header>
+      <Suspense>
+        <Command className="flex w-full flex-col gap-2.5">
+          <Header>
+            <LocationsSearch />
+          </Header>
 
-        <div className="relative">
-          <Locations>
-            <LocationsList />
-          </Locations>
+          <div className="relative">
+            <Locations>
+              <LocationsList />
+            </Locations>
 
-          <Indicators>
-            <IndicatorsList />
-          </Indicators>
-        </div>
-      </Command>
+            <Indicators>
+              <IndicatorsList />
+            </Indicators>
+          </div>
+        </Command>
+      </Suspense>
     </aside>
   );
 }
