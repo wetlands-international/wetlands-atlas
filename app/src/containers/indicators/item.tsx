@@ -5,7 +5,7 @@ import { Indicator } from "@/payload-types";
 
 export const IndicatorsItem = (indicator: Indicator) => {
   return (
-    <div key={indicator.id} className="bg-background rounded-4xl px-6 py-4">
+    <div key={indicator.id} className="bg-background rounded-4xl p-6">
       <header className="flex items-center justify-between gap-2">
         <h2 className="text-base font-semibold uppercase">{indicator.name}</h2>
         <Switch />
