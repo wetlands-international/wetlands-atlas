@@ -22,3 +22,17 @@ export const locationsAtom = atom<{
   search: "",
   enabled: false,
 });
+
+// STORIES
+export const storiesAtom = atom<{
+  search?: string;
+  filters?: {
+    highlighted?: boolean;
+    insight: string[];
+    location: string[];
+  };
+  enabled: boolean;
+}>({
+  search: "",
+  enabled: false,
+});
