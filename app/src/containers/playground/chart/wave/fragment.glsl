@@ -24,10 +24,13 @@ void main() {
   // Normalize the normal vector to ensure it has a length of 1
   normal = normalize(normal);
   // Define the light position as a normalized vector pointing diagonally
-  vec3 lightPos = normalize(vec3(1.0, 1.0, 1.0));
+  vec3 lightPos = normalize(vec3(0.0, 0.0, 1.0));
   // Calculate the diffuse lighting intensity based on the angle between the normal and light direction
   float diffuse = max(dot(normal, lightPos), 0.0);
 
+  // Convert vProgress to a value that goes from 0 to 1 to 0
+  float progress = 1.0 - abs(vProgress - 0.5) * 2.0;
 
-  gl_FragColor = vec4(color, alpha * diffuse * 0.75 * (0.75 - (vProgress * 0.75))); 
+
+  gl_FragColor = vec4(color, alpha * diffuse * 0.5 * progress); 
 }

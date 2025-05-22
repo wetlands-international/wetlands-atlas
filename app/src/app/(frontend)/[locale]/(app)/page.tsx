@@ -1,11 +1,16 @@
+import { Suspense } from "react";
+
 import { Metadata } from "next";
 
+import { Command } from "cmdk";
 import { getTranslations } from "next-intl/server";
 
 import { Header } from "@/containers/header";
 import { Indicators } from "@/containers/indicators";
-
-import { Search } from "@/components/ui/search";
+import { IndicatorsList } from "@/containers/indicators/list";
+import { Locations } from "@/containers/locations";
+import { LocationsList } from "@/containers/locations/list";
+import { LocationsSearch } from "@/containers/locations/search";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("metadata");
@@ -18,15 +23,24 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AppPage() {
   return (
-    <aside className="absolute top-4 left-4 z-10 flex w-full max-w-md flex-col gap-2.5">
-      <Header>
-        <Search />
-      </Header>
+    <aside className="absolute top-4 left-4 z-10 w-full max-w-md">
+      <Suspense>
+        <Command className="flex w-full flex-col gap-2.5">
+          <Header>
+            <LocationsSearch />
+          </Header>
 
-      <div className="animate-in fade-in slide-in-from-left-25 duration-300">
-        <Indicators />
-      </div>
-      {/* <Hero /> */}
+          <div className="relative">
+            <Locations>
+              <LocationsList />
+            </Locations>
+
+            <Indicators>
+              <IndicatorsList />
+            </Indicators>
+          </div>
+        </Command>
+      </Suspense>
     </aside>
   );
 }
