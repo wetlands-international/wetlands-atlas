@@ -1,29 +1,28 @@
-import { getPayload } from "payload";
+"use client";
 
-import { getLocale } from "next-intl/server";
+import { PropsWithChildren } from "react";
 
-import { IndicatorsItem } from "@/containers/indicators/item";
+import { useAtomValue } from "jotai";
 
-import payloadConfig from "@/payload.config";
+import { cn } from "@/lib/utils";
 
-export const Indicators = async () => {
-  const locale = await getLocale();
-  const payload = await getPayload({ config: payloadConfig });
+import { locationsAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
-  const indicators = await payload.find({
-    collection: "indicators",
-    depth: 0,
-    limit: 100,
-    page: 1,
-    sort: "-createdAt",
-    locale,
-  });
+export const Indicators = ({ children }: PropsWithChildren) => {
+  const { enabled } = useAtomValue(locationsAtom);
+
+  if (enabled) {
+    return null;
+  }
 
   return (
-    <div className="flex flex-col gap-2">
-      {indicators.docs.map((indicator) => (
-        <IndicatorsItem key={indicator.id} {...indicator} />
-      ))}
-    </div>
+    <section
+      className={cn("fill-mode-forwards absolute h-full w-full duration-300", {
+        "animate-in fade-in slide-in-from-left-25 pointer-events-auto": !enabled,
+        "animate-out fade-out slide-out-to-left-25 pointer-events-none": enabled,
+      })}
+    >
+      {children}
+    </section>
   );
 };

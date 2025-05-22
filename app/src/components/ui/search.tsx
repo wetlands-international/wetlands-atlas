@@ -1,3 +1,5 @@
+"use client";
+
 import { LucideMapPin } from "lucide-react";
 
 export const Search = () => {
