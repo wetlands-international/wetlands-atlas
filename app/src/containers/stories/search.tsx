@@ -61,7 +61,7 @@ export const StoriesSearch = () => {
     >
       <div
         className={cn(
-          "bg-primary text-foreground absolute top-2 left-2 flex size-12 shrink-0 items-center justify-center rounded-full",
+          "bg-primary text-foreground pointer-events-none absolute top-2 left-2 flex size-12 shrink-0 items-center justify-center rounded-full",
 
           stories.enabled && "bg-foreground text-background",
         )}

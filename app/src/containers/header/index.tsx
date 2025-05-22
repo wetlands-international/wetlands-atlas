@@ -8,11 +8,17 @@ import { Logo } from "@/containers/logo";
 
 import { Link } from "@/i18n/navigation";
 
-export const Header = ({ children }: { children: React.ReactNode }) => {
+export const Header = ({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) => {
   const t = useTranslations();
 
   return (
-    <header className="flex items-center gap-2.5">
+    <header className={cn("flex items-center gap-2.5", className)}>
       <h1
         className={cn(
           "relative flex size-16 shrink-0 items-center justify-center rounded-full",
