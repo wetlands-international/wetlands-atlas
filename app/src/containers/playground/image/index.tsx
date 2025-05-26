@@ -17,9 +17,9 @@ export function generateHeightmapTexture(size: number): THREE.DataTexture {
   const data = new Uint8Array(size * size);
 
   const octaves = 5;
-  const persistence = 0.5;
-  const lacunarity = 5.0;
-  const baseFrequency = 0.001;
+  const persistence = 0.2;
+  const lacunarity = 2.0;
+  const baseFrequency = 0.005;
   const heightMultiplier = 128;
 
   let i = 0;
