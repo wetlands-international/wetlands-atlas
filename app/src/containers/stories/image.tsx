@@ -11,19 +11,21 @@ import { ImageReveal } from "@/containers/playground/image";
 export default function StoryImage() {
   return (
     <Suspense fallback={null}>
-      <Canvas
-        resize={{ scroll: false }}
-        gl={{ alpha: true, preserveDrawingBuffer: true }}
-        className="bg-background"
-      >
-        <color attach="background" args={["#0b2b3c"]} />
-        <EffectComposer>
-          <TransparentFrame />
-        </EffectComposer>
-        <Suspense fallback={null}>
-          <ImageReveal imageUrl="/test.jpg" />
-        </Suspense>
-      </Canvas>
+      <div className="-mx-11 my-4 aspect-[1280/853]">
+        <Canvas
+          resize={{ scroll: false }}
+          gl={{ alpha: true, preserveDrawingBuffer: true }}
+          className="bg-background"
+        >
+          <color attach="background" args={["#0b2b3c"]} />
+          <EffectComposer>
+            <TransparentFrame />
+          </EffectComposer>
+          <Suspense fallback={null}>
+            <ImageReveal imageUrl="/test.jpg" />
+          </Suspense>
+        </Canvas>
+      </div>
     </Suspense>
   );
 }

@@ -1,38 +1,38 @@
-uniform sampler2D uImage;
-uniform sampler2D uHeightmap;
+#include "lygia/generative/fbm.glsl"
+#include "lygia/generative/curl.glsl"
 
+uniform sampler2D uImage;
 uniform float uTime;
 uniform float uRevealThreshold;
-
+uniform vec2 uRandomCenter; // Random center for the reveal
 varying vec2 vUv;
 
-#include "lygia/generative/voronoise.glsl";
-
-
 void main() {
-  vec4 heightTexture = texture2D(uHeightmap, vUv);
-  vec4 colorTexture = texture2D(uImage, vUv);
+  vec2 uv = vUv;
 
-  float progress = uRevealThreshold;
-  // progress = clamp(progress, 0.0, 1.0);
+  // 1. Distance from random center
+  float distFromRandomCenter = distance(uv, uRandomCenter);
 
-  // reveal the image from the center towards the edges, they should end up with an alpha of 1.0
-  // Compute radial distance from center
-  vec2 center = vec2(0.5, 0.5); // Image center in UV space
-  float dist = distance(vUv, center);
+  // 2. Normalize distance to ensure full coverage
+  float maxDistance = length(vec2(1.0, 1.0)); // Maximum distance in normalized UV space
+  float normalizedDistance = distFromRandomCenter / maxDistance;
 
-  // Use smoothstep to create a soft radial reveal
-  float radialAlpha = smoothstep(progress - 0.1, progress + 0.1, dist);
+  // 3. Organic texture for variation
+  float noiseValue = fbm(uv * 3.0 + uTime * 0.1) * (1.0 - uRevealThreshold);
 
-  float revealAlpha = smoothstep(heightTexture.r, 1.0, progress);
+  // 4. Combine distance + noise for organic mask
+  float fluidMask = smoothstep(uRevealThreshold + 0.1, uRevealThreshold - 0.1, normalizedDistance + noiseValue * 0.2);
 
-  float noise = voronoise(vUv, progress, progress);
-  vec2 displacedUv = vUv + vec2(sin(noise * 0.05)); // Adjust the scale of the noise as needed
-  vec4 displacedColor = texture2D(uImage, displacedUv);
-  colorTexture.rgb = mix(displacedColor.rgb, colorTexture.rgb, revealAlpha);
+  // 5. Apply distortion only at the edges of the reveal
+  float edgeMask = smoothstep(0.5, 0.0, abs(fluidMask - 0.5)); // Highlight edges of the reveal
+  vec2 distortion = curl(uv * 10.0 + uTime * 0.5) * 0.5 * edgeMask;
 
+  // 6. Distort UVs only at the edges
+  vec2 distortedUV = uv + distortion;
 
-  
-  // add a frame around the image to indicate the reveal
-  gl_FragColor = vec4(colorTexture.rgb, (1.0 - radialAlpha) * revealAlpha);
+  // 7. Sample texture
+  vec4 texColor = texture2D(uImage, distortedUV);
+
+  // 8. Final color with alpha from fluid mask
+  gl_FragColor = vec4(texColor.rgb, fluidMask);
 }

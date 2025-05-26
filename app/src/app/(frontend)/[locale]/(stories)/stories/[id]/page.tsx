@@ -27,9 +27,7 @@ export default async function StoriesIdPage() {
         <article className="px-11 py-10">
           <h1 className="font-display text-7xl font-bold text-blue-300">The Inner Niger Delta</h1>
 
-          <div className="my-4 aspect-[1280/853]">
-            <StoryImage />
-          </div>
+          <StoryImage />
 
           <div className="prose prose-invert">
             <p>

@@ -11,6 +11,7 @@ export class TransparentFrameEffect extends Effect {
       uniforms: new Map<string, Uniform<number | Vector2>>([
         ["borderSize", new Uniform(borderSize)],
         ["resolution", new Uniform(new Vector2(1, 1))],
+        ["uTime", new Uniform(0)],
       ]),
     });
   }
@@ -20,6 +21,7 @@ export class TransparentFrameEffect extends Effect {
 
     if (this.uniforms && this.uniforms.has("resolution")) {
       this.uniforms.get("resolution")!.value.set(size.width, size.height);
+      this.uniforms.get("uTime")!.value = performance.now() / 1000; // Update time in seconds
     }
   }
 }

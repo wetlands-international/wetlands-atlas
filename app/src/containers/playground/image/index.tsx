@@ -66,7 +66,7 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = clock.elapsedTime;
       materialRef.current.uniforms.uRevealThreshold.value = Math.min(
-        materialRef.current.uniforms.uRevealThreshold.value + delta * 0.75,
+        materialRef.current.uniforms.uRevealThreshold.value + delta,
         1,
       );
     }
@@ -81,6 +81,10 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
           {
             uImage: imageTexture,
             uHeightmap: heightmapTexture,
+            uRandomCenter: new THREE.Vector2(
+              Math.random() < 0.5 ? Math.random() * 0.25 : Math.random() * 0.25 + 0.75, // x-coordinate close to edges
+              Math.random() < 0.5 ? Math.random() * 0.25 : Math.random() * 0.25 + 0.75, // y-coordinate close to edges
+            ),
           },
         ]}
         transparent
