@@ -1,4 +1,5 @@
 import { ThreeElement } from "@react-three/fiber";
+import { resolveLygia } from "resolve-lygia";
 import * as THREE from "three";
 
 import fragmentShader from "./fragment.glsl";
@@ -17,8 +18,8 @@ class WaveMaterial extends THREE.ShaderMaterial {
 
     super({
       uniforms,
-      vertexShader,
-      fragmentShader,
+      vertexShader: resolveLygia(vertexShader),
+      fragmentShader: resolveLygia(fragmentShader),
     });
   }
 }

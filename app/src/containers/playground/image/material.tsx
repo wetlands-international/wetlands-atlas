@@ -1,4 +1,5 @@
 import { ThreeElement } from "@react-three/fiber";
+import { resolveLygia } from "resolve-lygia";
 import * as THREE from "three";
 
 import fragmentShader from "./fragment.glsl";
@@ -6,7 +7,6 @@ import vertexShader from "./vertex.glsl";
 
 class RevealMaterial extends THREE.ShaderMaterial {
   constructor({ uImage, uHeightmap }: { uImage: THREE.Texture; uHeightmap: THREE.Texture }) {
-    console.log({ uImage, uHeightmap, fragmentShader, vertexShader });
     const uniforms = {
       uTime: { value: 0 },
       uImage: { value: uImage },
@@ -17,8 +17,8 @@ class RevealMaterial extends THREE.ShaderMaterial {
 
     super({
       uniforms,
-      vertexShader,
-      fragmentShader,
+      vertexShader: resolveLygia(vertexShader),
+      fragmentShader: resolveLygia(fragmentShader),
       transparent: true,
       // blending: THREE.SubtractiveBlending,
     });
