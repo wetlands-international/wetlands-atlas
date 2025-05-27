@@ -72,6 +72,7 @@ export interface Config {
     categories: Category;
     indicators: Indicator;
     layers: Layer;
+    stories: Story;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -87,6 +88,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     indicators: IndicatorsSelect<false> | IndicatorsSelect<true>;
     layers: LayersSelect<false> | LayersSelect<true>;
+    stories: StoriesSelect<false> | StoriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -241,6 +243,21 @@ export interface Layer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stories".
+ */
+export interface Story {
+  /**
+   * This field is automatically generated from the name field. It is used to create a URL-friendly version of the name.
+   */
+  id: string;
+  name: string;
+  description: string;
+  cover?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -265,6 +282,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'layers';
         value: string | Layer;
+      } | null)
+    | ({
+        relationTo: 'stories';
+        value: string | Story;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -376,6 +397,18 @@ export interface LayersSelect<T extends boolean = true> {
   params_config?: T;
   legend_config?: T;
   indicator?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stories_select".
+ */
+export interface StoriesSelect<T extends boolean = true> {
+  id?: T;
+  name?: T;
+  description?: T;
+  cover?: T;
   updatedAt?: T;
   createdAt?: T;
 }

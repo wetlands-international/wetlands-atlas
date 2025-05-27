@@ -11,9 +11,11 @@ import { Link } from "@/i18n/navigation";
 export const Header = ({
   className,
   children,
+  blur = true,
 }: {
   className?: string;
   children: React.ReactNode;
+  blur?: boolean;
 }) => {
   const t = useTranslations();
 
@@ -34,7 +36,11 @@ export const Header = ({
         </Link>
       </h1>
 
-      <div className="animate-in fade-in zoom-in-90 w-full rounded-4xl bg-white/10 backdrop-blur-lg duration-300">
+      <div
+        className={cn("animate-in fade-in zoom-in-90 w-full duration-300", {
+          "rounded-4xl bg-white/10 backdrop-blur-lg": blur,
+        })}
+      >
         {children}
       </div>
     </header>

@@ -1,102 +1,45 @@
 import { Metadata } from "next";
 
-import { getTranslations } from "next-intl/server";
+import { notFound } from "next/navigation";
 
-import { Header } from "@/containers/header";
-import StoryImage from "@/containers/stories/image";
+import { getStoryId } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/actions";
 
-import { Link } from "@/i18n/navigation";
+import { StoriesIdArticle } from "@/containers/stories/[id]/article";
+import { StoriesIdHeader } from "@/containers/stories/[id]/header";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("metadata");
+export type StoriesIdPageProps = {
+  params: Promise<{ id: string }>;
+};
 
-  return {
-    title: `${t("stories.title")} detail`,
-    description: t("stories.description"),
-  };
+export async function generateMetadata({ params }: StoriesIdPageProps): Promise<Metadata> {
+  try {
+    const { id } = await params;
+
+    const story = await getStoryId(id);
+
+    return {
+      title: story.name,
+      description: story.description,
+    };
+  } catch (error) {
+    console.error("Error fetching story:", error);
+    notFound();
+  }
 }
 
-export default async function StoriesIdPage() {
+export default async function StoriesIdPage({ params }: StoriesIdPageProps) {
+  const { id } = await params;
+  const story = await getStoryId(id);
+
+  if (!story) {
+    notFound();
+  }
+
   return (
     <>
       <aside className="z-10 w-full max-w-xl">
-        <Header className="sticky top-0 p-4">
-          <Link href="/stories">Stories</Link> / title
-        </Header>
-
-        <article className="px-11 py-10">
-          <h1 className="font-display text-7xl font-bold text-blue-300">The Inner Niger Delta</h1>
-
-          <StoryImage />
-
-          <div className="prose prose-invert">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-              ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto
-              ut veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-            </p>
-          </div>
-        </article>
+        <StoriesIdHeader {...story} />
+        <StoriesIdArticle {...story} />
       </aside>
     </>
   );

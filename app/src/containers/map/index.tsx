@@ -3,7 +3,7 @@
 import { useCallback, useEffect } from "react";
 
 import { useAtom } from "jotai";
-import Map, { LngLatBoundsLike, useMap } from "react-map-gl/mapbox";
+import Map, { LngLatBoundsLike, MapProps, useMap } from "react-map-gl/mapbox";
 import { useDebounceCallback } from "usehooks-ts";
 
 import { tmpBboxAtom, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
@@ -14,7 +14,7 @@ import ZoomControl from "@/components/map/controls/zoom";
 
 import { env } from "@/env";
 
-export const MapContainer = () => {
+export const MapContainer = (props: MapProps) => {
   const [bbox, setBbox] = useSyncBbox();
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
 
@@ -75,6 +75,7 @@ export const MapContainer = () => {
         mapStyle="mapbox://styles/wetlands-vizzuality/cmaoz7mg901l701qoaj2a6v0h"
         minZoom={2}
         onMove={handleMovedDebounced}
+        {...props}
       >
         <Controls>
           <SettingsControl>
