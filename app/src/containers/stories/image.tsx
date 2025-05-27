@@ -11,7 +11,7 @@ import { ImageReveal } from "@/containers/playground/image";
 export default function StoryImage() {
   return (
     <Suspense fallback={null}>
-      <div className="-mx-11 my-4 aspect-[1280/853]">
+      <div className="-mx-11 my-10 aspect-[1280/853]">
         <Canvas
           resize={{ scroll: false }}
           gl={{ alpha: true, preserveDrawingBuffer: true }}

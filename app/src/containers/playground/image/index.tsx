@@ -66,7 +66,7 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
     if (materialRef.current) {
       materialRef.current.uniforms.uTime.value = clock.elapsedTime;
       materialRef.current.uniforms.uRevealThreshold.value = Math.min(
-        materialRef.current.uniforms.uRevealThreshold.value + delta,
+        materialRef.current.uniforms.uRevealThreshold.value + delta * 0.75,
         1,
       );
     }
