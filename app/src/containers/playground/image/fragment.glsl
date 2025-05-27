@@ -24,7 +24,7 @@ void main() {
   float fluidMask = smoothstep(uRevealThreshold + 0.1, uRevealThreshold - 0.1, normalizedDistance + noiseValue * 0.2);
 
   // 5. Apply distortion only at the edges of the reveal
-  float edgeMask = smoothstep(0.5, 0.0, abs(fluidMask - 0.5)); // Highlight edges of the reveal
+  float edgeMask = smoothstep(0.3, 0.0, abs(fluidMask - 0.5)); // Highlight edges of the reveal
   vec2 distortion = curl(uv * 10.0 + uTime * 0.5) * 0.5 * edgeMask;
 
   // 6. Distort UVs only at the edges
