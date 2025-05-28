@@ -2,24 +2,21 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
-import { slugField } from "@/cms/fields/slug";
+import { SlugIDField } from "@/cms/fields/slug";
 
 export const Indicators: CollectionConfig = {
   slug: "indicators",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["id", "name", "category", "layers"],
+    defaultColumns: ["slug_id", "name", "category", "layers"],
+  },
+  access: {
+    read: () => true,
   },
   defaultSort: ["name"],
-  hooks: {
-    afterChange: [
-      async () => {
-        revalidatePath("/", "layout");
-      },
-    ],
-  },
+
   fields: [
-    slugField(),
+    SlugIDField(),
     {
       name: "name",
       type: "text",
@@ -52,4 +49,11 @@ export const Indicators: CollectionConfig = {
       },
     },
   ],
+  hooks: {
+    afterChange: [
+      async () => {
+        revalidatePath("/", "layout");
+      },
+    ],
+  },
 };

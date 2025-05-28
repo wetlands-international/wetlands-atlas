@@ -2,12 +2,21 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
-import { slugField } from "@/cms/fields/slug";
+import { SlugIDField } from "@/cms/fields/slug";
 
 export const Stories: CollectionConfig = {
   slug: "stories",
+  admin: {
+    useAsTitle: "name",
+    defaultColumns: ["slug_id", "title", "insight", "published"],
+  },
+  defaultSort: ["-createdAt"],
+  access: {
+    // TODO: give proper access control
+    read: () => true,
+  },
   fields: [
-    slugField(),
+    SlugIDField("slug_id"),
     {
       name: "name",
       type: "text",
@@ -27,10 +36,19 @@ export const Stories: CollectionConfig = {
       relationTo: "media",
       localized: false,
     },
+    {
+      name: "category",
+      type: "relationship",
+      relationTo: "categories",
+      required: true,
+      hasMany: false,
+    },
+    {
+      name: "published",
+      type: "checkbox",
+      defaultValue: false,
+    },
   ],
-  access: {
-    read: () => true,
-  },
   hooks: {
     afterChange: [
       async (props) => {

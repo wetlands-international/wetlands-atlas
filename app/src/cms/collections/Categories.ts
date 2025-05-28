@@ -2,12 +2,19 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
-import { slugField } from "@/cms/fields/slug";
+import { SlugIDField } from "@/cms/fields/slug";
 
 export const Categories: CollectionConfig = {
   slug: "categories",
+  admin: {
+    useAsTitle: "name",
+    defaultColumns: ["id", "name"],
+  },
+  access: {
+    read: () => true,
+  },
   fields: [
-    slugField(),
+    SlugIDField(),
     {
       name: "name",
       type: "text",
@@ -17,13 +24,19 @@ export const Categories: CollectionConfig = {
     },
     {
       name: "description",
+      label: "Description",
       type: "textarea",
       localized: true,
     },
+    {
+      name: "stories",
+      label: "Related Stories",
+      type: "join",
+      collection: "stories",
+      on: "category",
+    },
   ],
-  access: {
-    read: () => true,
-  },
+
   hooks: {
     afterChange: [
       async () => {
