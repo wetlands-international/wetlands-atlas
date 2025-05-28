@@ -3,7 +3,7 @@
 import { FC, HTMLAttributes, PropsWithChildren, useState } from "react";
 
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { LuSettings } from "react-icons/lu";
+import { LuLayers2 } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
@@ -12,16 +12,16 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 
 import { CONTROL_BUTTON_STYLES } from "../constants";
 
-interface SettingsControlProps {
+interface LayersControlProps {
   id?: string;
   className?: HTMLAttributes<HTMLDivElement>["className"];
 }
 
-export const SettingsControl: FC<PropsWithChildren<SettingsControlProps>> = ({
+export const LayersControl: FC<PropsWithChildren<LayersControlProps>> = ({
   id,
   className,
   children,
-}: PropsWithChildren<SettingsControlProps>) => {
+}: PropsWithChildren<LayersControlProps>) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   return (
@@ -38,10 +38,10 @@ export const SettingsControl: FC<PropsWithChildren<SettingsControlProps>> = ({
                   [CONTROL_BUTTON_STYLES.active]: true,
                   [CONTROL_BUTTON_STYLES.open]: popoverOpen,
                 })}
-                aria-label="Map settings"
+                aria-label="Layers"
                 type="button"
               >
-                <LuSettings
+                <LuLayers2
                   className={cn({
                     [CONTROL_BUTTON_STYLES.icon]: true,
                   })}
@@ -53,7 +53,7 @@ export const SettingsControl: FC<PropsWithChildren<SettingsControlProps>> = ({
           {!popoverOpen && (
             <TooltipPortal>
               <TooltipContent side="left" align="center">
-                <div className="text-xxs">Map settings</div>
+                <div className="text-xxs">Layers</div>
               </TooltipContent>
             </TooltipPortal>
           )}
@@ -67,4 +67,4 @@ export const SettingsControl: FC<PropsWithChildren<SettingsControlProps>> = ({
   );
 };
 
-export default SettingsControl;
+export default LayersControl;

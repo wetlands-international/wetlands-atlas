@@ -5,29 +5,39 @@ import * as THREE from "three";
 import fragmentShader from "./fragment.glsl";
 import vertexShader from "./vertex.glsl";
 
-class WaveMaterial extends THREE.ShaderMaterial {
-  constructor(color: string, startRadius: number, endRadius: number, normalTexture: THREE.Texture) {
+class RevealMaterial extends THREE.ShaderMaterial {
+  constructor({
+    uImage,
+    uHeightmap,
+    uRandomCenter,
+  }: {
+    uImage: THREE.Texture;
+    uHeightmap: THREE.Texture;
+    uRandomCenter: THREE.Vector2;
+  }) {
     const uniforms = {
       uTime: { value: 0 },
+      uImage: { value: uImage },
+      uHeightmap: { value: uHeightmap },
+      uRandomCenter: { value: uRandomCenter },
+      uRevealThreshold: { value: 0 },
       uDpr: { value: window.devicePixelRatio },
-      uStartRadius: { value: startRadius },
-      uEndRadius: { value: endRadius },
-      uColor: { value: new THREE.Color(color) },
-      uNormalTexture: { value: normalTexture },
     };
 
     super({
       uniforms,
       vertexShader: resolveLygia(vertexShader),
       fragmentShader: resolveLygia(fragmentShader),
+      transparent: true,
+      // blending: THREE.SubtractiveBlending,
     });
   }
 }
 
 declare module "@react-three/fiber" {
   interface ThreeElements {
-    waveMaterial: ThreeElement<typeof WaveMaterial>;
+    revealMaterial: ThreeElement<typeof RevealMaterial>;
   }
 }
 
-export default WaveMaterial;
+export default RevealMaterial;

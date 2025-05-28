@@ -1,61 +1,26 @@
+import { getPayload } from "payload";
+
+import { getLocale } from "next-intl/server";
+
 import { StoriesListItem } from "@/containers/stories/item";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-const STORIES = [
-  {
-    id: 1,
-    title: "Story 1",
-    description: "Description of story 1",
-  },
-  {
-    id: 2,
-    title: "Story 2",
-    description: "Description of story 2",
-  },
-  {
-    id: 3,
-    title: "Story 3",
-    description: "Description of story 3",
-  },
-  {
-    id: 4,
-    title: "Story 4",
-    description: "Description of story 4",
-  },
-  {
-    id: 5,
-    title: "Story 5",
-    description: "Description of story 5",
-  },
-  {
-    id: 6,
-    title: "Story 6",
-    description: "Description of story 6",
-  },
-  {
-    id: 7,
-    title: "Story 7",
-    description: "Description of story 7",
-  },
-  {
-    id: 8,
-    title: "Story 8",
-    description: "Description of story 8",
-  },
-  {
-    id: 9,
-    title: "Story 9",
-    description: "Description of story 9",
-  },
-  {
-    id: 10,
-    title: "Story 10",
-    description: "Description of story 10",
-  },
-];
+import payloadConfig from "@/payload.config";
 
-export const StoriesList = () => {
+export const StoriesList = async () => {
+  const locale = await getLocale();
+  const payload = await getPayload({ config: payloadConfig });
+
+  const stories = await payload.find({
+    collection: "stories",
+    depth: 0,
+    limit: 100,
+    page: 1,
+    sort: "-createdAt",
+    locale,
+  });
+
   return (
     <ScrollArea
       className="animate-in fade-in-0 slide-in-from-bottom-25 w-full duration-300"
@@ -71,7 +36,7 @@ export const StoriesList = () => {
           </p>
         </li>
 
-        {STORIES.map((story) => (
+        {stories.docs.map((story) => (
           <li key={story.id}>
             <StoriesListItem {...story} />
           </li>
