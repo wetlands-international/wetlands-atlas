@@ -1,6 +1,6 @@
 "use client";
 // components/ImageReveal.tsx
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import { useAspect, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
@@ -55,6 +55,8 @@ export function generateHeightmapTexture(size: number): THREE.DataTexture {
 }
 
 export function ImageReveal({ imageUrl }: { imageUrl: string }) {
+  // Flag to track readiness
+  const readyRef = useRef(false);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
   const imageTexture = useTexture(imageUrl);
@@ -62,11 +64,20 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
 
   const scale = useAspect(imageTexture.image.width, imageTexture.image.height, 1);
 
+  useEffect(() => {
+    if (imageTexture && heightmapTexture) {
+      readyRef.current = true; // Set flag when textures are loaded
+      if (materialRef.current) {
+        materialRef.current.uniforms.uRevealThreshold.value = 0; // Initialize threshold
+      }
+    }
+  }, [imageTexture, heightmapTexture]);
+
   useFrame(({ clock }, delta) => {
-    if (materialRef.current) {
+    if (materialRef.current && readyRef.current) {
       materialRef.current.uniforms.uTime.value = clock.elapsedTime;
       materialRef.current.uniforms.uRevealThreshold.value = Math.min(
-        materialRef.current.uniforms.uRevealThreshold.value + delta * 0.75,
+        materialRef.current.uniforms.uRevealThreshold.value + delta * 0.5,
         1,
       );
     }

@@ -1,5 +1,7 @@
 "use client";
 
+import { Suspense } from "react";
+
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
 
@@ -26,7 +28,9 @@ export default function StoryImage(props: Story) {
           <TransparentFrame />
         </EffectComposer>
 
-        <ImageReveal imageUrl={image.url} />
+        <Suspense fallback={null}>
+          <ImageReveal imageUrl={image.url} />
+        </Suspense>
       </Canvas>
     </div>
   );

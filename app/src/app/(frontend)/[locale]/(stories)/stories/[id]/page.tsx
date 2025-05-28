@@ -37,10 +37,8 @@ export default async function StoriesIdPage({ params }: StoriesIdPageProps) {
 
   return (
     <>
-      <aside className="z-10 w-full max-w-xl">
-        <StoriesIdHeader {...story} />
-        <StoriesIdArticle {...story} />
-      </aside>
+      <StoriesIdHeader {...story} />
+      <StoriesIdArticle {...story} />
     </>
   );
 }

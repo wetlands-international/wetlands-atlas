@@ -12,6 +12,24 @@
       "tooltip": "Comenzar"
     }
   },
+  "stories": {
+    "title": "Stories",
+    "description": "A collection of stories about wetlands.",
+    "empty": "No stories available."
+  },
+  "storiesId": {
+    "title": "Story Details",
+    "description": "Details of the selected story.",
+    "not-found": {
+      "title": "Story not found",
+      "description": "The story you are looking for does not exist."
+    }
+  },
+  "not-found": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist.",
+    "back": "Go back to the homepage"
+  },
   "metadata": {
     "home": {
       "title": "Zonas húmedas",
