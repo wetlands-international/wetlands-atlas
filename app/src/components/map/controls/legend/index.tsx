@@ -25,7 +25,7 @@ export const LegendControl: FC<PropsWithChildren<LegendControlProps>> = ({
   return (
     <div className={cn("flex flex-col space-y-0.5", className)}>
       {/* <Popover> */}
-      <Tooltip>
+      <Tooltip delayDuration={300}>
         {/* <PopoverTrigger asChild> */}
         <TooltipTrigger asChild>
           <button
@@ -39,7 +39,11 @@ export const LegendControl: FC<PropsWithChildren<LegendControlProps>> = ({
             type="button"
             onClick={onClick}
           >
-            <LuLayers className="h-6 w-6" />
+            <LuLayers
+              className={cn({
+                [CONTROL_BUTTON_STYLES.icon]: true,
+              })}
+            />
           </button>
         </TooltipTrigger>
         {/* </PopoverTrigger> */}

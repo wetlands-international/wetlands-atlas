@@ -26,6 +26,7 @@ import { BLOCK_PERCENTAGE } from "@/cms/blocks/percentage";
 import { BLOCK_VALUE } from "@/cms/blocks/value";
 import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
+import { Stories } from "@/cms/collections/Stories";
 
 import { Categories } from "./cms/collections/Categories";
 import { Media } from "./cms/collections/Media";
@@ -41,7 +42,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Indicators, Layers],
+  collections: [Users, Media, Categories, Indicators, Layers, Stories],
   editor: lexicalEditor({
     features: () => [
       FixedToolbarFeature(),

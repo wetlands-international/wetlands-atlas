@@ -8,11 +8,19 @@ import { Logo } from "@/containers/logo";
 
 import { Link } from "@/i18n/navigation";
 
-export const Header = ({ children }: { children: React.ReactNode }) => {
+export const Header = ({
+  className,
+  children,
+  blur = true,
+}: {
+  className?: string;
+  children: React.ReactNode;
+  blur?: boolean;
+}) => {
   const t = useTranslations();
 
   return (
-    <header className="flex items-center gap-2.5">
+    <header className={cn("flex items-center gap-2.5", className)}>
       <h1
         className={cn(
           "relative flex size-16 shrink-0 items-center justify-center rounded-full",
@@ -28,7 +36,11 @@ export const Header = ({ children }: { children: React.ReactNode }) => {
         </Link>
       </h1>
 
-      <div className="animate-in fade-in zoom-in-90 w-full rounded-4xl bg-white/10 backdrop-blur-lg duration-300">
+      <div
+        className={cn("animate-in fade-in zoom-in-90 w-full duration-300", {
+          "rounded-4xl bg-white/10 backdrop-blur-lg": blur,
+        })}
+      >
         {children}
       </div>
     </header>
