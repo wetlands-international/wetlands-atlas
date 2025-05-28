@@ -59,7 +59,11 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
   const readyRef = useRef(false);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
-  const imageTexture = useTexture(imageUrl);
+  console.log(
+    imageUrl,
+    "We need to set up the media storage and upload the image to the server before we can use this",
+  );
+  const imageTexture = useTexture("/test.jpg"); // Replace with imageUrl if needed
   const heightmapTexture = useMemo(() => generateHeightmapTexture(512), []);
 
   const scale = useAspect(imageTexture.image.width, imageTexture.image.height, 1);
