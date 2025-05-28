@@ -8,38 +8,24 @@ import { useDebounceCallback } from "usehooks-ts";
 
 import { tmpBboxAtom, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
 
-import Controls from "@/components/map/controls";
-import LayersControl from "@/components/map/controls/layers";
-import SettingsControl from "@/components/map/controls/settings";
-import ZoomControl from "@/components/map/controls/zoom";
-
 import { env } from "@/env";
 
-export const MapContainer = (props: MapProps) => {
-  const [bbox, setBbox] = useSyncBbox();
+export const StoryMapContainer = (props: MapProps) => {
+  const [bbox] = useSyncBbox();
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
 
-  const { exploreMap } = useMap();
+  const { storyMap } = useMap();
 
   const handleMove = () => {
-    if (exploreMap) {
-      const b = exploreMap
-        .getBounds()
-        ?.toArray()
-        ?.flat()
-        ?.map((v: number) => {
-          return parseFloat(v.toFixed(2));
-        });
-
-      if (b) setBbox(b);
+    if (storyMap) {
       setTmpBbox(undefined);
     }
   };
   const handleMovedDebounced = useDebounceCallback(handleMove, 500);
 
   const handleFitBounds = useCallback(() => {
-    if (tmpBbox && exploreMap) {
-      exploreMap.fitBounds(tmpBbox as LngLatBoundsLike, {
+    if (tmpBbox && storyMap) {
+      storyMap.fitBounds(tmpBbox as LngLatBoundsLike, {
         padding: {
           top: 50,
           bottom: 50,
@@ -48,7 +34,7 @@ export const MapContainer = (props: MapProps) => {
         },
       });
     }
-  }, [exploreMap, tmpBbox]);
+  }, [storyMap, tmpBbox]);
 
   useEffect(() => {
     if (tmpBbox) {
@@ -59,7 +45,7 @@ export const MapContainer = (props: MapProps) => {
   return (
     <div className="relative flex grow flex-col overflow-hidden bg-[#326E82]">
       <Map
-        id="exploreMap"
+        id="storyMap"
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
         initialViewState={{
           bounds: bbox as LngLatBoundsLike,
@@ -76,22 +62,15 @@ export const MapContainer = (props: MapProps) => {
         mapStyle="mapbox://styles/wetlands-vizzuality/cmaoz7mg901l701qoaj2a6v0h"
         minZoom={2}
         onMove={handleMovedDebounced}
+        interactive={false}
+        scrollZoom={false}
+        doubleClickZoom={false}
+        dragPan={false}
+        dragRotate={false}
+        touchPitch={false}
+        touchZoomRotate={false}
         {...props}
-      >
-        <Controls>
-          <ZoomControl />
-          <LayersControl>
-            <div className="flex flex-col space-y-0.5">
-              <span>Layers</span>
-            </div>
-          </LayersControl>
-          <SettingsControl>
-            <div className="flex flex-col space-y-0.5">
-              <span>Basemap</span>
-            </div>
-          </SettingsControl>
-        </Controls>
-      </Map>
+      ></Map>
     </div>
   );
 };

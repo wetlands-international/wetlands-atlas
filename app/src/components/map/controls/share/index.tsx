@@ -1,8 +1,7 @@
 "use client";
 
-import { FC, HTMLAttributes, PropsWithChildren } from "react";
+import { FC, HTMLAttributes, PropsWithChildren, useState } from "react";
 
-import { PopoverArrow } from "@radix-ui/react-popover";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { LuShare } from "react-icons/lu";
 
@@ -23,10 +22,12 @@ export const ShareControl: FC<PropsWithChildren<ShareControlProps>> = ({
   className,
   children,
 }: PropsWithChildren<ShareControlProps>) => {
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
   return (
     <div className={cn("flex flex-col space-y-0.5", className)}>
-      <Popover>
-        <Tooltip>
+      <Popover onOpenChange={setPopoverOpen}>
+        <Tooltip delayDuration={300}>
           <PopoverTrigger asChild>
             <TooltipTrigger asChild>
               <button
@@ -35,24 +36,30 @@ export const ShareControl: FC<PropsWithChildren<ShareControlProps>> = ({
                   [CONTROL_BUTTON_STYLES.default]: true,
                   [CONTROL_BUTTON_STYLES.hover]: true,
                   [CONTROL_BUTTON_STYLES.active]: true,
+                  [CONTROL_BUTTON_STYLES.open]: popoverOpen,
                 })}
                 aria-label="Map settings"
                 type="button"
               >
-                <LuShare className="relative h-full w-full -translate-x-px" />
+                <LuShare
+                  className={cn({
+                    [CONTROL_BUTTON_STYLES.icon]: true,
+                  })}
+                />
               </button>
             </TooltipTrigger>
           </PopoverTrigger>
 
-          <TooltipPortal>
-            <TooltipContent side="left" align="center">
-              <div className="text-xxs">Share</div>
-            </TooltipContent>
-          </TooltipPortal>
+          {!popoverOpen && (
+            <TooltipPortal>
+              <TooltipContent side="left" align="center">
+                <div className="text-xxs">Share</div>
+              </TooltipContent>
+            </TooltipPortal>
+          )}
 
           <PopoverContent side="left" align="start">
             {children}
-            <PopoverArrow className="fill-white" width={10} height={5} />
           </PopoverContent>
         </Tooltip>
       </Popover>

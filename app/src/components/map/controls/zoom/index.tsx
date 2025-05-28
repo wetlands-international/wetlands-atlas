@@ -3,7 +3,7 @@
 import { FC, useCallback, MouseEvent, HTMLAttributes, useEffect, useState } from "react";
 
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { LuZoomIn, LuZoomOut } from "react-icons/lu";
+import { LuMinus, LuPlus } from "react-icons/lu";
 import { useMap } from "react-map-gl/mapbox";
 import { useDebounceCallback } from "usehooks-ts";
 
@@ -60,12 +60,12 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProp
 
   return (
     <div className={cn("flex flex-col", className)}>
-      <Tooltip>
+      <Tooltip delayDuration={300}>
         <TooltipTrigger asChild>
           <button
             className={cn({
               [CONTROL_BUTTON_STYLES.default]: true,
-              "rounded-none rounded-t-lg": true,
+              "rounded-none rounded-t-full": true,
               [CONTROL_BUTTON_STYLES.hover]: zoom !== maxZoom,
               [CONTROL_BUTTON_STYLES.active]: zoom !== maxZoom,
               [CONTROL_BUTTON_STYLES.disabled]: zoom === maxZoom,
@@ -75,7 +75,11 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProp
             disabled={zoom === maxZoom}
             onClick={increaseZoom}
           >
-            <LuZoomIn className="h-full w-full" />
+            <LuPlus
+              className={cn({
+                [CONTROL_BUTTON_STYLES.icon]: true,
+              })}
+            />
           </button>
         </TooltipTrigger>
 
@@ -86,12 +90,12 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProp
         </TooltipPortal>
       </Tooltip>
 
-      <Tooltip>
+      <Tooltip delayDuration={300}>
         <TooltipTrigger asChild>
           <button
             className={cn({
               [CONTROL_BUTTON_STYLES.default]: true,
-              "rounded-none rounded-b-lg": true,
+              "rounded-none rounded-b-full": true,
               [CONTROL_BUTTON_STYLES.hover]: zoom !== minZoom,
               [CONTROL_BUTTON_STYLES.active]: zoom !== minZoom,
               [CONTROL_BUTTON_STYLES.disabled]: zoom === minZoom,
@@ -101,7 +105,11 @@ export const ZoomControl: FC<ZoomControlProps> = ({ className }: ZoomControlProp
             disabled={zoom === minZoom}
             onClick={decreaseZoom}
           >
-            <LuZoomOut className="h-full w-full" />
+            <LuMinus
+              className={cn({
+                [CONTROL_BUTTON_STYLES.icon]: true,
+              })}
+            />
           </button>
         </TooltipTrigger>
 
