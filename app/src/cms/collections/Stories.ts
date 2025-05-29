@@ -2,6 +2,18 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
+import {
+  BoldFeature,
+  HeadingFeature,
+  InlineToolbarFeature,
+  ItalicFeature,
+  lexicalEditor,
+  LinkFeature,
+  OrderedListFeature,
+  UnorderedListFeature,
+} from "@payloadcms/richtext-lexical";
+
+import { MapField } from "@/cms/fields/map";
 import { slugField } from "@/cms/fields/slug";
 
 export const Stories: CollectionConfig = {
@@ -26,6 +38,64 @@ export const Stories: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       localized: false,
+    },
+    {
+      type: "array",
+      name: "steps",
+      fields: [
+        {
+          type: "radio",
+          name: "type",
+          required: true,
+          options: [
+            {
+              label: "Map",
+              value: "map",
+            },
+            {
+              label: "Chart",
+              value: "chart",
+            },
+          ],
+        },
+        {
+          type: "richText",
+          name: "sidebar",
+          localized: true,
+          required: true,
+          editor: lexicalEditor({
+            features: () => [
+              InlineToolbarFeature(),
+              HeadingFeature({
+                enabledHeadingSizes: ["h2", "h3"],
+              }),
+              UnorderedListFeature(),
+              OrderedListFeature(),
+              BoldFeature(),
+              ItalicFeature(),
+              LinkFeature(),
+            ],
+          }),
+        },
+        MapField({
+          required: true,
+          admin: {
+            condition: (_, siblingData) => {
+              return siblingData.type === "map";
+            },
+          },
+        }),
+        {
+          type: "json",
+          name: "chart",
+          required: true,
+          admin: {
+            condition: (_, siblingData) => {
+              return siblingData.type === "chart";
+            },
+          },
+        },
+      ],
     },
   ],
   access: {

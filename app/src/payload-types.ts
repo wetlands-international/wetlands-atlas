@@ -253,6 +253,39 @@ export interface Story {
   name: string;
   description: string;
   cover?: (number | null) | Media;
+  steps?:
+    | {
+        type: 'map' | 'chart';
+        sidebar: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        map?: {
+          bbox: unknown[];
+        };
+        chart?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -409,6 +442,15 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   cover?: T;
+  steps?:
+    | T
+    | {
+        type?: T;
+        sidebar?: T;
+        map?: T;
+        chart?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
