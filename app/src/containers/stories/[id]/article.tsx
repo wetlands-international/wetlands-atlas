@@ -1,4 +1,5 @@
-import StoryImage from "@/containers/stories/[id]/image";
+import { StoryImage } from "@/containers/stories/[id]/image";
+import { StorySteps } from "@/containers/stories/[id]/steps";
 
 import { Story } from "@/payload-types";
 
@@ -9,75 +10,8 @@ export const StoriesIdArticle = (props: Story) => {
         {props.name}
       </h1>
 
-      <StoryImage {...props} />
-
-      <div className="prose prose-invert">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro ipsum
-          accusantium natus sunt blanditiis repudiandae, eum minus reiciendis, architecto ut
-          veritatis eius exercitationem aperiam perspiciatis qui doloribus debitis?
-        </p>
-      </div>
+      <StoryImage />
+      <StorySteps {...props} />
     </article>
   );
 };
