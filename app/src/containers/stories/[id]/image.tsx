@@ -8,7 +8,7 @@ import { ImageReveal } from "@/containers/playground/image";
 
 export const StoryImage = () => {
   return (
-    <div className="-mx-11 my-10 aspect-[1280/853]">
+    <div className="-mx-11 my-10 aspect-[1280/853] grow">
       <Canvas
         linear
         resize={{ scroll: false, offsetSize: false }}

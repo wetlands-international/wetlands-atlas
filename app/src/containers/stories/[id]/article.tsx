@@ -5,12 +5,14 @@ import { Story } from "@/payload-types";
 
 export const StoriesIdArticle = (props: Story) => {
   return (
-    <article className="px-11 py-10">
-      <h1 className="font-display animate-in fade-in slide-in-from-top-10 text-7xl font-bold text-blue-300">
-        {props.name}
-      </h1>
+    <article className="px-11">
+      <div className="flex min-h-[calc(100svh_-_theme(spacing.24))] flex-col">
+        <h1 className="font-display animate-in fade-in slide-in-from-top-10 text-6xl font-bold text-blue-300 2xl:text-7xl">
+          {props.name}
+        </h1>
+        <StoryImage />
+      </div>
 
-      <StoryImage />
       <StorySteps {...props} />
     </article>
   );
