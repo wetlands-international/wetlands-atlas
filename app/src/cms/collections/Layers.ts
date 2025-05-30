@@ -1,12 +1,13 @@
 import { revalidatePath } from "next/cache";
 
+import { CollectionConfig } from "payload";
 
-import { SlugIDField } from "@/cms/fields/slug";
 import { LegendConfigField } from "@/cms/fields/legend-config";
 import { ParamsConfigField } from "@/cms/fields/params-config-field";
 import { RenderingConfigField } from "@/cms/fields/rendering-config";
+import { SlugIDField } from "@/cms/fields/slug";
 import { LayerTypeValidation } from "@/cms/utils/layer-validation";
-import { CollectionConfig } from "payload";
+import { DevOnlyAccessControl } from "@/cms/utils/dev-only-access-control";
 
 export const enum LAYER_TYPE {
   INDICATOR = "INDICATOR",
@@ -20,6 +21,7 @@ export const Layers: CollectionConfig = {
     defaultColumns: ["id", "name"],
   },
   defaultSort: ["name"],
+  access: DevOnlyAccessControl,
   hooks: {
     beforeValidate: [LayerTypeValidation],
     afterChange: [
@@ -28,7 +30,6 @@ export const Layers: CollectionConfig = {
       },
     ],
   },
-
   fields: [
     SlugIDField(),
     {
@@ -36,11 +37,6 @@ export const Layers: CollectionConfig = {
       type: "text",
       required: true,
       localized: true,
-    },
-    {
-      name: "info",
-      type: "textarea",
-      localized: false,
     },
     RenderingConfigField,
     ParamsConfigField,
@@ -50,6 +46,12 @@ export const Layers: CollectionConfig = {
       type: "relationship",
       relationTo: "indicators",
       hasMany: false,
+      admin: {
+        condition: (_, siblingData) => {
+          // Don't show this field if the layer type is CONTEXTUAL
+          return siblingData?.type === LAYER_TYPE.INDICATOR;
+        },
+      },
     },
     {
       name: "type",

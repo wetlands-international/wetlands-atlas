@@ -1,19 +1,22 @@
 import { CollectionConfig } from "payload";
-import { SlugIDField } from "@/cms/fields/slug";
-import { BLOCK_LOCATION_COORDINATES } from "@/cms/blocks/location";
 
+import { SlugIDField } from "@/cms/fields/slug";
+import { DevOnlyAccessControl } from "@/cms/utils/dev-only-access-control";
+
+export const LOCATION_TYPE = {
+  ADMIN_REGION: "ADMIN_REGION",
+  HYDRO_BASIN: "HYDRO_BASIN",
+};
 export const Locations: CollectionConfig = {
   slug: "locations",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["slug_id", "name", "type", "location_type"],
+    defaultColumns: ["id", "name", "type"],
   },
   defaultSort: ["name"],
-  access: {
-    read: () => true,
-  },
+  access: DevOnlyAccessControl,
   fields: [
-    SlugIDField("slug_id"),
+    SlugIDField(),
     {
       name: "name",
       type: "text",
@@ -22,22 +25,24 @@ export const Locations: CollectionConfig = {
       required: true,
     },
     {
+      name: "geometry",
+      type: "json",
+      required: true,
+    },
+    {
       name: "type",
       type: "select",
       options: [
         {
-          label: "Coordinates",
-          value: "coordinates",
+          label: "Admin Region",
+          value: LOCATION_TYPE.ADMIN_REGION,
+        },
+        {
+          label: "Hydro Basin",
+          value: LOCATION_TYPE.HYDRO_BASIN,
         },
       ],
-      required: false, // TODO change to required when type has been decided on possible values
-    },
-    {
-      name: "coordinates",
-      type: "blocks",
-      blocks: [BLOCK_LOCATION_COORDINATES],
-      required: false, // TODO change to required when type has been decided on possible values
-      maxRows: 1,
+      required: true,
     },
   ],
 };

@@ -14,7 +14,7 @@ export const SlugIDField: Slug = (fieldName = "id", baseFieldToUse = "name") => 
     admin: {
       position: "sidebar",
       readOnly: true,
-      description: `This field is automatically generated from the name ${baseFieldToUse}. It is usually used to create a URL-friendly version of the name.`,
+      description: `This field is automatically generated from the '${baseFieldToUse}' field. It is usually used to create a URL-friendly version of the name.`,
     },
     hooks: {
       beforeValidate: [formatSlug(baseFieldToUse)],

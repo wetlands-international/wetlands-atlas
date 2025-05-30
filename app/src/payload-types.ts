@@ -72,10 +72,9 @@ export interface Config {
     categories: Category;
     indicators: Indicator;
     layers: Layer;
-    'indicator-widgets': IndicatorWidget;
+    'indicator-data': IndicatorDatum;
     locations: Location;
     stories: Story;
-
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -87,9 +86,6 @@ export interface Config {
     indicators: {
       layers: 'layers';
     };
-    stories: {
-      steps: 'story-steps';
-    };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
@@ -97,7 +93,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     indicators: IndicatorsSelect<false> | IndicatorsSelect<true>;
     layers: LayersSelect<false> | LayersSelect<true>;
-    'indicator-widgets': IndicatorWidgetsSelect<false> | IndicatorWidgetsSelect<true>;
+    'indicator-data': IndicatorDataSelect<false> | IndicatorDataSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
     stories: StoriesSelect<false> | StoriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -178,13 +174,13 @@ export interface Media {
  */
 export interface Category {
   /**
-   * This field is automatically generated from the name name. It is usually used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
   description?: string | null;
   stories?: {
-    docs?: (number | Story)[];
+    docs?: (string | Story)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -196,34 +192,22 @@ export interface Category {
  * via the `definition` "stories".
  */
 export interface Story {
-  id: number;
   /**
-   * This field is automatically generated from the name name. It is usually used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
-  slug_id: string;
+  id: string;
   name: string;
-  category: string | Category;
-  steps?: {
-    docs?: (number | StoryStep)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  published?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "story-steps".
- */
-export interface StoryStep {
-  id: number;
-  title: string;
   description: string;
-  image?: (number | null) | Media;
-  order: number;
-  story: number | Story;
-  type: 'INTRO' | 'MAP';
+  cover?: (number | null) | Media;
+  category: string | Category;
+  location: {
+    latitude: number;
+    longitude: number;
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'location';
+  }[];
+  published?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -233,7 +217,7 @@ export interface StoryStep {
  */
 export interface Indicator {
   /**
-   * This field is automatically generated from the name name. It is usually used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
@@ -270,11 +254,10 @@ export interface Indicator {
  */
 export interface Layer {
   /**
-   * This field is automatically generated from the name name. It is usually used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
-  info?: string | null;
   config: {
     [k: string]: unknown;
   };
@@ -297,12 +280,12 @@ export interface Layer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "indicator-widgets".
+ * via the `definition` "indicator-data".
  */
-export interface IndicatorWidget {
+export interface IndicatorDatum {
   id: string;
   indicator: string | Indicator;
-  location: number | Location;
+  location: string | Location;
   data:
     | {
         [k: string]: unknown;
@@ -320,37 +303,21 @@ export interface IndicatorWidget {
  * via the `definition` "locations".
  */
 export interface Location {
-  id: number;
   /**
-   * This field is automatically generated from the name name. It is usually used to create a URL-friendly version of the name.
-   */
-  slug_id: string;
-  name: string;
-  type?: 'coordinates' | null;
-  coordinates?:
-    | {
-        latitude: number;
-        longitude: number;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'location';
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stories".
- */
-export interface Story {
-  /**
-   * This field is automatically generated from the name field. It is used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
-  description: string;
-  cover?: (number | null) | Media;
+  geometry:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  type: 'ADMIN_REGION' | 'HYDRO_BASIN';
   updatedAt: string;
   createdAt: string;
 }
@@ -382,16 +349,16 @@ export interface PayloadLockedDocument {
         value: string | Layer;
       } | null)
     | ({
-        relationTo: 'indicator-widgets';
-        value: string | IndicatorWidget;
+        relationTo: 'indicator-data';
+        value: string | IndicatorDatum;
       } | null)
     | ({
         relationTo: 'locations';
-        value: number | Location;
+        value: string | Location;
       } | null)
     | ({
         relationTo: 'stories';
-        value: number | Story;
+        value: string | Story;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -500,7 +467,6 @@ export interface IndicatorsSelect<T extends boolean = true> {
 export interface LayersSelect<T extends boolean = true> {
   id?: T;
   name?: T;
-  info?: T;
   config?: T;
   params_config?: T;
   legend_config?: T;
@@ -511,9 +477,9 @@ export interface LayersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "indicator-widgets_select".
+ * via the `definition` "indicator-data_select".
  */
-export interface IndicatorWidgetsSelect<T extends boolean = true> {
+export interface IndicatorDataSelect<T extends boolean = true> {
   id?: T;
   indicator?: T;
   location?: T;
@@ -526,47 +492,9 @@ export interface IndicatorWidgetsSelect<T extends boolean = true> {
  * via the `definition` "locations_select".
  */
 export interface LocationsSelect<T extends boolean = true> {
-  slug_id?: T;
+  id?: T;
   name?: T;
-  type?: T;
-  coordinates?:
-    | T
-    | {
-        location?:
-          | T
-          | {
-              latitude?: T;
-              longitude?: T;
-              id?: T;
-              blockName?: T;
-            };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stories_select".
- */
-export interface StoriesSelect<T extends boolean = true> {
-  slug_id?: T;
-  name?: T;
-  category?: T;
-  steps?: T;
-  published?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "story-steps_select".
- */
-export interface StoryStepsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  image?: T;
-  order?: T;
-  story?: T;
+  geometry?: T;
   type?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -580,6 +508,20 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   cover?: T;
+  category?: T;
+  location?:
+    | T
+    | {
+        location?:
+          | T
+          | {
+              latitude?: T;
+              longitude?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  published?: T;
   updatedAt?: T;
   createdAt?: T;
 }

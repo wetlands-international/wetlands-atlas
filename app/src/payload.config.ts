@@ -24,17 +24,15 @@ import { BLOCK_LOCATION_COORDINATES } from "@/cms/blocks/location";
 import { NumberBlock } from "@/cms/blocks/number";
 import { BLOCK_PERCENTAGE } from "@/cms/blocks/percentage";
 import { BLOCK_VALUE } from "@/cms/blocks/value";
+import { IndicatorDatas } from "@/cms/collections/IndicatorDatas";
 import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
+import { Locations } from "@/cms/collections/Location";
 import { Stories } from "@/cms/collections/Stories";
 
 import { Categories } from "./cms/collections/Categories";
 import { Media } from "./cms/collections/Media";
 import { Users } from "./cms/collections/Users";
-import { IndicatorWidgets } from "@/cms/collections/IndicatorWidgets";
-import { Locations } from "@/cms/collections/Location";
-import { Stories } from "@/cms/collections/Stories";
-import { StorySteps } from "@/cms/collections/StorySteps";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -46,16 +44,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [
-    Users,
-    Media,
-    Categories,
-    Indicators,
-    Layers,
-    IndicatorWidgets,
-    Locations,
-    Stories,
-  ],
+  collections: [Users, Media, Categories, Indicators, Layers, IndicatorDatas, Locations, Stories],
   editor: lexicalEditor({
     features: () => [
       FixedToolbarFeature(),
