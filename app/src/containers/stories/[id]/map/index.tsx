@@ -17,6 +17,14 @@ export const StoryMapContainer = (props: Story) => {
 
   const step = useAtomValue(stepAtom);
 
+  const LAYERS = useMemo(() => {
+    const s = steps?.[step];
+    if (s && "map" in s) {
+      return s.map?.layers || [];
+    }
+    return [];
+  }, [step, steps]);
+
   const BBOX = useMemo(() => {
     const s = steps?.[step];
     if (s && "map" in s) {
@@ -24,6 +32,8 @@ export const StoryMapContainer = (props: Story) => {
     }
     return null;
   }, [step, steps]);
+
+  console.log({ LAYERS, BBOX });
 
   return (
     <div className="relative flex grow flex-col overflow-hidden bg-[#326E82]">

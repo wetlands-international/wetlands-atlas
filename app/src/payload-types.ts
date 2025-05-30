@@ -273,6 +273,7 @@ export interface Story {
         };
         map?: {
           bbox: unknown[];
+          layers?: string[];
         };
         chart?:
           | {
