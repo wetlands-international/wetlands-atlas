@@ -2,12 +2,19 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
-import { slugField } from "@/cms/fields/slug";
+import { BLOCK_LOCATION_COORDINATES } from "@/cms/blocks/location";
+import { SlugIDField } from "@/cms/fields/slug";
 
 export const Stories: CollectionConfig = {
   slug: "stories",
+  admin: {
+    useAsTitle: "name",
+    defaultColumns: ["id", "title", "insight", "published"],
+  },
+  defaultSort: ["-createdAt"],
+  //access: {}, // By default, users with an account have all permissions https://payloadcms.com/docs/access-control/overview#default-access-control
   fields: [
-    slugField(),
+    SlugIDField(),
     {
       name: "name",
       type: "text",
@@ -27,10 +34,26 @@ export const Stories: CollectionConfig = {
       relationTo: "media",
       localized: false,
     },
+    {
+      name: "category",
+      type: "relationship",
+      relationTo: "categories",
+      required: true,
+      hasMany: false,
+    },
+    {
+      name: "location",
+      type: "blocks",
+      blocks: [BLOCK_LOCATION_COORDINATES],
+      required: true,
+      maxRows: 1,
+    },
+    {
+      name: "published",
+      type: "checkbox",
+      defaultValue: false,
+    },
   ],
-  access: {
-    read: () => true,
-  },
   hooks: {
     afterChange: [
       async (props) => {
