@@ -28,11 +28,12 @@ export const MapFieldComponent: JSONFieldServerComponent = async ({
       <FieldDescription path={path} description={clientField.admin?.description} />
 
       <section className="flex pt-6">
-        <aside className="w-1/3 shrink-0 space-y-2">
+        <aside className="bg-background relative z-10 w-1/3 shrink-0 space-y-2 p-4 shadow-2xl">
           <SectionTitle customValue="Layers" path={path} readOnly />
           <MapFieldLayers layers={layers.docs} />
         </aside>
-        <div className="relative flex aspect-square grow flex-col overflow-hidden bg-[#326E82]">
+
+        <div className="relative flex aspect-square w-2/3 grow flex-col overflow-hidden bg-[#326E82]">
           <MapfieldMap />
         </div>
       </section>

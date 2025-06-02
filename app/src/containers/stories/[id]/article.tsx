@@ -10,6 +10,9 @@ export const StoriesIdArticle = (props: Story) => {
         <h1 className="font-display animate-in fade-in slide-in-from-top-10 text-6xl font-bold text-blue-300 2xl:text-7xl">
           {props.name}
         </h1>
+        <p className="animate-in fade-in slide-in-from-top-10 mt-4 text-lg text-gray-400">
+          {props.description}
+        </p>
         <StoryImage />
       </div>
 

@@ -1,9 +1,9 @@
 "use client";
 
-import { useField } from "@payloadcms/ui";
+import { useField, useCollapsible } from "@payloadcms/ui";
 
 import Map, { LngLatBoundsLike, MapProvider, useMap } from "react-map-gl/mapbox";
-import { useDebounceCallback } from "usehooks-ts";
+import { useDebounceCallback, useDebounceValue } from "usehooks-ts";
 
 import Controls from "@/components/map/controls";
 import SettingsControl from "@/components/map/controls/settings";
@@ -22,7 +22,12 @@ export const MapfieldMap = () => {
 
 export const MapfieldMapInner = () => {
   const { value, setValue } = useField<NonNullable<Story["steps"]>[number]["map"]>();
+  const { isCollapsed, isWithinCollapsible } = useCollapsible();
+  // We use a debounced value to render the map only after the collapsible state has stabilized
+  const [collapsed] = useDebounceValue(isCollapsed, 500);
+
   const { stepMap } = useMap();
+
   const handleMove = () => {
     if (stepMap) {
       const b = stepMap
@@ -41,6 +46,8 @@ export const MapfieldMapInner = () => {
     }
   };
   const handleMovedDebounced = useDebounceCallback(handleMove, 500);
+
+  if (isWithinCollapsible && collapsed) return null;
 
   return (
     <Map

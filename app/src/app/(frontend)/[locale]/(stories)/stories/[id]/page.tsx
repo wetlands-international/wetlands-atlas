@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { getStoryId } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/actions";
 
 import { StoriesIdArticle } from "@/containers/stories/[id]/article";
+import { StoryChartContainer } from "@/containers/stories/[id]/chart";
 import { StoriesIdHeader } from "@/containers/stories/[id]/header";
 import { StoryMapContainer } from "@/containers/stories/[id]/map";
 
@@ -48,6 +49,7 @@ export default async function StoriesIdPage({ params }: StoriesIdPageProps) {
       <Suspense>
         <div className="sticky top-0 left-0 flex h-svh w-full">
           <StoryMapContainer {...story} />
+          <StoryChartContainer {...story} />
         </div>
       </Suspense>
     </>
