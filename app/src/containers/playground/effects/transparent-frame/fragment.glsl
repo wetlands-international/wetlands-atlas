@@ -6,10 +6,10 @@ uniform float uTime;
 
 void mainImage(const in vec4 inputColor, const in vec2 uv, out vec4 outputColor) {
   vec2 fragCoord = uv * resolution;
-  float border = borderSize * min(resolution.x, resolution.y);
+  float border = borderSize * 250.0; // border size in pixels
 
   // Rotate UV coordinates
-  float angle = sin(-0.15) * 0.5; // oscillating rotation angle
+  float angle = sin(-0.1) * 0.5; // oscillating rotation angle
   mat2 rotationMatrix = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
   vec2 rotatedUV = (uv - 0.5) * rotationMatrix + 0.5; // rotate around the center
 

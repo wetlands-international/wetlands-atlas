@@ -1,46 +1,39 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useMemo } from "react";
 
-import { useAtom } from "jotai";
-import Map, { LngLatBoundsLike, MapProps, useMap } from "react-map-gl/mapbox";
-import { useDebounceCallback } from "usehooks-ts";
+import { useAtomValue } from "jotai";
+import Map, { LngLatBoundsLike } from "react-map-gl/mapbox";
 
-import { tmpBboxAtom, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
+import { stepAtom } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/store";
+
+import { StoryFitBounds } from "@/containers/stories/[id]/map/fit-bounds";
 
 import { env } from "@/env";
+import { Story } from "@/payload-types";
 
-export const StoryMapContainer = (props: MapProps) => {
-  const [bbox] = useSyncBbox();
-  const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
+export const StoryMapContainer = (props: Story) => {
+  const { steps } = props;
 
-  const { storyMap } = useMap();
+  const step = useAtomValue(stepAtom);
 
-  const handleMove = () => {
-    if (storyMap) {
-      setTmpBbox(undefined);
+  const LAYERS = useMemo(() => {
+    const s = steps?.[step];
+    if (s && "map" in s) {
+      return s.map?.layers || [];
     }
-  };
-  const handleMovedDebounced = useDebounceCallback(handleMove, 500);
+    return [];
+  }, [step, steps]);
 
-  const handleFitBounds = useCallback(() => {
-    if (tmpBbox && storyMap) {
-      storyMap.fitBounds(tmpBbox as LngLatBoundsLike, {
-        padding: {
-          top: 50,
-          bottom: 50,
-          left: 50,
-          right: 50,
-        },
-      });
+  const BBOX = useMemo(() => {
+    const s = steps?.[step];
+    if (s && "map" in s) {
+      return s.map?.bbox;
     }
-  }, [storyMap, tmpBbox]);
+    return null;
+  }, [step, steps]);
 
-  useEffect(() => {
-    if (tmpBbox) {
-      handleFitBounds();
-    }
-  }, [tmpBbox, handleFitBounds]);
+  console.log({ LAYERS, BBOX });
 
   return (
     <div className="relative flex grow flex-col overflow-hidden bg-[#326E82]">
@@ -48,7 +41,7 @@ export const StoryMapContainer = (props: MapProps) => {
         id="storyMap"
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
         initialViewState={{
-          bounds: bbox as LngLatBoundsLike,
+          bounds: BBOX as LngLatBoundsLike,
           fitBoundsOptions: {
             padding: {
               top: 50,
@@ -61,7 +54,6 @@ export const StoryMapContainer = (props: MapProps) => {
         style={{ width: "100%", height: "100%" }}
         mapStyle="mapbox://styles/wetlands-vizzuality/cmaoz7mg901l701qoaj2a6v0h"
         minZoom={2}
-        onMove={handleMovedDebounced}
         interactive={false}
         scrollZoom={false}
         doubleClickZoom={false}
@@ -69,8 +61,9 @@ export const StoryMapContainer = (props: MapProps) => {
         dragRotate={false}
         touchPitch={false}
         touchZoomRotate={false}
-        {...props}
-      ></Map>
+      >
+        <StoryFitBounds {...props} />
+      </Map>
     </div>
   );
 };

@@ -1,26 +1,17 @@
 "use client";
 
-import { Suspense } from "react";
-
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
 
 import { TransparentFrame } from "@/containers/playground/effects/transparent-frame";
 import { ImageReveal } from "@/containers/playground/image";
 
-import { Story, Media } from "@/payload-types";
-
-export default function StoryImage(props: Story) {
-  const image = props.cover as Media;
-  if (!image || !image.url) {
-    return null;
-  }
-
+export const StoryImage = () => {
   return (
-    <div className="-mx-11 my-10 aspect-[1280/853]">
+    <div className="-mx-11 my-10 aspect-[1280/853] grow">
       <Canvas
         linear
-        resize={{ scroll: false }}
+        resize={{ scroll: false, offsetSize: false }}
         gl={{ alpha: true, preserveDrawingBuffer: true, antialias: true }}
         className="bg-background"
       >
@@ -28,10 +19,8 @@ export default function StoryImage(props: Story) {
           <TransparentFrame />
         </EffectComposer>
 
-        <Suspense fallback={null}>
-          <ImageReveal imageUrl={image.url} />
-        </Suspense>
+        <ImageReveal />
       </Canvas>
     </div>
   );
-}
+};
