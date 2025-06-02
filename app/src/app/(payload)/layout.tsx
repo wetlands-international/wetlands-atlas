@@ -11,6 +11,9 @@ import { handleServerFunctions, RootLayout } from "@payloadcms/next/layouts";
 import "@payloadcms/next/css";
 
 import { importMap } from "./admin/importMap.js";
+
+import "@/styles/admin.css";
+import "mapbox-gl/dist/mapbox-gl.css";
 import "./custom.scss";
 
 type Args = {

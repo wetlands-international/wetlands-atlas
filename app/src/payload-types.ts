@@ -208,6 +208,40 @@ export interface Story {
     blockType: 'location';
   }[];
   published?: boolean | null;
+  steps?:
+    | {
+        type: 'map' | 'chart';
+        sidebar: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        map?: {
+          bbox: unknown[];
+          layers?: string[];
+        };
+        chart?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -522,6 +556,15 @@ export interface StoriesSelect<T extends boolean = true> {
             };
       };
   published?: T;
+  steps?:
+    | T
+    | {
+        type?: T;
+        sidebar?: T;
+        map?: T;
+        chart?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

@@ -6,8 +6,8 @@ import { LegendConfigField } from "@/cms/fields/legend-config";
 import { ParamsConfigField } from "@/cms/fields/params-config-field";
 import { RenderingConfigField } from "@/cms/fields/rendering-config";
 import { SlugIDField } from "@/cms/fields/slug";
-import { LayerTypeValidation } from "@/cms/utils/layer-validation";
 import { DevOnlyAccessControl } from "@/cms/utils/dev-only-access-control";
+import { LayerTypeValidation } from "@/cms/utils/layer-validation";
 
 export const enum LAYER_TYPE {
   INDICATOR = "INDICATOR",

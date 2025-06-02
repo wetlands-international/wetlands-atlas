@@ -6,19 +6,10 @@ import fragmentShader from "./fragment.glsl";
 import vertexShader from "./vertex.glsl";
 
 class RevealMaterial extends THREE.ShaderMaterial {
-  constructor({
-    uImage,
-    uHeightmap,
-    uRandomCenter,
-  }: {
-    uImage: THREE.Texture;
-    uHeightmap: THREE.Texture;
-    uRandomCenter: THREE.Vector2;
-  }) {
+  constructor({ uImage, uRandomCenter }: { uImage: THREE.Texture; uRandomCenter: THREE.Vector2 }) {
     const uniforms = {
       uTime: { value: 0 },
       uImage: { value: uImage },
-      uHeightmap: { value: uHeightmap },
       uRandomCenter: { value: uRandomCenter },
       uRevealThreshold: { value: 0 },
       uDpr: { value: window.devicePixelRatio },

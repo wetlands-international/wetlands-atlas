@@ -54,28 +54,35 @@ export function generateHeightmapTexture(size: number): THREE.DataTexture {
   return texture;
 }
 
-export function ImageReveal({ imageUrl }: { imageUrl: string }) {
+export function ImageReveal({ imageUrl }: { imageUrl?: string }) {
   // Flag to track readiness
   const readyRef = useRef(false);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
 
-  console.log(
-    imageUrl,
-    "We need to set up the media storage and upload the image to the server before we can use this",
-  );
+  // console.log(
+  //   imageUrl,
+  //   "We need to set up the media storage and upload the image to the server before we can use this",
+  // );
   const imageTexture = useTexture("/test.jpg"); // Replace with imageUrl if needed
-  const heightmapTexture = useMemo(() => generateHeightmapTexture(512), []);
 
+  const randomCenter = useMemo(() => {
+    return new THREE.Vector2(
+      Math.random() < 0.5 ? Math.random() * 0.25 : Math.random() * 0.25 + 0.75, // x-coordinate close to edges
+      Math.random() < 0.5 ? Math.random() * 0.25 : Math.random() * 0.25 + 0.75, // y-coordinate close to edges
+    );
+  }, []);
   const scale = useAspect(imageTexture.image.width, imageTexture.image.height, 1);
 
   useEffect(() => {
-    if (imageTexture && heightmapTexture) {
-      readyRef.current = true; // Set flag when textures are loaded
-      if (materialRef.current) {
+    if (imageTexture) {
+      if (materialRef.current && !readyRef.current) {
+        console.log("Setting up uRevealThreshold");
+        console.log(imageUrl);
         materialRef.current.uniforms.uRevealThreshold.value = 0; // Initialize threshold
       }
+      readyRef.current = true; // Set flag when textures are loaded
     }
-  }, [imageTexture, heightmapTexture]);
+  }, [imageUrl, imageTexture]);
 
   useFrame(({ clock }, delta) => {
     if (materialRef.current && readyRef.current) {
@@ -85,7 +92,7 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
         1,
       );
     }
-  });
+  }, 1);
 
   return (
     <mesh scale={scale}>
@@ -95,11 +102,7 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
         args={[
           {
             uImage: imageTexture,
-            uHeightmap: heightmapTexture,
-            uRandomCenter: new THREE.Vector2(
-              Math.random() < 0.5 ? Math.random() * 0.25 : Math.random() * 0.25 + 0.75, // x-coordinate close to edges
-              Math.random() < 0.5 ? Math.random() * 0.25 : Math.random() * 0.25 + 0.75, // y-coordinate close to edges
-            ),
+            uRandomCenter: randomCenter,
           },
         ]}
         transparent
