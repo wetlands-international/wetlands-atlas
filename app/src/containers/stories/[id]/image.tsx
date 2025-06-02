@@ -11,7 +11,7 @@ export const StoryImage = () => {
     <div className="-mx-11 my-10 aspect-[1280/853] grow">
       <Canvas
         linear
-        resize={{ scroll: false, offsetSize: false }}
+        resize={{ scroll: false, offsetSize: false, debounce: { scroll: 0, resize: 250 } }}
         gl={{ alpha: true, preserveDrawingBuffer: true, antialias: true }}
         className="bg-background"
       >
