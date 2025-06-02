@@ -72,12 +72,17 @@ export interface Config {
     categories: Category;
     indicators: Indicator;
     layers: Layer;
+    'indicator-data': IndicatorDatum;
+    locations: Location;
     stories: Story;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
+    categories: {
+      stories: 'stories';
+    };
     indicators: {
       layers: 'layers';
     };
@@ -88,6 +93,8 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     indicators: IndicatorsSelect<false> | IndicatorsSelect<true>;
     layers: LayersSelect<false> | LayersSelect<true>;
+    'indicator-data': IndicatorDataSelect<false> | IndicatorDataSelect<true>;
+    locations: LocationsSelect<false> | LocationsSelect<true>;
     stories: StoriesSelect<false> | StoriesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -167,11 +174,40 @@ export interface Media {
  */
 export interface Category {
   /**
-   * This field is automatically generated from the name field. It is used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
   description?: string | null;
+  stories?: {
+    docs?: (string | Story)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stories".
+ */
+export interface Story {
+  /**
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
+   */
+  id: string;
+  name: string;
+  description: string;
+  cover?: (number | null) | Media;
+  category: string | Category;
+  location: {
+    latitude: number;
+    longitude: number;
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'location';
+  }[];
+  published?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -181,7 +217,7 @@ export interface Category {
  */
 export interface Indicator {
   /**
-   * This field is automatically generated from the name field. It is used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
@@ -218,7 +254,7 @@ export interface Indicator {
  */
 export interface Layer {
   /**
-   * This field is automatically generated from the name field. It is used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
@@ -238,21 +274,50 @@ export interface Layer {
     [k: string]: unknown;
   };
   indicator?: (string | null) | Indicator;
+  type: 'INDICATOR' | 'CONTEXTUAL';
   updatedAt: string;
   createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stories".
+ * via the `definition` "indicator-data".
  */
-export interface Story {
+export interface IndicatorDatum {
+  id: string;
+  indicator: string | Indicator;
+  location: string | Location;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
   /**
-   * This field is automatically generated from the name field. It is used to create a URL-friendly version of the name.
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
-  description: string;
-  cover?: (number | null) | Media;
+  geometry:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  type: 'ADMIN_REGION' | 'HYDRO_BASIN';
   updatedAt: string;
   createdAt: string;
 }
@@ -282,6 +347,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'layers';
         value: string | Layer;
+      } | null)
+    | ({
+        relationTo: 'indicator-data';
+        value: string | IndicatorDatum;
+      } | null)
+    | ({
+        relationTo: 'locations';
+        value: string | Location;
       } | null)
     | ({
         relationTo: 'stories';
@@ -370,6 +443,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   description?: T;
+  stories?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -397,6 +471,31 @@ export interface LayersSelect<T extends boolean = true> {
   params_config?: T;
   legend_config?: T;
   indicator?: T;
+  type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "indicator-data_select".
+ */
+export interface IndicatorDataSelect<T extends boolean = true> {
+  id?: T;
+  indicator?: T;
+  location?: T;
+  data?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations_select".
+ */
+export interface LocationsSelect<T extends boolean = true> {
+  id?: T;
+  name?: T;
+  geometry?: T;
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -409,6 +508,20 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   cover?: T;
+  category?: T;
+  location?:
+    | T
+    | {
+        location?:
+          | T
+          | {
+              latitude?: T;
+              longitude?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  published?: T;
   updatedAt?: T;
   createdAt?: T;
 }

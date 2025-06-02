@@ -20,12 +20,14 @@ import {
 import { openapi } from "payload-oapi";
 import sharp from "sharp";
 
-import { BLOCK_LOCATION } from "@/cms/blocks/location";
+import { BLOCK_LOCATION_COORDINATES } from "@/cms/blocks/location";
 import { NumberBlock } from "@/cms/blocks/number";
 import { BLOCK_PERCENTAGE } from "@/cms/blocks/percentage";
 import { BLOCK_VALUE } from "@/cms/blocks/value";
+import { IndicatorDatas } from "@/cms/collections/IndicatorDatas";
 import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
+import { Locations } from "@/cms/collections/Location";
 import { Stories } from "@/cms/collections/Stories";
 
 import { Categories } from "./cms/collections/Categories";
@@ -42,7 +44,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Indicators, Layers, Stories],
+  collections: [Users, Media, Categories, Indicators, Layers, IndicatorDatas, Locations, Stories],
   editor: lexicalEditor({
     features: () => [
       FixedToolbarFeature(),
@@ -51,7 +53,7 @@ export default buildConfig({
       UnorderedListFeature(),
       OrderedListFeature(),
       BlocksFeature({
-        inlineBlocks: [BLOCK_VALUE, BLOCK_PERCENTAGE, BLOCK_LOCATION, NumberBlock],
+        inlineBlocks: [BLOCK_VALUE, BLOCK_PERCENTAGE, BLOCK_LOCATION_COORDINATES, NumberBlock],
       }),
     ],
   }),
