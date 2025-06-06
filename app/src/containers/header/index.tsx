@@ -37,7 +37,7 @@ export const Header = ({
       </h1>
 
       <div
-        className={cn("animate-in fade-in zoom-in-90 relative z-20 w-full duration-300", {
+        className={cn("animate-in fade-in slide-in-from-top-10 relative z-20 w-full duration-500", {
           "rounded-4xl bg-white/10 backdrop-blur-lg": blur,
         })}
       >
