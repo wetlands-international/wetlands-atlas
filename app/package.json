@@ -68,7 +68,6 @@
     "react-dom": "19.0.0",
     "react-icons": "5.5.0",
     "react-map-gl": "8.0.4",
-    "resolve-lygia": "^1.0.4",
     "sharp": "0.32.6",
     "simplex-noise": "4.0.3",
     "slugify": "1.6.6",
