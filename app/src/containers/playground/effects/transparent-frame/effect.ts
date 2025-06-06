@@ -1,13 +1,12 @@
 // TransparentFrameEffect.js
 import { Effect } from "postprocessing";
-import { resolveLygia } from "resolve-lygia";
 import { Uniform, Vector2, WebGLRenderer } from "three";
 
 import fragmentShader from "./fragment.glsl";
 
 export class TransparentFrameEffect extends Effect {
   constructor({ borderSize = 0.01 } = {}) {
-    super("TransparentFrameEffect", resolveLygia(fragmentShader), {
+    super("TransparentFrameEffect", fragmentShader, {
       uniforms: new Map<string, Uniform<number | Vector2>>([
         ["borderSize", new Uniform(borderSize)],
         ["resolution", new Uniform(new Vector2(1, 1))],

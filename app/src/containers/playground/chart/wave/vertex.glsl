@@ -1,4 +1,4 @@
-#include "lygia/generative/snoise.glsl";
+#include "node_modules/lygia/generative/snoise.glsl"
 
 attribute vec3 aRandom;
 attribute float aSize;

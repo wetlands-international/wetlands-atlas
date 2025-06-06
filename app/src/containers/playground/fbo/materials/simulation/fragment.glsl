@@ -1,4 +1,4 @@
-#include "lygia/generative/curl.glsl";
+#include "node_modules/lygia/generative/curl.glsl"
 
 uniform sampler2D positions;
 uniform float uTime;
