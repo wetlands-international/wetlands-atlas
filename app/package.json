@@ -5,8 +5,8 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
-    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev --turbo",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "ci": "payload migrate && pnpm build",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
@@ -68,7 +68,6 @@
     "react-dom": "19.0.0",
     "react-icons": "5.5.0",
     "react-map-gl": "8.0.4",
-    "resolve-lygia": "^1.0.4",
     "sharp": "0.32.6",
     "simplex-noise": "4.0.3",
     "slugify": "1.6.6",
@@ -105,7 +104,8 @@
     "tw-animate-css": "^1.2.5",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.1.1"
+    "vitest": "^3.1.1",
+    "webpack-glsl-loader": "1.0.1"
   },
   "packageManager": "pnpm@10.11.0"
 }
