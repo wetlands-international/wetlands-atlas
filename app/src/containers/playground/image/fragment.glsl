@@ -1,5 +1,5 @@
-#include "lygia/generative/fbm.glsl"
-#include "lygia/generative/curl.glsl"
+#include "node_modules/lygia/generative/fbm.glsl"
+#include "node_modules/lygia/generative/curl.glsl"
 
 uniform sampler2D uImage;
 uniform float uTime;
