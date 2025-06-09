@@ -14,10 +14,19 @@ const nextConfig = {
   // Add the packages in transpilePackages
   transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core", "three"],
 
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.mapbox.com",
+      },
+    ],
+  },
+
   // turbopack: {
   //   rules: {
   //     "*.glsl": {
-  //       loaders: ["raw-loader"],
+  //       loaders: [path.resolve(__dirname, "src/lib/glsl-loader.js")],
   //       as: "*.js",
   //     },
   //   },
