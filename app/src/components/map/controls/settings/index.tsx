@@ -58,7 +58,7 @@ export const SettingsControl: FC<PropsWithChildren<SettingsControlProps>> = ({
             </TooltipPortal>
           )}
 
-          <PopoverContent side="left" align="start">
+          <PopoverContent side="left" align="start" className="w-auto overflow-hidden p-0">
             {children}
           </PopoverContent>
         </Tooltip>

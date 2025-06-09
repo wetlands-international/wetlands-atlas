@@ -1,25 +1,31 @@
 "use client";
 
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 import { useAtom } from "jotai";
 import Map, { LngLatBoundsLike, MapProps, useMap } from "react-map-gl/mapbox";
 import { useDebounceCallback } from "usehooks-ts";
 
-import { tmpBboxAtom, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
+import { tmpBboxAtom, useSyncBasemap, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
 
 import Controls from "@/components/map/controls";
 import LayersControl from "@/components/map/controls/layers";
 import SettingsControl from "@/components/map/controls/settings";
+import { BasemapControl, BASEMAPS } from "@/components/map/controls/settings/basemap";
 import ZoomControl from "@/components/map/controls/zoom";
 
 import { env } from "@/env";
 
 export const MapContainer = (props: MapProps) => {
   const [bbox, setBbox] = useSyncBbox();
+  const [basemap, setBasemap] = useSyncBasemap();
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
 
   const { exploreMap } = useMap();
+
+  const MAP_STYLE = useMemo(() => {
+    return BASEMAPS[basemap].mapStyle;
+  }, [basemap]);
 
   const handleMove = () => {
     if (exploreMap) {
@@ -73,7 +79,7 @@ export const MapContainer = (props: MapProps) => {
           },
         }}
         style={{ width: "100%", height: "100%" }}
-        mapStyle="mapbox://styles/wetlands-vizzuality/cmaoz7mg901l701qoaj2a6v0h"
+        mapStyle={MAP_STYLE}
         minZoom={2}
         onMove={handleMovedDebounced}
         {...props}
@@ -86,9 +92,7 @@ export const MapContainer = (props: MapProps) => {
             </div>
           </LayersControl>
           <SettingsControl>
-            <div className="flex flex-col space-y-0.5">
-              <span>Basemap</span>
-            </div>
+            <BasemapControl basemap={basemap} onBasemapChange={setBasemap} />
           </SettingsControl>
         </Controls>
       </Map>
