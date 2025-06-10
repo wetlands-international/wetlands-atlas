@@ -14,14 +14,23 @@ const nextConfig = {
   // Add the packages in transpilePackages
   transpilePackages: ["@t3-oss/env-nextjs", "@t3-oss/env-core", "three"],
 
-  // turbopack: {
-  //   rules: {
-  //     "*.glsl": {
-  //       loaders: ["raw-loader"],
-  //       as: "*.js",
-  //     },
-  //   },
-  // },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.mapbox.com",
+      },
+    ],
+  },
+
+  turbopack: {
+    rules: {
+      "*.glsl": {
+        loaders: [path.resolve(__dirname, "src/lib/glsl-loader.js")],
+        as: "*.js",
+      },
+    },
+  },
   webpack: (config) => {
     config.module.rules?.push({
       test: /\.(glsl|vs|fs)$/,
