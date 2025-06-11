@@ -27,15 +27,6 @@ vscode remote development or run this command:
 docker exec -it data_processing_notebooks /bin/bash
 ```
 
-#### Conda environment
-
-Create the environment with:
-
-``` bash
-mamba env create -n data_processing -f environment.yml
-```
-
-This will create an environment called data-processing with a common set of dependencies.
 
 #### UV environment
 
@@ -49,6 +40,13 @@ The virtual environment can be "activated" to make its packages available:
 
 ``` bash
 source .venv/bin/activate
+```
+
+To replicate project's environment use your the `requirements.txt` file.
+```bash
+uv pip install -r requirements.txt
+```
+
 
 ### `git` (if needed) and pre-commit hooks
 
@@ -68,14 +66,12 @@ pre-commit install
 
 ## Update the environment
 
-If you need to update the environment installing a new package, you simply do it with:
-
-``` bash
-mamba install [package]  # or `pip install [package]` if you want to install it via pip
+If you need to add a new package to your project, you can install it using `uv pip`:
+```bash
+uv pip install <package_name>
 ```
+Then, to update the `requirements.txt` file, run:
 
-then update the environment.yml file so others can clone your environment with:
-
-``` bash
-mamba env export --no-builds -f environment.yml
+```bash
+uv pip freeze > requirements.txt
 ```
