@@ -1,7 +1,7 @@
 import { CollectionConfig } from "payload";
 
-import { SlugIDField } from "@/cms/fields/slug";
-import { DevOnlyAccessControl } from "@/cms/utils/dev-only-access-control";
+import { BBoxField } from "@/cms/fields/bbox-field";
+import { formatCompoundSlug } from "@/cms/utils/formatSlug";
 
 export const LOCATION_TYPE = {
   ADMIN_REGION: "ADMIN_REGION",
@@ -14,9 +14,24 @@ export const Locations: CollectionConfig = {
     defaultColumns: ["id", "name", "type"],
   },
   defaultSort: ["name"],
-  access: DevOnlyAccessControl,
+  indexes: [{ unique: true, fields: ["type", "code"] }],
+  // access: DevOnlyAccessControl, // TODO revise permissions and uncomment later
   fields: [
-    SlugIDField(),
+    {
+      name: "id",
+      type: "text",
+      index: true,
+      unique: true,
+      required: true,
+      admin: {
+        position: "sidebar",
+        readOnly: true,
+        description: `This field is automatically generated from 'type' and 'code' fields. It is usually used to create a URL-friendly version of the name.`,
+      },
+      hooks: {
+        beforeValidate: [formatCompoundSlug("type", "code")],
+      },
+    },
     {
       name: "name",
       type: "text",
@@ -25,10 +40,22 @@ export const Locations: CollectionConfig = {
       required: true,
     },
     {
+      name: "code",
+      type: "text",
+      localized: false,
+      unique: false,
+      required: true,
+      admin: {
+        description:
+          "A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location.",
+      },
+    },
+    {
       name: "geometry",
       type: "json",
       required: true,
     },
+    BBoxField,
     {
       name: "type",
       type: "select",

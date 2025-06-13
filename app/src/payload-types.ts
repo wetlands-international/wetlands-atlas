@@ -84,7 +84,10 @@ export interface Config {
       stories: 'stories';
     };
     indicators: {
-      layers: 'layers';
+      'indicator-data': 'indicator-data';
+    };
+    layers: {
+      indicators: 'indicators';
     };
   };
   collectionsSelect: {
@@ -274,8 +277,9 @@ export interface Indicator {
     [k: string]: unknown;
   } | null;
   category: string | Category;
-  layers?: {
-    docs?: (string | Layer)[];
+  layers?: (string | Layer)[] | null;
+  'indicator-data'?: {
+    docs?: (string | IndicatorDatum)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -307,8 +311,13 @@ export interface Layer {
     }[];
     [k: string]: unknown;
   };
-  indicator?: (string | null) | Indicator;
+  indicator?: (string | Indicator)[] | null;
   type: 'INDICATOR' | 'CONTEXTUAL';
+  indicators?: {
+    docs?: (string | Indicator)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -338,10 +347,14 @@ export interface IndicatorDatum {
  */
 export interface Location {
   /**
-   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
+   * This field is automatically generated from 'type' and 'code' fields. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
+  /**
+   * A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location.
+   */
+  code: string;
   geometry:
     | {
         [k: string]: unknown;
@@ -351,6 +364,16 @@ export interface Location {
     | number
     | boolean
     | null;
+  bbox: {
+    /**
+     * An array of four numbers representing two sets of coordinates (SW and NE).
+     *
+     * @minItems 4
+     * @maxItems 4
+     */
+    bbox: [number, number, number, number];
+    [k: string]: unknown;
+  };
   type: 'ADMIN_REGION' | 'HYDRO_BASIN';
   updatedAt: string;
   createdAt: string;
@@ -491,6 +514,7 @@ export interface IndicatorsSelect<T extends boolean = true> {
   description?: T;
   category?: T;
   layers?: T;
+  'indicator-data'?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -506,6 +530,7 @@ export interface LayersSelect<T extends boolean = true> {
   legend_config?: T;
   indicator?: T;
   type?: T;
+  indicators?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -528,7 +553,9 @@ export interface IndicatorDataSelect<T extends boolean = true> {
 export interface LocationsSelect<T extends boolean = true> {
   id?: T;
   name?: T;
+  code?: T;
   geometry?: T;
+  bbox?: T;
   type?: T;
   updatedAt?: T;
   createdAt?: T;
