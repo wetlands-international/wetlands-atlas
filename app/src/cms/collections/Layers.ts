@@ -44,7 +44,7 @@ export const Layers: CollectionConfig = {
       name: "indicator",
       type: "relationship",
       relationTo: "indicators",
-      hasMany: true,
+      hasMany: false,
       admin: {
         condition: (_, siblingData) => {
           // Don't show this field if the layer type is CONTEXTUAL
@@ -67,15 +67,6 @@ export const Layers: CollectionConfig = {
       ],
       defaultValue: LAYER_TYPE.CONTEXTUAL,
       required: true,
-    },
-    {
-      name: "indicators",
-      type: "join",
-      collection: "indicators",
-      on: "layers",
-      admin: {
-        defaultColumns: ["id", "name"],
-      },
     },
   ],
 };

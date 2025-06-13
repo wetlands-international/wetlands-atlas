@@ -1,5 +1,5 @@
 {
-  "id": "acaea8c1-0a24-4ef7-8e9b-e71f92706c3a",
+  "id": "7e6d1899-a68c-4379-8a67-071c7bc8dd4e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -609,137 +609,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.indicators_rels": {
-      "name": "indicators_rels",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "order": {
-          "name": "order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "parent_id": {
-          "name": "parent_id",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "path": {
-          "name": "path",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "layers_id": {
-          "name": "layers_id",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "indicators_rels_order_idx": {
-          "name": "indicators_rels_order_idx",
-          "columns": [
-            {
-              "expression": "order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "indicators_rels_parent_idx": {
-          "name": "indicators_rels_parent_idx",
-          "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "indicators_rels_path_idx": {
-          "name": "indicators_rels_path_idx",
-          "columns": [
-            {
-              "expression": "path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "indicators_rels_layers_id_idx": {
-          "name": "indicators_rels_layers_id_idx",
-          "columns": [
-            {
-              "expression": "layers_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "indicators_rels_parent_fk": {
-          "name": "indicators_rels_parent_fk",
-          "tableFrom": "indicators_rels",
-          "tableTo": "indicators",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "indicators_rels_layers_fk": {
-          "name": "indicators_rels_layers_fk",
-          "tableFrom": "indicators_rels",
-          "tableTo": "layers",
-          "columnsFrom": [
-            "layers_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.layers": {
       "name": "layers",
       "schema": "",
@@ -771,6 +640,12 @@
           "notNull": true,
           "default": "'{\"type\":\"basic\",\"items\":[{\"color\":\"#000000\",\"value\":\"value\"}]}'::jsonb"
         },
+        "indicator_id": {
+          "name": "indicator_id",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
         "type": {
           "name": "type",
           "type": "enum_layers_type",
@@ -795,6 +670,21 @@
         }
       },
       "indexes": {
+        "layers_indicator_idx": {
+          "name": "layers_indicator_idx",
+          "columns": [
+            {
+              "expression": "indicator_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
         "layers_updated_at_idx": {
           "name": "layers_updated_at_idx",
           "columns": [
@@ -826,7 +716,21 @@
           "with": {}
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "layers_indicator_id_indicators_id_fk": {
+          "name": "layers_indicator_id_indicators_id_fk",
+          "tableFrom": "layers",
+          "tableTo": "indicators",
+          "columnsFrom": [
+            "indicator_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -893,137 +797,6 @@
           "tableTo": "layers",
           "columnsFrom": [
             "_parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
-    "public.layers_rels": {
-      "name": "layers_rels",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "order": {
-          "name": "order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "parent_id": {
-          "name": "parent_id",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "path": {
-          "name": "path",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "indicators_id": {
-          "name": "indicators_id",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": false
-        }
-      },
-      "indexes": {
-        "layers_rels_order_idx": {
-          "name": "layers_rels_order_idx",
-          "columns": [
-            {
-              "expression": "order",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "layers_rels_parent_idx": {
-          "name": "layers_rels_parent_idx",
-          "columns": [
-            {
-              "expression": "parent_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "layers_rels_path_idx": {
-          "name": "layers_rels_path_idx",
-          "columns": [
-            {
-              "expression": "path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "layers_rels_indicators_id_idx": {
-          "name": "layers_rels_indicators_id_idx",
-          "columns": [
-            {
-              "expression": "indicators_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "layers_rels_parent_fk": {
-          "name": "layers_rels_parent_fk",
-          "tableFrom": "layers_rels",
-          "tableTo": "layers",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "layers_rels_indicators_fk": {
-          "name": "layers_rels_indicators_fk",
-          "tableFrom": "layers_rels",
-          "tableTo": "indicators",
-          "columnsFrom": [
-            "indicators_id"
           ],
           "columnsTo": [
             "id"

@@ -38,17 +38,11 @@ export const Indicators: CollectionConfig = {
     },
     {
       name: "layers",
-      type: "relationship",
-      relationTo: "layers",
-      hasMany: true,
-    },
-    {
-      name: "indicator-data",
       type: "join",
-      collection: "indicator-data",
+      collection: "layers",
       on: "indicator",
       admin: {
-        defaultColumns: ["id", "location"],
+        defaultColumns: ["id", "name"],
       },
     },
   ],

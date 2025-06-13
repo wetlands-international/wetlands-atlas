@@ -84,10 +84,7 @@ export interface Config {
       stories: 'stories';
     };
     indicators: {
-      'indicator-data': 'indicator-data';
-    };
-    layers: {
-      indicators: 'indicators';
+      layers: 'layers';
     };
   };
   collectionsSelect: {
@@ -277,9 +274,8 @@ export interface Indicator {
     [k: string]: unknown;
   } | null;
   category: string | Category;
-  layers?: (string | Layer)[] | null;
-  'indicator-data'?: {
-    docs?: (string | IndicatorDatum)[];
+  layers?: {
+    docs?: (string | Layer)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -311,13 +307,8 @@ export interface Layer {
     }[];
     [k: string]: unknown;
   };
-  indicator?: (string | Indicator)[] | null;
+  indicator?: (string | null) | Indicator;
   type: 'INDICATOR' | 'CONTEXTUAL';
-  indicators?: {
-    docs?: (string | Indicator)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -514,7 +505,6 @@ export interface IndicatorsSelect<T extends boolean = true> {
   description?: T;
   category?: T;
   layers?: T;
-  'indicator-data'?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -530,7 +520,6 @@ export interface LayersSelect<T extends boolean = true> {
   legend_config?: T;
   indicator?: T;
   type?: T;
-  indicators?: T;
   updatedAt?: T;
   createdAt?: T;
 }
