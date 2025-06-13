@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+titiler.core
+rio-tiler
+rasterio
+python-dotenv

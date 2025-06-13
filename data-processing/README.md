@@ -27,7 +27,6 @@ vscode remote development or run this command:
 docker exec -it data_processing_notebooks /bin/bash
 ```
 
-
 #### UV environment
 
 Create the environment with Python 3.12:
@@ -40,13 +39,11 @@ The virtual environment can be "activated" to make its packages available:
 
 ``` bash
 source .venv/bin/activate
-```
 
 To replicate project's environment use your the `requirements.txt` file.
 ```bash
 uv pip install -r requirements.txt
 ```
-
 
 ### `git` (if needed) and pre-commit hooks
 
