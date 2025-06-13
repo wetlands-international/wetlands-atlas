@@ -338,10 +338,14 @@ export interface IndicatorDatum {
  */
 export interface Location {
   /**
-   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
+   * This field is automatically generated from 'type' and 'code' fields. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
   name: string;
+  /**
+   * A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location.
+   */
+  code: string;
   geometry:
     | {
         [k: string]: unknown;
@@ -351,6 +355,15 @@ export interface Location {
     | number
     | boolean
     | null;
+  bbox: {
+    /**
+     * An array of four numbers representing two sets of coordinates (SW and NE).
+     *
+     * @minItems 4
+     * @maxItems 4
+     */
+    bbox: [number, number, number, number];
+  };
   type: 'ADMIN_REGION' | 'HYDRO_BASIN';
   updatedAt: string;
   createdAt: string;
@@ -528,7 +541,9 @@ export interface IndicatorDataSelect<T extends boolean = true> {
 export interface LocationsSelect<T extends boolean = true> {
   id?: T;
   name?: T;
+  code?: T;
   geometry?: T;
+  bbox?: T;
   type?: T;
   updatedAt?: T;
   createdAt?: T;

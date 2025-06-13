@@ -6,7 +6,6 @@ import { LegendConfigField } from "@/cms/fields/legend-config";
 import { ParamsConfigField } from "@/cms/fields/params-config-field";
 import { RenderingConfigField } from "@/cms/fields/rendering-config";
 import { SlugIDField } from "@/cms/fields/slug";
-import { DevOnlyAccessControl } from "@/cms/utils/dev-only-access-control";
 import { LayerTypeValidation } from "@/cms/utils/layer-validation";
 
 export const enum LAYER_TYPE {
@@ -21,7 +20,7 @@ export const Layers: CollectionConfig = {
     defaultColumns: ["id", "name"],
   },
   defaultSort: ["name"],
-  access: DevOnlyAccessControl,
+  // access: DevOnlyAccessControl, // TODO revise permissions and uncomment later
   hooks: {
     beforeValidate: [LayerTypeValidation],
     afterChange: [

@@ -10,9 +10,7 @@ export const Categories: CollectionConfig = {
     useAsTitle: "name",
     defaultColumns: ["id", "name"],
   },
-  access: {
-    read: () => true,
-  },
+  // access: DevOnlyAccessControl, // TODO revise permissions and uncomment later
   fields: [
     SlugIDField(),
     {
