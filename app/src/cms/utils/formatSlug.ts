@@ -28,4 +28,16 @@ const formatSlug =
     return value;
   };
 
+export const formatCompoundSlug =
+  (field1: string, field2: string): FieldHook =>
+  ({ operation, value, siblingData }) => {
+    if (operation === "create" || operation === "update") {
+      const slugData = `${siblingData[field1]}-${siblingData[field2]}`;
+      console.log(slugify(siblingData[field1], slugifyOptions));
+      return slugify(slugData, slugifyOptions); // TODO doesn't seem to work for updates
+    }
+
+    return value;
+  };
+
 export default formatSlug;

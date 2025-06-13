@@ -1,14 +1,12 @@
 import { CollectionConfig } from "payload";
 
-import { DevOnlyAccessControl } from "@/cms/utils/dev-only-access-control";
-
 // This entity will be seeded manually and is it not intended to be changed manually
 export const IndicatorDatas: CollectionConfig = {
   slug: "indicator-data",
   admin: {
     defaultColumns: ["id", "indicator", "location"],
   },
-  access: DevOnlyAccessControl,
+  // access: DevOnlyAccessControl, // TODO revise permissions and uncomment later
   fields: [
     {
       name: "id",
