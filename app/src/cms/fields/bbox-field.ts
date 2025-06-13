@@ -15,6 +15,7 @@ export const BBoxField: Field = {
     fileMatch: ["a://b/bbox.json"], // required
     schema: {
       type: "object",
+      additionalProperties: false,
       properties: {
         bbox: {
           type: "array",

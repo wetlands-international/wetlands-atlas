@@ -363,7 +363,6 @@ export interface Location {
      * @maxItems 4
      */
     bbox: [number, number, number, number];
-    [k: string]: unknown;
   };
   type: 'ADMIN_REGION' | 'HYDRO_BASIN';
   updatedAt: string;
