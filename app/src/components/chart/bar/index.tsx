@@ -7,15 +7,16 @@ import {
   Bar,
   XAxis,
   YAxis,
-  Tooltip,
   ResponsiveContainer,
   Cell,
   Rectangle,
   BarProps,
   RectangleProps,
+  Tooltip,
 } from "recharts";
 
 import { Tick } from "@/components/chart/tick";
+import { ChartTooltip } from "@/components/chart/tooltip";
 
 const data = [
   {
@@ -77,9 +78,14 @@ export default function BarChartComponent() {
         }}
       >
         <defs>
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#8884d8" stopOpacity={1} />
             <stop offset="100%" stopColor="#8884d8" stopOpacity={0} />
+          </linearGradient>
+
+          <linearGradient id="activeColor" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#FFFFFF" stopOpacity={1} />
+            <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0} />
           </linearGradient>
         </defs>
 
@@ -93,13 +99,27 @@ export default function BarChartComponent() {
           angle={-30}
           tickLine={false}
           interval={0}
-          tick={Tick}
+          tick={(props) =>
+            Tick({
+              ...props,
+              textAnchor: "end",
+            })
+          }
         />
         <YAxis axisLine={false} tickLine={false} tick={Tick} />
-        <Tooltip isAnimationActive={false} wrapperClassName="text-background" />
+
+        <Tooltip
+          content={ChartTooltip}
+          isAnimationActive={false}
+          cursor={{
+            fill: "var(--foreground)",
+            fillOpacity: 0.1,
+          }}
+        />
+
         <Bar
           dataKey="pv"
-          fill="url(#colorUv)"
+          fill="url(#color)"
           shape={(props: unknown) => {
             const rectangleProps = props as RectangleProps & BarProps;
 
@@ -110,9 +130,10 @@ export default function BarChartComponent() {
               />
             );
           }}
+          activeBar={{ fill: "url(#activeColor)" }}
         >
           {data.map((_, index) => (
-            <Cell key={`cell-${index}`} fill="url(#colorUv)" stroke={"var(--foreground)"} />
+            <Cell key={`cell-${index}`} fill="url(#color)" stroke={"var(--foreground)"} />
           ))}
         </Bar>
       </BarChart>
