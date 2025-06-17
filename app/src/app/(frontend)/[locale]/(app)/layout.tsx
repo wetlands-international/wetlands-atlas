@@ -13,7 +13,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         {children}
 
         <div className="pointer-events-none fixed top-4 right-4 z-10 flex items-center gap-2">
-          <Language />
+          <Suspense>
+            <Language />
+          </Suspense>
           <Toggle />
         </div>
 
