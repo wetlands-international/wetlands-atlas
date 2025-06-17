@@ -3,7 +3,13 @@
     "title": "Wetlands!",
     "home": "Home",
     "admin": "Admin",
-    "playground": "Playground"
+    "playground": "Playground",
+    "stories": "Stories",
+    "insights": "Insights"
+  },
+  "language": {
+    "en": "English",
+    "es": "Spanish"
   },
   "home": {
     "hero": {
