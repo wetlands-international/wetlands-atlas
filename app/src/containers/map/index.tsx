@@ -63,7 +63,7 @@ export const MapContainer = (props: MapProps) => {
   }, [tmpBbox, handleFitBounds]);
 
   return (
-    <div className="relative flex grow flex-col overflow-hidden bg-[#326E82]">
+    <div className="fixed top-0 left-0 z-0 h-full w-full overflow-hidden bg-[#326E82]">
       <Map
         id="exploreMap"
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}

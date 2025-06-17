@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 
 import { locationsAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 export const Indicators = ({ children }: PropsWithChildren) => {
   const { enabled } = useAtomValue(locationsAtom);
 
@@ -17,12 +19,17 @@ export const Indicators = ({ children }: PropsWithChildren) => {
 
   return (
     <section
-      className={cn("fill-mode-forwards absolute h-full w-full duration-300", {
-        "animate-in fade-in slide-in-from-left-25 pointer-events-auto": !enabled,
-        "animate-out fade-out slide-out-to-left-25 pointer-events-none": enabled,
-      })}
+      className={cn(
+        "fill-mode-forwards relative flex w-full grow flex-col overflow-hidden duration-300",
+        {
+          "animate-in fade-in slide-in-from-left-25 pointer-events-auto": !enabled,
+          "animate-out fade-out slide-out-to-left-25 pointer-events-none": enabled,
+        },
+      )}
     >
-      {children}
+      <ScrollArea className="relative flex w-full overflow-auto rounded-4xl px-2.5">
+        {children}
+      </ScrollArea>
     </section>
   );
 };

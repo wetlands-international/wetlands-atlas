@@ -20,7 +20,9 @@ export const Header = ({
   const t = useTranslations();
 
   return (
-    <header className={cn("flex items-center gap-2.5", className)}>
+    <header
+      className={cn("relative top-0 left-0 z-10 flex w-full items-center gap-2.5", className)}
+    >
       <h1
         className={cn(
           "relative flex size-16 shrink-0 items-center justify-center rounded-full",

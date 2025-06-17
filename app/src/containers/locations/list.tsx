@@ -21,7 +21,7 @@ export const LocationsList = async () => {
   });
 
   return (
-    <CommandList>
+    <CommandList className="bg-foreground rounded-4xl p-6">
       <CommandEmpty>
         <span className="text-muted-foreground">No locations found</span>
       </CommandEmpty>

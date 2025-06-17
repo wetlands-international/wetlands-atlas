@@ -1,6 +1,6 @@
 "use client";
 
-import BarChartComponent from "@/components/chart/bar";
+import RankingChartComponent from "@/components/chart/ranking";
 // import ScatterChartComponent from "@/components/chart/scatter";
 import { Lexical } from "@/components/ui/lexical";
 import { Switch } from "@/components/ui/switch";
@@ -30,13 +30,10 @@ export const IndicatorsItem = (indicator: Indicator) => {
         </div>
       )}
 
-      <div className="-mx-6 h-64">
-        <BarChartComponent />
+      <div className="-mx-6 aspect-video">
+        {/* <BarChartComponent /> */}
+        <RankingChartComponent />
       </div>
-
-      <ul>
-        <li className="font-display text-2xl">60%</li>
-      </ul>
     </div>
   );
 };
