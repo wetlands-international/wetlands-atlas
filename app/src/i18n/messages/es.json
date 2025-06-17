@@ -3,7 +3,13 @@
     "title": "Zonas húmedas!",
     "home": "Inicio",
     "admin": "Administración",
-    "playground": "Zona de juegos"
+    "playground": "Zona de juegos",
+    "stories": "Historias",
+    "insights": "Descubrimientos"
+  },
+  "language": {
+    "en": "Inglés",
+    "es": "Español"
   },
   "home": {
     "hero": {
