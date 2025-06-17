@@ -2,6 +2,8 @@
 
 import React, { useMemo } from "react";
 
+import { formatNumber } from "@/lib/formats";
+
 const data = [
   {
     name: "Peatland",
@@ -59,13 +61,16 @@ export default function RankingChartComponent() {
         {data
           .sort((a, b) => b.pv - a.pv)
           .map((item, index) => (
-            <li key={index} className="flex flex-col gap-2">
-              <div className="flex items-center justify-between gap-1">
+            <li key={index} className="flex flex-col gap-1">
+              <div className="flex items-center justify-between gap-2">
                 <span className="shrink-0 text-sm">{item.name}</span>
-                <span className="text-muted-foreground text-sm">{item.pv}</span>
+                <span className="text-muted-foreground text-sm">{formatNumber(item.pv)}</span>
               </div>
               <div className="h-2.5 w-full">
-                <div className="h-2.5 bg-blue-500" style={{ width: `${scale(item.pv)}%` }}></div>
+                <div
+                  className="border-foreground/50 to-accent-500 h-2.5 border bg-gradient-to-r from-purple-500"
+                  style={{ width: `${scale(item.pv)}%` }}
+                ></div>
               </div>
             </li>
           ))}
