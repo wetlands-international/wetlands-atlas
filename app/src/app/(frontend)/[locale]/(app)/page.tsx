@@ -23,8 +23,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AppPage() {
   return (
-    <aside className="absolute top-4 left-4 z-10 w-full max-w-md">
-      <Command className="flex w-full flex-col gap-2.5">
+    <aside className="absolute top-0 left-0 z-10 h-[calc(100svh_-_theme(space.16))] w-full max-w-md overflow-hidden">
+      <Command className="flex h-full w-full flex-col gap-2.5 p-4">
         <Header>
           <Suspense>
             <LocationsSearch />
@@ -32,15 +32,13 @@ export default async function AppPage() {
         </Header>
 
         <Suspense>
-          <div className="relative">
-            <Locations>
-              <LocationsList />
-            </Locations>
+          <Locations>
+            <LocationsList />
+          </Locations>
 
-            <Indicators>
-              <IndicatorsList />
-            </Indicators>
-          </div>
+          <Indicators>
+            <IndicatorsList />
+          </Indicators>
         </Suspense>
       </Command>
     </aside>

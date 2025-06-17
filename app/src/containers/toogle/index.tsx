@@ -10,7 +10,7 @@ export const Toggle = () => {
   const pathname = usePathname();
 
   return (
-    <div className="pointer-events-none absolute top-4 right-4 z-10">
+    <div className="pointer-events-none fixed top-4 right-4 z-10">
       <ul className="bg-background inline-flex items-center gap-1 rounded-4xl p-0.5">
         <li>
           <Link

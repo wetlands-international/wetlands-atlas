@@ -1,3 +1,7 @@
+"use client";
+
+import RankingChartComponent from "@/components/chart/ranking";
+// import ScatterChartComponent from "@/components/chart/scatter";
 import { Lexical } from "@/components/ui/lexical";
 import { Switch } from "@/components/ui/switch";
 
@@ -10,6 +14,7 @@ export const IndicatorsItem = (indicator: Indicator) => {
         <h2 className="text-base font-semibold uppercase">{indicator.name}</h2>
         <Switch />
       </header>
+
       {!!indicator.description && (
         <div className="prose prose-invert prose-sm">
           <Lexical
@@ -24,9 +29,11 @@ export const IndicatorsItem = (indicator: Indicator) => {
           />
         </div>
       )}
-      <ul>
-        <li className="font-display text-2xl">60%</li>
-      </ul>
+
+      <div className="-mx-6 aspect-video">
+        {/* <BarChartComponent /> */}
+        <RankingChartComponent />
+      </div>
     </div>
   );
 };
