@@ -22,8 +22,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function StoriesPage() {
   return (
     <>
-      <aside className="absolute top-4 left-4 z-10 w-full max-w-md">
-        <Command className="flex w-full flex-col gap-2.5">
+      <aside className="absolute top-0 left-0 z-10 w-full max-w-md">
+        <Command className="flex w-full flex-col gap-2.5 p-4">
           <Header>
             <Suspense>
               <StoriesSearch />
