@@ -10,4 +10,6 @@ export const basemapParser = parseAsStringLiteral(
   Object.values(BASEMAPS).map((b) => b.id),
 ).withDefault("default");
 
+export const indicatorsParser = parseAsArrayOf(parseAsString);
+
 export const locationParser = parseAsString.withDefault("Worldwide");
