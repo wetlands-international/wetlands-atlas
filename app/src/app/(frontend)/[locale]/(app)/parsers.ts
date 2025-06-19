@@ -13,3 +13,4 @@ export const basemapParser = parseAsStringLiteral(
 export const indicatorsParser = parseAsArrayOf(parseAsString);
 
 export const locationParser = parseAsString.withDefault("Worldwide");
+export const insightParser = parseAsString;

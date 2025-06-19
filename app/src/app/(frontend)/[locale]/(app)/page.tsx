@@ -5,6 +5,8 @@ import { Metadata } from "next";
 import { Command } from "cmdk";
 import { getTranslations } from "next-intl/server";
 
+import { Categories } from "@/containers/categories";
+import { CategoriesList } from "@/containers/categories/list";
 import { Header } from "@/containers/header";
 import { Indicators } from "@/containers/indicators";
 import { IndicatorsList } from "@/containers/indicators/list";
@@ -32,13 +34,17 @@ export default async function AppPage() {
         </Header>
 
         <Suspense>
-          <Locations>
-            <LocationsList />
-          </Locations>
+          <Categories>
+            <CategoriesList />
+          </Categories>
 
           <Indicators>
             <IndicatorsList />
           </Indicators>
+
+          <Locations>
+            <LocationsList />
+          </Locations>
         </Suspense>
       </Command>
     </aside>

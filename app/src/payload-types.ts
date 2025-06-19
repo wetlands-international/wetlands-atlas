@@ -179,6 +179,7 @@ export interface Category {
   id: string;
   name: string;
   description?: string | null;
+  cover?: (number | null) | Media;
   stories?: {
     docs?: (string | Story)[];
     hasNextPage?: boolean;
@@ -490,6 +491,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   description?: T;
+  cover?: T;
   stories?: T;
   updatedAt?: T;
   createdAt?: T;

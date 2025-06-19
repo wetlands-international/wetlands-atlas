@@ -1,7 +1,13 @@
 import { atom } from "jotai";
 import { useQueryState } from "nuqs";
 
-import { basemapParser, bboxParser, indicatorsParser, locationParser } from "./parsers";
+import {
+  basemapParser,
+  bboxParser,
+  indicatorsParser,
+  insightParser,
+  locationParser,
+} from "./parsers";
 
 // MAP
 export const useSyncBbox = () => {
@@ -11,6 +17,11 @@ export const tmpBboxAtom = atom<number[]>();
 
 export const useSyncBasemap = () => {
   return useQueryState("basemap", basemapParser);
+};
+
+// INSIGHTS
+export const useSyncInsight = () => {
+  return useQueryState("insight", insightParser);
 };
 
 // LOCATIONS
