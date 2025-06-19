@@ -39,8 +39,8 @@ export const CategoriesItem = (category: Category) => {
           )}
         </header>
 
-        <div className="bg-background/50 group-hover:bg-primary relative flex size-12 items-center justify-center rounded-full transition-colors duration-500">
-          <span className="bg-primary absolute top-1/2 left-1/2 hidden h-8/12 w-8/12 -translate-1/2 rounded-full group-hover:block group-hover:animate-ping" />
+        <div className="bg-background/50 group-hover:bg-primary relative flex size-12 items-center justify-center rounded-full backdrop-blur-xs transition-colors duration-500">
+          <span className="bg-primary absolute top-1/2 left-1/2 hidden h-9/12 w-9/12 -translate-1/2 rounded-full group-hover:block group-hover:animate-ping" />
           <LuChevronRight className="text-foreground relative z-10 size-5" />
         </div>
       </div>

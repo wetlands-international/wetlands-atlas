@@ -70,6 +70,9 @@
   --color-green-700: hsl(67 51% 49%);
   --color-green-800: hsl(64 51% 43%);
   --color-green-900: hsl(57 53% 33%);
+
+  /* animation */
+  --animate-ping: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
 :root {
