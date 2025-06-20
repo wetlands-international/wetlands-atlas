@@ -14,7 +14,7 @@ export const CategoriesList = async () => {
 
   const categories = await payload.find({
     collection: "categories",
-    depth: 0,
+    depth: 1,
     limit: 100,
     page: 1,
     sort: "name",

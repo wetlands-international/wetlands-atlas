@@ -71,7 +71,10 @@
   --color-green-800: hsl(64 51% 43%);
   --color-green-900: hsl(57 53% 33%);
 
-  /* animation */
+  /*  */
+  --text-2xs: 0.625rem;
+
+  /* Animation */
   --animate-ping: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 

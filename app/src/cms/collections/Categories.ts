@@ -33,6 +33,16 @@ export const Categories: CollectionConfig = {
       localized: false,
     },
     {
+      name: "indicators",
+      label: "Related indicators",
+      type: "join",
+      collection: "indicators",
+      on: "category",
+      admin: {
+        allowCreate: false,
+      },
+    },
+    {
       name: "stories",
       label: "Related Stories",
       type: "join",
