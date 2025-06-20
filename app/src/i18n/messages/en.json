@@ -11,6 +11,10 @@
     "en": "English",
     "es": "Spanish"
   },
+  "insights": {
+    "title": "Discover wetlands",
+    "description": "Dive into different topics that define these unique ecosystems and uncover their significant impact on our environment."
+  },
   "home": {
     "hero": {
       "title": "Wetlands!",

@@ -6,14 +6,17 @@ import { useAtomValue } from "jotai";
 
 import { cn } from "@/lib/utils";
 
-import { locationsAtom } from "@/app/(frontend)/[locale]/(app)/store";
+import { locationsAtom, useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const Indicators = ({ children }: PropsWithChildren) => {
   const { enabled } = useAtomValue(locationsAtom);
+  const [insight] = useSyncInsight();
 
-  if (enabled) {
+  const visible = !enabled && !!insight;
+
+  if (!visible) {
     return null;
   }
 
@@ -22,8 +25,8 @@ export const Indicators = ({ children }: PropsWithChildren) => {
       className={cn(
         "fill-mode-forwards relative flex w-full grow flex-col overflow-hidden duration-300",
         {
-          "animate-in fade-in slide-in-from-left-25 pointer-events-auto": !enabled,
-          "animate-out fade-out slide-out-to-left-25 pointer-events-none": enabled,
+          "animate-in fade-in slide-in-from-left-25 pointer-events-auto": visible,
+          "animate-out fade-out slide-out-to-left-25 pointer-events-none": !visible,
         },
       )}
     >

@@ -63,7 +63,7 @@ export function ImageReveal({ imageUrl }: { imageUrl?: string }) {
   //   imageUrl,
   //   "We need to set up the media storage and upload the image to the server before we can use this",
   // );
-  const imageTexture = useTexture("/test.jpg"); // Replace with imageUrl if needed
+  const imageTexture = useTexture("https://picsum.photos/1280/720"); // Replace with imageUrl if needed
 
   const randomCenter = useMemo(() => {
     return new THREE.Vector2(

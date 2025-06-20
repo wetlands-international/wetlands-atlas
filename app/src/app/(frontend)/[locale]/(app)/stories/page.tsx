@@ -31,16 +31,14 @@ export default async function StoriesPage() {
           </Header>
 
           <Suspense>
-            <div className="relative">
-              <StoriesFilters>
-                <p className="text-background">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-                  ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis,
-                  architecto ut veritatis eius exercitationem aperiam perspiciatis qui doloribus
-                  debitis?
-                </p>
-              </StoriesFilters>
-            </div>
+            <StoriesFilters>
+              <p className="text-background bg-foreground p-6">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
+                ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis,
+                architecto ut veritatis eius exercitationem aperiam perspiciatis qui doloribus
+                debitis?
+              </p>
+            </StoriesFilters>
           </Suspense>
         </Command>
       </aside>

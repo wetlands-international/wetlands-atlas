@@ -27,11 +27,30 @@ export const Categories: CollectionConfig = {
       localized: true,
     },
     {
+      name: "cover",
+      type: "upload",
+      relationTo: "media",
+      localized: false,
+    },
+    {
+      name: "indicators",
+      label: "Related indicators",
+      type: "join",
+      collection: "indicators",
+      on: "category",
+      admin: {
+        allowCreate: false,
+      },
+    },
+    {
       name: "stories",
       label: "Related Stories",
       type: "join",
       collection: "stories",
       on: "category",
+      admin: {
+        allowCreate: false,
+      },
     },
   ],
 
