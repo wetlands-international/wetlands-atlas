@@ -8,24 +8,30 @@ import { cn } from "@/lib/utils";
 
 import { storiesAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 export const StoriesFilters = ({ children }: PropsWithChildren) => {
   const { enabled } = useAtomValue(storiesAtom);
 
-  if (!enabled) {
+  const visible = enabled;
+
+  if (!visible) {
     return null;
   }
 
   return (
     <section
       className={cn(
-        "fill-mode-forwards bg-foreground absolute w-full rounded-4xl p-6 duration-300",
+        "fill-mode-forwards relative flex w-full grow flex-col overflow-hidden duration-300",
         {
-          "animate-in fade-in slide-in-from-left-25 pointer-events-auto": enabled,
-          "animate-out fade-out slide-out-to-left-25 pointer-events-none": !enabled,
+          "animate-in fade-in slide-in-from-left-25 pointer-events-auto": visible,
+          "animate-out fade-out slide-out-to-left-25 pointer-events-none": !visible,
         },
       )}
     >
-      {children}
+      <ScrollArea className="relative flex w-full overflow-auto rounded-4xl px-2.5">
+        {children}
+      </ScrollArea>
     </section>
   );
 };

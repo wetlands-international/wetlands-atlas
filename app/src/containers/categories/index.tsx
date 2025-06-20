@@ -1,33 +1,38 @@
-import { getPayload } from "payload";
+"use client";
 
-import { getLocale } from "next-intl/server";
+import { PropsWithChildren } from "react";
 
-import payloadConfig from "@/payload.config";
+import { useAtomValue } from "jotai";
 
-export const Categories = async () => {
-  const locale = await getLocale();
+import { cn } from "@/lib/utils";
 
-  const payload = await getPayload({ config: payloadConfig });
+import { locationsAtom, useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
 
-  const categories = await payload.find({
-    collection: "categories",
-    depth: 0,
-    limit: 100,
-    page: 1,
-    sort: "name",
-    locale,
-  });
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+export const Categories = ({ children }: PropsWithChildren) => {
+  const { enabled } = useAtomValue(locationsAtom);
+  const [insight] = useSyncInsight();
+
+  const visible = !enabled && !insight;
+
+  if (!visible) {
+    return null;
+  }
 
   return (
-    <div className="grid gap-4">
-      {categories.docs.map((category) => (
-        <div key={category.id} className="flex flex-col gap-2">
-          <h2 className="text-sm font-semibold uppercase">{category.name}</h2>
-          {!!category.description && (
-            <div className="prose prose-invert prose-sm">{category.description}</div>
-          )}
-        </div>
-      ))}
-    </div>
+    <section
+      className={cn(
+        "fill-mode-forwards relative flex w-full grow flex-col overflow-hidden duration-300",
+        {
+          "animate-in fade-in slide-in-from-left-25 pointer-events-auto": visible,
+          "animate-out fade-out slide-out-to-left-25 pointer-events-none": !visible,
+        },
+      )}
+    >
+      <ScrollArea className="relative flex w-full overflow-auto rounded-4xl px-2.5">
+        {children}
+      </ScrollArea>
+    </section>
   );
 };

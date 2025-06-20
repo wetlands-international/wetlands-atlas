@@ -81,6 +81,7 @@ export interface Config {
   };
   collectionsJoins: {
     categories: {
+      indicators: 'indicators';
       stories: 'stories';
     };
     indicators: {
@@ -179,69 +180,17 @@ export interface Category {
   id: string;
   name: string;
   description?: string | null;
+  cover?: (number | null) | Media;
+  indicators?: {
+    docs?: (string | Indicator)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   stories?: {
     docs?: (string | Story)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stories".
- */
-export interface Story {
-  /**
-   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
-   */
-  id: string;
-  name: string;
-  description: string;
-  cover?: (number | null) | Media;
-  category: string | Category;
-  location: {
-    latitude: number;
-    longitude: number;
-    id?: string | null;
-    blockName?: string | null;
-    blockType: 'location';
-  }[];
-  published?: boolean | null;
-  steps?:
-    | {
-        type: 'map' | 'chart';
-        sidebar: {
-          root: {
-            type: string;
-            children: {
-              type: string;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        };
-        map?: {
-          bbox: unknown[];
-          layers?: string[];
-        };
-        chart?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -309,6 +258,64 @@ export interface Layer {
   };
   indicator?: (string | null) | Indicator;
   type: 'INDICATOR' | 'CONTEXTUAL';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "stories".
+ */
+export interface Story {
+  /**
+   * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
+   */
+  id: string;
+  name: string;
+  description: string;
+  cover?: (number | null) | Media;
+  category: string | Category;
+  location: {
+    latitude: number;
+    longitude: number;
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'location';
+  }[];
+  published?: boolean | null;
+  steps?:
+    | {
+        type: 'map' | 'chart';
+        sidebar: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        map?: {
+          bbox: unknown[];
+          layers?: string[];
+        };
+        chart?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -490,6 +497,8 @@ export interface CategoriesSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   description?: T;
+  cover?: T;
+  indicators?: T;
   stories?: T;
   updatedAt?: T;
   createdAt?: T;
