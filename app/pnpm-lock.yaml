@@ -238,8 +238,8 @@ importers:
         specifier: 7.7.1
         version: 7.7.1(typescript@5.7.3)
       payload-oapi:
-        specifier: 0.2.0
-        version: 0.2.0(payload@3.37.0(graphql@16.10.0)(typescript@5.7.3))
+        specifier: 0.2.4-b.0
+        version: 0.2.4-b.0(payload@3.37.0(graphql@16.10.0)(typescript@5.7.3))
       prettier:
         specifier: ^3.4.2
         version: 3.5.3
@@ -5681,8 +5681,8 @@ packages:
     resolution: {integrity: sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==}
     engines: {node: '>= 14.16'}
 
-  payload-oapi@0.2.0:
-    resolution: {integrity: sha512-PGzotcY4PzGUlsbeKDdOXLpiALVnPTS8twypaR7qwZBDkHndP281mPGFxZvuMNHz1yWVBI4hN8hoPAzpBzVV/g==}
+  payload-oapi@0.2.4-b.0:
+    resolution: {integrity: sha512-mRWRdYd47pC7JKyDPC6EAVUdxrZYU1f081+lkZhb7prYM1RpOSC4+89fjkpZdEuciqzgAM2+n3TKyhAhuAtQbg==}
     peerDependencies:
       payload: ^3.0.0
 
@@ -13248,7 +13248,7 @@ snapshots:
 
   pathval@2.0.0: {}
 
-  payload-oapi@0.2.0(payload@3.37.0(graphql@16.10.0)(typescript@5.7.3)):
+  payload-oapi@0.2.4-b.0(payload@3.37.0(graphql@16.10.0)(typescript@5.7.3)):
     dependencies:
       '@openapi-contrib/json-schema-to-openapi-schema': 3.0.3
       mutative: 1.1.0

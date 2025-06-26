@@ -745,6 +745,432 @@ export interface paths {
     };
     trace?: never;
   };
+  "/api/indicator-data": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Retrieve a list of Indicator Data */
+    get: {
+      parameters: {
+        query?: {
+          page?: number;
+          limit?: number;
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+          sort?: "id" | "-id" | "updatedAt" | "-updatedAt" | "createdAt" | "-createdAt";
+          where?: Record<string, never> &
+            (
+              | components["schemas"]["IndicatorDatumQueryOperations"]
+              | components["schemas"]["IndicatorDatumQueryOperationsAnd"]
+              | components["schemas"]["IndicatorDatumQueryOperationsOr"]
+            );
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["IndicatorDatumListResponse"];
+      };
+    };
+    put?: never;
+    /** Create a new Indicator Datum */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: components["requestBodies"]["IndicatorDatumRequestBody"];
+      responses: {
+        201: components["responses"]["NewIndicatorDatumResponse"];
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/indicator-data/{id}": {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Indicator Datum */
+        id: string;
+      };
+      cookie?: never;
+    };
+    /** Find a Indicator Datum by ID */
+    get: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Indicator Datum */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["IndicatorDatumResponse"];
+        404: components["responses"]["IndicatorDatumNotFoundResponse"];
+      };
+    };
+    put?: never;
+    post?: never;
+    /** Delete a Indicator Datum */
+    delete: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Indicator Datum */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["IndicatorDatumResponse"];
+        404: components["responses"]["IndicatorDatumNotFoundResponse"];
+      };
+    };
+    options?: never;
+    head?: never;
+    /** Update a Indicator Datum */
+    patch: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Indicator Datum */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["IndicatorDatumResponse"];
+        404: components["responses"]["IndicatorDatumNotFoundResponse"];
+      };
+    };
+    trace?: never;
+  };
+  "/api/locations": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Retrieve a list of Locations */
+    get: {
+      parameters: {
+        query?: {
+          page?: number;
+          limit?: number;
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+          sort?:
+            | "id"
+            | "-id"
+            | "name"
+            | "-name"
+            | "code"
+            | "-code"
+            | "updatedAt"
+            | "-updatedAt"
+            | "createdAt"
+            | "-createdAt";
+          where?: Record<string, never> &
+            (
+              | components["schemas"]["LocationQueryOperations"]
+              | components["schemas"]["LocationQueryOperationsAnd"]
+              | components["schemas"]["LocationQueryOperationsOr"]
+            );
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["LocationListResponse"];
+      };
+    };
+    put?: never;
+    /** Create a new Location */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: components["requestBodies"]["LocationRequestBody"];
+      responses: {
+        201: components["responses"]["NewLocationResponse"];
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/locations/{id}": {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Location */
+        id: string;
+      };
+      cookie?: never;
+    };
+    /** Find a Location by ID */
+    get: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Location */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["LocationResponse"];
+        404: components["responses"]["LocationNotFoundResponse"];
+      };
+    };
+    put?: never;
+    post?: never;
+    /** Delete a Location */
+    delete: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Location */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["LocationResponse"];
+        404: components["responses"]["LocationNotFoundResponse"];
+      };
+    };
+    options?: never;
+    head?: never;
+    /** Update a Location */
+    patch: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Location */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["LocationResponse"];
+        404: components["responses"]["LocationNotFoundResponse"];
+      };
+    };
+    trace?: never;
+  };
+  "/api/stories": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Retrieve a list of Stories */
+    get: {
+      parameters: {
+        query?: {
+          page?: number;
+          limit?: number;
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+          sort?:
+            | "id"
+            | "-id"
+            | "name"
+            | "-name"
+            | "updatedAt"
+            | "-updatedAt"
+            | "createdAt"
+            | "-createdAt";
+          where?: Record<string, never> &
+            (
+              | components["schemas"]["StoryQueryOperations"]
+              | components["schemas"]["StoryQueryOperationsAnd"]
+              | components["schemas"]["StoryQueryOperationsOr"]
+            );
+        };
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["StoryListResponse"];
+      };
+    };
+    put?: never;
+    /** Create a new Story */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: components["requestBodies"]["StoryRequestBody"];
+      responses: {
+        201: components["responses"]["NewStoryResponse"];
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/stories/{id}": {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Story */
+        id: string;
+      };
+      cookie?: never;
+    };
+    /** Find a Story by ID */
+    get: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Story */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["StoryResponse"];
+        404: components["responses"]["StoryNotFoundResponse"];
+      };
+    };
+    put?: never;
+    post?: never;
+    /** Delete a Story */
+    delete: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Story */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["StoryResponse"];
+        404: components["responses"]["StoryNotFoundResponse"];
+      };
+    };
+    options?: never;
+    head?: never;
+    /** Update a Story */
+    patch: {
+      parameters: {
+        query?: {
+          depth?: number;
+          locale?: string;
+          "fallback-locale"?: string;
+        };
+        header?: never;
+        path: {
+          /** @description ID of the Story */
+          id: string;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        200: components["responses"]["StoryResponse"];
+        404: components["responses"]["StoryNotFoundResponse"];
+      };
+    };
+    trace?: never;
+  };
   "/api/payload-locked-documents": {
     parameters: {
       query?: never;
@@ -1171,6 +1597,8 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    /** @example Europe/Prague */
+    supportedTimezones: string;
     /** User */
     User: {
       id: string;
@@ -1187,7 +1615,7 @@ export interface components {
     };
     /** Media */
     Media: {
-      id: string;
+      id: number;
       alt: string;
       updatedAt: string;
       createdAt: string;
@@ -1203,16 +1631,27 @@ export interface components {
     };
     /** Category */
     Category: {
-      /** @description This field is automatically generated from the name field. It is used to create a URL-friendly version of the name. */
+      /** @description This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name. */
       id: string;
       name: string;
       description?: string | null;
+      cover?: (number | null) | components["schemas"]["Media"];
+      indicators?: {
+        docs?: (string | components["schemas"]["Indicator"])[];
+        hasNextPage?: boolean;
+        totalDocs?: number;
+      };
+      stories?: {
+        docs?: (string | components["schemas"]["Story"])[];
+        hasNextPage?: boolean;
+        totalDocs?: number;
+      };
       updatedAt: string;
       createdAt: string;
     };
     /** Indicator */
     Indicator: {
-      /** @description This field is automatically generated from the name field. It is used to create a URL-friendly version of the name. */
+      /** @description This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name. */
       id: string;
       name: string;
       /** @description Formatted data values can be injected using a special syntax. If the widget type is Percentage bar, then you can use "{value}". If it is Range bar, then you can use "{min}", "{max}" and "{average}". If it is Pie, you can use "{value[0]}", "{value[1]}", and so on. */
@@ -1243,7 +1682,7 @@ export interface components {
     };
     /** Layer */
     Layer: {
-      /** @description This field is automatically generated from the name field. It is used to create a URL-friendly version of the name. */
+      /** @description This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name. */
       id: string;
       name: string;
       config: Record<string, never>;
@@ -1260,6 +1699,82 @@ export interface components {
         }[];
       };
       indicator?: (string | null) | components["schemas"]["Indicator"];
+      /** @enum {string} */
+      type: "INDICATOR" | "CONTEXTUAL";
+      updatedAt: string;
+      createdAt: string;
+    };
+    /** Indicator Datum */
+    IndicatorDatum: {
+      id: string;
+      indicator: string | components["schemas"]["Indicator"];
+      location: string | components["schemas"]["Location"];
+      data: (Record<string, never> | unknown[] | string | number | boolean) | null;
+      updatedAt: string;
+      createdAt: string;
+    };
+    /** Location */
+    Location: {
+      /** @description This field is automatically generated from 'type' and 'code' fields. It is usually used to create a URL-friendly version of the name. */
+      id: string;
+      name: string;
+      /** @description A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location. */
+      code: string;
+      geometry: (Record<string, never> | unknown[] | string | number | boolean) | null;
+      bbox: {
+        /** @description An array of four numbers representing two sets of coordinates (SW and NE). */
+        bbox: number[];
+      };
+      /** @enum {string} */
+      type: "ADMIN_REGION" | "HYDRO_BASIN";
+      updatedAt: string;
+      createdAt: string;
+    };
+    /** Story */
+    Story: {
+      /** @description This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name. */
+      id: string;
+      name: string;
+      description: string;
+      cover?: (number | null) | components["schemas"]["Media"];
+      category: string | components["schemas"]["Category"];
+      location: {
+        latitude: number;
+        longitude: number;
+        id?: string | null;
+        blockName?: string | null;
+        /** @enum {unknown} */
+        blockType: "location";
+      }[];
+      published?: boolean | null;
+      steps?:
+        | {
+            /** @enum {string} */
+            type: "map" | "chart";
+            sidebar: {
+              root: {
+                type: string;
+                children: ({
+                  type: string;
+                  version: number;
+                } & {
+                  [key: string]: unknown;
+                })[];
+                direction: "ltr" | "rtl" | null;
+                /** @enum {string} */
+                format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+                indent: number;
+                version: number;
+              };
+            };
+            map?: {
+              bbox: unknown[];
+              layers?: string[];
+            };
+            chart?: (Record<string, never> | unknown[] | string | number | boolean) | null;
+            id?: string | null;
+          }[]
+        | null;
       updatedAt: string;
       createdAt: string;
     };
@@ -1291,6 +1806,21 @@ export interface components {
             /** @enum {unknown} */
             relationTo: "layers";
             value: string | components["schemas"]["Layer"];
+          } | null)
+        | ({
+            /** @enum {unknown} */
+            relationTo: "indicator-data";
+            value: string | components["schemas"]["IndicatorDatum"];
+          } | null)
+        | ({
+            /** @enum {unknown} */
+            relationTo: "locations";
+            value: string | components["schemas"]["Location"];
+          } | null)
+        | ({
+            /** @enum {unknown} */
+            relationTo: "stories";
+            value: string | components["schemas"]["Story"];
           } | null);
       globalSlug?: string | null;
       user: {
@@ -1742,6 +2272,14 @@ export interface components {
         like?: string;
         contains?: string;
       };
+      type?: {
+        /** @enum {string} */
+        equals?: "INDICATOR" | "CONTEXTUAL";
+        /** @enum {string} */
+        not_equals?: "INDICATOR" | "CONTEXTUAL";
+        in?: string;
+        not_in?: string;
+      };
       updatedAt?: {
         /** Format: date-time */
         equals?: string;
@@ -1789,6 +2327,221 @@ export interface components {
         | components["schemas"]["LayerQueryOperations"]
         | components["schemas"]["LayerQueryOperationsAnd"]
         | components["schemas"]["LayerQueryOperationsOr"]
+      )[];
+    };
+    /** Indicator Datum query operations */
+    IndicatorDatumQueryOperations: {
+      id?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+      updatedAt?: {
+        /** Format: date-time */
+        equals?: string;
+        /** Format: date-time */
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        /** Format: date-time */
+        greater_than?: string;
+        /** Format: date-time */
+        greater_than_equal?: string;
+        /** Format: date-time */
+        less_than?: string;
+        /** Format: date-time */
+        less_than_equal?: string;
+      };
+      createdAt?: {
+        /** Format: date-time */
+        equals?: string;
+        /** Format: date-time */
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        /** Format: date-time */
+        greater_than?: string;
+        /** Format: date-time */
+        greater_than_equal?: string;
+        /** Format: date-time */
+        less_than?: string;
+        /** Format: date-time */
+        less_than_equal?: string;
+      };
+    };
+    /** Indicator Datum query conjunction */
+    IndicatorDatumQueryOperationsAnd: {
+      and: (
+        | components["schemas"]["IndicatorDatumQueryOperations"]
+        | components["schemas"]["IndicatorDatumQueryOperationsAnd"]
+        | components["schemas"]["IndicatorDatumQueryOperationsOr"]
+      )[];
+    };
+    /** Indicator Datum query disjunction */
+    IndicatorDatumQueryOperationsOr: {
+      or: (
+        | components["schemas"]["IndicatorDatumQueryOperations"]
+        | components["schemas"]["IndicatorDatumQueryOperationsAnd"]
+        | components["schemas"]["IndicatorDatumQueryOperationsOr"]
+      )[];
+    };
+    /** Location query operations */
+    LocationQueryOperations: {
+      id?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+      name?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+      code?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+      type?: {
+        /** @enum {string} */
+        equals?: "ADMIN_REGION" | "HYDRO_BASIN";
+        /** @enum {string} */
+        not_equals?: "ADMIN_REGION" | "HYDRO_BASIN";
+        in?: string;
+        not_in?: string;
+      };
+      updatedAt?: {
+        /** Format: date-time */
+        equals?: string;
+        /** Format: date-time */
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        /** Format: date-time */
+        greater_than?: string;
+        /** Format: date-time */
+        greater_than_equal?: string;
+        /** Format: date-time */
+        less_than?: string;
+        /** Format: date-time */
+        less_than_equal?: string;
+      };
+      createdAt?: {
+        /** Format: date-time */
+        equals?: string;
+        /** Format: date-time */
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        /** Format: date-time */
+        greater_than?: string;
+        /** Format: date-time */
+        greater_than_equal?: string;
+        /** Format: date-time */
+        less_than?: string;
+        /** Format: date-time */
+        less_than_equal?: string;
+      };
+    };
+    /** Location query conjunction */
+    LocationQueryOperationsAnd: {
+      and: (
+        | components["schemas"]["LocationQueryOperations"]
+        | components["schemas"]["LocationQueryOperationsAnd"]
+        | components["schemas"]["LocationQueryOperationsOr"]
+      )[];
+    };
+    /** Location query disjunction */
+    LocationQueryOperationsOr: {
+      or: (
+        | components["schemas"]["LocationQueryOperations"]
+        | components["schemas"]["LocationQueryOperationsAnd"]
+        | components["schemas"]["LocationQueryOperationsOr"]
+      )[];
+    };
+    /** Story query operations */
+    StoryQueryOperations: {
+      id?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+      name?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+      published?: {
+        equals?: boolean;
+        not_equals?: boolean;
+        in?: string;
+        not_in?: string;
+      };
+      updatedAt?: {
+        /** Format: date-time */
+        equals?: string;
+        /** Format: date-time */
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        /** Format: date-time */
+        greater_than?: string;
+        /** Format: date-time */
+        greater_than_equal?: string;
+        /** Format: date-time */
+        less_than?: string;
+        /** Format: date-time */
+        less_than_equal?: string;
+      };
+      createdAt?: {
+        /** Format: date-time */
+        equals?: string;
+        /** Format: date-time */
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        /** Format: date-time */
+        greater_than?: string;
+        /** Format: date-time */
+        greater_than_equal?: string;
+        /** Format: date-time */
+        less_than?: string;
+        /** Format: date-time */
+        less_than_equal?: string;
+      };
+    };
+    /** Story query conjunction */
+    StoryQueryOperationsAnd: {
+      and: (
+        | components["schemas"]["StoryQueryOperations"]
+        | components["schemas"]["StoryQueryOperationsAnd"]
+        | components["schemas"]["StoryQueryOperationsOr"]
+      )[];
+    };
+    /** Story query disjunction */
+    StoryQueryOperationsOr: {
+      or: (
+        | components["schemas"]["StoryQueryOperations"]
+        | components["schemas"]["StoryQueryOperationsAnd"]
+        | components["schemas"]["StoryQueryOperationsOr"]
       )[];
     };
     /** Payload Locked Document query operations */
@@ -2250,6 +3003,168 @@ export interface components {
         };
       };
     };
+    /** @description Indicator Datum object */
+    IndicatorDatumResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": components["schemas"]["IndicatorDatum"];
+      };
+    };
+    /** @description Indicator Datum object */
+    NewIndicatorDatumResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          message: string;
+          doc: components["schemas"]["IndicatorDatum"] & {
+            id: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+          };
+        };
+      };
+    };
+    /** @description Indicator Datum not found */
+    IndicatorDatumNotFoundResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content?: never;
+    };
+    /** @description List of Indicator Data */
+    IndicatorDatumListResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          docs: components["schemas"]["IndicatorDatum"][];
+          totalDocs: number;
+          limit: number;
+          totalPages: number;
+          page: number;
+          pagingCounter: number;
+          hasPrevPage: boolean;
+          hasNextPage: boolean;
+          prevPage: number | null;
+          nextPage: number | null;
+        };
+      };
+    };
+    /** @description Location object */
+    LocationResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": components["schemas"]["Location"];
+      };
+    };
+    /** @description Location object */
+    NewLocationResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          message: string;
+          doc: components["schemas"]["Location"] & {
+            id: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+          };
+        };
+      };
+    };
+    /** @description Location not found */
+    LocationNotFoundResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content?: never;
+    };
+    /** @description List of Locations */
+    LocationListResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          docs: components["schemas"]["Location"][];
+          totalDocs: number;
+          limit: number;
+          totalPages: number;
+          page: number;
+          pagingCounter: number;
+          hasPrevPage: boolean;
+          hasNextPage: boolean;
+          prevPage: number | null;
+          nextPage: number | null;
+        };
+      };
+    };
+    /** @description Story object */
+    StoryResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": components["schemas"]["Story"];
+      };
+    };
+    /** @description Story object */
+    NewStoryResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          message: string;
+          doc: components["schemas"]["Story"] & {
+            id: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+          };
+        };
+      };
+    };
+    /** @description Story not found */
+    StoryNotFoundResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content?: never;
+    };
+    /** @description List of Stories */
+    StoryListResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          docs: components["schemas"]["Story"][];
+          totalDocs: number;
+          limit: number;
+          totalPages: number;
+          page: number;
+          pagingCounter: number;
+          hasPrevPage: boolean;
+          hasNextPage: boolean;
+          prevPage: number | null;
+          nextPage: number | null;
+        };
+      };
+    };
     /** @description Payload Locked Document object */
     PayloadLockedDocumentResponse: {
       headers: {
@@ -2453,6 +3368,17 @@ export interface components {
         "application/json": {
           name: string;
           description?: string | null;
+          cover?: (string | null) | components["schemas"]["Media"];
+          indicators?: {
+            docs?: (string | components["schemas"]["Indicator"])[];
+            hasNextPage?: boolean;
+            totalDocs?: number;
+          };
+          stories?: {
+            docs?: (string | components["schemas"]["Story"])[];
+            hasNextPage?: boolean;
+            totalDocs?: number;
+          };
         };
       };
     };
@@ -2508,6 +3434,86 @@ export interface components {
           };
           /** @description ID of the indicators */
           indicator?: string;
+          /** @enum {string} */
+          type: "INDICATOR" | "CONTEXTUAL";
+        };
+      };
+    };
+    /** @description Indicator Datum */
+    IndicatorDatumRequestBody: {
+      content: {
+        "application/json": {
+          /** @description ID of the indicators */
+          indicator: string;
+          /** @description ID of the locations */
+          location: string;
+          data: (Record<string, never> | unknown[] | string | number | boolean) | null;
+        };
+      };
+    };
+    /** @description Location */
+    LocationRequestBody: {
+      content: {
+        "application/json": {
+          name: string;
+          /** @description A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location. */
+          code: string;
+          geometry: (Record<string, never> | unknown[] | string | number | boolean) | null;
+          bbox: {
+            /** @description An array of four numbers representing two sets of coordinates (SW and NE). */
+            bbox: number[];
+          };
+          /** @enum {string} */
+          type: "ADMIN_REGION" | "HYDRO_BASIN";
+        };
+      };
+    };
+    /** @description Story */
+    StoryRequestBody: {
+      content: {
+        "application/json": {
+          name: string;
+          description: string;
+          cover?: (string | null) | components["schemas"]["Media"];
+          /** @description ID of the categories */
+          category: string;
+          location: {
+            latitude: number;
+            longitude: number;
+            id?: string | null;
+            blockName?: string | null;
+            /** @enum {unknown} */
+            blockType: "location";
+          }[];
+          published?: boolean | null;
+          steps?:
+            | {
+                /** @enum {string} */
+                type: "map" | "chart";
+                sidebar: {
+                  root: {
+                    type: string;
+                    children: ({
+                      type: string;
+                      version: number;
+                    } & {
+                      [key: string]: unknown;
+                    })[];
+                    direction: "ltr" | "rtl" | null;
+                    /** @enum {string} */
+                    format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+                    indent: number;
+                    version: number;
+                  };
+                };
+                map?: {
+                  bbox: unknown[];
+                  layers?: string[];
+                };
+                chart?: (Record<string, never> | unknown[] | string | number | boolean) | null;
+                id?: string | null;
+              }[]
+            | null;
         };
       };
     };
@@ -2515,7 +3521,7 @@ export interface components {
     PayloadLockedDocumentRequestBody: {
       content: {
         "application/json": {
-          /** @description ID of the users/media/categories/indicators/layers */
+          /** @description ID of the users/media/categories/indicators/layers/indicator-data/locations/stories */
           document?: string;
           globalSlug?: string | null;
           /** @description ID of the users */

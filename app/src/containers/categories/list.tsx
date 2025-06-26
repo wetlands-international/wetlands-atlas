@@ -1,33 +1,34 @@
-import { getPayload } from "payload";
+"use client";
 
-import { getLocale } from "next-intl/server";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 
 import { CategoriesHeader } from "@/containers/categories/header";
 import { CategoriesItem } from "@/containers/categories/item";
 
-import payloadConfig from "@/payload.config";
+import API from "@/services/api";
 
-export const CategoriesList = async () => {
-  const locale = await getLocale();
+export const CategoriesList = () => {
+  const locale = useLocale();
 
-  const payload = await getPayload({ config: payloadConfig });
-
-  const categories = await payload.find({
-    collection: "categories",
-    depth: 1,
-    limit: 100,
-    page: 1,
-    sort: "name",
-    locale,
-  });
+  const { data: categoriesData } = useSuspenseQuery(
+    API.queryOptions("get", "/api/categories", {
+      params: {
+        query: {
+          depth: 1,
+          limit: 100,
+          sort: "name",
+          locale, // Replace with the actual locale if needed
+        },
+      },
+    }),
+  );
 
   return (
     <div className="flex flex-col gap-1">
       <CategoriesHeader />
 
-      {categories.docs.map((category) => (
-        <CategoriesItem key={category.id} {...category} />
-      ))}
+      {categoriesData?.docs.map((category) => <CategoriesItem key={category.id} {...category} />)}
     </div>
   );
 };
