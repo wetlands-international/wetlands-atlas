@@ -29,21 +29,50 @@ docker exec -it data_processing_notebooks /bin/bash
 
 #### UV environment
 
-Create the environment with Python 3.12:
+**If the enviroment is not already created**
+
+Create the environment with:
 
 ``` bash
-uv venv --python 3.12
+uv venv
 ```
 
-The virtual environment can be "activated" to make its packages available:
 
+Initialize the project (if not already initialized), this will create the `project.toml` file (if it does not exist):
+
+``` bash
+uv init
+```
+
+To activate the environment:
 ``` bash
 source .venv/bin/activate
-
-To replicate project's environment use your the `requirements.txt` file.
-```bash
-uv pip install -r requirements.txt
 ```
+
+To install packages and automatically track dependencies in the `pyproject.toml`file, use:
+```bash
+uv add <package-name>
+```
+
+**If the environment is already created**
+
+To replicate the project environment on another machine:
+``` bash
+uv venv
+uv sync
+```
+This installs all dependencies listed in `pyproject.toml`.
+
+To activate the environment:
+``` bash
+source .venv/bin/activate
+```
+
+To add new packages to the environment, you can use:
+```bash
+uv add <package-name>
+```
+
 
 ### `git` (if needed) and pre-commit hooks
 
