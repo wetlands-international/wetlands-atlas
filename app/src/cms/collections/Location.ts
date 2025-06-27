@@ -1,5 +1,6 @@
 import { CollectionConfig } from "payload";
 
+import { PublicAccessControl } from "@/cms/access/public";
 import { BBoxField } from "@/cms/fields/bbox-field";
 import { formatCompoundSlug } from "@/cms/utils/formatSlug";
 
@@ -15,7 +16,7 @@ export const Locations: CollectionConfig = {
   },
   defaultSort: ["name"],
   indexes: [{ unique: true, fields: ["type", "code"] }],
-  // access: DevOnlyAccessControl, // TODO revise permissions and uncomment later
+  access: PublicAccessControl, // TODO revise permissions and uncomment later
   fields: [
     {
       name: "id",

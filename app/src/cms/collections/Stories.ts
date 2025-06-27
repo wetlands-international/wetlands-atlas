@@ -13,7 +13,7 @@ import {
   UnorderedListFeature,
 } from "@payloadcms/richtext-lexical";
 
-import { BLOCK_LOCATION_COORDINATES } from "@/cms/blocks/location";
+import { PublicAccessControl } from "@/cms/access/public";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
 
@@ -24,7 +24,7 @@ export const Stories: CollectionConfig = {
     defaultColumns: ["id", "title", "insight", "published"],
   },
   defaultSort: ["-createdAt"],
-  //access: {}, // By default, users with an account have all permissions https://payloadcms.com/docs/access-control/overview#default-access-control
+  access: PublicAccessControl, // TODO revise permissions and uncomment later
   fields: [
     SlugIDField(),
     {
@@ -55,15 +55,17 @@ export const Stories: CollectionConfig = {
     },
     {
       name: "location",
-      type: "blocks",
-      blocks: [BLOCK_LOCATION_COORDINATES],
+      type: "point",
       required: true,
-      maxRows: 1,
     },
     {
       name: "published",
       type: "checkbox",
       defaultValue: false,
+      admin: {
+        position: "sidebar",
+        description: "Uncheck to hide this story from the public view.",
+      },
     },
     {
       type: "array",

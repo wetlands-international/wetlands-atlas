@@ -1,10 +1,10 @@
 import type { CollectionConfig } from "payload";
 
+import { PublicAccessControl } from "@/cms/access/public";
+
 export const Media: CollectionConfig = {
   slug: "media",
-  access: {
-    read: () => true,
-  },
+  access: PublicAccessControl, // TODO revise permissions and uncomment later
   fields: [
     {
       name: "alt",

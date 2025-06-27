@@ -12,7 +12,7 @@ const getBaseUrl = () => {
     return process.env.NEXT_PUBLIC_API_URL;
   }
 
-  return "http://localhost:3000";
+  return `http://localhost:${process.env.PORT || 3000}`; // Fallback to localhost if no environment variable is set
 };
 
 export const fetchClient = createFetchClient<paths>({
