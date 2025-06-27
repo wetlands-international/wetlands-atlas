@@ -53,6 +53,17 @@ export const Categories: CollectionConfig = {
         allowCreate: false,
       },
     },
+    {
+      name: "defaultIndicators",
+      label: "Default Indicators",
+      type: "relationship",
+      relationTo: "indicators",
+      hasMany: true,
+      admin: {
+        description:
+          "Define the default indicators for this category. These will be activated by default when a user selects this category.",
+      },
+    },
   ],
 
   hooks: {

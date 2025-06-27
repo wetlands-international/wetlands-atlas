@@ -76,7 +76,7 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    openapi({ openapiVersion: "3.0", metadata: { title: "Dev API", version: "0.0.1" } }),
+    openapi({ openapiVersion: "3.1", metadata: { title: "Dev API", version: "0.0.1" } }),
     // storage-adapter-placeholder
   ],
 });

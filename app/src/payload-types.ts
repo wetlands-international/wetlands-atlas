@@ -191,6 +191,10 @@ export interface Category {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  /**
+   * Define the default indicators for this category. These will be activated by default when a user selects this category.
+   */
+  defaultIndicators?: (string | Indicator)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -500,6 +504,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   cover?: T;
   indicators?: T;
   stories?: T;
+  defaultIndicators?: T;
   updatedAt?: T;
   createdAt?: T;
 }
