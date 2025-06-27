@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
+import { PublicAccessControl } from "@/cms/access/public";
 import { SlugIDField } from "@/cms/fields/slug";
 
 export const Categories: CollectionConfig = {
@@ -10,7 +11,7 @@ export const Categories: CollectionConfig = {
     useAsTitle: "name",
     defaultColumns: ["id", "name"],
   },
-  // access: DevOnlyAccessControl, // TODO revise permissions and uncomment later
+  access: PublicAccessControl, // TODO revise permissions and uncomment later
   fields: [
     SlugIDField(),
     {
@@ -50,6 +51,17 @@ export const Categories: CollectionConfig = {
       on: "category",
       admin: {
         allowCreate: false,
+      },
+    },
+    {
+      name: "defaultIndicators",
+      label: "Default Indicators",
+      type: "relationship",
+      relationTo: "indicators",
+      hasMany: true,
+      admin: {
+        description:
+          "Define the default indicators for this category. These will be activated by default when a user selects this category.",
       },
     },
   ],

@@ -20,10 +20,7 @@ import {
 import { openapi } from "payload-oapi";
 import sharp from "sharp";
 
-import { BLOCK_LOCATION_COORDINATES } from "@/cms/blocks/location";
 import { NumberBlock } from "@/cms/blocks/number";
-import { BLOCK_PERCENTAGE } from "@/cms/blocks/percentage";
-import { BLOCK_VALUE } from "@/cms/blocks/value";
 import { IndicatorDatas } from "@/cms/collections/IndicatorDatas";
 import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
@@ -53,7 +50,7 @@ export default buildConfig({
       UnorderedListFeature(),
       OrderedListFeature(),
       BlocksFeature({
-        inlineBlocks: [BLOCK_VALUE, BLOCK_PERCENTAGE, BLOCK_LOCATION_COORDINATES, NumberBlock],
+        inlineBlocks: [NumberBlock],
       }),
     ],
   }),
@@ -76,7 +73,7 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    openapi({ openapiVersion: "3.0", metadata: { title: "Dev API", version: "0.0.1" } }),
+    openapi({ openapiVersion: "3.1", metadata: { title: "Dev API", version: "0.0.1" } }),
     // storage-adapter-placeholder
   ],
 });

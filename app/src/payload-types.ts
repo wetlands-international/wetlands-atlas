@@ -191,6 +191,10 @@ export interface Category {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  /**
+   * Define the default indicators for this category. These will be activated by default when a user selects this category.
+   */
+  defaultIndicators?: (string | Indicator)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -274,13 +278,14 @@ export interface Story {
   description: string;
   cover?: (number | null) | Media;
   category: string | Category;
-  location: {
-    latitude: number;
-    longitude: number;
-    id?: string | null;
-    blockName?: string | null;
-    blockType: 'location';
-  }[];
+  /**
+   * @minItems 2
+   * @maxItems 2
+   */
+  location: [number, number];
+  /**
+   * Uncheck to hide this story from the public view.
+   */
   published?: boolean | null;
   steps?:
     | {
@@ -500,6 +505,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   cover?: T;
   indicators?: T;
   stories?: T;
+  defaultIndicators?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -567,18 +573,7 @@ export interface StoriesSelect<T extends boolean = true> {
   description?: T;
   cover?: T;
   category?: T;
-  location?:
-    | T
-    | {
-        location?:
-          | T
-          | {
-              latitude?: T;
-              longitude?: T;
-              id?: T;
-              blockName?: T;
-            };
-      };
+  location?: T;
   published?: T;
   steps?:
     | T

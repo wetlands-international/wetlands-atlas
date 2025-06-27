@@ -2,6 +2,7 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
+import { PublicAccessControl } from "@/cms/access/public";
 import { SlugIDField } from "@/cms/fields/slug";
 
 export const Indicators: CollectionConfig = {
@@ -10,7 +11,7 @@ export const Indicators: CollectionConfig = {
     useAsTitle: "name",
     defaultColumns: ["slug_id", "name", "category", "layers"],
   },
-  // access: DevOnlyAccessControl, // TODO revise permissions and uncomment later
+  access: PublicAccessControl, // TODO revise permissions and uncomment later
   defaultSort: ["name"],
   fields: [
     SlugIDField(),

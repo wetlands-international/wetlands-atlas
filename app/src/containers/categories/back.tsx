@@ -2,25 +2,35 @@
 
 import { useCallback } from "react";
 
-import { PaginatedDocs } from "payload";
-
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 import { LuX } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
 import { useSyncIndicators, useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
 
-import { Category } from "@/payload-types";
+import API from "@/services/api";
 
-export type CategoriesBackProps = {
-  categories?: PaginatedDocs<Category>;
-};
-
-export const CategoriesBack = ({ categories }: CategoriesBackProps) => {
+export const CategoriesBack = () => {
+  const locale = useLocale();
   const [insight, setInsight] = useSyncInsight();
   const [, setIndicators] = useSyncIndicators();
 
-  const category = categories?.docs.find((c) => c.id === insight);
+  const { data: categoriesData } = useSuspenseQuery(
+    API.queryOptions("get", "/api/categories", {
+      params: {
+        query: {
+          depth: 1,
+          limit: 100,
+          sort: "name",
+          locale, // Replace with the actual locale if needed
+        },
+      },
+    }),
+  );
+
+  const category = categoriesData?.docs.find((c) => c.id === insight);
 
   const handleClick = useCallback(() => {
     setInsight(null);
