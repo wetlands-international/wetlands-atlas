@@ -14,7 +14,6 @@ import {
 } from "@payloadcms/richtext-lexical";
 
 import { PublicAccessControl } from "@/cms/access/public";
-import { BLOCK_LOCATION_COORDINATES } from "@/cms/blocks/location";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
 
@@ -56,15 +55,17 @@ export const Stories: CollectionConfig = {
     },
     {
       name: "location",
-      type: "blocks",
-      blocks: [BLOCK_LOCATION_COORDINATES],
+      type: "point",
       required: true,
-      maxRows: 1,
     },
     {
       name: "published",
       type: "checkbox",
       defaultValue: false,
+      admin: {
+        position: "sidebar",
+        description: "Uncheck to hide this story from the public view.",
+      },
     },
     {
       type: "array",

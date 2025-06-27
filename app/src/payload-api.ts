@@ -1587,14 +1587,11 @@ export interface components {
             description: string;
             cover?: (string | null) | components["schemas"]["Media"];
             category: string | components["schemas"]["Category"];
-            location: {
-                latitude: number;
-                longitude: number;
-                id?: string | null;
-                blockName?: string | null;
-                /** @constant */
-                blockType: "location";
-            }[];
+            location: [
+                number,
+                number
+            ];
+            /** @description Uncheck to hide this story from the public view. */
             published?: boolean | null;
             steps?: {
                 /** @enum {string} */
@@ -3230,14 +3227,11 @@ export interface components {
                     cover?: (string | null) | components["schemas"]["Media"];
                     /** @description ID of the categories */
                     category: string;
-                    location: {
-                        latitude: number;
-                        longitude: number;
-                        id?: string | null;
-                        blockName?: string | null;
-                        /** @constant */
-                        blockType: "location";
-                    }[];
+                    location: [
+                        number,
+                        number
+                    ];
+                    /** @description Uncheck to hide this story from the public view. */
                     published?: boolean | null;
                     steps?: {
                         /** @enum {string} */
