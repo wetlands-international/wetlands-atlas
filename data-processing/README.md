@@ -54,6 +54,11 @@ To install packages and automatically track dependencies in the `pyproject.toml`
 uv add <package-name>
 ```
 
+To make the `processing` package available in the environment, you can install it in editable mode:
+```bash
+pip install -e .
+```
+
 **If the environment is already created**
 
 To replicate the project environment on another machine:
@@ -73,6 +78,10 @@ To add new packages to the environment, you can use:
 uv add <package-name>
 ```
 
+To make the `processing` package available in the environment, you can install it in editable mode:
+```bash
+pip install -e .
+```
 
 ### `git` (if needed) and pre-commit hooks
 
