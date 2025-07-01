@@ -92,3 +92,6 @@ target/
 .tox
 
 .ruff_cache
+
+# Cache directory
+cache/
