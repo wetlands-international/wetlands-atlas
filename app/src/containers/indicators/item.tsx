@@ -25,7 +25,10 @@ export const IndicatorsItem = (indicator: Indicator) => {
   }, [indicator.id, setIndicators]);
 
   return (
-    <div key={indicator.id} className="bg-background rounded-4xl p-6">
+    <div
+      key={indicator.id}
+      className="bg-background animate-in fade-in slide-in-from-left-0 rounded-4xl p-6 duration-500"
+    >
       <header className="flex items-center justify-between gap-2">
         <h2 className="text-base font-semibold uppercase">{indicator.name}</h2>
         <Switch checked={indicators?.includes(indicator.id)} onCheckedChange={handleSwitchChange} />

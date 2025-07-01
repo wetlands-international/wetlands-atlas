@@ -2,7 +2,7 @@
 
 import { Where } from "payload";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 
 import { useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
@@ -23,7 +23,7 @@ export const IndicatorsList = () => {
     },
   };
 
-  const { data: indicatorsData } = useSuspenseQuery(
+  const { data: indicatorsData } = useQuery(
     API.queryOptions("get", "/api/indicators", {
       params: {
         query: {
@@ -32,8 +32,6 @@ export const IndicatorsList = () => {
           page: 1,
           sort: "-createdAt",
           locale,
-          // TODO: openapi is not correctly handling the `where` clause with a nested object
-          // @ts-expect-error -- TypeScript is not correctly handling the `where` clause
           where: query,
         },
       },
@@ -44,8 +42,7 @@ export const IndicatorsList = () => {
     <div className="flex flex-col gap-1">
       <CategoriesBack />
 
-      {indicatorsData.docs.map((indicator) => (
-        // @ts-expect-error -- Media is not well defined in the types, but it works in practice. It doesn't take into account that the Media has a number as an id
+      {indicatorsData?.docs.map((indicator) => (
         <IndicatorsItem key={indicator.id} {...indicator} />
       ))}
     </div>
