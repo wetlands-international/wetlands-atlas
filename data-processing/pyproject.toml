@@ -1,6 +1,10 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name="data_processing"
-version="0.1.0"
+name = "processing"
+version = "0.1.0"
 dependencies = [
     "boto3>=1.38.45",
     "geopandas>=1.1.1",
@@ -9,7 +13,11 @@ dependencies = [
     "osmnx>=2.0.4",
     "pycountry>=24.6.1",
     "python-dotenv>=1.1.1",
+    "rich>=14.0.0",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/processing"]
 
 [tool.ruff]
 line-length = 100
