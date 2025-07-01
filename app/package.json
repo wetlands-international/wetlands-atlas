@@ -16,7 +16,6 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "cross-env NODE_OPTIONS=--no-deprecation vitest",
     "check-types": "cross-env NODE_OPTIONS=--no-deprecation tsc",
-    "openapi": "tsx watch --include './src/**/*' --exclude ./src/payload-api.ts ./src/openapi.ts",
     "prepare": "cd .. && husky app/.husky",
     "heroku-cleanup": "rm -rf .next/cache && find node_modules/@next -depth -maxdepth 1 -type d -name 'swc*' -exec rm -rf {} \\; -prune #Remove cache and SWC binaries to reduce heroku slug size"
   },

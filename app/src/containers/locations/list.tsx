@@ -1,24 +1,45 @@
-import { getPayload } from "payload";
+"use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { CommandEmpty, CommandGroup, CommandList } from "cmdk";
-import { getLocale } from "next-intl/server";
+import { useAtomValue } from "jotai";
+import { useLocale } from "next-intl";
+import { useDebounceValue } from "usehooks-ts";
+
+import { locationsAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { LocationsItem } from "@/containers/locations/item";
 
-import payloadConfig from "@/payload.config";
+import API from "@/services/api";
 
-export const LocationsList = async () => {
-  const locale = await getLocale();
-  const payload = await getPayload({ config: payloadConfig });
+export const LocationsList = () => {
+  const locale = useLocale();
+  const locations = useAtomValue(locationsAtom);
 
-  const indicators = await payload.find({
-    collection: "indicators",
-    depth: 0,
-    limit: 100,
-    page: 1,
-    sort: "-createdAt",
-    locale,
-  });
+  console.log("LocationsAtom", locations);
+
+  const [search] = useDebounceValue(locations.search, 300);
+
+  const { data: locationsData } = useSuspenseQuery(
+    API.queryOptions("get", "/api/indicators", {
+      params: {
+        query: {
+          depth: 1,
+          limit: 25,
+          page: 1,
+          sort: "-createdAt",
+          locale,
+          where: {
+            ...(!!search && {
+              name: {
+                like: `%${search}%`,
+              },
+            }),
+          },
+        },
+      },
+    }),
+  );
 
   return (
     <CommandList className="bg-foreground rounded-4xl p-6">
@@ -39,7 +60,7 @@ export const LocationsList = async () => {
           <LocationsItem>Location 6</LocationsItem>
           <LocationsItem>Location 7</LocationsItem>
 
-          {indicators.docs.map((indicator) => (
+          {locationsData?.docs.map((indicator) => (
             <LocationsItem key={indicator.id}>{indicator.name}</LocationsItem>
           ))}
         </div>
