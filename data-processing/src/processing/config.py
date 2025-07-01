@@ -1,0 +1,75 @@
+"""
+Configuration settings for the Wetlands data processing project.
+"""
+
+from pathlib import Path
+
+# Directory paths
+RAW_DATA_DIR = Path("data/raw/")
+OUTPUT_DIR = Path("data/processed/")
+
+# File paths
+SAHEL_BOUNDARY_FILE = RAW_DATA_DIR / "Sahel-zone - extended - dissolved.gpkg"
+
+# Data URLs
+HYDROBASINS_AFRICA_URL = "https://storage.googleapis.com/fao-maps-catalog-data/geonetwork/aquamaps/hydrobasins_africa.zip"
+
+# S3 configuration
+S3_BUCKET_PREFIX = "Wetlands/data/processed/"
+
+# Sahel countries list
+SAHEL_COUNTRIES = [
+    "Senegal",
+    "Mauritania",
+    "Mali",
+    "Burkina Faso",
+    "Niger",
+    "Chad",
+    "Sudan",
+    "Nigeria",
+    "Eritrea",
+    "Cameroon",
+    "Gambia",
+    "Guinea",
+    "South Sudan",
+    "Ethiopia",
+    "Kenya",
+    "Côte d'Ivoire",
+    "Ghana",
+    "Togo",
+    "Benin",
+    "Guinea-Bissau",
+    "Central African Republic",
+    "Uganda",
+]
+
+# Processing configuration
+HYDROBASINS_CONFIG = {
+    "columns_to_drop": ["to_bas", "legend"],
+    "sort_column": "maj_name",
+    "output_filename": "hydrobasins_sahel.geojson",
+    "s3_key": f"{S3_BUCKET_PREFIX}hydrobasins_sahel.geojson",
+}
+
+COUNTRIES_CONFIG = {
+    "columns_to_drop": [
+        "bbox_west",
+        "bbox_south",
+        "bbox_east",
+        "bbox_north",
+        "place_id",
+        "osm_type",
+        "osm_id",
+        "lat",
+        "lon",
+        "class",
+        "type",
+        "place_rank",
+        "importance",
+        "addresstype",
+        "display_name",
+        "country_name",
+    ],
+    "output_filename": "countries_sahel.geojson",
+    "s3_key": f"{S3_BUCKET_PREFIX}countries_sahel.geojson",
+}
