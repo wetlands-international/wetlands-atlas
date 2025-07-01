@@ -13,6 +13,7 @@ dependencies = [
     "osmnx>=2.0.4",
     "pycountry>=24.6.1",
     "python-dotenv>=1.1.1",
+    "rich>=14.0.0",
 ]
 
 [tool.hatch.build.targets.wheel]
