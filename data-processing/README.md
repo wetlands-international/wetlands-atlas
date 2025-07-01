@@ -167,3 +167,24 @@ The script generates the following processed files:
 
 - `data/processed/hydrobasins_sahel.geojson` - Watershed boundaries for the Sahel region
 - `data/processed/countries_sahel.geojson` - Country boundaries for Sahel region countries
+
+### 2. Create MBTiles
+
+To create MBTiles from the processed GeoJSON data, run the following command:
+
+```bash
+python scripts/create_mbtiles.py
+```
+
+This script will:
+
+1. **Convert GeoJSON to MBTiles** for both hydrobasins and countries data
+2. **Optimize MBTiles** for size and performance
+3. **Save MBTiles** in the `data/mbtiles/` directory
+
+#### Output Files
+
+The script generates the following MBTiles files:
+
+- `data/mbtiles/hydrobasins_sahel.mbtiles` - MBTiles for watershed boundaries
+- `data/mbtiles/countries_sahel.mbtiles` - MBTiles for country boundaries
