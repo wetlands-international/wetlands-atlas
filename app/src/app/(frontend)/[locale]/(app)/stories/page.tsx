@@ -23,7 +23,7 @@ export default async function StoriesPage() {
   return (
     <>
       <aside className="absolute top-0 left-0 z-10 w-full max-w-md">
-        <Command className="flex w-full flex-col gap-2.5 p-4">
+        <Command className="flex w-full flex-col gap-2.5 p-4" shouldFilter={false}>
           <Header>
             <Suspense>
               <StoriesSearch />

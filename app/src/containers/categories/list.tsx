@@ -28,10 +28,7 @@ export const CategoriesList = () => {
     <div className="flex flex-col gap-1">
       <CategoriesHeader />
 
-      {categoriesData?.docs.map((category) => (
-        // @ts-expect-error -- Media is not well defined in the types, but it works in practice. It doesn't take into account that the Media has a number as an id
-        <CategoriesItem key={category.id} {...category} />
-      ))}
+      {categoriesData?.docs.map((category) => <CategoriesItem key={category.id} {...category} />)}
     </div>
   );
 };

@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AppPage() {
   return (
     <aside className="absolute top-0 left-0 z-10 h-[calc(100svh_-_theme(space.16))] w-full max-w-md overflow-hidden">
-      <Command className="flex h-full w-full flex-col gap-2.5 p-4">
+      <Command className="flex h-full w-full flex-col gap-2.5 p-4" shouldFilter={false}>
         <Header>
           <Suspense>
             <LocationsSearch />

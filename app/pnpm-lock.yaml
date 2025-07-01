@@ -140,6 +140,9 @@ importers:
       postprocessing:
         specifier: 6.37.3
         version: 6.37.3(three@0.176.0)
+      qs-esm:
+        specifier: 7.0.2
+        version: 7.0.2
       react:
         specifier: 19.0.0
         version: 19.0.0
