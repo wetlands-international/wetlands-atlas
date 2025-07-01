@@ -58,7 +58,8 @@ export const LocationsList = () => {
           className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-bold [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:uppercase"
         >
           <div className="py-2">
-            {/* <LocationsItem>Worldwide</LocationsItem>
+            <LocationsItem>Worldwide</LocationsItem>
+            {/* 
             <LocationsItem>Location</LocationsItem>
             <LocationsItem>Location 2</LocationsItem>
             <LocationsItem>Location 3</LocationsItem>
