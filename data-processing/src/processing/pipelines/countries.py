@@ -8,8 +8,8 @@ from typing import List
 import geopandas as gpd
 from rich.console import Console
 
-from .geoprocessing import process_geodataframe_columns, reorder_columns_geometry_last
-from .osm_country_data import get_multiple_countries_osmx, name_to_iso3
+from ..core.geoprocessing import process_geodataframe_columns, reorder_columns_geometry_last
+from ..data.sources.osm import get_multiple_countries_osmx, name_to_iso3
 
 console = Console()
 
@@ -160,7 +160,7 @@ def process_countries_workflow(
     s3_key = COUNTRIES_CONFIG["s3_key"]
 
     if upload_to_s3:
-        from .geoprocessing import save_and_upload_geodata
+        from ..core.geoprocessing import save_and_upload_geodata
 
         save_and_upload_geodata(gdf, output_dir / filename, s3_key)
     else:

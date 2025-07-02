@@ -6,6 +6,9 @@ import os
 
 import boto3
 from dotenv import load_dotenv
+from rich.console import Console
+
+console = Console()
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -33,4 +36,4 @@ def upload_file_to_s3(local_path, object_key):
     # Upload
     s3 = session.client("s3")
     s3.upload_file(local_path, AWS_BUCKET_NAME, object_key)
-    print(f"Uploaded {local_path} → s3://{AWS_BUCKET_NAME}/{object_key}")
+    console.print(f"✅ Uploaded {local_path} → s3://{AWS_BUCKET_NAME}/{object_key}")

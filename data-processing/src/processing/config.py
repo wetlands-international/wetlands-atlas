@@ -9,7 +9,8 @@ RAW_DATA_DIR = Path("data/raw/")
 OUTPUT_DIR = Path("data/processed/")
 
 # File paths
-SAHEL_BOUNDARY_FILE = RAW_DATA_DIR / "Sahel-zone - extended - dissolved.gpkg"
+SAHEL_BOUNDARY_FILE = RAW_DATA_DIR / "sahel_boundary.gpkg"
+SAHEL_FILE_ID = "10I6Z6k_5laK70n1BpnWC_BWAHR8IbF2g"
 
 # Data URLs
 HYDROBASINS_AFRICA_URL = "https://storage.googleapis.com/fao-maps-catalog-data/geonetwork/aquamaps/hydrobasins_africa.zip"
@@ -44,6 +45,11 @@ SAHEL_COUNTRIES = [
 ]
 
 # Processing configuration
+SAHEL_CONFIG = {
+    "output_filename": "sahel_boundary.geojson",
+    "s3_key": f"{S3_BUCKET_PREFIX}sahel_boundary.geojson",
+}
+
 HYDROBASINS_CONFIG = {
     "columns_to_drop": ["to_bas", "legend"],
     "sort_column": "maj_name",

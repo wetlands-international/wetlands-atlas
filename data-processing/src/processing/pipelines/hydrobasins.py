@@ -7,12 +7,12 @@ from pathlib import Path
 import geopandas as gpd
 from rich.console import Console
 
-from .download_data import download_and_unzip
-from .geoprocessing import (
+from ..core.geoprocessing import (
     create_basin_hierarchy,
     filter_by_geographic_intersection,
     process_geodataframe_columns,
 )
+from ..data.download import download_and_unzip
 
 console = Console()
 
@@ -150,7 +150,7 @@ def process_hydrobasins_workflow(
     s3_key = HYDROBASINS_CONFIG["s3_key"]
 
     if upload_to_s3:
-        from .geoprocessing import save_and_upload_geodata
+        from ..core.geoprocessing import save_and_upload_geodata
 
         save_and_upload_geodata(gdf, output_dir / filename, s3_key)
     else:
