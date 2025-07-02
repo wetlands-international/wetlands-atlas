@@ -367,15 +367,11 @@ export interface Location {
     | number
     | boolean
     | null;
-  bbox: {
-    /**
-     * An array of four numbers representing two sets of coordinates (SW and NE).
-     *
-     * @minItems 4
-     * @maxItems 4
-     */
-    bbox: [number, number, number, number];
-  };
+  /**
+   * @minItems 4
+   * @maxItems 4
+   */
+  bbox: [number, number, number, number];
   type: 'ADMIN_REGION' | 'HYDRO_BASIN';
   updatedAt: string;
   createdAt: string;
