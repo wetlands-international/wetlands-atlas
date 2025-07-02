@@ -372,7 +372,8 @@ export interface Location {
    * @maxItems 4
    */
   bbox: [number, number, number, number];
-  type: 'ADMIN_REGION' | 'HYDRO_BASIN';
+  type: 'ADMIN_REGION' | 'HYDRO_BASIN' | 'GLOBAL' | 'WDPA';
+  parent?: (string | null) | Location;
   updatedAt: string;
   createdAt: string;
 }
@@ -556,6 +557,7 @@ export interface LocationsSelect<T extends boolean = true> {
   geometry?: T;
   bbox?: T;
   type?: T;
+  parent?: T;
   updatedAt?: T;
   createdAt?: T;
 }
