@@ -25,3 +25,8 @@
 # Docker cache
 .docker
 docker-compose.override.yml
+
+# Misc
+.github
+app-initial-data
+data-processing
