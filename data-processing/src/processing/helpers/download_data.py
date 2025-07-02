@@ -4,6 +4,7 @@ Module for downloading files from the internet.
 
 import os
 import zipfile
+from pathlib import Path
 
 import requests
 
@@ -50,3 +51,37 @@ def unzip_file(zip_file_path):
     # Unzip the file
     with zipfile.ZipFile(zip_file_path, "r") as zip_ref:
         zip_ref.extractall(unzip_dir)
+
+
+def download_file_from_google_drive(file_id: str, output_path: str | Path) -> Path:
+    """
+    Download a file from Google Drive using its file ID.
+
+    Args:
+        file_id (str): The Google Drive file ID extracted from the sharing URL
+        output_path (str | Path): Path where the file should be saved
+
+    Returns:
+        Path: The path where the file was saved
+
+    Raises:
+        requests.RequestException: If the download fails
+    """
+    # Convert to Path object if string
+    output_path = Path(output_path)
+
+    # Create parent directories if they don't exist
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # Construct the direct download URL
+    direct_url = f"https://drive.google.com/uc?export=download&id={file_id}"
+
+    # Download the file
+    response = requests.get(direct_url)
+    response.raise_for_status()  # Raise an exception for bad status codes
+
+    # Write the file
+    with open(output_path, "wb") as f:
+        f.write(response.content)
+
+    return output_path

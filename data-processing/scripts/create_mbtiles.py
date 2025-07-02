@@ -10,9 +10,13 @@ from rich.console import Console
 console = Console()
 
 DATA_PATH = Path("data/processed")
-MBTILES_PATH = Path("data/mbtiles")
+MBTILES_PATH = Path("data/processed/mbtiles")
 
 DATASETS = {
+    "sahel_boundary": {
+        "source": DATA_PATH / "sahel_boundary.geojson",
+        "output": MBTILES_PATH / "sahel_boundary.mbtiles",
+    },
     "hydrobasins": {
         "source": DATA_PATH / "hydrobasins_sahel.geojson",
         "output": MBTILES_PATH / "hydrobasins_sahel.mbtiles",

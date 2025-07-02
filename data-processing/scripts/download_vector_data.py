@@ -5,6 +5,7 @@ Script to download and process vector data for Wetlands project.
 from processing.config import OUTPUT_DIR, RAW_DATA_DIR, SAHEL_BOUNDARY_FILE, SAHEL_COUNTRIES
 from processing.helpers.countries_processing import process_countries_workflow
 from processing.helpers.hydrobasins_processing import process_hydrobasins_workflow
+from processing.helpers.sahel_processing import process_sahel_workflow
 from rich.console import Console
 
 console = Console()
@@ -13,6 +14,18 @@ console = Console()
 def main():
     """Download and process vector data."""
     console.print("🚀 Starting vector data processing workflow...")
+
+    # Process Sahel boundary data
+    console.print("\n" + "=" * 60)
+    console.print("🌍 PROCESSING SAHEL BOUNDARY DATA")
+    console.print("=" * 60)
+
+    sahel_gdf = process_sahel_workflow(
+        raw_data_dir=RAW_DATA_DIR,
+        file_name=SAHEL_BOUNDARY_FILE.name,
+        output_dir=OUTPUT_DIR,
+        upload_to_s3=False,
+    )
 
     # Process HydroBASINS data
     console.print("\n" + "=" * 60)
@@ -39,6 +52,7 @@ def main():
     console.print("\n" + "=" * 60)
     console.print("✅ ALL PROCESSING COMPLETED!")
     console.print("=" * 60)
+    console.print(f"📍 Processed Sahel boundary data with {len(sahel_gdf)} features")
     console.print(f"📈 Processed {len(hydrobasins_gdf)} basin features")
     console.print(f"🗺️  Processed {len(countries_gdf)} countries")
     console.print(f"💾 Files saved to: {OUTPUT_DIR}")
