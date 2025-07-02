@@ -1,21 +1,24 @@
 "use client";
 
-import { PropsWithChildren } from "react";
-
 import { CommandItem } from "cmdk";
 import { useSetAtom } from "jotai";
 
-import { locationsAtom, useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
+import { locationsAtom, tmpBboxAtom, useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
 
-export const LocationsItem = ({ children }: PropsWithChildren) => {
+import { Location } from "@/payload-types";
+
+export const LocationsItem = (props: Location) => {
   const [, setLocation] = useSyncLocation();
+  const setTmpBbox = useSetAtom(tmpBboxAtom);
   const setLocations = useSetAtom(locationsAtom);
 
   return (
     <CommandItem
       className="text-background data-[selected=true]:bg-accent data-[selected=true]:text-background cursor-pointer px-3 py-1 text-left transition-colors duration-150 data-[selected=true]:indent-1"
-      onSelect={(v) => {
-        setLocation(v);
+      onSelect={() => {
+        setLocation(props.id);
+
+        setTmpBbox(props.bbox);
 
         setLocations({
           search: undefined,
@@ -23,7 +26,7 @@ export const LocationsItem = ({ children }: PropsWithChildren) => {
         });
       }}
     >
-      {children}
+      {props.name}
     </CommandItem>
   );
 };

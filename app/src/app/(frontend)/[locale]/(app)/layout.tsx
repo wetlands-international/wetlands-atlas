@@ -22,7 +22,21 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           depth: 1,
           limit: 100,
           sort: "name",
-          locale, // You can replace this with the actual locale if needed
+          locale,
+        },
+      },
+    }),
+  );
+
+  await queryClient.prefetchQuery(
+    API.queryOptions("get", "/api/locations", {
+      params: {
+        query: {
+          depth: 1,
+          limit: 25,
+          page: 1,
+          sort: "name",
+          locale,
         },
       },
     }),
