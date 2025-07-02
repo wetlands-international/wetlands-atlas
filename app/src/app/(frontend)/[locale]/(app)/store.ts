@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { useQueryState } from "nuqs";
+import { createSerializer, useQueryState } from "nuqs";
 
 import {
   basemapParser,
@@ -55,3 +55,25 @@ export const storiesAtom = atom<{
   search: "",
   enabled: false,
 });
+
+// SERIALIZERS
+export const persistedSearchParamsSerializer = createSerializer({
+  bbox: bboxParser,
+  basemap: basemapParser,
+  insight: insightParser,
+  location: locationParser,
+});
+
+export const useGetSearchParams = () => {
+  const [bbox] = useSyncBbox();
+  const [basemap] = useSyncBasemap();
+  const [insight] = useSyncInsight();
+  const [location] = useSyncLocation();
+
+  return persistedSearchParamsSerializer({
+    bbox,
+    basemap,
+    insight,
+    location,
+  });
+};

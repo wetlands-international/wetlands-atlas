@@ -5,10 +5,13 @@ import { LuBookOpen, LuLightbulb } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
+import { useGetSearchParams } from "@/app/(frontend)/[locale]/(app)/store";
+
 import { Link, usePathname } from "@/i18n/navigation";
 
 export const Toggle = () => {
   const pathname = usePathname();
+  const searchParams = useGetSearchParams();
 
   const t = useTranslations("header");
 
@@ -16,7 +19,7 @@ export const Toggle = () => {
     <ul className="bg-background inline-flex items-center gap-1 rounded-4xl p-0.5">
       <li>
         <Link
-          href="/"
+          href={`/${searchParams ? `${searchParams}` : ""}`}
           className={cn(
             "pointer-events-auto flex items-center gap-2 rounded-4xl px-4 py-2 text-sm",
             pathname !== "/" && "hover:underline",
@@ -28,7 +31,7 @@ export const Toggle = () => {
       </li>
       <li>
         <Link
-          href="/stories"
+          href={`/stories${searchParams ? `${searchParams}` : ""}`}
           className={cn(
             "pointer-events-auto flex items-center gap-2 rounded-4xl px-4 py-2 text-sm",
             pathname !== "/stories" && "hover:underline",
