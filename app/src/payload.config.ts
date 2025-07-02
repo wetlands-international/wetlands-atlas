@@ -70,6 +70,27 @@ export default buildConfig({
     },
     extensions: ["postgis", "uuid-ossp"],
     migrationDir: path.resolve(dirname, "migrations"),
+    afterSchemaInit: [
+      async ({ schema, extendTable }) => {
+        const { customType } = await import("drizzle-orm/pg-core");
+        // Hack to make the geometry(polygon) column work with Postgres
+        const polygonGeometryColumn = (name: string) =>
+          customType<{ data: string }>({
+            dataType() {
+              return "geometry(Polygon,4326)";
+            },
+          })(name);
+
+        extendTable({
+          table: schema.tables.locations,
+          columns: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            geometry_4326: polygonGeometryColumn("geometry_4326") as any,
+          },
+        });
+        return schema;
+      },
+    ],
   }),
   sharp,
   plugins: [

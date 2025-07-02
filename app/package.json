@@ -9,6 +9,9 @@
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev --turbopack",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "ci": "payload migrate && pnpm build",
+    "data:transform": "tsx scripts/transform.ts",
+    "data:seed:dev": "tsx scripts/seed.ts --env=development",
+    "data:seed:staging": "tsx scripts/seed.ts --env=staging",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "lint": "cross-env NODE_OPTIONS=--no-deprecation next lint",
@@ -50,6 +53,8 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "cross-env": "^7.0.3",
+    "dotenv": "17.0.0",
+    "drizzle-orm": "0.44.2",
     "graphql": "^16.8.1",
     "jotai": "2.12.3",
     "lucide-react": "^0.488.0",
@@ -86,6 +91,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.0",
     "@types/mapbox-gl": "3.4.1",
+    "@types/minimist": "1.2.5",
     "@types/node": "^22.5.4",
     "@types/react": "19.0.12",
     "@types/react-dom": "19.0.4",
@@ -98,6 +104,7 @@
     "eslint-plugin-react-hooks": "5.2.0",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
+    "minimist": "1.2.8",
     "openapi-typescript": "7.7.1",
     "payload-oapi": "0.2.4-b.0",
     "prettier": "^3.4.2",
@@ -110,5 +117,5 @@
     "vitest": "^3.1.1",
     "webpack-glsl-loader": "1.0.1"
   },
-  "packageManager": "pnpm@10.11.0"
+  "packageManager": "pnpm@10.12.3"
 }
