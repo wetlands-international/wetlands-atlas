@@ -20,6 +20,7 @@ const transformShagelCountries = () => {
       trim: true,
     });
 
+    // TODO: Add parent_id to import raw data
     const sqlInsert = `INSERT INTO locations 
         (id, code, type, bbox, geometry, geometry_4326)
       VALUES 
@@ -32,6 +33,15 @@ const transformShagelCountries = () => {
         type        = EXCLUDED.type,
         updated_at  = EXCLUDED.updated_at;\n`;
     sqlContent += sqlInsert;
+
+    // TODO: Include translation for other locales
+    const sqlLocale = `INSERT INTO locations_locales
+        (_locale, name, _parent_id)
+      VALUES
+        ('en', '${row.properties.name.replace(/'/, "''")}', '${id}')
+      ON CONFLICT (_locale, _parent_id) DO UPDATE SET
+        name = EXCLUDED.name;\n`;
+    sqlContent += sqlLocale;
   }
 
   sqlContent = sqlContent.slice(0, -1);
