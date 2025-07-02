@@ -7,6 +7,8 @@ import { formatCompoundSlug } from "@/cms/utils/formatSlug";
 export const LOCATION_TYPE = {
   ADMIN_REGION: "ADMIN_REGION",
   HYDRO_BASIN: "HYDRO_BASIN",
+  GLOBAL: "GLOBAL",
+  WDPA: "WDPA",
 };
 export const Locations: CollectionConfig = {
   slug: "locations",
@@ -70,8 +72,22 @@ export const Locations: CollectionConfig = {
           label: "Hydro Basin",
           value: LOCATION_TYPE.HYDRO_BASIN,
         },
+        {
+          label: "Global",
+          value: LOCATION_TYPE.GLOBAL,
+        },
+        {
+          label: "WDPA",
+          value: LOCATION_TYPE.WDPA,
+        },
       ],
       required: true,
+    },
+    {
+      name: "parent",
+      type: "relationship",
+      relationTo: "locations",
+      hasMany: false,
     },
   ],
 };
