@@ -14,21 +14,12 @@ export const BBoxField: Field = {
     uri: "a://b/bbox.json", // required
     fileMatch: ["a://b/bbox.json"], // required
     schema: {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        bbox: {
-          type: "array",
-          items: {
-            type: "number",
-          },
-          minItems: 4,
-          maxItems: 4,
-          description: "An array of four numbers representing two sets of coordinates (SW and NE).",
-        },
+      type: "array",
+      items: {
+        type: "number",
       },
-      required: ["bbox"],
+      minItems: 4,
+      maxItems: 4,
     },
   },
-  // TODO worth it to add validation of the coordinates?
 };
