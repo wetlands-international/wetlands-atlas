@@ -77,7 +77,7 @@ def download_file_from_google_drive(file_id: str, output_path: str | Path) -> Pa
     direct_url = f"https://drive.google.com/uc?export=download&id={file_id}"
 
     # Download the file
-    response = requests.get(direct_url)
+    response = requests.get(direct_url, timeout=30)
     response.raise_for_status()  # Raise an exception for bad status codes
 
     # Write the file

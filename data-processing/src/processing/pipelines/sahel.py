@@ -5,9 +5,10 @@ Processing functions for Sahel boundary.
 from pathlib import Path
 
 import geopandas as gpd
-from processing.helpers.download_data import download_file_from_google_drive
-from processing.helpers.geoprocessing import reorder_columns_geometry_last
 from rich.console import Console
+
+from ..core.geoprocessing import reorder_columns_geometry_last
+from ..data.download import download_file_from_google_drive
 
 console = Console()
 
@@ -117,7 +118,7 @@ def process_sahel_workflow(
     s3_key = SAHEL_CONFIG["s3_key"]
 
     if upload_to_s3:
-        from .geoprocessing import save_and_upload_geodata
+        from ..core.geoprocessing import save_and_upload_geodata
 
         save_and_upload_geodata(gdf, output_dir / filename, s3_key)
     else:

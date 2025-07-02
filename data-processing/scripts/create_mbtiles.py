@@ -4,7 +4,7 @@ Script to create MBTiles from GeoJSON files.
 
 from pathlib import Path
 
-from processing.helpers.mbtiles_converter import convert_geojson_to_mbtiles
+from processing.converters.mbtiles import convert_geojson_to_mbtiles
 from rich.console import Console
 
 console = Console()

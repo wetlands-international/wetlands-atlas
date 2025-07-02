@@ -9,7 +9,7 @@ import geopandas as gpd
 import pandas as pd
 from rich.console import Console
 
-from .s3 import upload_file_to_s3
+from ..data.storage import upload_file_to_s3
 
 console = Console()
 
