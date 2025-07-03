@@ -21,8 +21,7 @@ def main():
     # Define processing steps
     processing_steps = [
         ProcessingStep(
-            name="🌍 PROCESSING SAHEL BOUNDARY DATA",
-            emoji="📍",
+            name="PROCESSING SAHEL BOUNDARY DATA",
             workflow_func=process_sahel_workflow,
             kwargs={
                 "raw_data_dir": RAW_DATA_DIR,
@@ -30,12 +29,10 @@ def main():
                 "output_dir": OUTPUT_DIR,
                 "upload_to_s3": UPLOAD_TO_S3,
             },
-            summary_icon="📍",
             summary_template="Processed Sahel boundary data with {count} features",
         ),
         ProcessingStep(
-            name="📊 PROCESSING HYDROBASINS DATA",
-            emoji="📈",
+            name="PROCESSING HYDROBASINS DATA",
             workflow_func=process_hydrobasins_workflow,
             kwargs={
                 "raw_data_dir": RAW_DATA_DIR,
@@ -43,19 +40,16 @@ def main():
                 "sahel_boundary_path": SAHEL_BOUNDARY_FILE,
                 "upload_to_s3": UPLOAD_TO_S3,
             },
-            summary_icon="📈",
             summary_template="Processed {count} basin features",
         ),
         ProcessingStep(
-            name="🌍 PROCESSING COUNTRY DATA",
-            emoji="🗺️",
+            name="PROCESSING COUNTRY DATA",
             workflow_func=process_countries_workflow,
             kwargs={
                 "output_dir": OUTPUT_DIR,
                 "countries": SAHEL_COUNTRIES,
                 "upload_to_s3": UPLOAD_TO_S3,
             },
-            summary_icon="🗺️",
             summary_template="Processed {count} countries",
         ),
     ]
