@@ -81,6 +81,6 @@ COUNTRIES_CONFIG = {
 }
 
 WETLANDS_CONFIG = {
-    "output_filename": "IUCN_Classified_Sahel_2019-2023_Dev-V2_Min_ROI.tif",
+    "output_filename": "IUCN_Classified_Sahel_2019-2023.tif",
     "file_id": "1VQGC-iV5Rhd1tC-ScBT2ujq6vT5U5yXH",
 }
