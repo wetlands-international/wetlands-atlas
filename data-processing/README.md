@@ -135,38 +135,32 @@ Before running the data processing scripts, ensure you have:
    AWS_BUCKET_NAME=your_bucket_name
    ```
 
-### 1. Downloading Vector Data
+### 1. Downloading Data
 
-This project includes an automated script to download and process vector data for the Wetlands project. The script handles two main data sources:
+This project includes an automated script to download and process data for the Wetlands project. The script handles four main data sources:
 
-1. **HydroBASINS Africa**: Watershed boundary data from HydroSHEDS
-2. **Country Boundaries**: Administrative boundaries for Sahel region countries from OpenStreetMap
-
+1. **Sahel Boundary**: Region boundary data from Google Drive
+2. **HydroBASINS Africa**: Watershed boundary data from HydroSHEDS
+3. **Country Boundaries**: Administrative boundaries for Sahel region countries from OpenStreetMap
+4. **Wetlands Data**: Additional wetlands-specific datasets
 
 #### Running the Complete Data Processing Workflow
 
-To download and process all vector data, simply run:
+To download and process all data, simply run:
 
 ```bash
-python scripts/download_vector_data.py
+python scripts/download_data.py
 ```
-
-This script will:
-
-1. **Download HydroBASINS Africa data** from Google Cloud Storage
-2. **Process the watershed data** to create major and sub-basin hierarchies
-3. **Filter basins** to only include those intersecting the Sahel region
-4. **Download country boundaries** for 22 Sahel region countries from OpenStreetMap
-5. **Process country data** including adding ISO3 codes and bounding boxes
-6. **Save processed data** as GeoJSON files in `data/processed/`
-7. **Upload results to S3** (if configured)
 
 #### Output Files
 
 The script generates the following processed files:
 
+- `data/processed/sahel_boundary.geojson` - Regional boundary for the Sahel area
 - `data/processed/hydrobasins_sahel.geojson` - Watershed boundaries for the Sahel region
 - `data/processed/countries_sahel.geojson` - Country boundaries for Sahel region countries
+- `data/processed/IUCN_Classified_Sahel_2019-2023_Dev-V2_Min_ROI.tif` - Wetlands-specific datasets
+
 
 ### 2. Create MBTiles
 
