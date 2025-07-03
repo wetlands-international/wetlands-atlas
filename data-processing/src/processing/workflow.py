@@ -47,36 +47,6 @@ def execute_workflow_steps(steps: list[ProcessingStep]) -> list[tuple[Processing
     Returns:
         List of tuples containing (step, result) for each executed step
     """
-    results = []
     for step in steps:
         print_section_header(f"🌍 {step.name}")
-        result = step.workflow_func(**step.kwargs)
-        results.append((step, result))
-    return results
-
-
-def print_workflow_summary(
-    results: list[tuple[ProcessingStep, Any]], output_dir: str, upload_to_s3: bool = False
-) -> None:
-    """Print a summary of workflow execution results.
-
-    Args:
-        results: List of (step, result) tuples from workflow execution
-        output_dir: Directory where files were saved
-        upload_to_s3: Whether files were uploaded to S3
-    """
-    print_section_header("✅ ALL PROCESSING COMPLETED!")
-
-    for step, result in results:
-        # Handle different result types (assuming GeoDataFrames with len() method)
-        try:
-            count = len(result)
-            console.print(f"🗺️ {step.summary_template.format(count=count)}")
-        except (TypeError, AttributeError):
-            # Fallback for results that don't have len()
-            console.print(f"🗺️ {step.summary_template.format(count='N/A')}")
-
-    console.print(f"💾 Files saved to: {output_dir}")
-    if upload_to_s3:
-        console.print("☁️  Files uploaded to S3")
-    console.print("🚀 Vector data processing workflow completed successfully!")
+        step.workflow_func(**step.kwargs)
