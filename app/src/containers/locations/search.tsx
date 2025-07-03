@@ -108,7 +108,7 @@ export const LocationsSearch = () => {
         })}
         placeholder={cn({
           [`${locationsIdData?.name}`]: !locations.enabled && locationsIdData?.name,
-          "Search for a location...": locations.enabled,
+          "Search for a location...": locations.enabled || !location,
         })}
         onValueChange={handleValueChange}
         onKeyUp={handleKeyUp}

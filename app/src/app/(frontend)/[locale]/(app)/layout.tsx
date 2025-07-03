@@ -28,19 +28,20 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     }),
   );
 
-  await queryClient.prefetchQuery(
-    API.queryOptions("get", "/api/locations", {
-      params: {
-        query: {
-          depth: 1,
-          limit: 25,
-          page: 1,
-          sort: "name",
-          locale,
-        },
-      },
-    }),
-  );
+  // await queryClient.prefetchQuery(
+  //   API.queryOptions("get", "/api/locations", {
+  //     params: {
+  //       query: {
+  //         depth: 1,
+  //         limit: 25,
+  //         page: 1,
+  //         sort: "name",
+  //         locale,
+  //         where: {},
+  //       },
+  //     },
+  //   }),
+  // );
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
