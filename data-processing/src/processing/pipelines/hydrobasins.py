@@ -5,12 +5,13 @@ Processing functions for HydroBASINS data.
 from pathlib import Path
 
 import geopandas as gpd
+import pandas as pd
 from rich.console import Console
 
 from ..core.geoprocessing import (
-    create_basin_hierarchy,
     filter_by_geographic_intersection,
     process_geodataframe_columns,
+    reorder_columns_geometry_last,
 )
 from ..data.download import download_and_unzip
 
@@ -75,10 +76,28 @@ def process_hydrobasins_data(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
         ascending=True,
     )
 
-    # Create basin hierarchy
-    gdf = create_basin_hierarchy(gdf)
+    # Create sub-basin level data
+    gdf_sub_bas = gdf.dissolve(by="sub_bas", as_index=False)
+    gdf_sub_bas["level"] = 2
+    gdf_sub_bas = reorder_columns_geometry_last(gdf_sub_bas)
 
-    return gdf
+    # Create major basin level data
+    gdf_maj_bas = gdf_sub_bas[["maj_bas", "maj_name", "maj_area", "geometry"]].copy()
+    gdf_maj_bas = gdf_maj_bas.dissolve(by="maj_bas", as_index=False)
+    gdf_maj_bas["level"] = 1
+    gdf_maj_bas = reorder_columns_geometry_last(gdf_maj_bas)
+
+    # Combine and sort
+    combined_gdf = pd.concat([gdf_maj_bas, gdf_sub_bas], ignore_index=True)
+    combined_gdf.sort_values(by=["maj_name", "level"], ascending=True, inplace=True)
+    combined_gdf.reset_index(drop=True, inplace=True)
+
+    # Reorder columns
+    combined_gdf = reorder_columns_geometry_last(combined_gdf)
+
+    console.print(f"✅ Processed {len(combined_gdf)} basin features")
+
+    return combined_gdf
 
 
 def filter_hydrobasins_by_sahel(

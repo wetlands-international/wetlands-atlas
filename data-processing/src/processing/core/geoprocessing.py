@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import List, Optional, Union
 
 import geopandas as gpd
-import pandas as pd
 from rich.console import Console
 
 from ..data.storage import upload_file_to_s3
@@ -109,29 +108,6 @@ def process_geodataframe_columns(
     gdf = reorder_columns_geometry_last(gdf)
 
     return gdf
-
-
-def create_basin_hierarchy(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-    """
-    Create a hierarchical basin structure from HydroBASINS data.
-    """
-    # Create sub-basin level data
-    gdf_sub_bas = gdf.dissolve(by="sub_bas", as_index=False)
-    gdf_sub_bas["level"] = 2
-    gdf_sub_bas = reorder_columns_geometry_last(gdf_sub_bas)
-
-    # Create major basin level data
-    gdf_maj_bas = gdf_sub_bas[["maj_bas", "maj_name", "maj_area", "geometry"]].copy()
-    gdf_maj_bas = gdf_maj_bas.dissolve(by="maj_bas", as_index=False)
-    gdf_maj_bas["level"] = 1
-    gdf_maj_bas = reorder_columns_geometry_last(gdf_maj_bas)
-
-    # Combine and sort
-    combined_gdf = pd.concat([gdf_maj_bas, gdf_sub_bas], ignore_index=True)
-    combined_gdf.sort_values(by=["maj_name", "level"], ascending=True, inplace=True)
-    combined_gdf.reset_index(drop=True, inplace=True)
-
-    return reorder_columns_geometry_last(combined_gdf)
 
 
 def filter_by_geographic_intersection(
