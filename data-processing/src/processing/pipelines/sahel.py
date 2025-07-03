@@ -9,6 +9,7 @@ from rich.console import Console
 
 from ..core.geoprocessing import reorder_columns_geometry_last
 from ..data.download import download_file_from_google_drive
+from ..data.storage import upload_file_to_s3
 
 console = Console()
 
@@ -117,12 +118,11 @@ def process_sahel_workflow(
     filename = SAHEL_CONFIG["output_filename"]
     s3_key = SAHEL_CONFIG["s3_key"]
 
-    if upload_to_s3:
-        from ..core.geoprocessing import save_and_upload_geodata
+    gdf.to_file(output_dir / filename, driver="GeoJSON")
+    console.print(f"💾 Saved to {output_dir / filename}")
 
-        save_and_upload_geodata(gdf, output_dir / filename, s3_key)
-    else:
-        gdf.to_file(output_dir / filename, driver="GeoJSON")
-        console.print(f"💾 Saved to {output_dir / filename}")
+    if upload_to_s3:
+        upload_file_to_s3(output_dir / filename, s3_key)
+        console.print(f"📤 Uploaded to S3 at {s3_key}")
 
     return gdf
