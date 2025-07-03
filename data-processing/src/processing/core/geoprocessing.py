@@ -2,13 +2,10 @@
 Common geoprocessing utilities for the Wetlands project.
 """
 
-from pathlib import Path
 from typing import List, Optional, Union
 
 import geopandas as gpd
 from rich.console import Console
-
-from ..data.storage import upload_file_to_s3
 
 console = Console()
 
@@ -19,43 +16,6 @@ def reorder_columns_geometry_last(gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
     """
     cols = [c for c in gdf.columns if c != "geometry"] + ["geometry"]
     return gdf[cols]
-
-
-def save_and_upload_geodata(
-    gdf: gpd.GeoDataFrame,
-    local_path: Union[str, Path],
-    s3_object_key: str,
-    driver: str = "GeoJSON",
-    upload_to_s3: bool = True,
-) -> None:
-    """
-    Save GeoDataFrame to file and optionally upload to S3.
-
-    Parameters
-    ----------
-    gdf : gpd.GeoDataFrame
-        The GeoDataFrame to save
-    local_path : Union[str, Path]
-        Local file path to save to
-    s3_object_key : str
-        S3 object key for upload
-    driver : str, default "GeoJSON"
-        File format driver
-    upload_to_s3 : bool, default True
-        Whether to upload to S3
-    """
-    local_path = Path(local_path)
-
-    # Ensure output directory exists
-    local_path.parent.mkdir(parents=True, exist_ok=True)
-
-    # Save locally
-    gdf.to_file(local_path, driver=driver)
-    console.print(f"💾 Saved to {local_path}")
-
-    # Upload to S3 if requested
-    if upload_to_s3:
-        upload_file_to_s3(local_path, s3_object_key)
 
 
 def process_geodataframe_columns(
