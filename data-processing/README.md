@@ -126,13 +126,22 @@ Before running the data processing scripts, ensure you have:
    ```
    data/raw/Sahel-zone - extended - dissolved.gpkg
    ```
-4. **AWS Credentials** (optional): If you want to upload results to S3, configure your AWS credentials in a `.env` file:
+4. **Cloud Storage Credentials** (optional): If you want to upload results to cloud storage, configure your credentials in a `.env` file:
+
+   **For AWS S3:**
    ```
    AWS_ACCESS_KEY_ID=your_access_key
    AWS_SECRET_ACCESS_KEY=your_secret_key
    AWS_SESSION_TOKEN=your_session_token  # if using temporary credentials
    AWS_DEFAULT_REGION=your_region
    AWS_BUCKET_NAME=your_bucket_name
+   ```
+
+   **For Google Cloud Storage:**
+   ```
+   GCS_BUCKET_NAME = your_bucket_name
+   GCS_PROJECT_ID = your_project_id
+   GCS_PRIVATE_KEY = your_private_key
    ```
 
 ### 1. Downloading Data
@@ -159,7 +168,7 @@ The script generates the following processed files:
 - `data/processed/sahel_boundary.geojson` - Regional boundary for the Sahel area
 - `data/processed/hydrobasins_sahel.geojson` - Watershed boundaries for the Sahel region
 - `data/processed/countries_sahel.geojson` - Country boundaries for Sahel region countries
-- `data/processed/IUCN_Classified_Sahel_2019-2023_Dev-V2_Min_ROI.tif` - Wetlands-specific datasets
+- `data/processed/IUCN_Classified_Sahel_2019-2023.tif` - Wetlands-specific datasets
 
 
 ### 2. Create MBTiles
@@ -182,3 +191,24 @@ The script generates the following MBTiles files:
 
 - `data/mbtiles/hydrobasins_sahel.mbtiles` - MBTiles for watershed boundaries
 - `data/mbtiles/countries_sahel.mbtiles` - MBTiles for country boundaries
+
+### 3. Create COGs
+
+To create Cloud Optimized GeoTIFFs (COGs) from the processed raster data, run the following command:
+
+```bash
+python scripts/create_cogs.py
+```
+
+This script will:
+
+1. **Convert TIFF to COG format** for optimized cloud access and performance
+2. **Apply appropriate resampling methods** (nearest neighbor for classified data)
+3. **Save COGs** in the `data/processed/cogs/` directory
+4. **Optionally upload to cloud storage** (Google Cloud Storage when configured)
+
+#### Output Files
+
+The script generates the following COG files:
+
+- `data/processed/cogs/IUCN_Classified_Sahel_2019-2023.tif` - Cloud optimized wetlands classification raster
