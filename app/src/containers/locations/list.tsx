@@ -10,6 +10,8 @@ import { locationsAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { LocationsItem } from "@/containers/locations/item";
 
+import { Loader } from "@/components/ui/loader";
+
 import API from "@/services/api";
 
 export const LocationsList = () => {
@@ -45,7 +47,9 @@ export const LocationsList = () => {
   });
 
   return (
-    <CommandList className="bg-foreground rounded-4xl p-6">
+    <CommandList className="bg-foreground relative rounded-4xl p-6">
+      <Loader isLoading={isFetching && !isFetched} />
+
       {!isFetching && isFetched && (
         <CommandEmpty>
           <span className="text-muted-foreground">No locations found</span>
