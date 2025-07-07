@@ -21,27 +21,39 @@ load_dotenv()
 # Initialize rich console
 console = Console()
 
-# Access GCS credentials from the environment variables
-GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME")
-GCS_PROJECT_ID = os.getenv("GCS_PROJECT_ID")
-GCS_PRIVATE_KEY = json.loads(os.getenv("GCS_PRIVATE_KEY"))
 
-# Initialize GCS client
-credentials = service_account.Credentials.from_service_account_info(GCS_PRIVATE_KEY)
-storage_client = storage.Client(project=GCS_PROJECT_ID, credentials=credentials)
+def initialize_gcs_client():
+    """
+    Initialize and return a Google Cloud Storage client.
+
+    Returns:
+        storage.Client: A configured GCS client instance.
+    """
+    credentials = service_account.Credentials.from_service_account_info(
+        json.loads(os.getenv("GCS_PRIVATE_KEY"))
+    )
+    return storage.Client(project=os.getenv("GCS_PROJECT_ID"), credentials=credentials)
 
 
-def upload_file_to_gcs(file_path: str, destination_blob_path: str):
+def upload_file_to_gcs(
+    file_path: str, destination_blob_path: str, storage_client: storage.Client = None
+):
     """
     Upload a single file to a GCS bucket.
 
     Parameters:
     file_path (str): The local file path to upload.
     destination_blob_path (str): The destination path in the GCS bucket.
+    storage_client (storage.Client, optional): An initialized GCS client instance.
+                                               If not provided, a new client will be initialized.
     """
 
+    # Initialize GCS client if not provided
+    if storage_client is None:
+        storage_client = initialize_gcs_client()
+
     # GCS bucket initialization
-    bucket = storage_client.bucket(GCS_BUCKET_NAME)
+    bucket = storage_client.bucket(os.getenv("GCS_BUCKET_NAME"))
 
     try:
         # Create a blob object in the bucket
@@ -101,6 +113,9 @@ def upload_folder_files_to_gcs_parallel(
     max_workers (int): The maximum number of parallel uploads.
     """
 
+    # Initialize GCS client once for all uploads
+    storage_client = initialize_gcs_client()
+
     # Use ThreadPoolExecutor to upload files in parallel
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = []
@@ -111,8 +126,10 @@ def upload_folder_files_to_gcs_parallel(
                 # Get the remote path for the file
                 blob_name = os.path.relpath(file_path, folder_path)
                 remote_path = os.path.join(destination_blob_path, blob_name)
-                # Use the existing upload_file_to_gcs function
-                futures.append(executor.submit(upload_file_to_gcs, file_path, remote_path))
+                # Use the upload function with shared client
+                futures.append(
+                    executor.submit(upload_file_to_gcs, file_path, remote_path, storage_client)
+                )
 
         # Wait for all uploads to complete
         for future in tqdm(as_completed(futures), total=len(futures)):
