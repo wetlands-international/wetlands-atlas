@@ -9,7 +9,6 @@
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev --turbopack",
     "build": "cross-env NODE_OPTIONS=--no-deprecation next build",
     "ci": "payload migrate && pnpm build",
-    "data:transform": "tsx scripts/transform.ts",
     "data:seed:dev": "tsx scripts/seed.ts --env=development",
     "data:seed:staging": "tsx scripts/seed.ts --env=staging",
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",

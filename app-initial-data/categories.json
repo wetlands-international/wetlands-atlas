@@ -1,0 +1,11 @@
+[
+  {
+    "id": "climate-mitigation-potential",
+    "name": "Climate Mitigation Potential",
+    "description": "Explore the potential of wetlands and related ecosystems for climate change mitigation through various intervention strategies including forest management, peatland restoration, and mangrove conservation.",
+    "cover": null,
+    "defaultIndicators": [
+      "wetlands-mitigation-potential"
+    ]
+  }
+]

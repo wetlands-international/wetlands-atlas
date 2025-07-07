@@ -1,0 +1,281 @@
+[
+  {
+    "id": "mitigation-data-22",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_ben",
+    "data": {
+      "Reduce Deforestation Avg": 262.9976,
+      "Reforestation Avg": 204.0629,
+      "Forest Management Avg": 3.532,
+      "Grassland And Savanna Fire Mgmt ": 52.9058,
+      "Reduce Peatland Degradation": 2565.0,
+      "Peatland Restoration": 3180.0,
+      "Reduce Mangrove Conversion": 847.0226,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-35",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_bfa",
+    "data": {
+      "Reduce Deforestation Avg": 115.6229,
+      "Reforestation Avg": 199.2904,
+      "Forest Management Avg": 31.2582,
+      "Grassland And Savanna Fire Mgmt ": 16.8085,
+      "Peatland Restoration": 870.0
+    }
+  },
+  {
+    "id": "mitigation-data-39",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_cmr",
+    "data": {
+      "Reduce Deforestation Avg": 374.3571,
+      "Reforestation Avg": 218.143,
+      "Forest Management Avg": 0.6945,
+      "Grassland And Savanna Fire Mgmt ": 20.0409,
+      "Reduce Peatland Degradation": 1045.2857,
+      "Peatland Restoration": 1978.6957,
+      "Reduce Mangrove Conversion": 1470.9252,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-42",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_caf",
+    "data": {
+      "Reduce Deforestation Avg": 262.3109,
+      "Reforestation Avg": 210.0995,
+      "Forest Management Avg": 0.1135,
+      "Grassland And Savanna Fire Mgmt ": 32.8955,
+      "Reduce Peatland Degradation": 1177.5,
+      "Peatland Restoration": 1950.0
+    }
+  },
+  {
+    "id": "mitigation-data-43",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_tcd",
+    "data": {
+      "Reduce Deforestation Avg": 225.7684,
+      "Reforestation Avg": 136.3486,
+      "Forest Management Avg": 0.008,
+      "Grassland And Savanna Fire Mgmt ": 8.3268
+    }
+  },
+  {
+    "id": "mitigation-data-54",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_civ",
+    "data": {
+      "Reduce Deforestation Avg": 244.1175,
+      "Reforestation Avg": 218.4528,
+      "Forest Management Avg": 36.4007,
+      "Grassland And Savanna Fire Mgmt ": 0.1015,
+      "Reduce Mangrove Conversion": 1373.2427,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-68",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_eri",
+    "data": {
+      "Reforestation Avg": 126.6334,
+      "Forest Management Avg": 0.1746,
+      "Reduce Mangrove Conversion": 1121.9941,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-70",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_eth",
+    "data": {
+      "Reduce Deforestation Avg": 301.7049,
+      "Reforestation Avg": 143.6373,
+      "Forest Management Avg": 38.9417,
+      "Grassland And Savanna Fire Mgmt ": 6.0245,
+      "Reduce Peatland Degradation": 1918.9195,
+      "Peatland Restoration": 1212.5
+    }
+  },
+  {
+    "id": "mitigation-data-80",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_gmb",
+    "data": {
+      "Reduce Deforestation Avg": 437.187,
+      "Reforestation Avg": 198.4833,
+      "Forest Management Avg": 427.7152,
+      "Reduce Mangrove Conversion": 1318.2546,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-83",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_gha",
+    "data": {
+      "Reduce Deforestation Avg": 218.7037,
+      "Reforestation Avg": 214.0885,
+      "Forest Management Avg": 292.3546,
+      "Grassland And Savanna Fire Mgmt ": 10.3916,
+      "Reduce Mangrove Conversion": 890.9162,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-92",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_gin",
+    "data": {
+      "Reduce Deforestation Avg": 208.2368,
+      "Reforestation Avg": 214.1743,
+      "Forest Management Avg": 14.7032,
+      "Grassland And Savanna Fire Mgmt ": 8.1937,
+      "Reduce Mangrove Conversion": 967.7638,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-93",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_gnb",
+    "data": {
+      "Reduce Deforestation Avg": 162.3694,
+      "Reforestation Avg": 208.7372,
+      "Forest Management Avg": 0.5612,
+      "Grassland And Savanna Fire Mgmt ": 14.1982,
+      "Reduce Mangrove Conversion": 1044.7758,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-115",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_ken",
+    "data": {
+      "Reduce Deforestation Avg": 235.5004,
+      "Reforestation Avg": 219.0485,
+      "Forest Management Avg": 126.5828,
+      "Grassland And Savanna Fire Mgmt ": 0.2219,
+      "Reduce Peatland Degradation": 2812.9688,
+      "Peatland Restoration": 720.0,
+      "Reduce Mangrove Conversion": 1444.2564,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-136",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_mli",
+    "data": {
+      "Reduce Deforestation Avg": 554.1213,
+      "Reforestation Avg": 199.4069,
+      "Forest Management Avg": 15.5928,
+      "Grassland And Savanna Fire Mgmt ": 2.4139,
+      "Peatland Restoration": 2460.0
+    }
+  },
+  {
+    "id": "mitigation-data-140",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_mrt",
+    "data": {
+      "Reduce Deforestation Avg": 265.5014,
+      "Reforestation Avg": 194.2019,
+      "Forest Management Avg": 56.1046,
+      "Peatland Restoration": 534.0
+    }
+  },
+  {
+    "id": "mitigation-data-161",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_ner",
+    "data": {
+      "Reduce Deforestation Avg": 285.385,
+      "Reforestation Avg": 131.011,
+      "Forest Management Avg": 0.6266,
+      "Grassland And Savanna Fire Mgmt ": 1.1007
+    }
+  },
+  {
+    "id": "mitigation-data-162",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_nga",
+    "data": {
+      "Reduce Deforestation Avg": 366.2489,
+      "Reforestation Avg": 213.0745,
+      "Forest Management Avg": 9.0203,
+      "Grassland And Savanna Fire Mgmt ": 5.1927,
+      "Reduce Peatland Degradation": 1583.6364,
+      "Peatland Restoration": 1830.0,
+      "Reduce Mangrove Conversion": 1559.3656,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-191",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_sen",
+    "data": {
+      "Reduce Deforestation Avg": 382.0766,
+      "Reforestation Avg": 198.3317,
+      "Forest Management Avg": 95.6323,
+      "Grassland And Savanna Fire Mgmt ": 36.6047,
+      "Reduce Mangrove Conversion": 1250.1999,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-204",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_ssd",
+    "data": {
+      "Reduce Deforestation Avg": 297.3315,
+      "Reforestation Avg": 204.7752,
+      "Forest Management Avg": 0.0
+    }
+  },
+  {
+    "id": "mitigation-data-211",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_sdn",
+    "data": {
+      "Reduce Deforestation Avg": 178.0504,
+      "Reforestation Avg": 135.1826,
+      "Forest Management Avg": 6.0023,
+      "Grassland And Savanna Fire Mgmt ": 28.2837,
+      "Reduce Peatland Degradation": 1740.9375,
+      "Reduce Mangrove Conversion": 1012.1145,
+      "Mangrove Restoration": 704.0
+    }
+  },
+  {
+    "id": "mitigation-data-223",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_tgo",
+    "data": {
+      "Reduce Deforestation Avg": 171.1989,
+      "Reforestation Avg": 207.9833,
+      "Forest Management Avg": 21.6004,
+      "Grassland And Savanna Fire Mgmt ": 13.6066
+    }
+  },
+  {
+    "id": "mitigation-data-232",
+    "indicator": "wetlands-mitigation-potential",
+    "location": "adminregion_uga",
+    "data": {
+      "Reduce Deforestation Avg": 228.2453,
+      "Reforestation Avg": 213.4228,
+      "Forest Management Avg": 212.3727,
+      "Grassland And Savanna Fire Mgmt ": 1.8745,
+      "Reduce Peatland Degradation": 1207.2067,
+      "Peatland Restoration": 1642.5
+    }
+  }
+]
