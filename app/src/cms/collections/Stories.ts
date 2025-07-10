@@ -16,6 +16,7 @@ import {
 import { PublicAccessControl } from "@/cms/access/public";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
+import { storiesReadLocationCriteriaExtension } from "@/cms/hooks/story-read-location-criteria-extension";
 
 export const Stories: CollectionConfig = {
   slug: "stories",
@@ -127,6 +128,7 @@ export const Stories: CollectionConfig = {
     },
   ],
   hooks: {
+    beforeOperation: [storiesReadLocationCriteriaExtension],
     afterChange: [
       async (props) => {
         if (props.operation === "update") {
