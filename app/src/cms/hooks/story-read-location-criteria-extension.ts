@@ -38,7 +38,7 @@ export const storiesReadLocationCriteriaExtension: CollectionBeforeOperationHook
           SELECT s.id FROM stories s
           WHERE EXISTS (
               SELECT 1 FROM locations l
-              WHERE ST_Within(s.location,l.geometry_4326)
+              WHERE l.id = '${location.id}' AND ST_Within(s.location,l.geometry_4326)
           )
         `);
 
