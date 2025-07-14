@@ -277,6 +277,11 @@ export interface Story {
   name: string;
   description: string;
   cover?: (number | null) | Media;
+  'embedded-video'?: {
+    type?: 'youtube' | null;
+    source?: string | null;
+    title?: string | null;
+  };
   category: string | Category;
   /**
    * @minItems 2
@@ -570,6 +575,13 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   cover?: T;
+  'embedded-video'?:
+    | T
+    | {
+        type?: T;
+        source?: T;
+        title?: T;
+      };
   category?: T;
   location?: T;
   published?: T;
