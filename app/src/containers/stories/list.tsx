@@ -19,6 +19,11 @@ export const StoriesList = async () => {
     page: 1,
     sort: "-createdAt",
     locale,
+    where: {
+      published: {
+        equals: true,
+      },
+    },
   });
 
   return (
