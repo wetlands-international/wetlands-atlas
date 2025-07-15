@@ -35,7 +35,7 @@ export default async function StoriesIdPage({ params }: StoriesIdPageProps) {
   const { id } = await params;
   const story = await getStoryId(id);
 
-  if (!story) {
+  if (!story || !story.published) {
     notFound();
   }
 
