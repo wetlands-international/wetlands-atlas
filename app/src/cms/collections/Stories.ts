@@ -48,6 +48,29 @@ export const Stories: CollectionConfig = {
       localized: false,
     },
     {
+      type: "group",
+      name: "embedded-video",
+      label: "Embedded video",
+      fields: [
+        {
+          type: "radio",
+          name: "type",
+          options: [{ label: "Youtube", value: "youtube" }],
+          defaultValue: "youtube",
+        },
+        {
+          name: "source",
+          type: "text",
+          localized: false,
+        },
+        {
+          name: "title",
+          type: "text",
+          localized: true,
+        },
+      ],
+    },
+    {
       name: "category",
       type: "relationship",
       relationTo: "categories",

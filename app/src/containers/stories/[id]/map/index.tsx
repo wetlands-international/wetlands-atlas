@@ -33,7 +33,7 @@ export const StoryMapContainer = (props: Story) => {
     return null;
   }, [step, steps]);
 
-  console.log({ LAYERS, BBOX });
+  console.log({ LAYERS });
 
   return (
     <div className="relative flex grow flex-col overflow-hidden bg-[#326E82]">
