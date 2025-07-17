@@ -1,6 +1,7 @@
-import EmbeddedVideo from "@/components/embedded-video";
 import { StoryImage } from "@/containers/stories/[id]/image";
 import { StorySteps } from "@/containers/stories/[id]/steps";
+
+import EmbeddedVideo from "@/components/embedded-video";
 
 import { Story } from "@/payload-types";
 
