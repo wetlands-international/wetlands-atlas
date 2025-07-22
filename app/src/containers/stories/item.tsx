@@ -1,14 +1,35 @@
+import { useMemo } from "react";
+
+import { cn } from "@/lib/utils";
+
 import { Link } from "@/i18n/navigation";
 import { Story } from "@/payload-types";
 
-export const StoriesListItem = ({ id, name }: Story) => {
+export const StoriesListItem = ({ id, name, cover }: Story) => {
+  const thumbnailStyle = useMemo(() => {
+    if (typeof cover === "object" && cover?.sizes?.thumbnail) {
+      return {
+        background: `url(${cover.sizes.thumbnail.url}) lightgray 50% / cover no-repeat`,
+      };
+    }
+  }, [cover]);
+
   return (
     <Link
       href={`/stories/${id}`}
-      className="bg-background flex h-full w-72 shrink-0 cursor-pointer justify-between rounded-4xl p-4"
+      className={cn(
+        "group bg-background relative flex h-full w-72 shrink-0 cursor-pointer justify-between rounded-4xl p-4",
+        {
+          "backdrop-blur-sm": !!thumbnailStyle,
+        },
+      )}
+      style={thumbnailStyle}
     >
-      <div className="flex flex-col">
-        <h2 className="text-foreground text-xl font-bold">{name}</h2>
+      {thumbnailStyle && (
+        <div className="pointer-events-none absolute inset-0 rounded-4xl bg-[rgba(5,21,29,0.5)] opacity-0 backdrop-blur-[1px] transition-opacity group-hover:opacity-100" />
+      )}
+      <div className="relative flex flex-col justify-end">
+        <h2 className="text-foreground text-base font-medium">{name}</h2>
       </div>
     </Link>
   );
