@@ -97,10 +97,7 @@ export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
             name={s.name}
             location={s.location}
             href={`/stories/${s.id}`}
-            imgUrl={
-              (s.cover && typeof s.cover === "object" && s.cover.thumbnailURL) ||
-              "/marker-placeholder.png"
-            }
+            media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
           />
         ))}
         <Controls>
