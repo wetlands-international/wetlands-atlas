@@ -9,6 +9,7 @@ import { ClientProviders } from "@/app/(frontend)/[locale]/(app)/providers";
 
 import { Language } from "@/containers/language";
 import { MapContainer } from "@/containers/map";
+import MapLegend from "@/containers/map/map-legend";
 import { Toggle } from "@/containers/toogle";
 
 import payloadConfig from "@/payload.config";
@@ -78,6 +79,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <Suspense>
             <MapContainer stories={stories.docs} />
           </Suspense>
+
+          <div className="pointer-events-none fixed right-5 bottom-7 z-10">
+            <MapLegend />
+          </div>
         </main>
       </ClientProviders>
     </HydrationBoundary>
