@@ -1,5 +1,7 @@
 import type { CollectionConfig } from "payload";
 
+import { nanoid } from "nanoid";
+
 import { PublicAccessControl } from "@/cms/access/public";
 
 export const Media: CollectionConfig = {
@@ -22,6 +24,15 @@ export const Media: CollectionConfig = {
       {
         name: "thumbnail",
         width: 500,
+      },
+    ],
+  },
+  hooks: {
+    beforeOperation: [
+      async (req) => {
+        if (req.operation === "create") {
+          if (req.req.file) req.req.file.name = nanoid();
+        }
       },
     ],
   },
