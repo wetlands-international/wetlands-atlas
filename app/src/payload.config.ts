@@ -26,6 +26,8 @@ import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
 import { Locations } from "@/cms/collections/Location";
 import { Stories } from "@/cms/collections/Stories";
+import { gcsPrefixPlugin } from "@/cms/plugins/GCS";
+import { env } from "@/env";
 
 import { Categories } from "./cms/collections/Categories";
 import { Media } from "./cms/collections/Media";
@@ -55,7 +57,7 @@ export default buildConfig({
       }),
     ],
   }),
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret: env.PAYLOAD_SECRET,
   localization: {
     locales: ["en", "es"], // required
     defaultLocale: "en", // required
@@ -65,7 +67,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI,
+      connectionString: env.DATABASE_URI,
       ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
     },
     extensions: ["postgis", "uuid-ossp"],
@@ -95,6 +97,11 @@ export default buildConfig({
   sharp,
   plugins: [
     payloadCloudPlugin(),
+    gcsPrefixPlugin({
+      projectId: env.GCS_PROJECT_ID,
+      bucketName: env.GCS_BUCKET_NAME,
+      serviceAccountKey: env.GCS_SERVICE_ACCOUNT_KEY,
+    }),
     openapi({ openapiVersion: "3.1", metadata: { title: "Dev API", version: "0.0.1" } }),
     // storage-adapter-placeholder
   ],

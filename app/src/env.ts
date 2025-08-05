@@ -10,6 +10,12 @@ export const env = createEnv({
   server: {
     DATABASE_URI: z.string().url(),
     PAYLOAD_SECRET: z.string().min(1),
+    // Google Cloud Storage configuration
+    GCS_PROJECT_ID: z.string().min(1, "GCS Project ID is required"),
+    GCS_BUCKET_NAME: z.string().min(1, "GCS Bucket name is required"),
+    GCS_SERVICE_ACCOUNT_KEY: z
+      .string()
+      .min(1, "GCS service account key (base64 encoded JSON) is required"),
   },
   /*
    * Environment variables available on the client (and server).
@@ -29,5 +35,9 @@ export const env = createEnv({
     DATABASE_URI: process.env.DATABASE_URI,
     PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
     NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
+    // Google Cloud Storage configuration
+    GCS_PROJECT_ID: process.env.GCS_PROJECT_ID,
+    GCS_BUCKET_NAME: process.env.GCS_BUCKET_NAME,
+    GCS_SERVICE_ACCOUNT_KEY: process.env.GCS_SERVICE_ACCOUNT_KEY,
   },
 });
