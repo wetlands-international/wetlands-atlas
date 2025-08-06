@@ -295,6 +295,8 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
   for (const row of rows) {
     const { id, name, renderingConfig, paramsConfig, legendConfig, indicator, type } = row;
 
+    console.log(legendConfig);
+
     // Optional: validate indicator exists for LAYER_TYPE.INDICATOR
     if (type === "INDICATOR" && indicator) {
       const indicatorExists = await tx.query.indicators.findFirst({
@@ -312,9 +314,9 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
       .insert(layers)
       .values({
         id,
-        renderingConfig,
-        paramsConfig,
-        legendConfig,
+        config: renderingConfig,
+        params_config: paramsConfig,
+        legend_config: legendConfig,
         indicator: indicator ?? null,
         type,
         createdAt: now,
@@ -323,9 +325,9 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
       .onConflictDoUpdate({
         target: layers.id,
         set: {
-          renderingConfig,
-          paramsConfig,
-          legendConfig,
+          config: renderingConfig,
+          params_config: paramsConfig,
+          legend_config: legendConfig,
           indicator: indicator ?? null,
           type,
           updatedAt: now,
@@ -357,11 +359,11 @@ const seed = async () => {
   const db = payload.db.drizzle;
 
   await db.transaction(async (tx) => {
-    await seedLocations(db, tx);
-    await seedCategories(db, tx);
-    await seedIndicators(db, tx);
-    await seedCategoryIndicatorRels(db, tx);
-    await seedIndicatorsData(db, tx);
+    // await seedLocations(db, tx);
+    // await seedCategories(db, tx);
+    // await seedIndicators(db, tx);
+    // await seedCategoryIndicatorRels(db, tx);
+    // await seedIndicatorsData(db, tx);
     await seedLayers(db, tx);
   });
 
