@@ -5,7 +5,7 @@ import path from "path";
 import { DatabaseAdapter } from "payload";
 
 import dotenv from "dotenv";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2));
@@ -211,6 +211,17 @@ const seedCategoryIndicatorRels = async (db: DB, tx: TX): Promise<void> => {
 
     let order = 0;
     for (const indicatorID of defaultIndicators) {
+      const foundRelationships = await tx.query.categories_rels.findFirst({
+        where: and(
+          eq(categoriesRels.parent, categoryId),
+          eq(categoriesRels.indicatorsID, indicatorID),
+          eq(categoriesRels.order, order),
+          eq(categoriesRels.path, `${categoryId}.${indicatorID}`),
+        ),
+      });
+
+      if (foundRelationships) continue;
+
       await tx
         .insert(categoriesRels)
         .values({
