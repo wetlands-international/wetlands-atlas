@@ -6,7 +6,6 @@ import { fileURLToPath } from "url";
 import { buildConfig } from "payload";
 
 import { postgresAdapter } from "@payloadcms/db-postgres";
-import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import {
   lexicalEditor,
   BlocksFeature,
@@ -17,7 +16,6 @@ import {
   FixedToolbarFeature,
 } from "@payloadcms/richtext-lexical";
 
-import { openapi } from "payload-oapi";
 import sharp from "sharp";
 
 import { NumberBlock } from "@/cms/blocks/number";
@@ -26,7 +24,7 @@ import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
 import { Locations } from "@/cms/collections/Location";
 import { Stories } from "@/cms/collections/Stories";
-import { gcsPrefixPlugin } from "@/cms/plugins/GCS";
+import { plugins } from "@/cms/plugins";
 import { env } from "@/env";
 
 import { Categories } from "./cms/collections/Categories";
@@ -95,14 +93,5 @@ export default buildConfig({
     ],
   }),
   sharp,
-  plugins: [
-    payloadCloudPlugin(),
-    gcsPrefixPlugin({
-      projectId: env.GCS_PROJECT_ID,
-      bucketName: env.GCS_BUCKET_NAME,
-      serviceAccountKey: env.GCS_SERVICE_ACCOUNT_KEY,
-    }),
-    openapi({ openapiVersion: "3.1", metadata: { title: "Dev API", version: "0.0.1" } }),
-    // storage-adapter-placeholder
-  ],
+  plugins,
 });
