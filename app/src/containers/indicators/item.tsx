@@ -4,14 +4,14 @@ import { useCallback } from "react";
 
 import { useSyncIndicators, useSyncLayers } from "@/app/(frontend)/[locale]/(app)/store";
 
-import RankingChartComponent from "@/components/chart/ranking";
-// import ScatterChartComponent from "@/components/chart/scatter";
+import ScatterChartComponent from "@/components/chart/scatter";
 import { Lexical } from "@/components/ui/lexical";
 import { Switch } from "@/components/ui/switch";
 
 import { Indicator } from "@/payload-types";
 
 export const IndicatorsItem = (indicator: Indicator) => {
+  console.log(indicator);
   const [indicators, setIndicators] = useSyncIndicators();
   const [, setLayers] = useSyncLayers();
 
@@ -60,13 +60,20 @@ export const IndicatorsItem = (indicator: Indicator) => {
       key={indicator.id}
       className="bg-background animate-in fade-in slide-in-from-left-0 rounded-4xl p-6 duration-500"
     >
-      <header className="flex items-center justify-between gap-2">
-        <h2 className="text-base font-semibold uppercase">{indicator.name}</h2>
-        <Switch
-          checked={!!indicators?.includes(indicator.id)}
-          onCheckedChange={handleSwitchChange}
-        />
+      <header className="space-y-2">
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-base font-semibold uppercase">{indicator.name}</h2>
+          <Switch
+            checked={indicators?.includes(indicator.id)}
+            onCheckedChange={handleSwitchChange}
+          />
+        </div>
+        <p className="text-sm">
+          Wetlands stand out for their potential to mitigate climate change, especially peatlands
+          and coastal wetlands. 
+        </p>
       </header>
+      <div className="mt-7 mb-4 w-full border-t border-dashed" />
 
       {!!indicator.description && (
         <div className="prose prose-invert prose-sm">
@@ -84,8 +91,28 @@ export const IndicatorsItem = (indicator: Indicator) => {
       )}
 
       <div className="-mx-6 aspect-video">
-        {/* <BarChartComponent /> */}
-        <RankingChartComponent />
+        {/* <StackedBarChartComponent
+          data={[
+            { name: "Peatland", restoration: 1000, protection: 2400, isWetland: true },
+            { name: "Floodplain", restoration: 2000, protection: 9800, isWetland: true },
+            { name: "Mangroves", restoration: 2780, protection: 3908, isWetland: true },
+            { name: "Lake", restoration: 2780, protection: 3908, isWetland: true },
+            { name: "Forest", restoration: 500, protection: 1398 },
+            { name: "Grassland", restoration: 1890, protection: 4800 },
+            { name: "Type", restoration: 2390, protection: 3800 },
+          ]}
+        /> */}
+        <ScatterChartComponent
+          data={[
+            { name: "Peatland", restoration: 1000, protection: 2400, isWetland: true },
+            { name: "Floodplain", restoration: 2000, protection: 9800, isWetland: true },
+            { name: "Mangroves", restoration: 2780, protection: 3908, isWetland: true },
+            { name: "Lake", restoration: 2780, protection: 3908, isWetland: true },
+            { name: "Forest", restoration: 500, protection: 1398 },
+            { name: "Grassland", restoration: 1890, protection: 4800 },
+            { name: "Type", restoration: 2390, protection: 3800 },
+          ]}
+        />
       </div>
     </div>
   );

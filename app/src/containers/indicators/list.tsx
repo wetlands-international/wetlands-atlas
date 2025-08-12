@@ -37,6 +37,26 @@ export const IndicatorsList = () => {
       },
     }),
   );
+  const { data: indicatorData } = useQuery(
+    API.queryOptions("get", "/api/indicator-data", {
+      params: {
+        query: {
+          depth: 1,
+          limit: 100,
+          page: 1,
+          sort: "-createdAt",
+          locale,
+          where: {
+            "indicator.id": {
+              equals: insight,
+            },
+          },
+        },
+      },
+    }),
+  );
+
+  console.log({ indicatorsData, insight, indicatorData });
 
   return (
     <div className="flex flex-col gap-1">
