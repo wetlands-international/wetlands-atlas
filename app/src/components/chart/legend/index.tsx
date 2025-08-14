@@ -39,7 +39,7 @@ const ChartLegendContent: FC<Props> = ({ items }) => {
                 </svg>
               )}
             </span>
-            <span>Wetlands</span>
+            <span>{i.label}</span>
           </li>
         ))}
       </ul>

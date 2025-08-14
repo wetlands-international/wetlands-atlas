@@ -18,39 +18,36 @@ import {
   Legend,
 } from "recharts";
 
+import { IndicatorChartData } from "@/containers/indicators/types";
+
 import ChartLegendContent from "@/components/chart/legend";
 import { Tick } from "@/components/chart/tick";
 
-interface IndicatorData {
-  name: string;
-  restoration: number;
-  protection: number;
-  isWetland?: boolean;
-}
-
-export default function StackedBarChartComponent({ data }: { data: IndicatorData[] }) {
+export default function StackedBarChartComponent({ data }: { data: IndicatorChartData[] }) {
   const wetlandsCount = data.filter((d) => d.isWetland).length;
-  const yMax = Math.max(...data.map((item) => item.protection));
+  const yMax = Math.max(...data.map((item) => item.value));
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
-        width={500}
-        height={300}
-        data={data}
+        data={data.map((doc) => ({
+          ...doc,
+          protection: doc.isProtection ? doc.value : undefined,
+          restoration: doc.isRestoration ? doc.value : undefined,
+        }))}
         margin={{
-          top: 30,
+          top: 50,
           right: 30,
           left: 20,
-          bottom: 10,
+          bottom: 65,
         }}
         barSize={20}
         barCategoryGap={16}
       >
         <defs>
           <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#97E0AA" stopOpacity={1} />
-            <stop offset="100%" stopColor="#97E0AA" stopOpacity={0} />
+            <stop offset="0%" stopColor="rgb(42, 246, 250)" stopOpacity={0.6} />
+            <stop offset="74.52%" stopColor="rgb(44, 95, 96)" stopOpacity={0.6} />
           </linearGradient>
 
           <pattern
@@ -68,7 +65,6 @@ export default function StackedBarChartComponent({ data }: { data: IndicatorData
 
         <XAxis
           dataKey="name"
-          xAxisId={0}
           axisLine={{
             stroke: "var(--foreground)",
             strokeWidth: 1,
@@ -84,7 +80,7 @@ export default function StackedBarChartComponent({ data }: { data: IndicatorData
             })
           }
         />
-        <XAxis dataKey="name" xAxisId={1} hide />
+        <XAxis dataKey="name" xAxisId="overlay" hide />
         <YAxis
           axisLine={false}
           tickLine={false}
@@ -137,42 +133,39 @@ export default function StackedBarChartComponent({ data }: { data: IndicatorData
 
         <Legend
           verticalAlign="bottom"
-          wrapperStyle={{ position: "relative" }}
+          wrapperStyle={{ position: "relative", marginTop: 60 }}
           content={
             <ChartLegendContent
               items={[
-                { label: "Wetlands", shape: "square", pattern: true },
-                { label: "Non-wetlands", shape: "square" },
+                { label: "Restoration", shape: "square", pattern: true },
+                { label: "Protection", shape: "square" },
               ]}
             />
           }
         />
+
         <Bar
-          dataKey="protection"
-          xAxisId={0}
+          dataKey={(d) => d.restoration + d.protection}
+          xAxisId="overlay"
+          isAnimationActive={false}
           shape={(props: unknown) => {
-            const rectangleProps = props as RectangleProps & BarProps;
+            const { x = 0, y = 0, width = 0, height = 0 } = props as RectangleProps & BarProps;
             return (
               <Rectangle
-                {...rectangleProps}
-                strokeDasharray={`${(rectangleProps.height ?? 0) + (rectangleProps.width ?? 0)} ${rectangleProps.width}`}
+                x={x}
+                y={y}
+                width={width}
+                height={height}
+                fill="url(#color)"
+                stroke="var(--foreground)"
               />
             );
           }}
-          activeBar={{ fill: "url(#activeColor)" }}
-        >
-          {data.map((_, index) => (
-            <Cell
-              key={`protection-cell-${index}`}
-              fill="url(#color)"
-              stroke={"var(--foreground)"}
-            />
-          ))}
-        </Bar>
+        />
 
         <Bar
           dataKey="restoration"
-          xAxisId={1}
+          stackId="a"
           fill="none"
           shape={(props: unknown) => {
             const { x = 0, y = 0, width = 0, height = 0 } = props as RectangleProps & BarProps;
@@ -197,6 +190,25 @@ export default function StackedBarChartComponent({ data }: { data: IndicatorData
             );
           }}
         />
+
+        <Bar
+          dataKey="protection"
+          stackId="a"
+          shape={(props: unknown) => {
+            const rectProps = props as RectangleProps & BarProps;
+            return (
+              <Rectangle
+                {...rectProps}
+                fill="transparent"
+                strokeDasharray={`${(rectProps.height ?? 0) + (rectProps.width ?? 0)} ${rectProps.width}`}
+              />
+            );
+          }}
+        >
+          {data.map((_, index) => (
+            <Cell key={`protection-cell-${index}`} fill="transparent" stroke="var(--foreground)" />
+          ))}
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   );

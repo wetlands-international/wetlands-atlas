@@ -1,17 +1,22 @@
 "use client";
 
-import { useCallback } from "react";
+import { FC, useCallback } from "react";
 
 import { useSyncIndicators, useSyncLayers } from "@/app/(frontend)/[locale]/(app)/store";
 
-import ScatterChartComponent from "@/components/chart/scatter";
+import { IndicatorChartData } from "@/containers/indicators/types";
+
+import BarChartComponent from "@/components/chart/bar";
 import { Lexical } from "@/components/ui/lexical";
 import { Switch } from "@/components/ui/switch";
 
 import { Indicator } from "@/payload-types";
 
-export const IndicatorsItem = (indicator: Indicator) => {
-  console.log(indicator);
+interface IndicatorsItemProps {
+  indicator: Indicator;
+  chartData: IndicatorChartData[];
+}
+export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator, chartData }) => {
   const [indicators, setIndicators] = useSyncIndicators();
   const [, setLayers] = useSyncLayers();
 
@@ -90,30 +95,11 @@ export const IndicatorsItem = (indicator: Indicator) => {
         </div>
       )}
 
-      <div className="-mx-6 aspect-video">
-        {/* <StackedBarChartComponent
-          data={[
-            { name: "Peatland", restoration: 1000, protection: 2400, isWetland: true },
-            { name: "Floodplain", restoration: 2000, protection: 9800, isWetland: true },
-            { name: "Mangroves", restoration: 2780, protection: 3908, isWetland: true },
-            { name: "Lake", restoration: 2780, protection: 3908, isWetland: true },
-            { name: "Forest", restoration: 500, protection: 1398 },
-            { name: "Grassland", restoration: 1890, protection: 4800 },
-            { name: "Type", restoration: 2390, protection: 3800 },
-          ]}
-        /> */}
-        <ScatterChartComponent
-          data={[
-            { name: "Peatland", restoration: 1000, protection: 2400, isWetland: true },
-            { name: "Floodplain", restoration: 2000, protection: 9800, isWetland: true },
-            { name: "Mangroves", restoration: 2780, protection: 3908, isWetland: true },
-            { name: "Lake", restoration: 2780, protection: 3908, isWetland: true },
-            { name: "Forest", restoration: 500, protection: 1398 },
-            { name: "Grassland", restoration: 1890, protection: 4800 },
-            { name: "Type", restoration: 2390, protection: 3800 },
-          ]}
-        />
-      </div>
+      {chartData.length > 0 && (
+        <div className="-mx-6 aspect-video">
+          <BarChartComponent data={chartData} />
+        </div>
+      )}
     </div>
   );
 };
