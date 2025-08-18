@@ -2,23 +2,75 @@
 
 import { FC, useCallback } from "react";
 
-import { useSyncIndicators, useSyncLayers } from "@/app/(frontend)/[locale]/(app)/store";
+import { useQuery } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 
+import {
+  useSyncIndicators,
+  useSyncLayers,
+  useSyncLocation,
+} from "@/app/(frontend)/[locale]/(app)/store";
+
+import { chartCategoriesMap } from "@/containers/indicators/constants";
 import { IndicatorChartData } from "@/containers/indicators/types";
 
-import BarChartComponent from "@/components/chart/bar";
+import RankingChartComponent from "@/components/chart/ranking";
 import { Lexical } from "@/components/ui/lexical";
 import { Switch } from "@/components/ui/switch";
 
 import { Indicator } from "@/payload-types";
 
+import API from "@/services/api";
+
 interface IndicatorsItemProps {
   indicator: Indicator;
-  chartData: IndicatorChartData[];
 }
-export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator, chartData }) => {
+export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
   const [indicators, setIndicators] = useSyncIndicators();
   const [, setLayers] = useSyncLayers();
+  const locale = useLocale();
+  const [location] = useSyncLocation();
+  const { data } = useQuery(
+    API.queryOptions(
+      "get",
+      "/api/indicator-data",
+      {
+        params: {
+          query: {
+            depth: 1,
+            limit: 100,
+            page: 1,
+            sort: "-createdAt",
+            locale,
+            where: {
+              "indicator.id": {
+                equals: indicator.id,
+              },
+            },
+          },
+        },
+      },
+      {
+        select: (data) => {
+          const result: { location: string; chartData: IndicatorChartData[] }[] = data.docs.map(
+            (doc) => ({
+              location: typeof doc.location === "object" ? doc.location.name : doc.location,
+              chartData: Object.entries(
+                doc.data as Record<keyof typeof chartCategoriesMap, number>,
+              ).map(([name, value]) => ({
+                name,
+                value,
+                ...chartCategoriesMap[name as keyof typeof chartCategoriesMap],
+              })),
+            }),
+          );
+
+          return result;
+        },
+      },
+    ),
+  );
+  const chartData = data?.find((doc) => doc.location === location)?.chartData || [];
 
   const handleSwitchChange = useCallback(() => {
     setIndicators((prev) => {
@@ -95,11 +147,9 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator, chartData }
         </div>
       )}
 
-      {chartData.length > 0 && (
-        <div className="-mx-6 aspect-video">
-          <BarChartComponent data={chartData} />
-        </div>
-      )}
+      <div className="-mx-6 aspect-video">
+        <RankingChartComponent data={chartData} />
+      </div>
     </div>
   );
 };
