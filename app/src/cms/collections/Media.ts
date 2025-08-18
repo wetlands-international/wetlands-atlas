@@ -12,5 +12,17 @@ export const Media: CollectionConfig = {
       required: true,
     },
   ],
-  upload: true,
+  upload: {
+    imageSizes: [
+      {
+        name: "avatar",
+        width: 100,
+        height: 100,
+      },
+      {
+        name: "thumbnail",
+        width: 500,
+      },
+    ],
+  },
 };

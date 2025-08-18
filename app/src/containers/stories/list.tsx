@@ -14,11 +14,16 @@ export const StoriesList = async () => {
 
   const stories = await payload.find({
     collection: "stories",
-    depth: 0,
+    depth: 1,
     limit: 100,
     page: 1,
     sort: "-createdAt",
     locale,
+    where: {
+      published: {
+        equals: true,
+      },
+    },
   });
 
   return (

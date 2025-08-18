@@ -126,7 +126,9 @@ Before running the data processing scripts, ensure you have:
    ```
    data/raw/Sahel-zone - extended - dissolved.gpkg
    ```
-4. **AWS Credentials** (optional): If you want to upload results to S3, configure your AWS credentials in a `.env` file:
+4. **Cloud Storage Credentials** (optional): If you want to upload results to cloud storage, configure your credentials in a `.env` file:
+
+   **For AWS S3:**
    ```
    AWS_ACCESS_KEY_ID=your_access_key
    AWS_SECRET_ACCESS_KEY=your_secret_key
@@ -135,38 +137,39 @@ Before running the data processing scripts, ensure you have:
    AWS_BUCKET_NAME=your_bucket_name
    ```
 
-### 1. Downloading Vector Data
+   **For Google Cloud Storage:**
+   ```
+   GCS_BUCKET_NAME = your_bucket_name
+   GCS_PROJECT_ID = your_project_id
+   GCS_PRIVATE_KEY = your_private_key
+   ```
 
-This project includes an automated script to download and process vector data for the Wetlands project. The script handles two main data sources:
+### 1. Downloading Data
 
-1. **HydroBASINS Africa**: Watershed boundary data from HydroSHEDS
-2. **Country Boundaries**: Administrative boundaries for Sahel region countries from OpenStreetMap
+This project includes an automated script to download and process data for the Wetlands project. The script handles four main data sources:
 
+1. **Sahel Boundary**: Region boundary data from Google Drive
+2. **HydroBASINS Africa**: Watershed boundary data from HydroSHEDS
+3. **Country Boundaries**: Administrative boundaries for Sahel region countries from OpenStreetMap
+4. **Wetlands Data**: Additional wetlands-specific datasets
 
 #### Running the Complete Data Processing Workflow
 
-To download and process all vector data, simply run:
+To download and process all data, simply run:
 
 ```bash
-python scripts/download_vector_data.py
+python scripts/download_data.py
 ```
-
-This script will:
-
-1. **Download HydroBASINS Africa data** from Google Cloud Storage
-2. **Process the watershed data** to create major and sub-basin hierarchies
-3. **Filter basins** to only include those intersecting the Sahel region
-4. **Download country boundaries** for 22 Sahel region countries from OpenStreetMap
-5. **Process country data** including adding ISO3 codes and bounding boxes
-6. **Save processed data** as GeoJSON files in `data/processed/`
-7. **Upload results to S3** (if configured)
 
 #### Output Files
 
 The script generates the following processed files:
 
+- `data/processed/sahel_boundary.geojson` - Regional boundary for the Sahel area
 - `data/processed/hydrobasins_sahel.geojson` - Watershed boundaries for the Sahel region
 - `data/processed/countries_sahel.geojson` - Country boundaries for Sahel region countries
+- `data/processed/IUCN_Classified_Sahel_2019-2023.tif` - Wetlands-specific datasets
+
 
 ### 2. Create MBTiles
 
@@ -188,3 +191,24 @@ The script generates the following MBTiles files:
 
 - `data/mbtiles/hydrobasins_sahel.mbtiles` - MBTiles for watershed boundaries
 - `data/mbtiles/countries_sahel.mbtiles` - MBTiles for country boundaries
+
+### 3. Create COGs
+
+To create Cloud Optimized GeoTIFFs (COGs) from the processed raster data, run the following command:
+
+```bash
+python scripts/create_cogs.py
+```
+
+This script will:
+
+1. **Convert TIFF to COG format** for optimized cloud access and performance
+2. **Apply appropriate resampling methods** (nearest neighbor for classified data)
+3. **Save COGs** in the `data/processed/cogs/` directory
+4. **Optionally upload to cloud storage** (Google Cloud Storage when configured)
+
+#### Output Files
+
+The script generates the following COG files:
+
+- `data/processed/cogs/IUCN_Classified_Sahel_2019-2023.tif` - Cloud optimized wetlands classification raster

@@ -3,7 +3,7 @@ import { parseAsArrayOf, parseAsFloat, parseAsString, parseAsStringLiteral } fro
 import { BASEMAPS } from "@/components/map/controls/settings/basemap";
 
 export const bboxParser = parseAsArrayOf(parseAsFloat, ",").withDefault([
-  -109.52, -15.27, 87.93, 73.4,
+  -11.57, -10.84, 48.06, 29.61,
 ]);
 
 export const basemapParser = parseAsStringLiteral(

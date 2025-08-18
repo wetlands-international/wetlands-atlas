@@ -1,0 +1,8 @@
+[
+  {
+    "id": "wetlands-mitigation-potential",
+    "name": "Wetlands Mitigation Potential",
+    "description": "This indicator shows the potential for various climate mitigation interventions across different ecosystem types. Values represent average mitigation potential in CO₂ equivalent per hectare per year. Interventions include: deforestation reduction ({reduce_deforestation_avg}), reforestation ({reforestation_avg}), forest management ({forest_management_avg}), grassland fire management ({grassland_and_savanna_fire_mgmt_}), peatland degradation reduction ({reduce_peatland_degradation}), peatland restoration ({peatland_restoration}), mangrove conversion reduction ({reduce_mangrove_conversion}), and mangrove restoration ({mangrove_restoration}).",
+    "category": "climate-mitigation-potential"
+  }
+]

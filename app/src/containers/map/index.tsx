@@ -8,6 +8,8 @@ import { useDebounceCallback } from "usehooks-ts";
 
 import { tmpBboxAtom, useSyncBasemap, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
 
+import StoryMarker from "@/containers/map/story-marker";
+
 import Controls from "@/components/map/controls";
 import LayersControl from "@/components/map/controls/layers";
 import SettingsControl from "@/components/map/controls/settings";
@@ -15,8 +17,13 @@ import { BasemapControl, BASEMAPS } from "@/components/map/controls/settings/bas
 import ZoomControl from "@/components/map/controls/zoom";
 
 import { env } from "@/env";
+import { Story } from "@/payload-types";
 
-export const MapContainer = (props: MapProps) => {
+type MapContainerProps = {
+  stories: Story[];
+} & MapProps;
+
+export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
   const [bbox, setBbox] = useSyncBbox();
   const [basemap, setBasemap] = useSyncBasemap();
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
@@ -84,6 +91,15 @@ export const MapContainer = (props: MapProps) => {
         onMove={handleMovedDebounced}
         {...props}
       >
+        {stories.map((s) => (
+          <StoryMarker
+            key={`story-marker-${s.id}`}
+            name={s.name}
+            location={s.location}
+            href={`/stories/${s.id}`}
+            media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
+          />
+        ))}
         <Controls>
           <ZoomControl />
           <LayersControl>

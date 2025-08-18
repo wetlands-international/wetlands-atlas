@@ -6,7 +6,6 @@ import { fileURLToPath } from "url";
 import { buildConfig } from "payload";
 
 import { postgresAdapter } from "@payloadcms/db-postgres";
-import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 import {
   lexicalEditor,
   BlocksFeature,
@@ -17,7 +16,6 @@ import {
   FixedToolbarFeature,
 } from "@payloadcms/richtext-lexical";
 
-import { openapi } from "payload-oapi";
 import sharp from "sharp";
 
 import { NumberBlock } from "@/cms/blocks/number";
@@ -26,6 +24,8 @@ import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
 import { Locations } from "@/cms/collections/Location";
 import { Stories } from "@/cms/collections/Stories";
+import { plugins } from "@/cms/plugins";
+import { env } from "@/env";
 
 import { Categories } from "./cms/collections/Categories";
 import { Media } from "./cms/collections/Media";
@@ -55,7 +55,7 @@ export default buildConfig({
       }),
     ],
   }),
-  secret: process.env.PAYLOAD_SECRET || "",
+  secret: env.PAYLOAD_SECRET,
   localization: {
     locales: ["en", "es"], // required
     defaultLocale: "en", // required
@@ -65,7 +65,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI,
+      connectionString: env.DATABASE_URI,
       ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
     },
     extensions: ["postgis", "uuid-ossp"],
@@ -93,9 +93,5 @@ export default buildConfig({
     ],
   }),
   sharp,
-  plugins: [
-    payloadCloudPlugin(),
-    openapi({ openapiVersion: "3.1", metadata: { title: "Dev API", version: "0.0.1" } }),
-    // storage-adapter-placeholder
-  ],
+  plugins,
 });
