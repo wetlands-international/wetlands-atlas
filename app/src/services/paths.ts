@@ -924,7 +924,9 @@ export interface components {
       /** @description A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location. */
       code: string;
       geometry: Record<string, never> | unknown[] | string | number | boolean | null;
-      bbox: [number, number, number, number];
+      bbox: {
+        bbox: [number, number, number, number];
+      };
       /** @enum {string} */
       type: "ADMIN_REGION" | "HYDRO_BASIN";
       updatedAt: string;

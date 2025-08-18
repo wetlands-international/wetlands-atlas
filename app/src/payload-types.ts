@@ -13,53 +13,53 @@
  * via the `definition` "supportedTimezones".
  */
 export type SupportedTimezones =
-  | 'Pacific/Midway'
-  | 'Pacific/Niue'
-  | 'Pacific/Honolulu'
-  | 'Pacific/Rarotonga'
-  | 'America/Anchorage'
-  | 'Pacific/Gambier'
-  | 'America/Los_Angeles'
-  | 'America/Tijuana'
-  | 'America/Denver'
-  | 'America/Phoenix'
-  | 'America/Chicago'
-  | 'America/Guatemala'
-  | 'America/New_York'
-  | 'America/Bogota'
-  | 'America/Caracas'
-  | 'America/Santiago'
-  | 'America/Buenos_Aires'
-  | 'America/Sao_Paulo'
-  | 'Atlantic/South_Georgia'
-  | 'Atlantic/Azores'
-  | 'Atlantic/Cape_Verde'
-  | 'Europe/London'
-  | 'Europe/Berlin'
-  | 'Africa/Lagos'
-  | 'Europe/Athens'
-  | 'Africa/Cairo'
-  | 'Europe/Moscow'
-  | 'Asia/Riyadh'
-  | 'Asia/Dubai'
-  | 'Asia/Baku'
-  | 'Asia/Karachi'
-  | 'Asia/Tashkent'
-  | 'Asia/Calcutta'
-  | 'Asia/Dhaka'
-  | 'Asia/Almaty'
-  | 'Asia/Jakarta'
-  | 'Asia/Bangkok'
-  | 'Asia/Shanghai'
-  | 'Asia/Singapore'
-  | 'Asia/Tokyo'
-  | 'Asia/Seoul'
-  | 'Australia/Brisbane'
-  | 'Australia/Sydney'
-  | 'Pacific/Guam'
-  | 'Pacific/Noumea'
-  | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+  | "Pacific/Midway"
+  | "Pacific/Niue"
+  | "Pacific/Honolulu"
+  | "Pacific/Rarotonga"
+  | "America/Anchorage"
+  | "Pacific/Gambier"
+  | "America/Los_Angeles"
+  | "America/Tijuana"
+  | "America/Denver"
+  | "America/Phoenix"
+  | "America/Chicago"
+  | "America/Guatemala"
+  | "America/New_York"
+  | "America/Bogota"
+  | "America/Caracas"
+  | "America/Santiago"
+  | "America/Buenos_Aires"
+  | "America/Sao_Paulo"
+  | "Atlantic/South_Georgia"
+  | "Atlantic/Azores"
+  | "Atlantic/Cape_Verde"
+  | "Europe/London"
+  | "Europe/Berlin"
+  | "Africa/Lagos"
+  | "Europe/Athens"
+  | "Africa/Cairo"
+  | "Europe/Moscow"
+  | "Asia/Riyadh"
+  | "Asia/Dubai"
+  | "Asia/Baku"
+  | "Asia/Karachi"
+  | "Asia/Tashkent"
+  | "Asia/Calcutta"
+  | "Asia/Dhaka"
+  | "Asia/Almaty"
+  | "Asia/Jakarta"
+  | "Asia/Bangkok"
+  | "Asia/Shanghai"
+  | "Asia/Singapore"
+  | "Asia/Tokyo"
+  | "Asia/Seoul"
+  | "Australia/Brisbane"
+  | "Australia/Sydney"
+  | "Pacific/Guam"
+  | "Pacific/Noumea"
+  | "Pacific/Auckland"
+  | "Pacific/Fiji";
 
 export interface Config {
   auth: {
@@ -72,20 +72,20 @@ export interface Config {
     categories: Category;
     indicators: Indicator;
     layers: Layer;
-    'indicator-data': IndicatorDatum;
+    "indicator-data": IndicatorDatum;
     locations: Location;
     stories: Story;
-    'payload-locked-documents': PayloadLockedDocument;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
+    "payload-locked-documents": PayloadLockedDocument;
+    "payload-preferences": PayloadPreference;
+    "payload-migrations": PayloadMigration;
   };
   collectionsJoins: {
     categories: {
-      indicators: 'indicators';
-      stories: 'stories';
+      indicators: "indicators";
+      stories: "stories";
     };
     indicators: {
-      layers: 'layers';
+      layers: "layers";
     };
   };
   collectionsSelect: {
@@ -94,21 +94,23 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     indicators: IndicatorsSelect<false> | IndicatorsSelect<true>;
     layers: LayersSelect<false> | LayersSelect<true>;
-    'indicator-data': IndicatorDataSelect<false> | IndicatorDataSelect<true>;
+    "indicator-data": IndicatorDataSelect<false> | IndicatorDataSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
     stories: StoriesSelect<false> | StoriesSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    "payload-locked-documents":
+      | PayloadLockedDocumentsSelect<false>
+      | PayloadLockedDocumentsSelect<true>;
+    "payload-preferences": PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    "payload-migrations": PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: number;
   };
   globals: {};
   globalsSelect: {};
-  locale: 'en' | 'es';
+  locale: "en" | "es";
   user: User & {
-    collection: 'users';
+    collection: "users";
   };
   jobs: {
     tasks: unknown;
@@ -237,8 +239,8 @@ export interface Indicator {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
       indent: number;
       version: number;
     };
@@ -271,7 +273,7 @@ export interface Layer {
     default: string | number | boolean;
   }[];
   legend_config: {
-    type: 'basic' | 'choropleth' | 'gradient';
+    type: "basic" | "choropleth" | "gradient";
     items: {
       color: string;
       value?: string | number;
@@ -279,7 +281,7 @@ export interface Layer {
     [k: string]: unknown;
   };
   indicator?: (string | null) | Indicator;
-  type: 'INDICATOR' | 'CONTEXTUAL';
+  type: "INDICATOR" | "CONTEXTUAL";
   updatedAt: string;
   createdAt: string;
 }
@@ -295,8 +297,8 @@ export interface Story {
   name: string;
   description: string;
   cover?: (number | null) | Media;
-  'embedded-video'?: {
-    type?: 'youtube' | null;
+  "embedded-video"?: {
+    type?: "youtube" | null;
     source?: string | null;
     title?: string | null;
   };
@@ -312,7 +314,7 @@ export interface Story {
   published?: boolean | null;
   steps?:
     | {
-        type: 'map' | 'chart';
+        type: "map" | "chart";
         sidebar: {
           root: {
             type: string;
@@ -321,8 +323,8 @@ export interface Story {
               version: number;
               [k: string]: unknown;
             }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            direction: ("ltr" | "rtl") | null;
+            format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
             indent: number;
             version: number;
           };
@@ -390,12 +392,14 @@ export interface Location {
     | number
     | boolean
     | null;
-  /**
-   * @minItems 4
-   * @maxItems 4
-   */
-  bbox: [number, number, number, number];
-  type: 'ADMIN_REGION' | 'HYDRO_BASIN' | 'GLOBAL' | 'WDPA';
+  bbox: {
+    /**
+     * @minItems 4
+     * @maxItems 4
+     */
+    bbox: [number, number, number, number];
+  };
+  type: "ADMIN_REGION" | "HYDRO_BASIN" | "GLOBAL" | "WDPA";
   parent?: (string | null) | Location;
   updatedAt: string;
   createdAt: string;
@@ -408,40 +412,40 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
+        relationTo: "users";
         value: number | User;
       } | null)
     | ({
-        relationTo: 'media';
+        relationTo: "media";
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'categories';
+        relationTo: "categories";
         value: string | Category;
       } | null)
     | ({
-        relationTo: 'indicators';
+        relationTo: "indicators";
         value: string | Indicator;
       } | null)
     | ({
-        relationTo: 'layers';
+        relationTo: "layers";
         value: string | Layer;
       } | null)
     | ({
-        relationTo: 'indicator-data';
+        relationTo: "indicator-data";
         value: string | IndicatorDatum;
       } | null)
     | ({
-        relationTo: 'locations';
+        relationTo: "locations";
         value: string | Location;
       } | null)
     | ({
-        relationTo: 'stories';
+        relationTo: "stories";
         value: string | Story;
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: number | User;
   };
   updatedAt: string;
@@ -454,7 +458,7 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: number;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: number | User;
   };
   key?: string | null;
@@ -617,7 +621,7 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   cover?: T;
-  'embedded-video'?:
+  "embedded-video"?:
     | T
     | {
         type?: T;
@@ -679,7 +683,6 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-
-declare module 'payload' {
+declare module "payload" {
   export interface GeneratedTypes extends Config {}
 }

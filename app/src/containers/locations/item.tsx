@@ -18,7 +18,7 @@ export const LocationsItem = (props: Location) => {
       onSelect={() => {
         setLocation(props.id);
 
-        setTmpBbox(props.bbox);
+        setTmpBbox(props.bbox.bbox);
 
         setLocations({
           search: undefined,
