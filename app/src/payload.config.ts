@@ -75,6 +75,7 @@ export default buildConfig({
     },
     extensions: ["postgis", "uuid-ossp"],
     migrationDir: path.resolve(dirname, "migrations"),
+    push: false,
     afterSchemaInit: [
       async ({ schema, extendTable }) => {
         const { customType } = await import("drizzle-orm/pg-core");

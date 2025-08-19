@@ -49,7 +49,10 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${workSans.variable} ${philosopher.variable} font-sans`}>
+    <html
+      lang={locale}
+      className={`${workSans.variable} ${philosopher.variable} scroll-smooth font-sans`}
+    >
       <body>
         <QueryProvider>
           <NuqsAdapter>
