@@ -226,9 +226,6 @@ export interface Indicator {
    */
   id: string;
   name: string;
-  /**
-   * Formatted data values can be injected using a special syntax. If the widget type is Percentage bar, then you can use "{value}". If it is Range bar, then you can use "{min}", "{max}" and "{average}". If it is Pie, you can use "{value[0]}", "{value[1]}", and so on.
-   */
   description?: {
     root: {
       type: string;
@@ -250,6 +247,21 @@ export interface Indicator {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
+  widget?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -268,13 +280,25 @@ export interface Layer {
   };
   params_config: {
     key: string;
-    default: string | number | boolean;
+    default:
+      | string
+      | number
+      | boolean
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | null;
   }[];
   legend_config: {
     type: 'basic' | 'choropleth' | 'gradient';
     items: {
       color: string;
       value?: string | number;
+      /**
+       * Optional label for the item, used for display purposes.
+       */
+      label?: string;
     }[];
     [k: string]: unknown;
   };
@@ -565,6 +589,7 @@ export interface IndicatorsSelect<T extends boolean = true> {
   description?: T;
   category?: T;
   layers?: T;
+  widget?: T;
   updatedAt?: T;
   createdAt?: T;
 }

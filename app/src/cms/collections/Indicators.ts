@@ -2,7 +2,18 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
+import {
+  BlocksFeature,
+  BoldFeature,
+  FixedToolbarFeature,
+  lexicalEditor,
+  LinkFeature,
+  OrderedListFeature,
+  UnorderedListFeature,
+} from "@payloadcms/richtext-lexical";
+
 import { PublicAccessControl } from "@/cms/access/public";
+import { NumberBlock } from "@/cms/blocks/number";
 import { SlugIDField } from "@/cms/fields/slug";
 
 export const Indicators: CollectionConfig = {
@@ -25,10 +36,7 @@ export const Indicators: CollectionConfig = {
       name: "description",
       type: "richText",
       localized: true,
-      admin: {
-        description:
-          'Formatted data values can be injected using a special syntax. If the widget type is Percentage bar, then you can use "{value}". If it is Range bar, then you can use "{min}", "{max}" and "{average}". If it is Pie, you can use "{value[0]}", "{value[1]}", and so on.',
-      },
+      admin: {},
     },
     {
       name: "category",
@@ -45,6 +53,23 @@ export const Indicators: CollectionConfig = {
       admin: {
         defaultColumns: ["id", "name"],
       },
+    },
+    {
+      name: "widget",
+      type: "richText",
+      localized: true,
+      editor: lexicalEditor({
+        features: () => [
+          FixedToolbarFeature(),
+          BoldFeature(),
+          LinkFeature(),
+          UnorderedListFeature(),
+          OrderedListFeature(),
+          BlocksFeature({
+            inlineBlocks: [NumberBlock],
+          }),
+        ],
+      }),
     },
   ],
   hooks: {

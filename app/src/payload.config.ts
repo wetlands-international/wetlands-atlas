@@ -8,7 +8,6 @@ import { buildConfig } from "payload";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import {
   lexicalEditor,
-  BlocksFeature,
   BoldFeature,
   LinkFeature,
   UnorderedListFeature,
@@ -18,7 +17,6 @@ import {
 
 import sharp from "sharp";
 
-import { NumberBlock } from "@/cms/blocks/number";
 import { IndicatorDatas } from "@/cms/collections/IndicatorDatas";
 import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
@@ -50,9 +48,6 @@ export default buildConfig({
       LinkFeature(),
       UnorderedListFeature(),
       OrderedListFeature(),
-      BlocksFeature({
-        inlineBlocks: [NumberBlock],
-      }),
     ],
   }),
   secret: env.PAYLOAD_SECRET,
