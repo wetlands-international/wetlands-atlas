@@ -18,7 +18,7 @@ export const ParamsConfigField: Field = {
             type: "string",
           },
           default: {
-            type: ["string", "number", "boolean"],
+            type: ["string", "number", "boolean", "object", "array", "null"],
           },
         },
         required: ["key", "default"],

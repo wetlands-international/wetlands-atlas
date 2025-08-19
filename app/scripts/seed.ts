@@ -101,7 +101,7 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, description, category } = row;
+    const { id, name, description, category, widget } = row;
 
     // Step 1: Ensure category exists (foreign key)
     const categoryExists = await tx.query.categories.findFirst({
@@ -138,12 +138,14 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
         _parentID: id,
         name,
         description,
+        widget,
       })
       .onConflictDoUpdate({
         target: [indicatorsLocales._locale, indicatorsLocales._parentID],
         set: {
           name,
           description,
+          widget,
         },
       });
   }
@@ -295,8 +297,6 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
   for (const row of rows) {
     const { id, name, renderingConfig, paramsConfig, legendConfig, indicator, type } = row;
 
-    console.log(legendConfig);
-
     // Optional: validate indicator exists for LAYER_TYPE.INDICATOR
     if (type === "INDICATOR" && indicator) {
       const indicatorExists = await tx.query.indicators.findFirst({
@@ -359,11 +359,11 @@ const seed = async () => {
   const db = payload.db.drizzle;
 
   await db.transaction(async (tx) => {
-    // await seedLocations(db, tx);
-    // await seedCategories(db, tx);
-    // await seedIndicators(db, tx);
-    // await seedCategoryIndicatorRels(db, tx);
-    // await seedIndicatorsData(db, tx);
+    await seedLocations(db, tx);
+    await seedCategories(db, tx);
+    await seedIndicators(db, tx);
+    await seedCategoryIndicatorRels(db, tx);
+    await seedIndicatorsData(db, tx);
     await seedLayers(db, tx);
   });
 

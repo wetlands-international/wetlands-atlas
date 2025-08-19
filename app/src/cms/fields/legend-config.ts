@@ -35,6 +35,10 @@ export const LegendConfigField: Field = {
               value: {
                 type: ["string", "number"],
               },
+              label: {
+                type: "string",
+                description: "Optional label for the item, used for display purposes.",
+              },
             },
             required: ["color"],
             additionalProperties: false,

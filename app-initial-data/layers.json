@@ -3,59 +3,63 @@
     "id": "wetlands-layer",
     "name": "Wetland Types",
     "renderingConfig": {
-      "type": "raster",
-      "colormap": {
-        "type": "categorical",
-        "values": [
-          0,
-          11,
-          12,
-          14,
-          15,
-          16,
-          21,
-          23,
-          25,
-          26,
-          27,
-          31,
-          35,
-          43,
-          44,
-          45
-        ],
-        "colors": [
-          "#E5CB71",
-          "#FF00F3",
-          "#000CFF",
-          "#CCDE57",
-          "#3898DF",
-          "#D8255B",
-          "#FB00FF",
-          "#8A00FF",
-          "#FF1E00",
-          "#E2FDFF",
-          "#9CF7F8",
-          "#5DEFAB",
-          "#D4E613",
-          "#155700",
-          "#5B9A68",
-          "#408F4B"
+      "source": {
+        "type": "raster",
+        "tiles": [
+          {
+            "@@function": "setQueryParams",
+            "url": "https://wetlands-gap-map-staging-b3fdd14996a5.herokuapp.com/tiler/tiles/WebMercatorQuad/0/0/0@2x",
+            "query": {
+              "colormap": "#params.colormap",
+              "url": "https://storage.googleapis.com/wetlands-gap-map/cogs/IUCN_Classified_Sahel_2019-2023.tif"
+            }
+          }
         ]
       },
-      "opacity": 0.8
+      "styles": [
+        {
+          "paint": {
+            "raster-opacity": "@params.opacity"
+          }
+        }
+      ]
     },
-    "paramsConfig": {
-      "dataSource": "raster",
-      "rasterUrl": "/api/tiles/wetlands/{z}/{x}/{y}.png",
-      "attribution": "Wetlands classification data"
-    },
+    "paramsConfig": [
+      {
+        "key": "opacity",
+        "default": 0.8
+      },
+      {
+        "key": "colormap",
+        "default": {
+          "type": "categorical",
+          "values": [
+            0, 11, 12, 14, 15, 16, 21, 23, 25, 26, 27, 31, 35, 43, 44, 45
+          ],
+          "colors": [
+            "#E5CB71",
+            "#FF00F3",
+            "#000CFF",
+            "#CCDE57",
+            "#3898DF",
+            "#D8255B",
+            "#FB00FF",
+            "#8A00FF",
+            "#FF1E00",
+            "#E2FDFF",
+            "#9CF7F8",
+            "#5DEFAB",
+            "#D4E613",
+            "#155700",
+            "#5B9A68",
+            "#408F4B"
+          ]
+        }
+      }
+    ],
     "legendConfig": {
-      "type": "categorical",
-      "title": "Wetland Types",
-      "position": "bottom-left",
-      "orientation": "vertical",
-      "categories": [
+      "type": "basic",
+      "items": [
         {
           "value": 11,
           "color": "#FF00F3",
