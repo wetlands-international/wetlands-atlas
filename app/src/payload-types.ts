@@ -157,7 +157,6 @@ export interface User {
 export interface Media {
   id: number;
   alt: string;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -391,11 +390,13 @@ export interface Location {
     | number
     | boolean
     | null;
-  /**
-   * @minItems 4
-   * @maxItems 4
-   */
-  bbox: [number, number, number, number];
+  bbox: {
+    /**
+     * @minItems 4
+     * @maxItems 4
+     */
+    bbox: [number, number, number, number];
+  };
   type: 'ADMIN_REGION' | 'HYDRO_BASIN' | 'GLOBAL' | 'WDPA';
   parent?: (string | null) | Location;
   updatedAt: string;
@@ -503,7 +504,6 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

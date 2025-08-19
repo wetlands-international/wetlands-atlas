@@ -925,8 +925,7 @@ export interface components {
       code: string;
       geometry: Record<string, never> | unknown[] | string | number | boolean | null;
       bbox: {
-        /** @description An array of four numbers representing two sets of coordinates (SW and NE). */
-        bbox: number[];
+        bbox: [number, number, number, number];
       };
       /** @enum {string} */
       type: "ADMIN_REGION" | "HYDRO_BASIN";

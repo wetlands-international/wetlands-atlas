@@ -10,6 +10,8 @@ import { locationsAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { LocationsItem } from "@/containers/locations/item";
 
+import { Loader } from "@/components/ui/loader";
+
 import API from "@/services/api";
 
 export const LocationsList = () => {
@@ -23,13 +25,13 @@ export const LocationsList = () => {
     isFetched,
     isFetching,
   } = useQuery({
-    ...API.queryOptions("get", "/api/indicators", {
+    ...API.queryOptions("get", "/api/locations", {
       params: {
         query: {
           depth: 1,
           limit: 25,
           page: 1,
-          sort: "-createdAt",
+          sort: "name",
           locale,
           where: {
             ...(!!search && {
@@ -45,7 +47,9 @@ export const LocationsList = () => {
   });
 
   return (
-    <CommandList className="bg-foreground rounded-4xl p-6">
+    <CommandList className="bg-foreground relative rounded-4xl p-6">
+      <Loader isLoading={isFetching && !isFetched} />
+
       {!isFetching && isFetched && (
         <CommandEmpty>
           <span className="text-muted-foreground">No locations found</span>
@@ -58,7 +62,6 @@ export const LocationsList = () => {
           className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-bold [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:uppercase"
         >
           <div className="py-2">
-            <LocationsItem>Worldwide</LocationsItem>
             {/* 
             <LocationsItem>Location</LocationsItem>
             <LocationsItem>Location 2</LocationsItem>
@@ -68,8 +71,8 @@ export const LocationsList = () => {
             <LocationsItem>Location 6</LocationsItem>
             <LocationsItem>Location 7</LocationsItem> */}
 
-            {locationsData?.docs.map((indicator) => (
-              <LocationsItem key={indicator.id}>{indicator.name}</LocationsItem>
+            {locationsData?.docs.map((location) => (
+              <LocationsItem key={location.id} {...location} />
             ))}
           </div>
         </CommandGroup>
