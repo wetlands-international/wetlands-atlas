@@ -2,20 +2,40 @@
 
 import { useEffect, useRef } from "react";
 
+import { useQuery } from "@tanstack/react-query";
 import { CommandInput } from "cmdk";
 import { useAtom } from "jotai";
 import { LucideXCircle } from "lucide-react";
+import { useLocale } from "next-intl";
 import { LuMapPin, LuSearch } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
 import { locationsAtom, useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
 
+import API from "@/services/api";
+
 export const LocationsSearch = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const locale = useLocale();
+
   const [location] = useSyncLocation();
   const [locations, setLocations] = useAtom(locationsAtom);
+
+  const { data: locationsIdData } = useQuery({
+    ...API.queryOptions("get", "/api/locations/{id}", {
+      params: {
+        path: {
+          id: location ?? "",
+        },
+        query: {
+          locale,
+        },
+      },
+    }),
+    enabled: !!location, // Only run this query if location is defined
+  });
 
   const handleValueChange = (value: string) => {
     setLocations({
@@ -83,12 +103,12 @@ export const LocationsSearch = () => {
           "text-foreground placeholder:text-foreground outline-0": !locations.enabled,
         })}
         value={cn({
-          [location]: !locations.enabled,
+          [`${locationsIdData?.name}`]: !locations.enabled && locationsIdData?.name,
           [locations.search ?? ""]: locations.enabled,
         })}
         placeholder={cn({
-          [location]: !locations.enabled,
-          "Search for a location...": locations.enabled,
+          [`${locationsIdData?.name}`]: !locations.enabled && locationsIdData?.name,
+          "Search for a location...": locations.enabled || !location,
         })}
         onValueChange={handleValueChange}
         onKeyUp={handleKeyUp}

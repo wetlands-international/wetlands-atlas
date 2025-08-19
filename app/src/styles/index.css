@@ -76,6 +76,24 @@
 
   /* Animation */
   --animate-ping: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  --animate-moving: moving 2s ease-in-out infinite;
+
+  @keyframes moving {
+    0% {
+      width: 0%;
+    }
+
+    50% {
+      width: 100%;
+    }
+
+    100% {
+      width: 0;
+      right: 0;
+      left: auto;
+      transform: translate(100%, 0);
+    }
+  }
 }
 
 :root {
