@@ -280,13 +280,25 @@ export interface Layer {
   };
   params_config: {
     key: string;
-    default: string | number | boolean;
+    default:
+      | string
+      | number
+      | boolean
+      | {
+          [k: string]: unknown;
+        }
+      | unknown[]
+      | null;
   }[];
   legend_config: {
     type: 'basic' | 'choropleth' | 'gradient';
     items: {
       color: string;
       value?: string | number;
+      /**
+       * Optional label for the item, used for display purposes.
+       */
+      label?: string;
     }[];
     [k: string]: unknown;
   };
