@@ -30,6 +30,7 @@ COPY app/ ./
 
 # Install dependencies and rebuild native modules
 RUN pnpm install --frozen-lockfile
+RUN pnpm generate:importmap
 
 COPY app/app-build.sh ./
 RUN chmod +x ./app-build.sh
