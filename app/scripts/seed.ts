@@ -37,6 +37,7 @@ const CATEGORIES_FILE_PATH = `../app-initial-data/categories.json`;
 const INDICATORS_FILE_PATH = `../app-initial-data/indicators.json`;
 const INDICATOR_DATA_FILE_PATH = `../app-initial-data/indicator-data.json`;
 const LAYERS_FILE_PATH = `../app-initial-data/layers.json`;
+const STORIES_FILE_PATH = `../app-initial-data/stories.json`;
 
 type DB = DatabaseAdapter["drizzle"] & { query: Record<string, any> };
 type TX = Parameters<Parameters<DB["transaction"]>[0]>[0] & { query: Record<string, any> };
@@ -353,6 +354,79 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
   console.log("✅ Seeded layers.");
 };
 
+const seedStories = async (db: DB, tx: TX): Promise<void> => {
+  const stories = db.query.stories.table;
+  const storiesLocales = db.query.stories_locales.table;
+
+  const rows = JSON.parse(await fs.promises.readFile(STORIES_FILE_PATH, "utf-8"));
+  const now = new Date().toISOString();
+
+  for (const row of rows) {
+    const { id, name, description, category, location, published, embeddedVideo, steps } = row;
+
+    // Optional: Check that category exists (foreign key)
+    const categoryExists = await tx.query.categories.findFirst({
+      where: eq(db.query.categories.table.id, category),
+    });
+
+    if (!categoryExists) {
+      console.warn(`⚠️ Skipping story '${id}' — category '${category}' not found.`);
+      continue;
+    }
+
+    // Convert location array to PostGIS point format
+    const locationPoint = location ? `POINT(${location[0]} ${location[1]})` : null;
+
+    // Upsert into stories table
+    await tx
+      .insert(stories)
+      .values({
+        id,
+        category,
+        location: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
+        published: published ?? false,
+        embedded_video_type: embeddedVideo?.type ?? null,
+        embedded_video_source: embeddedVideo?.source ?? null,
+        steps: JSON.stringify(steps),
+        createdAt: now,
+        updatedAt: now,
+      })
+      .onConflictDoUpdate({
+        target: stories.id,
+        set: {
+          category,
+          location: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
+          published: published ?? false,
+          embedded_video_type: embeddedVideo?.type ?? null,
+          embedded_video_source: embeddedVideo?.source ?? null,
+          steps: JSON.stringify(steps),
+          updatedAt: now,
+        },
+      });
+
+    // Upsert localized fields (en only)
+    await tx
+      .insert(storiesLocales)
+      .values({
+        _locale: "en",
+        _parentID: id,
+        name,
+        description,
+        embedded_video_title: embeddedVideo?.title ?? null,
+      })
+      .onConflictDoUpdate({
+        target: [storiesLocales._locale, storiesLocales._parentID],
+        set: {
+          name,
+          description,
+          embedded_video_title: embeddedVideo?.title ?? null,
+        },
+      });
+  }
+
+  console.log("✅ Seeded stories.");
+};
+
 const seed = async () => {
   await payload.init({ config });
 
@@ -365,6 +439,7 @@ const seed = async () => {
     await seedCategoryIndicatorRels(db, tx);
     await seedIndicatorsData(db, tx);
     await seedLayers(db, tx);
+    await seedStories(db, tx);
   });
 
   process.exit(0);
