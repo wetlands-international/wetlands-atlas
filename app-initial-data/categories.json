@@ -7,5 +7,13 @@
     "defaultIndicators": [
       "wetlands-mitigation-potential"
     ]
+  },
+  {
+    "id": "climate-adaptation",
+    "name": "Climate Adaptation",
+    "description": "Water quality refers to the chemical, physical, and biological characteristics of water.",
+    "defaultIndicators": [
+      "wetlands-mitigation-potential"
+    ]
   }
 ]

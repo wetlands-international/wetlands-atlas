@@ -1,0 +1,199 @@
+[
+  {
+    "id": "wetland-restoration-amazon",
+    "name": "Wetland restoration in the Amazon",
+    "description": "A story about wetland restoration in the Amazon.",
+    "category": "climate-mitigation-potential",
+    "location": [-63.582, -3.465],
+    "published": true,
+    "embeddedVideo": {
+      "type": "youtube",
+      "source": "dQw4w9WgXcQ",
+      "title": "Amazon Wetland Restoration"
+    },
+    "steps": [
+      {
+        "type": "map",
+        "map": {
+          "bbox": [-68.58, -17.03, -48.36, 2.93]
+        },
+        "sidebar": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "tag": "h2",
+                "type": "heading",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Amazon Wetland Restoration",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "This project focuses on restoring critical wetland ecosystems in the Amazon basin. Through innovative restoration techniques, we're working to rebuild these vital carbon sinks and biodiversity hotspots.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      },
+      {
+        "type": "chart",
+        "chart": {
+          "type": "bar",
+          "data": {
+            "labels": ["2020", "2021", "2022", "2023"],
+            "values": [120, 150, 180, 220]
+          },
+          "title": "Hectares Restored Over Time"
+        },
+        "sidebar": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "tag": "h3",
+                "type": "heading",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Progress Over Time",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Our restoration efforts have steadily increased year over year, with over 670 hectares restored to date.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": "wetland-conservation-africa",
+    "name": "Wetland conservation in Africa",
+    "description": "A story about wetland conservation in Africa.",
+    "category": "climate-adaptation",
+    "location": [31.2357, -1.2921],
+    "published": true,
+    "embeddedVideo": {
+      "type": "youtube",
+      "source": "jNQXAC9IVRw",
+      "title": "African Wetland Conservation"
+    },
+    "steps": [
+      {
+        "type": "map",
+        "map": {
+          "bbox": [25.0, -5.0, 40.0, 5.0]
+        },
+        "sidebar": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "tag": "h2",
+                "type": "heading",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Protecting African Wetlands",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Community-led conservation efforts are protecting vital wetland ecosystems across East Africa, supporting both biodiversity and local livelihoods.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      }
+    ]
+  }
+]
