@@ -26,8 +26,15 @@ export const Logo = ({ className }: { className?: string }) => {
   );
 };
 
-export const LogoLarge = () => (
-  <svg width="121" height="40" viewBox="0 0 121 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const LogoLarge = ({ className }: { className?: string }) => (
+  <svg
+    className={className}
+    width="121"
+    height="40"
+    viewBox="0 0 121 40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g clipPath="url(#clip0_6418_1293)">
       <mask id="mask0_6418_1293" maskUnits="userSpaceOnUse" x="0" y="0" width="121" height="40">
         <path d="M0 0.090332H120.645V39.909H0V0.090332Z" fill="white" />

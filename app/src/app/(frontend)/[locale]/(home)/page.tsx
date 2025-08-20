@@ -7,7 +7,7 @@ import HomeSection from "@/containers/home/section";
 export default function LandingPage() {
   return (
     <main>
-      <div className="px-20 pt-2">
+      <div className="fixed top-0 left-0 z-20 w-full px-20 pt-2">
         <Navbar />
       </div>
       <Hero />

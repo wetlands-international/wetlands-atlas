@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 
 const Navbar: FC = () => {
   return (
-    <div className="flex w-full items-center justify-between rounded-4xl bg-white/0.5 py-1 pr-2 backdrop-blur-2xl">
-      <LogoLarge />
+    <div className="flex w-full items-center justify-between rounded-4xl bg-white/[0.05] p-2 backdrop-blur-2xl">
+      <LogoLarge className="shrink-0" />
       <nav>
         <ul className="flex items-center gap-4">
           <li>

@@ -9,29 +9,30 @@ import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   return (
-    <div className="relative grid min-h-[calc(100svh_-_theme(spacing.16))] items-center justify-items-center overflow-hidden">
+    <div className="relative mt-[theme(spacing.16)] grid min-h-[calc(100svh_-_theme(spacing.16))] items-center justify-items-center overflow-hidden">
       <div className="absolute top-1/2 left-1/2 container h-full w-full -translate-x-1/2 -translate-y-1/2 transform 2xl:max-w-full">
-        <Circle size="l" className="absolute top-[3%] left-[10%]" />
+        <Circle size="l" className="absolute top-0 left-[5%] 2xl:top-[5%] 2xl:left-[15%]" />
+        <Circle size="s" className="absolute top-[15%] left-[90%]" />
         <Circle
-          className="absolute top-[22%] left-[5%]"
+          className="absolute top-[10%] left-0 2xl:top-[22%] 2xl:left-[12%]"
           section={{ id: homeSectionsSteps[0].id, imageUrl: homeSections[0].imageUrl }}
           enableAnimation={false}
         />
         <Circle
           size="l"
-          className="absolute top-[2%] left-[70%]"
+          className="absolute top-0 left-[70%] 2xl:left-[80%]"
           section={{ id: homeSectionsSteps[1].id, imageUrl: homeSections[1].imageUrl }}
           enableAnimation={false}
         />
         <Circle
           size="s"
-          className="absolute top-[70%] left-[85%]"
+          className="absolute top-[70%] left-[85%] 2xl:left-[85%]"
           section={{ id: homeSectionsSteps[2].id, imageUrl: homeSections[2].imageUrl }}
           enableAnimation={false}
         />
         <Circle
           size="s"
-          className="absolute top-[80%] left-[5%]"
+          className="absolute top-[80%] left-[5%] 2xl:left-[10%]"
           section={{ id: homeSectionsSteps[3].id, imageUrl: homeSections[3].imageUrl }}
           enableAnimation={false}
         />
@@ -44,10 +45,10 @@ export const Hero = () => {
             imageUrl: homeSections[3].imageUrl,
           }}
         />
-        <Circle size="s" className="absolute top-[15%] left-[82%]" />
+
         <Circle size="xl" className="absolute top-[90%] left-[10%]" enableAnimation={false} />
       </div>
-      <div className="container space-y-8 text-center">
+      <div className="z-10 container space-y-8 text-center">
         <header className="space-y-2">
           <h3 className="mb-2 text-base font-semibold text-blue-300 uppercase">
             discover wetlands

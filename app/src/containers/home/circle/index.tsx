@@ -1,12 +1,14 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 
-import { motion, useAnimation } from "motion/react";
+import { motion, useAnimation, useMotionValue } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
+type CircleSize = "s" | "m" | "l" | "xl";
+const sizeMap: Record<CircleSize, number> = { s: 120, m: 160, l: 240, xl: 320 };
 interface CircleProps {
   section?: {
     id: string;
@@ -18,38 +20,64 @@ interface CircleProps {
     imageUrl: string;
   };
   enableAnimation?: boolean;
-  size?: "s" | "m" | "l" | "xl";
+  size?: CircleSize;
   className?: string;
 }
 const Circle: FC<CircleProps> = ({
   section,
   story,
   enableAnimation = true,
-  size = "medium",
+  size = "m",
   className,
 }) => {
-  // const [isHovered, setIsHovered] = useState(false);
   const controls = useAnimation();
-  const motionProps = {
-    ...(enableAnimation && {
-      animate: {
-        x: [0, 5, 0],
-        y: [0, -5, 0],
-      },
-      transition: {
-        repeat: Infinity,
-        duration: 3,
-        ease: "easeInOut",
-      },
-    }),
+  const dimension = sizeMap[size];
+  const radius = dimension / 2;
+  const textRadius = radius + 12;
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const enablePause = enableAnimation && story;
+
+  useEffect(() => {
+    if (!enableAnimation) return;
+    console.log("hallo?");
+    controls.start({
+      x: [0, 5, 0],
+      y: [0, -5, 0],
+      transition: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+    });
+  }, [enableAnimation, controls]);
+
+  const handleMouseEnter = () => {
+    if (!enablePause) return;
+    controls.stop();
+  };
+
+  const handleMouseLeave = async () => {
+    if (!enablePause) return;
+
+    const currentX = x.get();
+    const currentY = y.get();
+
+    await controls.start({
+      x: [currentX, 0],
+      y: [currentY, 0],
+      transition: { duration: 1, ease: "easeInOut" },
+    });
+
+    controls.start({
+      x: [0, 5, 0],
+      y: [0, -5, 0],
+      transition: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+    });
   };
 
   return (
     <motion.div
       initial={{ x: 0, y: 0 }}
-      {...motionProps}
-      onMouseEnter={() => controls.stop()}
-      // onMouseLeave={() => setIsHovered(false)}
+      animate={controls}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={cn(
         {
           "rounded-full bg-[linear-gradient(0deg,#D5EB4E_0%,#5AC4C6_100%)]": true,
@@ -61,6 +89,8 @@ const Circle: FC<CircleProps> = ({
         className,
       )}
       style={{
+        x,
+        y,
         filter: "drop-shadow(0 0 13px rgba(8, 127, 170, 0.40)) drop-shadow(0 0 1px #0B2A3B)",
       }}
     >
@@ -84,13 +114,37 @@ const Circle: FC<CircleProps> = ({
             alt=""
             fill
           />
+          <svg
+            viewBox={`0 0 ${dimension} ${dimension}`}
+            className="absolute inset-0 overflow-visible text-[10px] font-medium tracking-[0.4em] uppercase opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          >
+            <circle cx={radius} cy={radius} r={radius} fill="none" />
+
+            <path
+              id={`text-circle-${story?.id}`}
+              d={`
+      M ${radius},${radius}
+      m -${textRadius},0
+      a ${textRadius},${textRadius} 0 1,1 ${textRadius * 2},0
+      a ${textRadius},${textRadius} 0 1,1 -${textRadius * 2},0
+    `}
+              fill="none"
+            />
+
+            <text textAnchor="middle" fill="#fff">
+              <textPath href={`#text-circle-${story?.id}`} startOffset="14%">
+                Discover the story
+              </textPath>
+            </text>
+          </svg>
+
           <div
             className={cn({
-              "absolute h-full w-full rounded-full bg-[linear-gradient(0deg,#D5EB4E_0%,#5AC4C6_100%)] opacity-100 transition-opacity group-hover:opacity-0":
+              "absolute h-full w-full rounded-full bg-[linear-gradient(0deg,#D5EB4E_0%,#5AC4C6_100%)] opacity-100 transition-opacity duration-300 group-hover:opacity-0":
                 true,
             })}
           ></div>
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-all hover:opacity-100">
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <span className="px-2 text-center text-2xl font-bold text-white select-none">
               {story.name}
             </span>
