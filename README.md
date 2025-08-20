@@ -9,3 +9,14 @@ Then, use the following command to test the docker build locally:
 ```sh
 docker buildx build --platform=linux/amd64 -t wetlands . && docker rm -f wetlands-container && docker run -d --name wetlands-container -p 80:80 wetlands
 ```
+
+### Titiler
+
+Start titiler:
+```sh
+cd titiler
+source .venv/bin/activate
+uvicorn main:app
+```
+
+Run `pdm install` inside titiler folder after the activate command f you need to install the python dependencies

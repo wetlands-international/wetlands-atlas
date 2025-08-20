@@ -5,12 +5,22 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from titiler.core.factory import TilerFactory
 from titiler.core.dependencies import ColorMapParams
+from starlette.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
-tiler_BASE_URL = os.getenv("tiler_BASE_URL", "/tiler")
+TILER_BASE_URL = os.getenv("TILER_BASE_URL", "/tiler")
 
-app = FastAPI(title="Mini tiler", root_path=tiler_BASE_URL)
+app = FastAPI(title="Mini tiler", root_path=TILER_BASE_URL)
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins (for development - be more specific in production)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 WETLANDS_COLORMAP = {
     11: "#FF00F3",  # F1.1 Permanent upland streams

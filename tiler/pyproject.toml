@@ -1,0 +1,4 @@
+
+[project]
+dependencies = ["fastapi", "uvicorn", "titiler-core", "rio-tiler", "rasterio", "python-dotenv"]
+requires-python = ">=3.13"
