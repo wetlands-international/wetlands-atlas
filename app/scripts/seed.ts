@@ -48,7 +48,7 @@ const seedLocations = async (db: DB, tx: TX) => {
   const rows = JSON.parse(await fs.promises.readFile(LOCATIONS_FILE_PATH, "utf-8"));
   for (const row of rows) {
     const { id, name, code, geometry, type, parent } = row;
-    const bbox = row.bbox ? JSON.parse(row.bbox) : null;
+    const bbox = row.bbox;
 
     const now = new Date().toISOString();
     await tx

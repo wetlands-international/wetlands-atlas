@@ -414,13 +414,11 @@ export interface Location {
     | number
     | boolean
     | null;
-  bbox: {
-    /**
-     * @minItems 4
-     * @maxItems 4
-     */
-    bbox: [number, number, number, number];
-  };
+  /**
+   * @minItems 4
+   * @maxItems 4
+   */
+  bbox: [number, number, number, number];
   type: 'ADMIN_REGION' | 'HYDRO_BASIN' | 'GLOBAL' | 'WDPA';
   parent?: (string | null) | Location;
   updatedAt: string;
