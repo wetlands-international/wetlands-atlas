@@ -8,6 +8,7 @@ import { useDebounceCallback } from "usehooks-ts";
 
 import { tmpBboxAtom, useSyncBasemap, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
 
+import { LayerManager } from "@/containers/map/layer-manager";
 import StoryMarker from "@/containers/map/story-marker";
 
 import Controls from "@/components/map/controls";
@@ -100,6 +101,9 @@ export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
             media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
           />
         ))}
+
+        <LayerManager />
+
         <Controls>
           <ZoomControl />
           <LayersControl>

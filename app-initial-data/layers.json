@@ -7,19 +7,20 @@
         "type": "raster",
         "tiles": [
           {
-            "@@function": "setQueryParams",
-            "url": "https://wetlands-gap-map-staging-b3fdd14996a5.herokuapp.com/tiler/tiles/WebMercatorQuad/0/0/0@2x",
+            "url": "https://wetlands-gap-map-staging-b3fdd14996a5.herokuapp.com/tiler/tiles/WebMercatorQuad/{z}/{x}/{y}@2x",
             "query": {
-              "colormap": "#params.colormap",
-              "url": "https://storage.googleapis.com/wetlands-gap-map/cogs/IUCN_Classified_Sahel_2019-2023.tif"
-            }
+              "url": "https://storage.googleapis.com/wetlands-gap-map/cogs/IUCN_Classified_Sahel_2019-2023.tif",
+              "colormap": "@@#params.colormap"
+            },
+            "@@function": "setQueryParams"
           }
         ]
       },
       "styles": [
         {
+          "type": "raster",
           "paint": {
-            "raster-opacity": "@params.opacity"
+            "raster-opacity": "@@#params.opacity"
           }
         }
       ]

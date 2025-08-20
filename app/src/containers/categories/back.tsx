@@ -8,7 +8,11 @@ import { LuX } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
-import { useSyncIndicators, useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
+import {
+  useSyncIndicators,
+  useSyncInsight,
+  useSyncLayers,
+} from "@/app/(frontend)/[locale]/(app)/store";
 
 import API from "@/services/api";
 
@@ -16,6 +20,7 @@ export const CategoriesBack = () => {
   const locale = useLocale();
   const [insight, setInsight] = useSyncInsight();
   const [, setIndicators] = useSyncIndicators();
+  const [, setLayers] = useSyncLayers();
 
   const { data: categoriesData } = useSuspenseQuery(
     API.queryOptions("get", "/api/categories", {
@@ -35,7 +40,8 @@ export const CategoriesBack = () => {
   const handleClick = useCallback(() => {
     setInsight(null);
     setIndicators(null);
-  }, [setInsight, setIndicators]);
+    setLayers(null);
+  }, [setInsight, setIndicators, setLayers]);
 
   return (
     <button
