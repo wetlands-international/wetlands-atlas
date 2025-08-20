@@ -14,19 +14,12 @@ export const BBoxField: Field = {
     uri: "a://b/bbox.json", // required
     fileMatch: ["a://b/bbox.json"], // required
     schema: {
-      type: "object",
-      properties: {
-        bbox: {
-          type: "array",
-          items: {
-            type: "number",
-          },
-          minItems: 4,
-          maxItems: 4,
-        },
+      type: "array",
+      items: {
+        type: "number",
       },
-      required: ["bbox"],
-      additionalProperties: false,
+      minItems: 4,
+      maxItems: 4,
     },
   },
 };
