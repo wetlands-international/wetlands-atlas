@@ -45,7 +45,7 @@ const HomeSection: FC<HomeSectionProps> = ({
   });
 
   return (
-    <section ref={ref} id={id} className="relative min-h-screen overflow-hidden px-20 pt-28">
+    <section id={id} className="relative min-h-screen overflow-hidden px-20 pt-28">
       <Image
         src={imageUrl}
         width={2048}
@@ -71,7 +71,9 @@ const HomeSection: FC<HomeSectionProps> = ({
           </div>
         </div>
         <p className="text-xs font-medium">1. {sup}</p>
-        <SectionStepper />
+        <div ref={ref}>
+          <SectionStepper />
+        </div>
       </div>
     </section>
   );
