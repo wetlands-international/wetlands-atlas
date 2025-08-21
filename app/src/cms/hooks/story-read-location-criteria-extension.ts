@@ -33,16 +33,19 @@ export const storiesReadLocationCriteriaExtension: CollectionBeforeOperationHook
     return;
   }
 
+  interface StoryQueryResult {
+    rows: { id: string }[];
+  }
   // Query the database to find stories that have a location within the specified geometry
-  const result = await req.payload.db.drizzle.execute(sql`
+  const result = (await req.payload.db.drizzle.execute(sql`
           SELECT s.id FROM stories s
           WHERE EXISTS (
               SELECT 1 FROM locations l
               WHERE l.id = '${location.id}' AND ST_Within(s.location,l.geometry_4326)
           )
-        `);
+        `)) as StoryQueryResult;
 
-  const storyIDs = result.rows.map((row: any) => row.id);
+  const storyIDs = result.rows.map((row) => row.id);
 
   //Add the stories within the specified location to the query
   args.where = {
