@@ -7,7 +7,6 @@
         "type": "raster",
         "tiles": [
           {
-            "url": "https://wetlands-gap-map-staging-b3fdd14996a5.herokuapp.com/tiler/tiles/WebMercatorQuad/{z}/{x}/{y}@2x",
             "query": {
               "url": "https://storage.googleapis.com/wetlands-gap-map/cogs/IUCN_Classified_Sahel_2019-2023.tif",
               "colormap": "@@#params.colormap"

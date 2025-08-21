@@ -1,5 +1,7 @@
 import { BooleanOptional, IStringifyOptions, stringify } from "qs-esm";
 
+import { env } from "@/env";
+
 /**
  * *`setQueryParams`*
  * Set opacity
@@ -12,7 +14,8 @@ type SetQueryParamsProps = {
   query: Record<string, unknown>;
   options: IStringifyOptions<BooleanOptional>;
 };
-export const setQueryParams = ({ url = "", query = {}, options }: SetQueryParamsProps) => {
+export const setQueryParams = ({ query = {}, options }: SetQueryParamsProps) => {
+  const url = env.NEXT_PUBLIC_TILER_URL;
   const u = stringify(query, {
     skipNulls: true,
     ...options,
