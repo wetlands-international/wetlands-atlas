@@ -9,6 +9,7 @@ import * as migration_20250715_104039_add_embedded_video_to_stories from './2025
 import * as migration_20250722_163655_add_sizes_to_media from './20250722_163655_add_sizes_to_media';
 import * as migration_20250805_091012 from './20250805_091012';
 import * as migration_20250819_154345 from './20250819_154345';
+import * as migration_20250820_091116_add_user_sessions_table from './20250820_091116_add_user_sessions_table';
 
 export const migrations = [
   {
@@ -64,6 +65,11 @@ export const migrations = [
   {
     up: migration_20250819_154345.up,
     down: migration_20250819_154345.down,
-    name: '20250819_154345'
+    name: '20250819_154345',
+  },
+  {
+    up: migration_20250820_091116_add_user_sessions_table.up,
+    down: migration_20250820_091116_add_user_sessions_table.down,
+    name: '20250820_091116_add_user_sessions_table'
   },
 ];
