@@ -6,6 +6,8 @@ import {
   bboxParser,
   indicatorsParser,
   insightParser,
+  layersParser,
+  layersSettingsParser,
   locationParser,
 } from "./parsers";
 
@@ -40,6 +42,15 @@ export const locationsAtom = atom<{
 // INDICATORS
 export const useSyncIndicators = () => {
   return useQueryState("indicators", indicatorsParser);
+};
+
+// LAYERS
+export const useSyncLayers = () => {
+  return useQueryState("layers", layersParser);
+};
+
+export const useSyncLayersSettings = () => {
+  return useQueryState("layers-settings", layersSettingsParser);
 };
 
 // STORIES

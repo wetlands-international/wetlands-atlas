@@ -25,6 +25,7 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_MAPBOX_TOKEN: z.string().min(1),
+    NEXT_PUBLIC_TILER_URL: z.string().min(1),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -37,6 +38,7 @@ export const env = createEnv({
     DATABASE_URI: process.env.DATABASE_URI,
     PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
     NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
+    NEXT_PUBLIC_TILER_URL: process.env.NEXT_PUBLIC_TILER_URL,
     // Google Cloud Storage configuration
     GCS_PROJECT_ID: process.env.GCS_PROJECT_ID,
     GCS_BUCKET_NAME: process.env.GCS_BUCKET_NAME,
