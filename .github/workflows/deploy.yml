@@ -44,6 +44,7 @@ jobs:
           echo "GCS_PROJECT_ID=$(echo $response | jq -r '.GCS_PROJECT_ID')" >> $GITHUB_ENV
           echo "GCS_BUCKET_NAME=$(echo $response | jq -r '.GCS_BUCKET_NAME')" >> $GITHUB_ENV
           echo "GCS_SERVICE_ACCOUNT_KEY=$(echo $response | jq -r '.GCS_SERVICE_ACCOUNT_KEY')" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_TILER_URL=$(echo $response | jq -r '.NEXT_PUBLIC_TILER_URL')" >> $GITHUB_ENV
 
       - name: 🔐 Log in to Heroku Container Registry
         run: echo "${{ env.HEROKU_API_KEY }}" | docker login --username=_ --password-stdin registry.heroku.com
