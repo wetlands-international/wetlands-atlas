@@ -12,6 +12,37 @@ export const RenderingConfigField: Field = {
     fileMatch: ["a://b/layer_config.json"], // required
     schema: {
       type: "object",
+      // properties: {
+      //   source: {
+      //     type: "object",
+      //     description:
+      //       "The source of the layer. It can be a vector or raster source. See https://docs.mapbox.com/mapbox-gl-js/style-spec/sources/",
+      //     required: true,
+      //     properties: {
+      //       type: {
+      //         type: "string",
+      //         enum: ["vector", "raster"],
+      //         description: "The type of the source, either 'vector' or 'raster'.",
+      //       },
+      //     },
+      //   },
+      //   styles: {
+      //     type: "array",
+      //     // items: {
+      //     //   type: "object",
+      //     //   description:
+      //     //     "The styles of the layer. It can be a vector or raster layer. See https://docs.mapbox.com/mapbox-gl-js/style-spec/layers/",
+      //     //   properties: {
+      //     //     type: {
+      //     //       type: "string",
+      //     //       enum: ["vector", "raster"],
+      //     //       description: "The type of the layer, either 'vector' or 'raster'.",
+      //     //     },
+      //     //   },
+      //     // },
+      //   },
+      // },
+      // additionalProperties: false,
     },
   },
   admin: {
