@@ -243,12 +243,15 @@ const seedCategoryIndicatorRels = async (db: DB, tx: TX): Promise<void> => {
 
 const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
   const indicatorData = db.query.indicator_data.table;
+  const indicatorDataLocales = db.query.indicator_data_locales.table;
 
   const rows = JSON.parse(await fs.promises.readFile(INDICATOR_DATA_FILE_PATH, "utf-8"));
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, indicator, location, data } = row;
+    const { id, location, data, locale } = row;
+    // All entries in the indicator-data.json are for the wetlands-mitigation-potential indicator
+    const indicator = "wetlands-mitigation-potential";
 
     // Optional: Check that both referenced rows exist
     const [indicatorExists, locationExists] = await Promise.all([
@@ -265,6 +268,7 @@ const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
       continue;
     }
 
+    // Insert/update main indicator_data table
     await tx
       .insert(indicatorData)
       .values({
@@ -283,6 +287,27 @@ const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
           updatedAt: now,
         },
       });
+
+    // Handle localized labels
+    if (locale && typeof locale === "object") {
+      for (const [localeCode, localeData] of Object.entries(locale)) {
+        if (localeData && typeof localeData === "object" && "labels" in localeData) {
+          await tx
+            .insert(indicatorDataLocales)
+            .values({
+              _locale: localeCode,
+              _parentID: id,
+              labels: JSON.stringify(localeData.labels),
+            })
+            .onConflictDoUpdate({
+              target: [indicatorDataLocales._locale, indicatorDataLocales._parentID],
+              set: {
+                labels: JSON.stringify(localeData.labels),
+              },
+            });
+        }
+      }
+    }
   }
 
   console.log("✅ Seeded indicator-data entries.");
