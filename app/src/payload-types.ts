@@ -395,6 +395,15 @@ export interface IndicatorDatum {
     | number
     | boolean
     | null;
+  labels:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -629,6 +638,7 @@ export interface IndicatorDataSelect<T extends boolean = true> {
   indicator?: T;
   location?: T;
   data?: T;
+  labels?: T;
   updatedAt?: T;
   createdAt?: T;
 }
