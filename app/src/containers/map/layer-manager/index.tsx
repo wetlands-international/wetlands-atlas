@@ -64,8 +64,6 @@ export const LayerManager = () => {
       {LAYERS.map((l, i, arr) => {
         const beforeId = i === 0 ? baseLayer : `${arr[i - 1]}-layer`;
 
-        console.log({ l, beforeId, styles: map?.getStyle().layers }); // DEBUG
-
         return (
           <Layer
             id={`${l}-layer`}
