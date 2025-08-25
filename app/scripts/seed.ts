@@ -297,12 +297,12 @@ const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
             .values({
               _locale: localeCode,
               _parentID: id,
-              labels: JSON.stringify(localeData.labels),
+              labels: localeData.labels,
             })
             .onConflictDoUpdate({
               target: [indicatorDataLocales._locale, indicatorDataLocales._parentID],
               set: {
-                labels: JSON.stringify(localeData.labels),
+                labels: localeData.labels,
               },
             });
         }
