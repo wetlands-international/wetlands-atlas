@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { useAtom } from "jotai";
 import Map, { LngLatBoundsLike, MapProps, useMap } from "react-map-gl/mapbox";
@@ -8,6 +8,7 @@ import { useDebounceCallback } from "usehooks-ts";
 
 import { tmpBboxAtom, useSyncBasemap, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
 
+import { Layers } from "@/containers/layers";
 import { LayerManager } from "@/containers/map/layer-manager";
 import StoryMarker from "@/containers/map/story-marker";
 
@@ -25,6 +26,7 @@ type MapContainerProps = {
 } & MapProps;
 
 export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
+  const [loaded, setLoaded] = useState(false);
   const [bbox, setBbox] = useSyncBbox();
   const [basemap, setBasemap] = useSyncBasemap();
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
@@ -64,6 +66,10 @@ export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
     }
   }, [exploreMap, tmpBbox]);
 
+  const handleLoad = useCallback(() => {
+    setLoaded(true);
+  }, []);
+
   useEffect(() => {
     if (tmpBbox) {
       handleFitBounds();
@@ -90,6 +96,7 @@ export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
         mapStyle={MAP_STYLE}
         minZoom={2}
         onMove={handleMovedDebounced}
+        onLoad={handleLoad}
         {...props}
       >
         {stories.map((s) => (
@@ -102,14 +109,12 @@ export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
           />
         ))}
 
-        <LayerManager />
+        {loaded && <LayerManager />}
 
         <Controls>
           <ZoomControl />
           <LayersControl>
-            <div className="flex flex-col space-y-0.5">
-              <span>Layers</span>
-            </div>
+            <Layers />
           </LayersControl>
           <SettingsControl>
             <BasemapControl basemap={basemap} onBasemapChange={setBasemap} />

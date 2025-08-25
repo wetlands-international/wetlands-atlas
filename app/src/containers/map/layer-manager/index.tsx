@@ -51,14 +51,18 @@ export const LayerManager = () => {
     });
   }, [layers, layersSettings, setLayersSettings]);
 
+  const LAYERS = useMemo(() => {
+    return layers.toReversed();
+  }, [layers]);
+
   return (
     <>
       {/*
           Generate all transparent backgrounds to be able to sort by layers without an error
           - https://github.com/visgl/react-map-gl/issues/939#issuecomment-625290200
         */}
-      {layers.map((l, i) => {
-        const beforeId = i === 0 ? baseLayer : `${layers[i - 1]}-layer`;
+      {LAYERS.map((l, i, arr) => {
+        const beforeId = i === 0 ? baseLayer : `${arr[i - 1]}-layer`;
 
         return (
           <Layer
@@ -75,7 +79,9 @@ export const LayerManager = () => {
           Loop through active layers. The id is gonna be used to fetch the current layer and know how to order the layers.
           The first item will always be at the top of the layers stack
         */}
-      {layers.map((l) => {
+      {LAYERS.map((l, i, arr) => {
+        const beforeId = i === 0 ? baseLayer : `${arr[i - 1]}-layer`;
+
         return (
           <LayerManagerItem
             key={l}
@@ -84,6 +90,7 @@ export const LayerManager = () => {
               // ...{ opacity: 1, visibility: true },
               ...(!!layersSettings && layersSettings[l]),
             }}
+            beforeId={beforeId}
           />
         );
       })}
