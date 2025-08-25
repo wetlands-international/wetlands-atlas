@@ -24,7 +24,6 @@ interface ValidAvatar extends Avatar {
 }
 
 function isValidAvatar(avatar?: Avatar): avatar is ValidAvatar {
-  console.log(avatar);
   return (
     typeof avatar?.url === "string" &&
     avatar.url.trim() !== "" &&

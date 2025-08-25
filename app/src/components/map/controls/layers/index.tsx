@@ -58,7 +58,7 @@ export const LayersControl: FC<PropsWithChildren<LayersControlProps>> = ({
             </TooltipPortal>
           )}
 
-          <PopoverContent side="left" align="start">
+          <PopoverContent side="left" align="start" className="p-0">
             {children}
           </PopoverContent>
         </Tooltip>

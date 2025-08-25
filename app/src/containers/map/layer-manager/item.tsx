@@ -10,9 +10,9 @@ import { Layer } from "@/payload-types";
 import API from "@/services/api";
 
 interface LayerManagerItemProps {
-  beforeId?: string;
   settings: Record<string, unknown>;
   id: string;
+  beforeId?: string;
 }
 
 const LayerManagerItem = ({ id, settings, beforeId }: LayerManagerItemProps) => {
