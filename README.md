@@ -13,6 +13,7 @@ docker buildx build --platform=linux/amd64 -t wetlands . && docker rm -f wetland
 ### Titiler
 
 Start titiler:
+
 ```sh
 cd titiler
 source .venv/bin/activate
@@ -20,3 +21,9 @@ uvicorn main:app
 ```
 
 Run `pdm install` inside titiler folder after the activate command f you need to install the python dependencies
+
+### Git LFS
+
+This project uses git LFS for the `app-initial-data` seeding files.
+In case you cannot see the contents of a data file, use `git lfs pull`.
+[https://git-lfs.com](https://git-lfs.com)
