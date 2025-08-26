@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
@@ -17,6 +18,22 @@ import { PublicAccessControl } from "@/cms/access/public";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
 import { storiesReadLocationCriteriaExtension } from "@/cms/hooks/story-read-location-criteria-extension";
+
+const validateEmbeddedVideoSource = (value: any, opts: any) => {
+  const { embedded_video } = opts.data;
+  if (embedded_video.type && !embedded_video.source) {
+    return "Embedded video source is required.";
+  }
+  return true;
+};
+
+const validateEmbeddedVideoTitle = (value: any, opts: any) => {
+  const { embedded_video } = opts.data;
+  if (embedded_video.type && !embedded_video.title) {
+    return "Embedded video title is required.";
+  }
+  return true;
+};
 
 export const Stories: CollectionConfig = {
   slug: "stories",
@@ -49,24 +66,27 @@ export const Stories: CollectionConfig = {
     },
     {
       type: "group",
-      name: "embedded-video",
+      name: "embedded_video",
       label: "Embedded video",
+      required: false,
+
       fields: [
         {
-          type: "radio",
+          type: "select",
           name: "type",
           options: [{ label: "Youtube", value: "youtube" }],
-          defaultValue: "youtube",
         },
         {
           name: "source",
           type: "text",
           localized: false,
+          validate: validateEmbeddedVideoSource,
         },
         {
           name: "title",
           type: "text",
           localized: true,
+          validate: validateEmbeddedVideoTitle,
         },
       ],
     },

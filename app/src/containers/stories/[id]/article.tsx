@@ -6,7 +6,7 @@ import EmbeddedVideo from "@/components/embedded-video";
 import { Story } from "@/payload-types";
 
 export const StoriesIdArticle = (props: Story) => {
-  const embeddedVideo = props["embedded-video"];
+  const embeddedVideo = props["embedded_video"];
   return (
     <article className="px-11">
       <div className="flex min-h-[calc(100svh_-_theme(spacing.24))] flex-col">
