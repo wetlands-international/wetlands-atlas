@@ -32,6 +32,7 @@ dotenv.config({ path: dotenvPath });
 const { default: payload } = await import("payload");
 const { default: config } = await import("../../app/src/payload.config");
 
+const MEDIA_FILE_PATH = `../app-initial-data/media.json`;
 const LOCATIONS_FILE_PATH = `../app-initial-data/locations.json`;
 const CATEGORIES_FILE_PATH = `../app-initial-data/categories.json`;
 const INDICATORS_FILE_PATH = `../app-initial-data/indicators.json`;
@@ -41,6 +42,101 @@ const STORIES_FILE_PATH = `../app-initial-data/stories.json`;
 
 type DB = DatabaseAdapter["drizzle"] & { query: Record<string, any> };
 type TX = Parameters<Parameters<DB["transaction"]>[0]>[0] & { query: Record<string, any> };
+
+const seedMedia = async (db: DB, tx: TX) => {
+  const media = db.query.media.table;
+  const rows = JSON.parse(await fs.promises.readFile(MEDIA_FILE_PATH, "utf-8"));
+  const now = new Date().toISOString();
+
+  for (const row of rows) {
+    const {
+      id,
+      alt,
+      url,
+      thumbnail_u_r_l,
+      filename,
+      mime_type,
+      filesize,
+      width,
+      height,
+      focal_x,
+      focal_y,
+      sizes_avatar_url,
+      sizes_avatar_width,
+      sizes_avatar_height,
+      sizes_avatar_mime_type,
+      sizes_avatar_filesize,
+      sizes_avatar_filename,
+      sizes_thumbnail_url,
+      sizes_thumbnail_width,
+      sizes_thumbnail_height,
+      sizes_thumbnail_mime_type,
+      sizes_thumbnail_filesize,
+      sizes_thumbnail_filename,
+    } = row;
+
+    await tx
+      .insert(media)
+      .values({
+        id,
+        alt,
+        url,
+        thumbnail_u_r_l,
+        filename,
+        mime_type,
+        filesize,
+        width,
+        height,
+        focal_x,
+        focal_y,
+        sizes_avatar_url,
+        sizes_avatar_width,
+        sizes_avatar_height,
+        sizes_avatar_mime_type,
+        sizes_avatar_filesize,
+        sizes_avatar_filename,
+        sizes_thumbnail_url,
+        sizes_thumbnail_width,
+        sizes_thumbnail_height,
+        sizes_thumbnail_mime_type,
+        sizes_thumbnail_filesize,
+        sizes_thumbnail_filename,
+        createdAt: now,
+        updatedAt: now,
+      })
+      .onConflictDoUpdate({
+        target: media.id,
+        set: {
+          id,
+          alt,
+          url,
+          thumbnail_u_r_l,
+          filename,
+          mime_type,
+          filesize,
+          width,
+          height,
+          focal_x,
+          focal_y,
+          sizes_avatar_url,
+          sizes_avatar_width,
+          sizes_avatar_height,
+          sizes_avatar_mime_type,
+          sizes_avatar_filesize,
+          sizes_avatar_filename,
+          sizes_thumbnail_url,
+          sizes_thumbnail_width,
+          sizes_thumbnail_height,
+          sizes_thumbnail_mime_type,
+          sizes_thumbnail_filesize,
+          sizes_thumbnail_filename,
+          updatedAt: now,
+        },
+      });
+  }
+
+  console.log("✅ Seeded media.");
+};
 
 const seedLocations = async (db: DB, tx: TX) => {
   const locations = db.query.locations.table;
@@ -389,7 +485,8 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, description, category, location, published, embeddedVideo, steps } = row;
+    const { id, name, cover, description, category, location, published, embeddedVideo, steps } =
+      row;
 
     // Optional: Check that category exists (foreign key)
     const categoryExists = await tx.query.categories.findFirst({
@@ -410,10 +507,11 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
       .values({
         id,
         category,
+        cover: cover ?? null,
         location: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
         published: published ?? false,
         embedded_video_type: embeddedVideo?.type ?? null,
-        embedded_video_source: embeddedVideo?.source ?? null,
+        embedded_videoSource: embeddedVideo?.source ?? null,
         createdAt: now,
         updatedAt: now,
       })
@@ -421,10 +519,11 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
         target: stories.id,
         set: {
           category,
+          cover: cover ?? null,
           location: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
           published: published ?? false,
           embedded_video_type: embeddedVideo?.type ?? null,
-          embedded_video_source: embeddedVideo?.source ?? null,
+          embedded_videoSource: embeddedVideo?.source ?? null,
           updatedAt: now,
         },
       });
@@ -503,6 +602,7 @@ const seed = async () => {
   const db = payload.db.drizzle;
 
   await db.transaction(async (tx) => {
+    await seedMedia(db, tx);
     await seedLocations(db, tx);
     await seedCategories(db, tx);
     await seedIndicators(db, tx);
