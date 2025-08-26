@@ -510,8 +510,8 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
         cover: cover ?? null,
         location: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
         published: published ?? false,
-        embedded_video_type: embeddedVideo?.type ?? null,
-        embedded_videoSource: embeddedVideo?.source ?? null,
+        embedded_video_type: embeddedVideo?.type,
+        embedded_video_source: embeddedVideo?.source,
         createdAt: now,
         updatedAt: now,
       })
@@ -522,8 +522,8 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
           cover: cover ?? null,
           location: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
           published: published ?? false,
-          embedded_video_type: embeddedVideo?.type ?? null,
-          embedded_videoSource: embeddedVideo?.source ?? null,
+          embedded_video_type: embeddedVideo?.type,
+          embedded_video_source: embeddedVideo?.source,
           updatedAt: now,
         },
       });

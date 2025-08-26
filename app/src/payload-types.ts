@@ -326,7 +326,7 @@ export interface Story {
   name: string;
   description: string;
   cover?: (number | null) | Media;
-  'embedded-video'?: {
+  embedded_video?: {
     type?: 'youtube' | null;
     source?: string | null;
     title?: string | null;
@@ -666,7 +666,7 @@ export interface StoriesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   cover?: T;
-  'embedded-video'?:
+  embedded_video?:
     | T
     | {
         type?: T;
