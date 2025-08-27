@@ -31,7 +31,7 @@ export const LegendTypeGradient: React.FC<LegendTypeProps> = ({ className = "", 
                 "flex-shrink-0 text-xs": true,
               })}
             >
-              {formatNumber(value)}
+              {formatNumber(Number(value))}
             </li>
           ))}
       </ul>

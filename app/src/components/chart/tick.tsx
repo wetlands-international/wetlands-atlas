@@ -9,7 +9,7 @@ interface TickProps {
 
 export const Tick = (props: TickProps) => {
   return (
-    <Text {...props} className="fill-muted-foreground text-2xs">
+    <Text {...props} className="fill-foreground text-2xs">
       {props.payload.value}
     </Text>
   );

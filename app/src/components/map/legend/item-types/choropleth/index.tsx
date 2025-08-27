@@ -34,7 +34,7 @@ export const LegendTypeChoropleth: React.FC<LegendTypeProps> = ({ className = ""
               width: `${100 / items.length}%`,
             }}
           >
-            {formatNumber(value)}
+            {formatNumber(Number(value))}
           </li>
         ))}
       </ul>

@@ -22,9 +22,12 @@ export const basemapParser = parseAsStringLiteral(
 export const indicatorsParser = parseAsArrayOf(parseAsString);
 
 export const layersParser = parseAsArrayOf(parseAsString).withDefault([]);
-export const layersSettingsParser = parseAsJson<{
-  [key: string]: Record<string, unknown>;
-}>(layerSettingsSchema.parse);
+export type LayersSettings<T> = Record<string, Record<string, T>>;
+
+export const createLayersSettingsParser = <T>() =>
+  parseAsJson<LayersSettings<T>>(layerSettingsSchema.parse);
+
+export const layersSettingsParser = createLayersSettingsParser<unknown>();
 
 export const locationParser = parseAsString;
 export const insightParser = parseAsString;

@@ -898,6 +898,7 @@ export interface components {
         type: "basic" | "choropleth" | "gradient";
         items: {
           color: string;
+          label: string;
           value?: string | number;
         }[];
       };
@@ -913,6 +914,7 @@ export interface components {
       indicator: string | components["schemas"]["Indicator"];
       location: string | components["schemas"]["Location"];
       data: Record<string, never> | unknown[] | string | number | boolean | null;
+      labels: Record<string, string>;
       updatedAt: string;
       createdAt: string;
     };

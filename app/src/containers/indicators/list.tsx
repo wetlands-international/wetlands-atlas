@@ -43,7 +43,7 @@ export const IndicatorsList = () => {
       <CategoriesBack />
 
       {indicatorsData?.docs.map((indicator) => (
-        <IndicatorsItem key={indicator.id} {...indicator} />
+        <IndicatorsItem key={indicator.id} indicator={indicator} />
       ))}
     </div>
   );
