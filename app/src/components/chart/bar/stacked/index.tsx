@@ -24,17 +24,13 @@ import ChartLegendContent from "@/components/chart/legend";
 import { Tick } from "@/components/chart/tick";
 
 export default function StackedBarChartComponent({ data }: { data: IndicatorChartData[] }) {
-  const wetlandsCount = data.filter((d) => d.isWetland).length;
+  const wetlandsCount = data.filter((d) => d.group === "wetlands").length;
   const yMax = Math.max(...data.map((item) => item.value));
 
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
-        data={data.map((doc) => ({
-          ...doc,
-          protection: doc.isProtection ? doc.value : undefined,
-          restoration: doc.isRestoration ? doc.value : undefined,
-        }))}
+        data={data}
         margin={{
           top: 50,
           right: 30,
@@ -96,7 +92,7 @@ export default function StackedBarChartComponent({ data }: { data: IndicatorChar
           }
         />
 
-        <ReferenceArea x1={data[0].name} x2={data[wetlandsCount - 1].name} fill="none">
+        <ReferenceArea x1={data[0].label} x2={data[wetlandsCount - 1].label} fill="none">
           <Label
             value="Wetlands"
             position="insideTopRight"
@@ -114,12 +110,12 @@ export default function StackedBarChartComponent({ data }: { data: IndicatorChar
           position="start"
           ifOverflow="visible"
           segment={[
-            { x: data[wetlandsCount].name, y: 0 },
-            { x: data[wetlandsCount].name, y: yMax + yMax / 2 },
+            { x: data[wetlandsCount].label, y: 0 },
+            { x: data[wetlandsCount].label, y: yMax + yMax / 2 },
           ]}
         />
 
-        <ReferenceArea x1={data[wetlandsCount].name} x2={data[data.length - 1].name} fill="none">
+        <ReferenceArea x1={data[wetlandsCount].label} x2={data[data.length - 1].label} fill="none">
           <Label
             value="Non-wetlands"
             position="insideTopRight"

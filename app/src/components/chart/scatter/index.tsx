@@ -13,18 +13,13 @@ import {
   Legend,
 } from "recharts";
 
+import { IndicatorChartData } from "@/containers/indicators/types";
+
 import ChartLegendContent from "@/components/chart/legend";
 import { Tick } from "@/components/chart/tick";
 import { ChartLabelTooltip } from "@/components/chart/tooltip";
 
-interface IndicatorData {
-  name: string;
-  restoration: number;
-  protection: number;
-  isWetland?: boolean;
-}
-
-export default function ScatterChartComponent({ data }: { data: IndicatorData[] }) {
+export default function ScatterChartComponent({ data }: { data: IndicatorChartData[] }) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <ScatterChart
@@ -87,7 +82,7 @@ export default function ScatterChartComponent({ data }: { data: IndicatorData[] 
           {data.map((entry, index) => (
             <Cell
               key={`scatter-cell-${index}`}
-              fill={entry.isWetland ? "#fff" : "rgba(255, 255, 255, 0.10)"}
+              fill={entry.group === "wetlands" ? "#fff" : "rgba(255, 255, 255, 0.10)"}
               stroke="#fff"
             />
           ))}

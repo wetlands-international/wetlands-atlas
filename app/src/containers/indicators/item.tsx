@@ -11,7 +11,6 @@ import {
   useSyncLocation,
 } from "@/app/(frontend)/[locale]/(app)/store";
 
-import { chartCategoriesMap } from "@/containers/indicators/constants";
 import { IndicatorChartData } from "@/containers/indicators/types";
 
 import RankingChartComponent from "@/components/chart/ranking";
@@ -52,15 +51,13 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       },
       {
         select: (data) => {
+          console.log(data);
           const result: { location: string; chartData: IndicatorChartData[] }[] = data.docs.map(
             (doc) => ({
               location: typeof doc.location === "object" ? doc.location.id : doc.location,
-              chartData: Object.entries(
-                doc.data as Record<keyof typeof chartCategoriesMap, number>,
-              ).map(([name, value]) => ({
-                name,
-                value,
-                ...chartCategoriesMap[name as keyof typeof chartCategoriesMap],
+              chartData: (doc.data as IndicatorChartData[]).map((d) => ({
+                ...d,
+                label: doc.labels[d.label],
               })),
             }),
           );
@@ -71,6 +68,10 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
     ),
   );
   const chartData = data?.find((doc) => doc.location === location)?.chartData || [];
+  const lexicalVariables = chartData.reduce(
+    (acc, curr) => ({ [curr.label]: curr.value, ...acc }),
+    {},
+  );
 
   const handleSwitchChange = useCallback(() => {
     setIndicators((prev) => {
@@ -125,25 +126,17 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
             onCheckedChange={handleSwitchChange}
           />
         </div>
-        <p className="text-sm">
-          Wetlands stand out for their potential to mitigate climate change, especially peatlands
-          and coastal wetlands. 
-        </p>
+        {!!indicator.description && (
+          <div className="prose prose-invert prose-sm">
+            <Lexical data={indicator.description} variables={lexicalVariables} />
+          </div>
+        )}
       </header>
       <div className="mt-7 mb-4 w-full border-t border-dashed" />
 
-      {!!indicator.description && (
+      {!!indicator.widget && (
         <div className="prose prose-invert prose-sm">
-          <Lexical
-            data={indicator.description}
-            variables={{
-              value: "11M km²",
-              percentage: "7%",
-              location: "World",
-              total: 1000000,
-              totalPercentage: 0.3897,
-            }}
-          />
+          <Lexical data={indicator.widget} variables={lexicalVariables} />
         </div>
       )}
 

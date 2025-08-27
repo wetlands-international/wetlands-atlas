@@ -1,7 +1,10 @@
 export interface IndicatorChartData {
-  name: string;
+  id: string;
+  type: "protection" | "restoration";
+  unit: string;
+  color: string;
+  group: "wetlands" | "non-wetlands";
+  label: string;
   value: number;
-  isProtection: boolean;
-  isRestoration: boolean;
-  isWetland: boolean;
+  format: string;
 }
