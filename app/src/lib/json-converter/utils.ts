@@ -1,4 +1,4 @@
-import { BooleanOptional, IStringifyOptions, stringify } from "qs-esm";
+import qs from "query-string";
 
 import { env } from "@/env";
 
@@ -12,12 +12,31 @@ import { env } from "@/env";
 type SetQueryParamsProps = {
   url: string;
   query: Record<string, unknown>;
-  options: IStringifyOptions<BooleanOptional>;
+  options: qs.StringifyOptions;
 };
 export const setQueryParams = ({ query = {}, options }: SetQueryParamsProps) => {
   const url = env.NEXT_PUBLIC_TILER_URL;
-  const u = stringify(query, {
-    skipNulls: true,
+
+  const Q = Object.keys(query).reduce((acc, key) => {
+    // Check if the value is an object and JSON stringify it
+    if (typeof query[key] === "object") {
+      return {
+        ...acc,
+        [key]: JSON.stringify(query[key]),
+      };
+    }
+
+    return {
+      ...acc,
+      [key]: query[key],
+    };
+  }, {});
+
+  const u = qs.stringify(Q, {
+    arrayFormat: "bracket-separator",
+    arrayFormatSeparator: ",",
+    skipNull: true,
+    skipEmptyString: true,
     ...options,
   });
 
