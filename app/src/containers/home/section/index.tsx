@@ -37,19 +37,20 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({ id, imageUrl, children, su
         alt=""
         className="absolute inset-0 h-full w-full bg-gray-300 object-cover blur-2xl"
       />
-      <div className="grid-row-2 relative mx-auto grid min-h-[calc(100vh-7rem)] w-full max-w-7xl grid-cols-2 gap-4">
+      <div className="grid-row-2 relative mx-auto grid min-h-[calc(100vh-7rem)] w-full grid-cols-[40%_60%] gap-4">
         <div>
           <div className="flex h-full flex-col justify-center gap-9">{children}</div>
         </div>
-        <div className="items-between flex flex-col justify-center">
+        <div className="flex flex-col items-end justify-center">
           <div className="flex flex-col items-center">
             <DropletImage imageUrl={imageUrl} />
+
+            <div ref={ref}>
+              <SectionStepper />
+            </div>
           </div>
         </div>
         {supContent}
-        <div ref={ref}>
-          <SectionStepper />
-        </div>
       </div>
     </section>
   );

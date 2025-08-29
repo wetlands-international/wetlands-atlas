@@ -73,7 +73,8 @@
     "landscapes": {
       "title": "A lifeline in the Sahel",
       "description": "<p>The Sahel region of Africa underscores the importance of wetlands. In this dry area, seasonal wetlands and floodplains provide fertile land for farming, pastures for livestock, and fish for communities.</p><p>They also support cultural traditions and social ties.</p><p>As the Sahel faces climate change and conflict, protecting wetlands is crucial for regional stability.</p>",
-      "button": "Discover all landscapes"
+      "button-discover": "Discover all landscapes",
+      "button-read": "Read story"
     }
   },
   "landscapes": {

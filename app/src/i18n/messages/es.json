@@ -73,7 +73,8 @@
     "landscapes": {
       "title": "Un salvavidas en el Sahel",
       "description": "<p>La región del Sahel en África subraya la importancia de los humedales. En esta zona árida, los humedales estacionales y las llanuras de inundación proporcionan tierras fértiles para la agricultura, pastos para el ganado y pescado para las comunidades.</p><p>También apoyan tradiciones culturales y lazos sociales.</p><p>A medida que el Sahel enfrenta el cambio climático y los conflictos, proteger los humedales es crucial para la estabilidad regional.</p>",
-      "button": "Descubrir todos los paisajes"
+      "button-discover": "Descubrir todos los paisajes",
+      "button-read": "Leer la historia"
     }
   },
   "landscapes": {
