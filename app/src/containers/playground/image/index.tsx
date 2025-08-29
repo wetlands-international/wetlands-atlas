@@ -71,8 +71,6 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
   useEffect(() => {
     if (imageTexture) {
       if (materialRef.current && !readyRef.current) {
-        console.log("Setting up uRevealThreshold");
-        console.log(imageUrl);
         materialRef.current.uniforms.uRevealThreshold.value = 0; // Initialize threshold
       }
       readyRef.current = true; // Set flag when textures are loaded

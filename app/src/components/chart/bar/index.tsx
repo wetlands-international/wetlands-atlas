@@ -27,8 +27,6 @@ export default function BarChartComponent({ data }: { data: IndicatorChartData[]
   const wetlandsCount = data.filter((d) => d.group === "wetlands").length;
   const yMax = Math.max(...data.map((item) => item.value));
 
-  console.log({ wetlandsCount, data });
-
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart

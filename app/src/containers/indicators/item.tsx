@@ -51,7 +51,6 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       },
       {
         select: (data) => {
-          console.log(data);
           const result: { location: string; chartData: IndicatorChartData[] }[] = data.docs.map(
             (doc) => ({
               location: typeof doc.location === "object" ? doc.location.id : doc.location,
