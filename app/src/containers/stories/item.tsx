@@ -7,9 +7,9 @@ import { Story } from "@/payload-types";
 
 export const StoriesListItem = ({ id, name, cover }: Story) => {
   const thumbnailStyle = useMemo(() => {
-    if (typeof cover === "object" && cover?.sizes?.thumbnail) {
+    if (typeof cover === "object" && cover?.url) {
       return {
-        background: `url(${cover.sizes.thumbnail.url}) lightgray 50% / cover no-repeat`,
+        background: `url(${cover.url}) lightgray 50% / cover no-repeat`,
       };
     }
   }, [cover]);

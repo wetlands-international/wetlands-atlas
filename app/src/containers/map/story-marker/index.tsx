@@ -9,28 +9,20 @@ import { cn } from "@/lib/utils";
 
 import { Media } from "@/payload-types";
 
-interface Avatar {
-  url?: string | null;
-  width?: number | null;
-  height?: number | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  filename?: string | null;
-}
-interface ValidAvatar extends Avatar {
+interface ValidMedia extends Media {
   url: string;
   width: number;
   height: number;
 }
 
-function isValidAvatar(avatar?: Avatar): avatar is ValidAvatar {
+function isValidMedia(media?: Media): media is ValidMedia {
   return (
-    typeof avatar?.url === "string" &&
-    avatar.url.trim() !== "" &&
-    typeof avatar.width === "number" &&
-    !isNaN(avatar.width) &&
-    typeof avatar.height === "number" &&
-    !isNaN(avatar.height)
+    typeof media?.url === "string" &&
+    media.url.trim() !== "" &&
+    typeof media.width === "number" &&
+    !isNaN(media.width) &&
+    typeof media.height === "number" &&
+    !isNaN(media.height)
   );
 }
 interface StoryMarkerProps {
@@ -54,12 +46,12 @@ const StoryMarker: FC<StoryMarkerProps> = ({ name, location, media, href }) => {
             "bg-primary": !media,
           })}
         >
-          {isValidAvatar(media?.sizes?.avatar) && (
+          {isValidMedia(media) && (
             <Image
-              src={media.sizes.avatar.url}
+              src={media.url}
               alt={media.alt}
-              width={media.sizes.avatar.width}
-              height={media.sizes.avatar.height}
+              width={media.width}
+              height={media.height}
               className="h-full w-full object-cover"
             />
           )}

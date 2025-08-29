@@ -1,12 +1,14 @@
 "use client";
 
+import { FC } from "react";
+
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer } from "@react-three/postprocessing";
 
 import { TransparentFrame } from "@/containers/playground/effects/transparent-frame";
 import { ImageReveal } from "@/containers/playground/image";
 
-export const StoryImage = () => {
+export const StoryImage: FC<{ imageUrl: string }> = ({ imageUrl }) => {
   return (
     <div className="-mx-11 my-10 aspect-[1280/853] grow">
       <Canvas
@@ -19,7 +21,7 @@ export const StoryImage = () => {
           <TransparentFrame />
         </EffectComposer>
 
-        <ImageReveal />
+        <ImageReveal imageUrl={imageUrl} />
       </Canvas>
     </div>
   );
