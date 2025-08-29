@@ -51,6 +51,8 @@ export const LayerManager = () => {
     });
   }, [layers, layersSettings, setLayersSettings]);
 
+  console.log("hallo", layersSettings);
+
   const LAYERS = useMemo(() => {
     return layers.toReversed();
   }, [layers]);

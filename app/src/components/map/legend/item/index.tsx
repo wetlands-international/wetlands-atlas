@@ -66,7 +66,8 @@ export const LegendItem: React.FC<PropsWithChildren & LegendItemProps> = ({
 
               <div
                 className={cn({
-                  "text-popover-foreground mt-px text-xs leading-snug font-bold": true,
+                  "text-muted-foreground mt-px text-[10px] leading-snug font-medium uppercase":
+                    true,
                 })}
               >
                 {name}

@@ -8,6 +8,8 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 import { QueryProvider } from "@/containers/providers/query-provider";
 
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 import { routing } from "@/i18n/routing";
 
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -52,7 +54,9 @@ export default async function LocaleLayout({
         <QueryProvider>
           <NuqsAdapter>
             <NextIntlClientProvider>
-              <JotaiProvider>{children}</JotaiProvider>
+              <TooltipProvider>
+                <JotaiProvider>{children}</JotaiProvider>
+              </TooltipProvider>
             </NextIntlClientProvider>
           </NuqsAdapter>
         </QueryProvider>

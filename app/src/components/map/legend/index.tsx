@@ -1,3 +1,4 @@
+"use client";
 import React, { useMemo, Children, isValidElement } from "react";
 
 import { cn } from "@/lib/utils";

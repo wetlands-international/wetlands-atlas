@@ -21,14 +21,16 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
       },
     }),
   );
-  const [layersSettings] = useSyncLayersSettings();
+  const [layersSettings, setLayersSettings] = useSyncLayersSettings();
 
   if (!layer) return null;
 
-  const settings = {
-    ...getParams({ params_config: layer.params_config, settings: layersSettings || {} }),
-    ...layersSettings,
-  };
+  const settings = getParams({
+    params_config: layer.params_config,
+    settings: layersSettings?.[id] || {},
+  });
+
+  console.log({ settings });
 
   return (
     <>
@@ -39,12 +41,17 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
         settings={settings}
         settingsManager={{
           opacity: settings?.opacity !== undefined,
-          visibility: !!settings?.visibility,
+          visibility: settings?.visibility !== undefined,
         }}
-        // onChangeOpacity={(v) => setLayersSettings({ ...settings, opacity: v })}
-        // onChangeVisibility={(visible) =>
-        //   setLayersSettings((prev) => ({ ...prev, visibility: visible }))
-        // }
+        onChangeOpacity={(v) =>
+          setLayersSettings({ ...layersSettings, [id]: { ...settings, opacity: v } })
+        }
+        onChangeVisibility={(v) =>
+          setLayersSettings({
+            ...layersSettings,
+            [id]: { ...settings, visibility: v ? "visible" : "none" },
+          })
+        }
       >
         <LegendTypeBasic items={layer.legend_config.items || []} />
       </LegendItem>

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { PopoverArrow } from "@radix-ui/react-popover";
 import { LuEye, LuEyeClosed, LuInfo, LuX } from "react-icons/lu";
+import { TbChartCircles } from "react-icons/tb";
 
 import { cn } from "@/lib/utils";
 
@@ -43,7 +44,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                       "pointer-events-none": popoverOpen,
                     })}
                   >
-                    <LegendItemButton Icon={LuEye} value={opacity} selected />
+                    <LegendItemButton Icon={TbChartCircles} value={opacity} selected />
                   </TooltipTrigger>
                 </PopoverTrigger>
 

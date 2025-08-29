@@ -1,51 +1,50 @@
 "use client";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
+import { useSyncLayers } from "@/app/(frontend)/[locale]/(app)/store";
+
+import MapLegendItem from "@/containers/map/map-legend/item";
+
 import Legend from "@/components/map/legend";
-import LegendItem from "@/components/map/legend/item";
-import { LegendTypeBasic } from "@/components/map/legend/item-types";
 import { Button } from "@/components/ui/button";
 
 const MapLegend: FC = () => {
   const [showLegend, setShowLegend] = useState<boolean>(false);
+  const [layers] = useSyncLayers();
+  // temporary store layers to enable smooth hiding transition in the UI
+  const [tLayers, setTLayers] = useState(layers);
+
+  useEffect(() => {
+    if (layers.length > 0) {
+      setTLayers(layers);
+    }
+    if (layers.length === 0 && showLegend) {
+      setShowLegend(false);
+    }
+  }, [layers, showLegend]);
 
   return (
     <div className="pointer-events-auto">
       <div
-        className={`bg-popover text-popover-foreground legend-container absolute bottom-16 left-1/2 z-50 w-xs -translate-x-10/12 rounded-lg transition-all duration-500 ease-in-out ${
-          showLegend
-            ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-full opacity-0"
-        } `}
+        className={cn({
+          "bg-popover text-popover-foreground legend-container pointer-events-none absolute bottom-16 left-1/2 z-50 w-xs -translate-x-10/12 translate-y-full rounded-lg opacity-0 transition-all duration-500 ease-in-out":
+            true,
+          "pointer-events-auto translate-y-0 opacity-100": showLegend,
+        })}
       >
         <Legend
-          sortable={{ enabled: true, handle: true }}
+          sortable={{ enabled: false, handle: false }}
           onChangeOrder={(v) => {
             console.log(v);
           }}
         >
-          <LegendItem
-            id="wetland-types-1"
-            name="Wetland types"
-            sortable={{ enabled: false, handle: true }}
-          >
-            <LegendTypeBasic
-              items={[
-                { label: "Rivirine", color: "red", value: 1 },
-                { label: "Flood plain", color: "blue", value: 1 },
-                { label: "High Altitude", color: "green", value: 1 },
-              ]}
-            />
-          </LegendItem>
-          <LegendItem
-            id="wetland-types-2"
-            name="Wetland types"
-            sortable={{ enabled: false, handle: true }}
-          />
+          {tLayers.map((l) => (
+            <MapLegendItem key={`map-legend-item-${l}`} id={l} />
+          ))}
         </Legend>
       </div>
 
@@ -53,8 +52,9 @@ const MapLegend: FC = () => {
         size="lg"
         variant="secondary"
         className={cn({
-          "flex w-28 cursor-pointer items-center gap-2 rounded-full text-sm font-normal": true,
-          "border-2": showLegend,
+          "pointer-events-none flex w-28 translate-y-full cursor-pointer items-center gap-2 rounded-full text-sm font-normal opacity-0":
+            true,
+          "pointer-events-auto translate-y-0 border-2 opacity-100": layers.length > 0,
         })}
         onClick={() => setShowLegend((prev) => !prev)}
       >

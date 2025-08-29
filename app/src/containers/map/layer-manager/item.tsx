@@ -31,15 +31,15 @@ const LayerManagerItem = ({ id, settings, beforeId }: LayerManagerItemProps) => 
   if (!config || !params_config) return null;
 
   const c = parseConfig<Layer["config"]>({
-    config: config,
+    config,
     params_config,
-    settings: {
-      ...settings,
-    },
+    settings,
   });
 
   const SOURCE = c?.source as SourceProps;
   const STYLES = c?.styles as LayerProps[];
+
+  console.log({ c });
 
   return (
     <RMSource {...SOURCE} key={`${id}-source`} id={`${id}-source`}>
