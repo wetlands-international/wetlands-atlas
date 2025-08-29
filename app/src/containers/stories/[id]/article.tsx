@@ -8,7 +8,7 @@ import { Story } from "@/payload-types";
 export const StoriesIdArticle = (props: Story) => {
   const embeddedVideo = props["embedded_video"]?.source ? props["embedded_video"] : null;
   const imageUrl = typeof props.cover === "object" ? props.cover?.url : undefined;
-  console.log({ props });
+
   return (
     <article className="px-11">
       <div className="flex min-h-[calc(100svh_-_theme(spacing.24))] flex-col">
