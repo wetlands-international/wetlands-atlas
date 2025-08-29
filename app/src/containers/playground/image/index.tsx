@@ -54,16 +54,11 @@ export function generateHeightmapTexture(size: number): THREE.DataTexture {
   return texture;
 }
 
-export function ImageReveal({ imageUrl }: { imageUrl?: string }) {
+export function ImageReveal({ imageUrl }: { imageUrl: string }) {
   // Flag to track readiness
   const readyRef = useRef(false);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
-
-  // console.log(
-  //   imageUrl,
-  //   "We need to set up the media storage and upload the image to the server before we can use this",
-  // );
-  const imageTexture = useTexture("https://picsum.photos/1280/720"); // Replace with imageUrl if needed
+  const imageTexture = useTexture(imageUrl);
 
   const randomCenter = useMemo(() => {
     return new THREE.Vector2(

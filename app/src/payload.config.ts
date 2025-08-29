@@ -15,8 +15,6 @@ import {
   FixedToolbarFeature,
 } from "@payloadcms/richtext-lexical";
 
-import sharp from "sharp";
-
 import { IndicatorDatas } from "@/cms/collections/IndicatorDatas";
 import { Indicators } from "@/cms/collections/Indicators";
 import { Layers } from "@/cms/collections/Layers";
@@ -87,6 +85,5 @@ export default buildConfig({
       },
     ],
   }),
-  sharp,
   plugins,
 });
