@@ -1,5 +1,6 @@
 export interface IndicatorChartData {
   id: string;
+  key: string;
   type: "protection" | "restoration";
   unit: string;
   color: string;
