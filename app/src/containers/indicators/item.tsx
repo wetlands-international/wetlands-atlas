@@ -9,6 +9,7 @@ import {
   useSyncIndicators,
   useSyncLayers,
   useSyncLocation,
+  useSyncLayersSettings,
 } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { IndicatorChartData } from "@/containers/indicators/types";
@@ -71,46 +72,54 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
     (acc, curr) => ({ [curr.label]: curr.value, ...acc }),
     {},
   );
+  const [layersSettings, setLayersSettings] = useSyncLayersSettings();
 
-  const handleSwitchChange = useCallback(() => {
-    setIndicators((prev) => {
-      if (prev?.includes(indicator.id)) {
-        const updatedIndicators = prev.filter((id) => id !== indicator.id);
-        // If no indicators are left, reset layers
-        if (updatedIndicators.length === 0) {
-          return null;
-        }
-
-        return updatedIndicators;
-      } else {
-        return [...(prev || []), indicator.id];
+  const handleSwitchChange = useCallback(
+    (checked: boolean) => {
+      if (!checked && layersSettings) {
+        setLayersSettings(null);
       }
-    });
 
-    setLayers((prev) => {
-      const newLayers = indicator?.layers?.docs?.map((l) => {
-        if (typeof l !== "string" && "id" in l) {
-          return l.id;
+      setIndicators((prev) => {
+        if (prev?.includes(indicator.id)) {
+          const updatedIndicators = prev.filter((id) => id !== indicator.id);
+          // If no indicators are left, reset layers
+          if (updatedIndicators.length === 0) {
+            return null;
+          }
+
+          return updatedIndicators;
+        } else {
+          return [...(prev || []), indicator.id];
         }
-        return l; // If l is already a string, return it as is
       });
 
-      if (!newLayers?.length) return prev;
+      setLayers((prev) => {
+        const newLayers = indicator?.layers?.docs?.map((l) => {
+          if (typeof l !== "string" && "id" in l) {
+            return l.id;
+          }
+          return l; // If l is already a string, return it as is
+        });
 
-      // If the layers are already present, remove them
-      if (prev?.length) {
-        const filteredLayers = prev.filter((layer) => !newLayers.includes(layer));
-        if (filteredLayers.length === prev.length) {
-          // If no layers were removed, add the new layers
-          return [...new Set([...prev, ...newLayers])]; // Ensure unique layers
+        if (!newLayers?.length) return prev;
+
+        // If the layers are already present, remove them
+        if (prev?.length) {
+          const filteredLayers = prev.filter((layer) => !newLayers.includes(layer));
+          if (filteredLayers.length === prev.length) {
+            // If no layers were removed, add the new layers
+            return [...new Set([...prev, ...newLayers])]; // Ensure unique layers
+          }
+          return filteredLayers;
         }
-        return filteredLayers;
-      }
 
-      // If no layers are present, add the new layers
-      return newLayers;
-    });
-  }, [indicator.id, indicator.layers, setIndicators, setLayers]);
+        // If no layers are present, add the new layers
+        return newLayers;
+      });
+    },
+    [indicator.id, indicator.layers, layersSettings, setIndicators, setLayers, setLayersSettings],
+  );
 
   return (
     <div
@@ -121,7 +130,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-base font-semibold uppercase">{indicator.name}</h2>
           <Switch
-            checked={indicators?.includes(indicator.id)}
+            checked={!!indicators?.includes(indicator.id)}
             onCheckedChange={handleSwitchChange}
           />
         </div>

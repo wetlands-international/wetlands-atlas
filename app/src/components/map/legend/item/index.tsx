@@ -60,13 +60,14 @@ export const LegendItem: React.FC<PropsWithChildren & LegendItemProps> = ({
                   className="text-navy-700 hover:text-navy-700/50 mt-0.5 cursor-pointer transition-colors"
                   {...listeners}
                 >
-                  <LuGripVertical className="h-5 w-5" />
+                  <LuGripVertical className="text-muted-foreground h-5 w-5" />
                 </button>
               )}
 
               <div
                 className={cn({
-                  "text-navy-700 mt-px text-xs leading-snug font-bold": true,
+                  "text-muted-foreground mt-px text-[10px] leading-snug font-medium uppercase":
+                    true,
                 })}
               >
                 {name}

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { PopoverArrow } from "@radix-ui/react-popover";
 import { LuEye, LuEyeClosed, LuInfo, LuX } from "react-icons/lu";
+import { TbChartCircles } from "react-icons/tb";
 
 import { cn } from "@/lib/utils";
 
@@ -22,7 +23,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
   onChangeVisibility,
 }: LegendItemToolbarProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const { opacity = 1, visibility = true } = settings || {};
+  const { opacity = 1, visibility = "visible" } = settings || {};
 
   return (
     <div id="legend-toolbar" className="mt-0.5 flex divide-x">
@@ -43,7 +44,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                       "pointer-events-none": popoverOpen,
                     })}
                   >
-                    <LegendItemButton Icon={LuEye} value={opacity} selected />
+                    <LegendItemButton Icon={TbChartCircles} value={opacity} selected />
                   </TooltipTrigger>
                 </PopoverTrigger>
 
@@ -91,10 +92,11 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                   "pointer-events-none": popoverOpen,
                 })}
                 onClick={() => {
-                  if (onChangeVisibility) onChangeVisibility(!visibility);
+                  if (onChangeVisibility)
+                    onChangeVisibility(visibility === "visible" ? "none" : "visible");
                 }}
               >
-                <LegendItemButton Icon={visibility ? LuEye : LuEyeClosed} />
+                <LegendItemButton Icon={visibility === "visible" ? LuEye : LuEyeClosed} />
               </TooltipTrigger>
 
               <TooltipContent side="top" align="end" alignOffset={-10}>

@@ -20,7 +20,7 @@ export const LegendItemButton = ({
           "relative z-10 flex h-4 w-4 items-center justify-center rounded-full text-slate-800 transition-colors":
             true,
           "group-hover:text-slate-800/50 group-active:text-slate-500": true,
-          "fill-slate-800": selected,
+          // "fill-slate-800": selected,
         })}
         style={{ fillOpacity: selected ? value : 1 }}
       />

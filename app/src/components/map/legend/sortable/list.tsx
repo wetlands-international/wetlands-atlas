@@ -4,10 +4,13 @@ import {
   isValidElement,
   ReactElement,
   useCallback,
+  useEffect,
   useId,
   useMemo,
   useState,
 } from "react";
+
+import { createPortal } from "react-dom";
 
 import {
   DndContext,
@@ -40,6 +43,11 @@ export const SortableList: React.FC<SortableListProps> = ({
 }: SortableListProps) => {
   const uid = useId();
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null);
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalContainer(window.document.body);
+  }, []);
 
   const ActiveItem = useMemo(() => {
     const activeChildArray = Children.map(children, (Child) => {
@@ -126,15 +134,19 @@ export const SortableList: React.FC<SortableListProps> = ({
         })}
       </SortableContext>
 
-      <DragOverlay>
-        {isValidElement(ActiveItem) && (
-          <div className="flex max-h-[calc(100vh_-_theme(space.16)_-_theme(space.6)_-_theme(space.48)_-_theme(space.40))] flex-col overflow-hidden">
-            {cloneElement(ActiveItem as ReactElement<SortableItemProps>, {
-              sortable,
-            })}
-          </div>
+      {portalContainer &&
+        createPortal(
+          <DragOverlay>
+            {isValidElement(ActiveItem) && (
+              <div className="text-popover-foreground flex max-h-[calc(100vh_-_theme(space.16)_-_theme(space.6)_-_theme(space.48)_-_theme(space.40))] flex-col overflow-hidden">
+                {cloneElement(ActiveItem as ReactElement<SortableItemProps>, {
+                  sortable,
+                })}
+              </div>
+            )}
+          </DragOverlay>,
+          window.document.body,
         )}
-      </DragOverlay>
     </DndContext>
   );
 };
