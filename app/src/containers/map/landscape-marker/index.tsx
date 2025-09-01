@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { Marker } from "react-map-gl/mapbox";
 
-import { cn } from "@/lib/utils";
+import { cn, isValidMedia } from "@/lib/utils";
 
 import { Media } from "@/payload-types";
 

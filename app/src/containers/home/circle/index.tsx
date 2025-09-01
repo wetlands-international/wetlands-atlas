@@ -40,7 +40,6 @@ const Circle: FC<CircleProps> = ({
 
   useEffect(() => {
     if (!enableAnimation) return;
-    console.log("hallo?");
     controls.start({
       x: [0, 5, 0],
       y: [0, -5, 0],
