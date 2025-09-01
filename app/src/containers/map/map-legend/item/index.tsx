@@ -30,8 +30,6 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
     settings: layersSettings?.[id] || {},
   });
 
-  console.log({ settings });
-
   return (
     <>
       <LegendItem
@@ -49,7 +47,7 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
         onChangeVisibility={(v) =>
           setLayersSettings({
             ...layersSettings,
-            [id]: { ...settings, visibility: v ? "visible" : "none" },
+            [id]: { ...settings, visibility: v },
           })
         }
       >

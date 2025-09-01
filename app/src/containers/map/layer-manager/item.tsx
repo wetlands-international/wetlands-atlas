@@ -39,8 +39,6 @@ const LayerManagerItem = ({ id, settings, beforeId }: LayerManagerItemProps) => 
   const SOURCE = c?.source as SourceProps;
   const STYLES = c?.styles as LayerProps[];
 
-  console.log({ c });
-
   return (
     <RMSource {...SOURCE} key={`${id}-source`} id={`${id}-source`}>
       {STYLES?.map((style, index) => {

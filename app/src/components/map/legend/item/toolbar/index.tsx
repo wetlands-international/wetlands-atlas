@@ -23,7 +23,7 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
   onChangeVisibility,
 }: LegendItemToolbarProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const { opacity = 1, visibility = true } = settings || {};
+  const { opacity = 1, visibility = "visible" } = settings || {};
 
   return (
     <div id="legend-toolbar" className="mt-0.5 flex divide-x">
@@ -92,10 +92,11 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                   "pointer-events-none": popoverOpen,
                 })}
                 onClick={() => {
-                  if (onChangeVisibility) onChangeVisibility(!visibility);
+                  if (onChangeVisibility)
+                    onChangeVisibility(visibility === "visible" ? "none" : "visible");
                 }}
               >
-                <LegendItemButton Icon={visibility ? LuEye : LuEyeClosed} />
+                <LegendItemButton Icon={visibility === "visible" ? LuEye : LuEyeClosed} />
               </TooltipTrigger>
 
               <TooltipContent side="top" align="end" alignOffset={-10}>
