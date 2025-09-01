@@ -57,6 +57,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
               location: typeof doc.location === "object" ? doc.location.id : doc.location,
               chartData: (doc.data as IndicatorChartData[]).map((d) => ({
                 ...d,
+                key: d.label,
                 label: doc.labels[d.label],
               })),
             }),
@@ -69,7 +70,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
   );
   const chartData = data?.find((doc) => doc.location === location)?.chartData || [];
   const lexicalVariables = chartData.reduce(
-    (acc, curr) => ({ [curr.label]: curr.value, ...acc }),
+    (acc, curr) => ({ [curr.key]: curr.value, ...acc }),
     {},
   );
   const [layersSettings, setLayersSettings] = useSyncLayersSettings();
@@ -140,17 +141,21 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
           </div>
         )}
       </header>
-      <div className="mt-7 mb-4 w-full border-t border-dashed" />
+      {chartData.length > 0 && (
+        <>
+          <div className="mt-7 mb-4 w-full border-t border-dashed" />
 
-      {!!indicator.widget && (
-        <div className="prose prose-invert prose-sm">
-          <Lexical data={indicator.widget} variables={lexicalVariables} />
-        </div>
+          {indicator.widget && Object.keys(lexicalVariables).length > 0 && (
+            <div className="prose prose-invert prose-sm">
+              <Lexical data={indicator.widget} variables={lexicalVariables} />
+            </div>
+          )}
+
+          <div className="-mx-6 aspect-video">
+            <RankingChartComponent data={chartData} />
+          </div>
+        </>
       )}
-
-      <div className="-mx-6 aspect-video">
-        <RankingChartComponent data={chartData} />
-      </div>
     </div>
   );
 };

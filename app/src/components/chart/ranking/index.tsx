@@ -21,7 +21,7 @@ export default function RankingChartComponent({ data }: { data: IndicatorChartDa
           .map((item, index) => (
             <li key={index} className="flex flex-col gap-2">
               <div className="flex items-center justify-between gap-2 text-base font-normal">
-                <span className="shrink-0">{item.label}</span>
+                <span className="flex-1">{item.label}</span>
                 <span className="text-blue-300">{formatNumber(item.value)}</span>
               </div>
               <div className="h-2.5 w-full rounded-lg bg-[rgba(250,250,250,0.05)]">
