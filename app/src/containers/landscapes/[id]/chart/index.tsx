@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 
 import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
-export const StoryChartContainer = (props: Story) => {
+export const LandscapeChartContainer = (props: Landscape) => {
   const { steps } = props;
 
   const step = useAtomValue(stepAtom);

@@ -4,7 +4,7 @@
     "home": "Home",
     "admin": "Admin",
     "playground": "Playground",
-    "stories": "Landscapes",
+    "landscapes": "Landscapes",
     "insights": "Insights"
   },
   "language": {
@@ -28,12 +28,12 @@
       "tooltip": "Get started"
     }
   },
-  "stories": {
+  "landscapes": {
     "title": "Landscapes",
     "description": "A collection of landscapes about wetlands.",
     "empty": "No landscapes available."
   },
-  "storiesId": {
+  "landscapesId": {
     "title": "Landscape Details",
     "description": "Details of the selected landscape.",
     "not-found": {
@@ -52,7 +52,7 @@
       "title": "Wetlands",
       "description": "Wetlands is a web application that helps you to manage your wetlands."
     },
-    "stories": {
+    "landscapes": {
       "title": "Landscapes | Wetlands",
       "description": "A collection of landscapes about wetlands."
     },

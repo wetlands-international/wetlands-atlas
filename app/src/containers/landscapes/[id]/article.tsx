@@ -1,11 +1,11 @@
-import { StoryImage } from "@/containers/stories/[id]/image";
-import { StorySteps } from "@/containers/stories/[id]/steps";
+import { LandscapeImage } from "@/containers/landscapes/[id]/image";
+import { LandscapeSteps } from "@/containers/landscapes/[id]/steps";
 
 import EmbeddedVideo from "@/components/embedded-video";
 
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
-export const StoriesIdArticle = (props: Story) => {
+export const LandscapesIdArticle = (props: Landscape) => {
   const embeddedVideo = props["embedded_video"]?.source ? props["embedded_video"] : null;
   const imageUrl = typeof props.cover === "object" ? props.cover?.url : undefined;
 
@@ -21,11 +21,11 @@ export const StoriesIdArticle = (props: Story) => {
         {embeddedVideo ? (
           <EmbeddedVideo src={embeddedVideo.source} title={embeddedVideo.title} />
         ) : imageUrl ? (
-          <StoryImage imageUrl={imageUrl} />
+          <LandscapeImage imageUrl={imageUrl} />
         ) : null}
       </div>
 
-      <StorySteps {...props} />
+      <LandscapeSteps {...props} />
     </article>
   );
 };

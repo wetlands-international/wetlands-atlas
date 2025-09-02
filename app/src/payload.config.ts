@@ -17,9 +17,9 @@ import {
 
 import { IndicatorDatas } from "@/cms/collections/IndicatorDatas";
 import { Indicators } from "@/cms/collections/Indicators";
+import { Landscapes } from "@/cms/collections/Landscapes";
 import { Layers } from "@/cms/collections/Layers";
 import { Locations } from "@/cms/collections/Location";
-import { Stories } from "@/cms/collections/Stories";
 import { plugins } from "@/cms/plugins";
 import { env } from "@/env";
 
@@ -41,7 +41,16 @@ export default buildConfig({
   upload: {
     useTempFiles: true,
   },
-  collections: [Users, Media, Categories, Indicators, Layers, IndicatorDatas, Locations, Stories],
+  collections: [
+    Users,
+    Media,
+    Categories,
+    Indicators,
+    Layers,
+    IndicatorDatas,
+    Locations,
+    Landscapes,
+  ],
   editor: lexicalEditor({
     features: () => [
       FixedToolbarFeature(),

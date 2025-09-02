@@ -25,14 +25,14 @@ function isValidMedia(media?: Media): media is ValidMedia {
     !isNaN(media.height)
   );
 }
-interface StoryMarkerProps {
+interface LandscapeMarkerProps {
   name: string;
   location: [number, number];
   media?: Media;
   href: string;
 }
 
-const StoryMarker: FC<StoryMarkerProps> = ({ name, location, media, href }) => {
+const LandscapeMarker: FC<LandscapeMarkerProps> = ({ name, location, media, href }) => {
   return (
     <Marker longitude={location[0]} latitude={location[1]}>
       <Link
@@ -65,4 +65,4 @@ const StoryMarker: FC<StoryMarkerProps> = ({ name, location, media, href }) => {
   );
 };
 
-export default StoryMarker;
+export default LandscapeMarker;

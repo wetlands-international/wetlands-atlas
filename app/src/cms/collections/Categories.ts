@@ -44,10 +44,10 @@ export const Categories: CollectionConfig = {
       },
     },
     {
-      name: "stories",
-      label: "Related Stories",
+      name: "landscapes",
+      label: "Related Landscapes",
       type: "join",
-      collection: "stories",
+      collection: "landscapes",
       on: "category",
       admin: {
         allowCreate: false,

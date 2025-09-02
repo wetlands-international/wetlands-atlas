@@ -6,12 +6,12 @@ import { useAtomValue } from "jotai";
 
 import { cn } from "@/lib/utils";
 
-import { storiesAtom } from "@/app/(frontend)/[locale]/(app)/store";
+import { landscapesAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-export const StoriesFilters = ({ children }: PropsWithChildren) => {
-  const { enabled } = useAtomValue(storiesAtom);
+export const LandscapesFilters = ({ children }: PropsWithChildren) => {
+  const { enabled } = useAtomValue(landscapesAtom);
 
   const visible = enabled;
 

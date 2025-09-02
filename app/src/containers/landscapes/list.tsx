@@ -2,18 +2,18 @@ import { getPayload } from "payload";
 
 import { getLocale } from "next-intl/server";
 
-import { StoriesListItem } from "@/containers/stories/item";
+import { LandscapesListItem } from "@/containers/landscapes/item";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import payloadConfig from "@/payload.config";
 
-export const StoriesList = async () => {
+export const LandscapesList = async () => {
   const locale = await getLocale();
   const payload = await getPayload({ config: payloadConfig });
 
-  const stories = await payload.find({
-    collection: "stories",
+  const landscapes = await payload.find({
+    collection: "landscapes",
     depth: 1,
     limit: 100,
     page: 1,
@@ -41,9 +41,9 @@ export const StoriesList = async () => {
           </p>
         </li>
 
-        {stories.docs.map((story) => (
-          <li key={story.id}>
-            <StoriesListItem {...story} />
+        {landscapes.docs.map((landscape) => (
+          <li key={landscape.id}>
+            <LandscapesListItem {...landscape} />
           </li>
         ))}
       </ul>

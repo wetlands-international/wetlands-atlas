@@ -10,7 +10,7 @@ import SettingsControl from "@/components/map/controls/settings";
 import ZoomControl from "@/components/map/controls/zoom";
 
 import { env } from "@/env";
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
 export const MapfieldMap = () => {
   return (
@@ -21,7 +21,7 @@ export const MapfieldMap = () => {
 };
 
 export const MapfieldMapInner = () => {
-  const { value, setValue } = useField<NonNullable<Story["steps"]>[number]["map"]>();
+  const { value, setValue } = useField<NonNullable<Landscape["steps"]>[number]["map"]>();
   const { isCollapsed, isWithinCollapsible } = useCollapsible();
   // We use a debounced value to render the map only after the collapsible state has stabilized
   const [collapsed] = useDebounceValue(isCollapsed, 500);

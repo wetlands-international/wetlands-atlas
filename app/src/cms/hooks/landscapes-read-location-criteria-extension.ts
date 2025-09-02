@@ -3,7 +3,7 @@ import { CollectionBeforeOperationHook } from "payload";
 
 import { sql } from "@payloadcms/db-postgres";
 
-export const storiesReadLocationCriteriaExtension: CollectionBeforeOperationHook = async ({
+export const landscapesReadLocationCriteriaExtension: CollectionBeforeOperationHook = async ({
   operation,
   req,
   args,
@@ -33,25 +33,25 @@ export const storiesReadLocationCriteriaExtension: CollectionBeforeOperationHook
     return;
   }
 
-  interface StoryQueryResult {
+  interface LandscapeQueryResult {
     rows: { id: string }[];
   }
-  // Query the database to find stories that have a location within the specified geometry
+  // Query the database to find landscapes that have a location within the specified geometry
   const result = (await req.payload.db.drizzle.execute(sql`
-          SELECT s.id FROM stories s
+          SELECT s.id FROM landscapes s
           WHERE EXISTS (
               SELECT 1 FROM locations l
               WHERE l.id = '${location.id}' AND ST_Within(s.location,l.geometry_4326)
           )
-        `)) as StoryQueryResult;
+        `)) as LandscapeQueryResult;
 
-  const storyIDs = result.rows.map((row) => row.id);
+  const landscapesIDs = result.rows.map((row) => row.id);
 
-  //Add the stories within the specified location to the query
+  //Add the landscapes within the specified location to the query
   args.where = {
     ...args.where,
     id: {
-      in: storyIDs,
+      in: landscapesIDs,
     },
   };
 

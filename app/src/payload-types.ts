@@ -74,7 +74,7 @@ export interface Config {
     layers: Layer;
     'indicator-data': IndicatorDatum;
     locations: Location;
-    stories: Story;
+    landscapes: Landscape;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -82,7 +82,7 @@ export interface Config {
   collectionsJoins: {
     categories: {
       indicators: 'indicators';
-      stories: 'stories';
+      landscapes: 'landscapes';
     };
     indicators: {
       layers: 'layers';
@@ -96,7 +96,7 @@ export interface Config {
     layers: LayersSelect<false> | LayersSelect<true>;
     'indicator-data': IndicatorDataSelect<false> | IndicatorDataSelect<true>;
     locations: LocationsSelect<false> | LocationsSelect<true>;
-    stories: StoriesSelect<false> | StoriesSelect<true>;
+    landscapes: LandscapesSelect<false> | LandscapesSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -193,8 +193,8 @@ export interface Category {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
-  stories?: {
-    docs?: (string | Story)[];
+  landscapes?: {
+    docs?: (string | Landscape)[];
     hasNextPage?: boolean;
     totalDocs?: number;
   };
@@ -298,9 +298,9 @@ export interface Layer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stories".
+ * via the `definition` "landscapes".
  */
-export interface Story {
+export interface Landscape {
   /**
    * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
@@ -320,7 +320,7 @@ export interface Story {
    */
   location: [number, number];
   /**
-   * Uncheck to hide this story from the public view.
+   * Uncheck to hide this landscape from the public view.
    */
   published?: boolean | null;
   steps?:
@@ -458,8 +458,8 @@ export interface PayloadLockedDocument {
         value: string | Location;
       } | null)
     | ({
-        relationTo: 'stories';
-        value: string | Story;
+        relationTo: 'landscapes';
+        value: string | Landscape;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -553,7 +553,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   description?: T;
   cover?: T;
   indicators?: T;
-  stories?: T;
+  landscapes?: T;
   defaultIndicators?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -617,9 +617,9 @@ export interface LocationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "stories_select".
+ * via the `definition` "landscapes_select".
  */
-export interface StoriesSelect<T extends boolean = true> {
+export interface LandscapesSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   description?: T;

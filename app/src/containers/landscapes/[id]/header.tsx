@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 import { Header } from "@/containers/header";
 
 import { Link } from "@/i18n/navigation";
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
-export const StoriesIdHeader = async (props: Story) => {
+export const LandscapesIdHeader = async (props: Landscape) => {
   return (
     <Header
       className={cn(
