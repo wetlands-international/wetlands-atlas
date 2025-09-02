@@ -15,6 +15,7 @@ import {
 import { IndicatorChartData } from "@/containers/indicators/types";
 
 import RankingChartComponent from "@/components/chart/ranking";
+import InfoButton from "@/components/ui/info-button";
 import { Lexical } from "@/components/ui/lexical";
 import { Switch } from "@/components/ui/switch";
 
@@ -130,16 +131,18 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       <header className="space-y-2">
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-base font-semibold uppercase">{indicator.name}</h2>
+          {!!indicator.description && (
+            <InfoButton>
+              <div className="prose prose-invert prose-sm">
+                <Lexical data={indicator.description} variables={lexicalVariables} />
+              </div>
+            </InfoButton>
+          )}
           <Switch
             checked={!!indicators?.includes(indicator.id)}
             onCheckedChange={handleSwitchChange}
           />
         </div>
-        {!!indicator.description && (
-          <div className="prose prose-invert prose-sm">
-            <Lexical data={indicator.description} variables={lexicalVariables} />
-          </div>
-        )}
       </header>
       {chartData.length > 0 && (
         <>
