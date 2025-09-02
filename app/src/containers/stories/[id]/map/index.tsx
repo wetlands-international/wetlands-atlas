@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useAtomValue } from "jotai";
 import Map, { LngLatBoundsLike } from "react-map-gl/mapbox";
 
-import { stepAtom } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/store";
+import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
 import { StoryFitBounds } from "@/containers/stories/[id]/map/fit-bounds";
 

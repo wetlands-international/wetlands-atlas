@@ -17,7 +17,7 @@ export const StoriesIdHeader = async (props: Story) => {
       blur={false}
     >
       <div className="relative z-20 flex items-center gap-2">
-        <Link href="/stories">Stories</Link>
+        <Link href="/landscapes">Landscapes</Link>
         <LuChevronRight />
         <span className="text-blue-300">{props.name}</span>
       </div>

@@ -104,7 +104,7 @@ export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
             key={`story-marker-${s.id}`}
             name={s.name}
             location={s.location}
-            href={`/stories/${s.id}`}
+            href={`/landscapes/${s.id}`}
             media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
           />
         ))}

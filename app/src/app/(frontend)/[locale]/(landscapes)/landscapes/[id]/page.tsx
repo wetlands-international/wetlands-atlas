@@ -4,7 +4,7 @@ import { Metadata } from "next";
 
 import { notFound } from "next/navigation";
 
-import { getStoryId } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/actions";
+import { getStoryId } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/actions";
 
 import { StoriesIdArticle } from "@/containers/stories/[id]/article";
 import { StoryChartContainer } from "@/containers/stories/[id]/chart";

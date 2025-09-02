@@ -16,7 +16,7 @@ export const StoriesListItem = ({ id, name, cover }: Story) => {
 
   return (
     <Link
-      href={`/stories/${id}`}
+      href={`/landscapes/${id}`}
       className={cn(
         "group bg-background relative flex h-full w-72 shrink-0 cursor-pointer justify-between rounded-4xl p-4",
         {

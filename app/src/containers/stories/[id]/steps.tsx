@@ -2,7 +2,7 @@
 
 import { useSetAtom } from "jotai";
 
-import { stepAtom } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/store";
+import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
 import { Step } from "@/components/scroll/step";
 import { Lexical } from "@/components/ui/lexical";
