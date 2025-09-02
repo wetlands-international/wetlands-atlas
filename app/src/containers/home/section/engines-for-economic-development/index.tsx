@@ -2,6 +2,7 @@ import { FC } from "react";
 
 import { useTranslations } from "next-intl";
 
+import Description from "@/containers/home/section/description";
 import Kicker from "@/containers/home/section/kicker";
 import Stats from "@/containers/home/section/stats";
 import Title from "@/containers/home/section/title";
@@ -14,12 +15,12 @@ const EnginesForEconomicDevelopment: FC = () => {
       <div>
         <Kicker>{t("kicker")}</Kicker>
         <Title>{t("title")}</Title>
-        <div className="space-y-4 text-xl">
+        <Description>
           {t.rich("description", {
             p: (chunk) => <p>{chunk}</p>,
             strong: (chunk) => <strong>{chunk}</strong>,
           })}
-        </div>
+        </Description>
       </div>
       <Stats
         size="l"

@@ -52,11 +52,11 @@ export const Hero = () => {
 
         <Circle size="xl" className="absolute top-[90%] left-[10%]" enableAnimation={false} />
       </div>
-      <div className="z-10 container space-y-8 text-center">
+      <div className="z-10 container max-w-3xl space-y-8 text-center">
         <header className="space-y-2">
           <h3 className="mb-2 text-base font-semibold text-blue-300 uppercase">{t("kicker")}</h3>
-          <h1 className="text-6xl font-bold">{t("title")}</h1>
-          <p className="text-xl font-normal">
+          <h1 className="font-display text-6xl font-bold">{t("title")}</h1>
+          <p className="text-lg font-normal">
             {t.rich("description", {
               strong: (chunk) => <strong>{chunk}</strong>,
             })}

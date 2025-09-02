@@ -2,6 +2,7 @@ import { FC } from "react";
 
 import { useTranslations } from "next-intl";
 
+import Description from "@/containers/home/section/description";
 import Kicker from "@/containers/home/section/kicker";
 import Stats from "@/containers/home/section/stats";
 import Title from "@/containers/home/section/title";
@@ -14,9 +15,9 @@ const ClimateResilienceSection: FC = () => {
       <div>
         <Kicker>{t("kicker")}</Kicker>
         <Title>{t("title")}</Title>
-        <p className="text-xl">
-          {t.rich("description", { strong: (chunk) => <strong>{chunk}</strong> })}
-        </p>
+        <Description>
+          <p>{t.rich("description", { strong: (chunk) => <strong>{chunk}</strong> })}</p>
+        </Description>
       </div>
       <Stats
         size="m"

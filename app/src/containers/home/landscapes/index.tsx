@@ -27,7 +27,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
       />
       <div className="grid-row-2 relative grid min-h-[calc(100vh-7rem)] w-full grid-cols-[30%_70%] gap-4">
         <div className="flex flex-col items-start justify-center">
-          <h1 className="mb-9 text-3xl font-normal">{t("title")}</h1>
+          <h1 className="font-display mb-9 text-3xl font-normal">{t("title")}</h1>
           <div className="mb-14 space-y-2">
             {t.rich("description", { p: (chunk) => <p>{chunk}</p> })}
           </div>
@@ -38,7 +38,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
             </Link>
           </Button>
         </div>
-        <div className="flex flex-col items-start justify-evenly">
+        <div className="flex flex-col items-start justify-end pb-20">
           <Carousel opts={{ align: "start" }} className="w-full">
             <CarouselContent className="-ml-4">
               {stories.map((s) => (
