@@ -143,16 +143,15 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
             onCheckedChange={handleSwitchChange}
           />
         </div>
+        {indicator.widget && Object.keys(lexicalVariables).length > 0 && (
+          <div className="prose prose-invert prose-sm">
+            <Lexical data={indicator.widget} variables={lexicalVariables} />
+          </div>
+        )}
       </header>
       {chartData.length > 0 && (
         <>
           <div className="mt-7 mb-4 w-full border-t border-dashed" />
-
-          {indicator.widget && Object.keys(lexicalVariables).length > 0 && (
-            <div className="prose prose-invert prose-sm">
-              <Lexical data={indicator.widget} variables={lexicalVariables} />
-            </div>
-          )}
 
           <div className="-mx-6 aspect-video">
             <RankingChartComponent data={chartData} />
