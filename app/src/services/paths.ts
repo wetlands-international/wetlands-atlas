@@ -674,14 +674,14 @@ export interface paths {
     };
     trace?: never;
   };
-  "/api/stories": {
+  "/api/landscapes": {
     parameters: {
       query?: never;
       header?: never;
       path?: never;
       cookie?: never;
     };
-    /** Retrieve a list of Stories */
+    /** Retrieve a list of landscapes */
     get: {
       parameters: {
         query?: {
@@ -711,7 +711,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/stories/{id}": {
+  "/api/landscapes/{id}": {
     parameters: {
       query?: {
         depth?: number;
@@ -842,7 +842,7 @@ export interface components {
         hasNextPage?: boolean;
         totalDocs?: number;
       };
-      stories?: {
+      landscapes?: {
         docs?: (string | components["schemas"]["Story"])[];
         hasNextPage?: boolean;
         totalDocs?: number;
@@ -1388,7 +1388,7 @@ export interface components {
       };
       content?: never;
     };
-    /** @description List of Stories */
+    /** @description List of landscapes */
     StoryListResponse: {
       headers: {
         [name: string]: unknown;
@@ -1455,7 +1455,7 @@ export interface components {
             hasNextPage?: boolean;
             totalDocs?: number;
           };
-          stories?: {
+          landscapes?: {
             docs?: (string | components["schemas"]["Story"])[];
             hasNextPage?: boolean;
             totalDocs?: number;
