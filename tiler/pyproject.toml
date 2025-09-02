@@ -1,4 +1,6 @@
 
 [project]
+name = "tiler"
+version = "1.0.0"
 dependencies = ["fastapi", "uvicorn", "titiler-core", "rio-tiler", "rasterio", "python-dotenv"]
 requires-python = ">=3.13"
