@@ -33,7 +33,7 @@ export const StoriesList = async () => {
     >
       <ul className="flex w-full items-stretch gap-2">
         <li className="bg-background w-96 shrink-0 space-y-4 rounded-4xl p-6">
-          <h1 className="font-display text-4xl text-blue-500">Highlighted stories</h1>
+          <h1 className="font-display text-4xl text-blue-500">Highlighted landscapes</h1>
           <p className="text-foreground text-sm">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, similique magnam tenetur
             eligendi beatae aut architecto deleniti iste autem adipisci ipsam hic nisi, quia, dicta

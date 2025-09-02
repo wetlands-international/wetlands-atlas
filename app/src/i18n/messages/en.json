@@ -4,7 +4,7 @@
     "home": "Home",
     "admin": "Admin",
     "playground": "Playground",
-    "stories": "Stories",
+    "stories": "Landscapes",
     "insights": "Insights"
   },
   "language": {
@@ -23,17 +23,17 @@
     }
   },
   "stories": {
-    "title": "Stories",
-    "description": "A collection of stories about wetlands.",
-    "empty": "No stories available."
+    "title": "Landscapes",
+    "description": "A collection of landscapes about wetlands.",
+    "empty": "No landscapes available."
   },
   "storiesId": {
-    "title": "Story Details",
-    "description": "Details of the selected story.",
+    "title": "Landscape Details",
+    "description": "Details of the selected landscape.",
     "not-found": {
-      "title": "Story not found",
-      "description": "The story you are looking for does not exist. Please check the URL or return to the homepage. If you believe this is an error, please contact support.",
-      "back": "Go back to stories"
+      "title": "Landscape not found",
+      "description": "The landscape you are looking for does not exist. Please check the URL or return to the homepage. If you believe this is an error, please contact support.",
+      "back": "Go back to landscapes"
     }
   },
   "not-found": {
@@ -47,8 +47,8 @@
       "description": "Wetlands is a web application that helps you to manage your wetlands."
     },
     "stories": {
-      "title": "Stories | Wetlands",
-      "description": "A collection of stories about wetlands."
+      "title": "Landscapes | Wetlands",
+      "description": "A collection of landscapes about wetlands."
     },
     "playground": {
       "title": "Playground | Wetlands",

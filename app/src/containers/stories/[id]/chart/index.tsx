@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
-import { stepAtom } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/store";
+import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
 import { Story } from "@/payload-types";
 

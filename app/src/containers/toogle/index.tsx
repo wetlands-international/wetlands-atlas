@@ -31,11 +31,11 @@ export const Toggle = () => {
       </li>
       <li>
         <Link
-          href={`/stories${searchParams ? `${searchParams}` : ""}`}
+          href={`/landscapes${searchParams ? `${searchParams}` : ""}`}
           className={cn(
             "pointer-events-auto flex items-center gap-2 rounded-4xl px-4 py-2 text-sm",
-            pathname !== "/stories" && "hover:underline",
-            pathname === "/stories" &&
+            pathname !== "/landscapes" && "hover:underline",
+            pathname === "/landscapes" &&
               "from-accent to-border text-accent-foreground bg-linear-to-r",
           )}
         >

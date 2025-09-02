@@ -15,14 +15,14 @@ export default function RankingChartComponent({ data }: { data: IndicatorChartDa
 
   return (
     <div className="px-6">
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {data
           .sort((a, b) => b.value - a.value)
           .map((item, index) => (
             <li key={index} className="flex flex-col gap-2">
               <div className="flex items-center justify-between gap-2 text-base font-normal">
                 <span className="flex-1">{item.label}</span>
-                <span className="text-blue-300">{formatNumber(item.value)}</span>
+                <span>{formatNumber(item.value)}</span>
               </div>
               <div className="h-2.5 w-full rounded-lg bg-[rgba(250,250,250,0.05)]">
                 <div
@@ -30,7 +30,7 @@ export default function RankingChartComponent({ data }: { data: IndicatorChartDa
                     "h-full rounded-l-lg bg-blue-300": true,
                     "rounded-r-lg": scale(item.value) === 100,
                   })}
-                  style={{ width: `${scale(item.value)}%` }}
+                  style={{ width: `${scale(item.value)}%`, backgroundColor: item.color }}
                 ></div>
               </div>
             </li>

@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { useQueryState } from "nuqs";
 
-import { stepParser } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/parsers";
+import { stepParser } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/parsers";
 
 // MAP
 export const useSyncStep = () => {

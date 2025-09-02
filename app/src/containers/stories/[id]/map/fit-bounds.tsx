@@ -3,7 +3,7 @@ import { useEffect, useMemo } from "react";
 import { useAtomValue } from "jotai";
 import { LngLatBoundsLike, useMap } from "react-map-gl/mapbox";
 
-import { stepAtom } from "@/app/(frontend)/[locale]/(stories)/stories/[id]/store";
+import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
 import { Story } from "@/payload-types";
 

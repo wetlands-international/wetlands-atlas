@@ -13,7 +13,7 @@ export default function NotFoundPage() {
     <aside className="z-10 w-xl shrink-0">
       <Header className="sticky top-0 z-20 p-4" blur={false}>
         <div className="flex items-center gap-2">
-          <Link href="/stories">Stories</Link>
+          <Link href="/landscapes">Landscapes</Link>
         </div>
       </Header>
       <article className="space-y-5 px-11 py-10">
@@ -24,7 +24,7 @@ export default function NotFoundPage() {
           <p className="text-lg">{t("description")}</p>
         </div>
 
-        <Link href="/stories">
+        <Link href="/landscapes">
           <Button>{t("back")}</Button>
         </Link>
       </article>
