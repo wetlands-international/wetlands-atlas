@@ -9,6 +9,8 @@ export const LOCATION_TYPE = {
   HYDRO_BASIN: "HYDRO_BASIN",
   GLOBAL: "GLOBAL",
   WDPA: "WDPA",
+  ECO_REGION: "ECO_REGION",
+  LANDSCAPES: "LANDSCAPES",
 };
 export const Locations: CollectionConfig = {
   slug: "locations",
@@ -69,12 +71,20 @@ export const Locations: CollectionConfig = {
           value: LOCATION_TYPE.ADMIN_REGION,
         },
         {
+          label: "Eco Region",
+          value: LOCATION_TYPE.ECO_REGION,
+        },
+        {
           label: "Hydro Basin",
           value: LOCATION_TYPE.HYDRO_BASIN,
         },
         {
           label: "Global",
           value: LOCATION_TYPE.GLOBAL,
+        },
+        {
+          label: "Landscapes",
+          value: LOCATION_TYPE.LANDSCAPES,
         },
         {
           label: "WDPA",

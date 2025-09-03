@@ -13,6 +13,7 @@ import * as migration_20250820_091116_add_user_sessions_table from './20250820_0
 import * as migration_20250822_164446 from './20250822_164446';
 import * as migration_20250826_141750 from './20250826_141750';
 import * as migration_20250829_091954_remove_media_img_sizes from './20250829_091954_remove_media_img_sizes';
+import * as migration_20250903_141307_add_location_types from './20250903_141307_add_location_types';
 
 export const migrations = [
   {
@@ -88,6 +89,11 @@ export const migrations = [
   {
     up: migration_20250829_091954_remove_media_img_sizes.up,
     down: migration_20250829_091954_remove_media_img_sizes.down,
-    name: '20250829_091954_remove_media_img_sizes'
+    name: '20250829_091954_remove_media_img_sizes',
+  },
+  {
+    up: migration_20250903_141307_add_location_types.up,
+    down: migration_20250903_141307_add_location_types.down,
+    name: '20250903_141307_add_location_types'
   },
 ];
