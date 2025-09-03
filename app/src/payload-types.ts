@@ -417,7 +417,7 @@ export interface Location {
    * @maxItems 4
    */
   bbox: [number, number, number, number];
-  type: 'ADMIN_REGION' | 'HYDRO_BASIN' | 'GLOBAL' | 'WDPA';
+  type: 'ADMIN_REGION' | 'ECO_REGION' | 'HYDRO_BASIN' | 'GLOBAL' | 'LANDSCAPES' | 'WDPA';
   parent?: (string | null) | Location;
   updatedAt: string;
   createdAt: string;
