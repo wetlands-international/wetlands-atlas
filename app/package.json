@@ -70,6 +70,7 @@
     "payload": "3.52.0",
     "postcss": "8.5.3",
     "postprocessing": "6.37.3",
+    "qs-esm": "7.0.2",
     "query-string": "9.2.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
