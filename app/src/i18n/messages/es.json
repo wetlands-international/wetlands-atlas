@@ -13,7 +13,13 @@
   },
   "insights": {
     "title": "Discover wetlands",
-    "description": "Dive into different topics that define these unique ecosystems and uncover their significant impact on our environment."
+    "description": "Dive into different topics that define these unique ecosystems and uncover their significant impact on our environment.",
+    "widgets": {
+      "wetlands": "Humedales",
+      "non-wetlands": "No humedales",
+      "restoration": "Restauración",
+      "protection": "Protección"
+    }
   },
   "home": {
     "hero": {
