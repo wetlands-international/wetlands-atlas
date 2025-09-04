@@ -151,8 +151,6 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       </header>
       {chartData.length > 0 && (
         <>
-          <div className="mt-7 mb-4 w-full border-t border-dashed" />
-
           <div className="-mx-6 aspect-video">
             <RankingChartComponent data={chartData} />
           </div>
