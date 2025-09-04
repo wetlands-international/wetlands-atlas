@@ -38,6 +38,9 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  upload: {
+    useTempFiles: true,
+  },
   collections: [Users, Media, Categories, Indicators, Layers, IndicatorDatas, Locations, Stories],
   editor: lexicalEditor({
     features: () => [
