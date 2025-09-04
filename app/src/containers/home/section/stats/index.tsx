@@ -1,4 +1,7 @@
+"use client";
 import { FC } from "react";
+
+import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
@@ -18,7 +21,14 @@ const Stats: FC<StatsProps> = ({ items, size = "m", title }) => {
             key={`stats-${caption}-${value}`}
             className={cn({ "flex w-full": true, "bg-[rgba(255,255,255,0.04)]": size !== "s" })}
           >
-            <div className="bg-white" style={{ width: `${value}%` }} />
+            <div style={{ width: `${value}%` }}>
+              <motion.div
+                className="h-full bg-white"
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 1, ease: "easeInOut" }}
+              />
+            </div>
 
             <figure
               className={cn({

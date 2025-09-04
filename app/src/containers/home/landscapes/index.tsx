@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { CircleArrowRightIcon, MapPinIcon } from "lucide-react";
+import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 
 import { isValidMedia } from "@/lib/utils";
@@ -16,17 +17,30 @@ import { Story } from "@/payload-types";
 
 const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
   const t = useTranslations("home.landscapes");
+
   return (
     <section className="relative min-h-[calc(100vh-7rem)] overflow-hidden pt-28 pl-20">
-      <Image
-        src="/home/landscapes.avif"
-        width={4096}
-        height={2304}
-        alt=""
-        className="absolute inset-0 h-full w-full bg-gray-300 object-cover"
-      />
+      <motion.div
+        initial={{ scale: 3 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        className="absolute inset-0 h-full w-full"
+      >
+        <Image
+          src="/home/landscapes.avif"
+          width={4096}
+          height={2304}
+          alt=""
+          className="h-full w-full bg-gray-300 object-cover"
+        />
+      </motion.div>
       <div className="grid-row-2 relative grid min-h-[calc(100vh-7rem)] w-full grid-cols-[30%_70%] gap-4">
-        <div className="flex flex-col items-start justify-center">
+        <motion.div
+          className="flex flex-col items-start justify-center"
+          initial={{ x: "-50%", opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.25, duration: 0.5, ease: "easeOut" }}
+        >
           <h1 className="font-display mb-9 text-3xl font-normal">{t("title")}</h1>
           <div className="mb-14 space-y-2">
             {t.rich("description", { p: (chunk) => <p>{chunk}</p> })}
@@ -37,8 +51,13 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
               <CircleArrowRightIcon />
             </Link>
           </Button>
-        </div>
-        <div className="flex flex-col items-start justify-end pb-20">
+        </motion.div>
+        <motion.div
+          className="flex flex-col items-start justify-end pb-20"
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
+        >
           <Carousel opts={{ align: "start" }} className="w-full">
             <CarouselContent className="-ml-4">
               {stories.map((s) => (
@@ -78,7 +97,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
               ))}
             </CarouselContent>
           </Carousel>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
