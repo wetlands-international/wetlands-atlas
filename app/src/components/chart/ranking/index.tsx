@@ -60,12 +60,22 @@ function RankingChartComponent({ data }: Props) {
   const nonWetlands = data.filter((d) => d.group === "non-wetlands");
   const t = useTranslations("insights.widgets");
 
+  if (data.length === 0) return null;
+
   return (
     <div className="px-6">
-      <div className="mt-7 w-full border-t border-dashed" />
-      <HorizontalBars data={wetlands} title={t("wetlands")} unit={unit} />
-      <div className="mt-3.5 w-full border-t border-dashed" />
-      <HorizontalBars data={nonWetlands} title={t("non-wetlands")} unit={unit} />
+      {wetlands.length > 0 && (
+        <>
+          <div className="mt-7 w-full border-t border-dashed" />
+          <HorizontalBars data={wetlands} title={t("wetlands")} unit={unit} />
+        </>
+      )}
+      {nonWetlands.length > 0 && (
+        <>
+          <div className="mt-3.5 w-full border-t border-dashed" />
+          <HorizontalBars data={nonWetlands} title={t("non-wetlands")} unit={unit} />
+        </>
+      )}
       <div className="mt-5 flex justify-center gap-1.5 text-xs">
         <div className="flex items-center justify-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-green-700"></span>
