@@ -23,7 +23,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
       <motion.div
         initial={{ scale: 3 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.9, ease: "easeInOut" }}
         className="absolute inset-0 h-full w-full"
       >
         <Image
@@ -39,7 +39,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
           className="flex flex-col items-start justify-center"
           initial={{ x: "-50%", opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.25, duration: 0.5, ease: "easeOut" }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
           <h1 className="font-display mb-9 text-3xl font-normal">{t("title")}</h1>
           <div className="mb-14 space-y-2">
@@ -56,7 +56,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
           className="flex flex-col items-start justify-end pb-20"
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5, ease: "easeOut" }}
+          transition={{ delay: 0.5, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
           <Carousel opts={{ align: "start" }} className="w-full">
             <CarouselContent className="-ml-4">
@@ -69,7 +69,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
                         width={s.cover.width}
                         height={s.cover.height}
                         alt=""
-                        className="absolute inset-0 -z-10 h-full w-full rounded-4xl object-cover opacity-0 transition-opacity group-hover:opacity-50"
+                        className="absolute inset-0 -z-10 h-full w-full rounded-4xl object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-50"
                       />
                     ) : null}
                     <div className="absolute inset-0 -z-10 h-full w-full rounded-4xl transition group-hover:bg-black/20" />
