@@ -53,8 +53,8 @@ export const useSyncLayersSettings = () => {
   return useQueryState("layers-settings", layersSettingsParser);
 };
 
-// STORIES
-export const storiesAtom = atom<{
+// LANDSCAPES
+export const landscapesAtom = atom<{
   search?: string;
   filters?: {
     highlighted?: boolean;

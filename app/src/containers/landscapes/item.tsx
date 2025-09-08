@@ -3,9 +3,9 @@ import { useMemo } from "react";
 import { cn } from "@/lib/utils";
 
 import { Link } from "@/i18n/navigation";
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
-export const StoriesListItem = ({ id, name, cover }: Story) => {
+export const LandscapesListItem = ({ id, name, cover }: Landscape) => {
   const thumbnailStyle = useMemo(() => {
     if (typeof cover === "object" && cover?.url) {
       return {

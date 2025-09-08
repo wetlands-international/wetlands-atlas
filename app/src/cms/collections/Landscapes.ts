@@ -17,7 +17,7 @@ import {
 import { PublicAccessControl } from "@/cms/access/public";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
-import { storiesReadLocationCriteriaExtension } from "@/cms/hooks/story-read-location-criteria-extension";
+import { landscapesReadLocationCriteriaExtension } from "@/cms/hooks/landscapes-read-location-criteria-extension";
 
 const validateEmbeddedVideoSource = (value: any, opts: any) => {
   const { embedded_video } = opts.data;
@@ -35,8 +35,8 @@ const validateEmbeddedVideoTitle = (value: any, opts: any) => {
   return true;
 };
 
-export const Stories: CollectionConfig = {
-  slug: "stories",
+export const Landscapes: CollectionConfig = {
+  slug: "landscapes",
   admin: {
     useAsTitle: "name",
     defaultColumns: ["id", "title", "insight", "published"],
@@ -108,7 +108,7 @@ export const Stories: CollectionConfig = {
       defaultValue: false,
       admin: {
         position: "sidebar",
-        description: "Uncheck to hide this story from the public view.",
+        description: "Uncheck to hide this landscape from the public view.",
       },
     },
     {
@@ -171,14 +171,14 @@ export const Stories: CollectionConfig = {
     },
   ],
   hooks: {
-    beforeOperation: [storiesReadLocationCriteriaExtension],
+    beforeOperation: [landscapesReadLocationCriteriaExtension],
     afterChange: [
       async (props) => {
         if (props.operation === "update") {
           const { doc } = props;
-          revalidatePath(`/stories/${doc.id}`, "page");
+          revalidatePath(`/landscapes/${doc.id}`, "page");
         }
-        revalidatePath("/stories", "layout");
+        revalidatePath("/landscapes", "layout");
       },
     ],
   },

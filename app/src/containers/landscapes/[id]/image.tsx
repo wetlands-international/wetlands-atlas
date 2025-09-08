@@ -8,7 +8,7 @@ import { EffectComposer } from "@react-three/postprocessing";
 import { TransparentFrame } from "@/containers/playground/effects/transparent-frame";
 import { ImageReveal } from "@/containers/playground/image";
 
-export const StoryImage: FC<{ imageUrl: string }> = ({ imageUrl }) => {
+export const LandscapeImage: FC<{ imageUrl: string }> = ({ imageUrl }) => {
   return (
     <div className="-mx-11 my-10 aspect-[1280/853] grow">
       <Canvas

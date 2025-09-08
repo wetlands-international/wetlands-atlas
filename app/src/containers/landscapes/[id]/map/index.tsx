@@ -7,12 +7,12 @@ import Map, { LngLatBoundsLike } from "react-map-gl/mapbox";
 
 import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
-import { StoryFitBounds } from "@/containers/stories/[id]/map/fit-bounds";
+import { LandscapeFitBounds } from "@/containers/landscapes/[id]/map/fit-bounds";
 
 import { env } from "@/env";
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
-export const StoryMapContainer = (props: Story) => {
+export const LandscapeMapContainer = (props: Landscape) => {
   const { steps } = props;
 
   const step = useAtomValue(stepAtom);
@@ -36,7 +36,7 @@ export const StoryMapContainer = (props: Story) => {
   return (
     <div className="relative flex grow flex-col overflow-hidden bg-[#326E82]">
       <Map
-        id="storyMap"
+        id="landscapeMap"
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
         initialViewState={{
           bounds: BBOX as LngLatBoundsLike,
@@ -60,7 +60,7 @@ export const StoryMapContainer = (props: Story) => {
         touchPitch={false}
         touchZoomRotate={false}
       >
-        <StoryFitBounds {...props} />
+        <LandscapeFitBounds {...props} />
       </Map>
     </div>
   );

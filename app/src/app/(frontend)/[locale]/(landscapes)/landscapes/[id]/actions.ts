@@ -6,21 +6,21 @@ import { getLocale } from "next-intl/server";
 
 import payloadConfig from "@/payload.config";
 
-export const getStoryId = async (id: string) => {
+export const getLandscapeById = async (id: string) => {
   try {
     const locale = await getLocale();
     const payload = await getPayload({ config: payloadConfig });
 
-    const story = await payload.findByID({
+    const landscape = await payload.findByID({
       id,
-      collection: "stories",
+      collection: "landscapes",
       depth: 1,
       locale,
     });
 
-    return story;
+    return landscape;
   } catch (error) {
-    console.error("Error fetching story:", error);
+    console.error("Error fetching landscape:", error);
     notFound();
   }
 };

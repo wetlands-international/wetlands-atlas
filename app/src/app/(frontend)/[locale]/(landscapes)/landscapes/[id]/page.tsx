@@ -4,52 +4,52 @@ import { Metadata } from "next";
 
 import { notFound } from "next/navigation";
 
-import { getStoryId } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/actions";
+import { getLandscapeById } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/actions";
 
-import { StoriesIdArticle } from "@/containers/stories/[id]/article";
-import { StoryChartContainer } from "@/containers/stories/[id]/chart";
-import { StoriesIdHeader } from "@/containers/stories/[id]/header";
-import { StoryMapContainer } from "@/containers/stories/[id]/map";
+import { LandscapesIdArticle } from "@/containers/landscapes/[id]/article";
+import { LandscapeChartContainer } from "@/containers/landscapes/[id]/chart";
+import { LandscapesIdHeader } from "@/containers/landscapes/[id]/header";
+import { LandscapeMapContainer } from "@/containers/landscapes/[id]/map";
 
-export type StoriesIdPageProps = {
+export type LandscapesIdPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export async function generateMetadata({ params }: StoriesIdPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: LandscapesIdPageProps): Promise<Metadata> {
   try {
     const { id } = await params;
 
-    const story = await getStoryId(id);
+    const landscape = await getLandscapeById(id);
 
     return {
-      title: story.name,
-      description: story.description,
+      title: landscape.name,
+      description: landscape.description,
     };
   } catch (error) {
-    console.error("Error fetching story:", error);
+    console.error("Error fetching landscape:", error);
     notFound();
   }
 }
 
-export default async function StoriesIdPage({ params }: StoriesIdPageProps) {
+export default async function LandscapesIdPage({ params }: LandscapesIdPageProps) {
   const { id } = await params;
-  const story = await getStoryId(id);
+  const landscape = await getLandscapeById(id);
 
-  if (!story || !story.published) {
+  if (!landscape || !landscape.published) {
     notFound();
   }
 
   return (
     <>
       <aside className="z-10 w-xl shrink-0">
-        <StoriesIdHeader {...story} />
-        <StoriesIdArticle {...story} />
+        <LandscapesIdHeader {...landscape} />
+        <LandscapesIdArticle {...landscape} />
       </aside>
 
       <Suspense>
         <div className="sticky top-0 left-0 flex h-svh w-full">
-          <StoryMapContainer {...story} />
-          <StoryChartContainer {...story} />
+          <LandscapeMapContainer {...landscape} />
+          <LandscapeChartContainer {...landscape} />
         </div>
       </Suspense>
     </>

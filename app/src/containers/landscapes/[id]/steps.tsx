@@ -7,9 +7,9 @@ import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]
 import { Step } from "@/components/scroll/step";
 import { Lexical } from "@/components/ui/lexical";
 
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
-export const StorySteps = (props: Story) => {
+export const LandscapeSteps = (props: Landscape) => {
   const setStep = useSetAtom(stepAtom);
 
   return props.steps?.map((step, index) => (

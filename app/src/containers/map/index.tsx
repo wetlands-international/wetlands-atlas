@@ -9,8 +9,8 @@ import { useDebounceCallback } from "usehooks-ts";
 import { tmpBboxAtom, useSyncBasemap, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { Layers } from "@/containers/layers";
+import LandscapeMarker from "@/containers/map/landscape-marker";
 import { LayerManager } from "@/containers/map/layer-manager";
-import StoryMarker from "@/containers/map/story-marker";
 
 import Controls from "@/components/map/controls";
 import LayersControl from "@/components/map/controls/layers";
@@ -19,13 +19,13 @@ import { BasemapControl, BASEMAPS } from "@/components/map/controls/settings/bas
 import ZoomControl from "@/components/map/controls/zoom";
 
 import { env } from "@/env";
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
 type MapContainerProps = {
-  stories: Story[];
+  landscapes: Landscape[];
 } & MapProps;
 
-export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
+export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
   const [loaded, setLoaded] = useState(false);
   const [bbox, setBbox] = useSyncBbox();
   const [basemap, setBasemap] = useSyncBasemap();
@@ -99,9 +99,9 @@ export const MapContainer = ({ stories, ...props }: MapContainerProps) => {
         onLoad={handleLoad}
         {...props}
       >
-        {stories.map((s) => (
-          <StoryMarker
-            key={`story-marker-${s.id}`}
+        {landscapes.map((s) => (
+          <LandscapeMarker
+            key={`landscape-marker-${s.id}`}
             name={s.name}
             location={s.location}
             href={`/landscapes/${s.id}`}

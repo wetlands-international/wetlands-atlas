@@ -6,45 +6,45 @@ import { Command } from "cmdk";
 import { getTranslations } from "next-intl/server";
 
 import { Header } from "@/containers/header";
-import { Stories } from "@/containers/stories";
-import { StoriesFilters } from "@/containers/stories/filters";
-import { StoriesSearch } from "@/containers/stories/search";
+import { Landscapes } from "@/containers/landscapes";
+import { LandscapesFilters } from "@/containers/landscapes/filters";
+import { LandscapesSearch } from "@/containers/landscapes/search";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("metadata");
 
   return {
-    title: t("stories.title"),
-    description: t("stories.description"),
+    title: t("landscapes.title"),
+    description: t("landscapes.description"),
   };
 }
 
-export default async function StoriesPage() {
+export default async function LandscapesPage() {
   return (
     <>
       <aside className="absolute top-0 left-0 z-10 w-full max-w-md">
         <Command className="flex w-full flex-col gap-2.5 p-4" shouldFilter={false}>
           <Header>
             <Suspense>
-              <StoriesSearch />
+              <LandscapesSearch />
             </Suspense>
           </Header>
 
           <Suspense>
-            <StoriesFilters>
+            <LandscapesFilters>
               <p className="text-background bg-foreground p-6">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
                 ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis,
                 architecto ut veritatis eius exercitationem aperiam perspiciatis qui doloribus
                 debitis?
               </p>
-            </StoriesFilters>
+            </LandscapesFilters>
           </Suspense>
         </Command>
       </aside>
 
       <aside className="absolute bottom-12 left-4 z-10 flex w-[calc(100%_-_theme(spacing.8))] flex-col gap-2.5">
-        <Stories />
+        <Landscapes />
       </aside>
     </>
   );

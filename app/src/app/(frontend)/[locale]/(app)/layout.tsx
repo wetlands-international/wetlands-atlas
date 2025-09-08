@@ -21,8 +21,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const queryClient = new QueryClient();
   const payload = await getPayload({ config: payloadConfig });
 
-  const stories = await payload.find({
-    collection: "stories",
+  const landscapes = await payload.find({
+    collection: "landscapes",
     depth: 1,
     limit: 100,
     page: 1,
@@ -77,7 +77,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </div>
 
           <Suspense>
-            <MapContainer stories={stories.docs} />
+            <MapContainer landscapes={landscapes.docs} />
           </Suspense>
 
           <div className="pointer-events-none fixed right-5 bottom-7 z-10">

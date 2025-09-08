@@ -6,10 +6,10 @@ import { useField } from "@payloadcms/ui";
 
 import { Switch } from "@/components/ui/switch";
 
-import { Layer, Story } from "@/payload-types";
+import { Layer, Landscape } from "@/payload-types";
 
 export const MapFieldLayers = ({ layers }: { layers: Layer[] }) => {
-  const { value, setValue } = useField<NonNullable<Story["steps"]>[number]["map"]>();
+  const { value, setValue } = useField<NonNullable<Landscape["steps"]>[number]["map"]>();
 
   const handleToogleLayer = useCallback(
     (layerId: Layer["id"]) => {

@@ -4,7 +4,7 @@
     "home": "Inicio",
     "admin": "Administración",
     "playground": "Zona de juegos",
-    "stories": "Historias",
+    "landscapes": "Historias",
     "insights": "Descubrimientos"
   },
   "language": {
@@ -28,12 +28,12 @@
       "tooltip": "Comenzar"
     }
   },
-  "stories": {
+  "landscapes": {
     "title": "Landscapes",
     "description": "A collection of landscapes about wetlands.",
     "empty": "No landscapes available."
   },
-  "storiesId": {
+  "landscapesId": {
     "title": "Landscape Details",
     "description": "Details of the selected landscape.",
     "not-found": {
@@ -52,7 +52,7 @@
       "title": "Zonas húmedas",
       "description": "Zonas húmedas es una aplicación web que te ayuda a gestionar tus zonas húmedas."
     },
-    "stories": {
+    "landscapes": {
       "title": "Historias | Wetlands",
       "description": "Una colección de historias sobre zonas húmedas."
     },

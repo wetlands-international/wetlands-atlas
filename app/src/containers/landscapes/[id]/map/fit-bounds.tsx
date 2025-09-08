@@ -5,9 +5,9 @@ import { LngLatBoundsLike, useMap } from "react-map-gl/mapbox";
 
 import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
-export const StoryFitBounds = (props: Story) => {
+export const LandscapeFitBounds = (props: Landscape) => {
   const { current } = useMap();
 
   const { steps } = props;

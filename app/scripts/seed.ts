@@ -38,7 +38,7 @@ const CATEGORIES_FILE_PATH = `../app-initial-data/categories.json`;
 const INDICATORS_FILE_PATH = `../app-initial-data/indicators.json`;
 const INDICATOR_DATA_FILE_PATH = `../app-initial-data/indicator-data.json`;
 const LAYERS_FILE_PATH = `../app-initial-data/layers.json`;
-const STORIES_FILE_PATH = `../app-initial-data/stories.json`;
+const LANDSCAPES_FILE_PATH = `../app-initial-data/landscapes.json`;
 
 type DB = DatabaseAdapter["drizzle"] & { query: Record<string, any> };
 type TX = Parameters<Parameters<DB["transaction"]>[0]>[0] & { query: Record<string, any> };
@@ -425,13 +425,13 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
   console.log("✅ Seeded layers.");
 };
 
-const seedStories = async (db: DB, tx: TX): Promise<void> => {
-  const stories = db.query.stories.table;
-  const storiesLocales = db.query.stories_locales.table;
-  const storiesSteps = db.query.stories_steps.table;
-  const storiesStepsLocales = db.query.stories_steps_locales.table;
+const seedLandscapes = async (db: DB, tx: TX): Promise<void> => {
+  const landscapes = db.query.landscapes.table;
+  const landscapesLocales = db.query.landscapes_locales.table;
+  const landscapesSteps = db.query.landscapes_steps.table;
+  const landscapesStepsLocales = db.query.landscapes_steps_locales.table;
 
-  const rows = JSON.parse(await fs.promises.readFile(STORIES_FILE_PATH, "utf-8"));
+  const rows = JSON.parse(await fs.promises.readFile(LANDSCAPES_FILE_PATH, "utf-8"));
   const now = new Date().toISOString();
 
   for (const row of rows) {
@@ -444,16 +444,16 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
     });
 
     if (!categoryExists) {
-      console.warn(`⚠️ Skipping story '${id}' — category '${category}' not found.`);
+      console.warn(`⚠️ Skipping landscape '${id}' — category '${category}' not found.`);
       continue;
     }
 
     // Convert location array to PostGIS point format
     const locationPoint = location ? `POINT(${location[0]} ${location[1]})` : null;
 
-    // Upsert into stories table (without steps - they'll be in separate table)
+    // Upsert into landscapes table (without steps - they'll be in separate table)
     await tx
-      .insert(stories)
+      .insert(landscapes)
       .values({
         id,
         category,
@@ -466,7 +466,7 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
         updatedAt: now,
       })
       .onConflictDoUpdate({
-        target: stories.id,
+        target: landscapes.id,
         set: {
           category,
           cover: cover ?? null,
@@ -480,7 +480,7 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
 
     // Upsert localized fields (en only)
     await tx
-      .insert(storiesLocales)
+      .insert(landscapesLocales)
       .values({
         _locale: "en",
         _parentID: id,
@@ -489,7 +489,7 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
         embedded_video_title: embeddedVideo?.title ?? null,
       })
       .onConflictDoUpdate({
-        target: [storiesLocales._locale, storiesLocales._parentID],
+        target: [landscapesLocales._locale, landscapesLocales._parentID],
         set: {
           name,
           description,
@@ -503,9 +503,9 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
         const step = steps[stepIndex];
         const stepId = `${id}-step-${stepIndex}`;
 
-        // Upsert into stories_steps table
+        // Upsert into landscapes_steps table
         await tx
-          .insert(storiesSteps)
+          .insert(landscapesSteps)
           .values({
             id: stepId,
             _order: stepIndex,
@@ -515,7 +515,7 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
             chart: step.chart ? JSON.stringify(step.chart) : null,
           })
           .onConflictDoUpdate({
-            target: storiesSteps.id,
+            target: landscapesSteps.id,
             set: {
               _order: stepIndex,
               _parentID: id,
@@ -525,16 +525,16 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
             },
           });
 
-        // Upsert into stories_steps_locales table
+        // Upsert into landscapes_steps_locales table
         await tx
-          .insert(storiesStepsLocales)
+          .insert(landscapesStepsLocales)
           .values({
             _locale: "en",
             _parentID: stepId,
             sidebar: JSON.stringify(step.sidebar),
           })
           .onConflictDoUpdate({
-            target: [storiesStepsLocales._locale, storiesStepsLocales._parentID],
+            target: [landscapesStepsLocales._locale, landscapesStepsLocales._parentID],
             set: {
               sidebar: JSON.stringify(step.sidebar),
             },
@@ -543,7 +543,7 @@ const seedStories = async (db: DB, tx: TX): Promise<void> => {
     }
   }
 
-  console.log("✅ Seeded stories with steps.");
+  console.log("✅ Seeded landscapes with steps.");
 };
 
 const seed = async () => {
@@ -559,7 +559,7 @@ const seed = async () => {
     await seedCategoryIndicatorRels(db, tx);
     await seedIndicatorsData(db, tx);
     await seedLayers(db, tx);
-    await seedStories(db, tx);
+    await seedLandscapes(db, tx);
   });
 
   process.exit(0);

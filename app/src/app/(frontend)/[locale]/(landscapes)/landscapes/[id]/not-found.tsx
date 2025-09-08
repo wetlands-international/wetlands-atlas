@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 
 export default function NotFoundPage() {
-  const t = useTranslations("storiesId.not-found");
+  const t = useTranslations("landscapesId.not-found");
 
   return (
     <aside className="z-10 w-xl shrink-0">

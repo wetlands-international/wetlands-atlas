@@ -9,22 +9,22 @@ import { LuFilter, LuSearch } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
-import { storiesAtom } from "@/app/(frontend)/[locale]/(app)/store";
+import { landscapesAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
-export const StoriesSearch = () => {
+export const LandscapesSearch = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [stories, setStories] = useAtom(storiesAtom);
+  const [landscapes, setLandscapes] = useAtom(landscapesAtom);
 
   const handleValueChange = (value: string) => {
-    setStories({
-      ...stories,
+    setLandscapes({
+      ...landscapes,
       search: value,
     });
   };
 
   const handleFocus = () => {
-    setStories({
+    setLandscapes({
       search: undefined,
       enabled: true,
     });
@@ -32,7 +32,7 @@ export const StoriesSearch = () => {
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Escape") {
-      setStories({
+      setLandscapes({
         search: undefined,
         enabled: false,
       });
@@ -40,33 +40,33 @@ export const StoriesSearch = () => {
   };
 
   const handleClose = () => {
-    setStories({
+    setLandscapes({
       search: undefined,
       enabled: false,
     });
   };
 
   useEffect(() => {
-    if (!stories.enabled) {
+    if (!landscapes.enabled) {
       inputRef.current?.blur();
     }
-  }, [stories.enabled]);
+  }, [landscapes.enabled]);
 
   return (
     <div
       className={cn(
         "flex h-16 w-full cursor-pointer items-center justify-start gap-2 rounded-4xl text-left",
-        stories.enabled && "bg-foreground outline-0",
+        landscapes.enabled && "bg-foreground outline-0",
       )}
     >
       <div
         className={cn(
           "bg-primary text-foreground pointer-events-none absolute top-2 left-2 flex size-12 shrink-0 items-center justify-center rounded-full",
 
-          stories.enabled && "bg-foreground text-background",
+          landscapes.enabled && "bg-foreground text-background",
         )}
       >
-        {stories.enabled ? (
+        {landscapes.enabled ? (
           <LuSearch className="h-4 w-4 text-current transition-colors" />
         ) : (
           <LuFilter className="h-4 w-4 text-current transition-colors" />
@@ -74,24 +74,24 @@ export const StoriesSearch = () => {
       </div>
 
       <CommandInput
-        id="stories-search"
+        id="landscapes-search"
         ref={inputRef}
         className={cn({
           "h-full w-full rounded-4xl px-16 transition-colors duration-300": true,
-          "text-background placeholder:text-muted-foreground outline-0": stories.enabled,
-          "text-foreground placeholder:text-foreground outline-0": !stories.enabled,
+          "text-background placeholder:text-muted-foreground outline-0": landscapes.enabled,
+          "text-foreground placeholder:text-foreground outline-0": !landscapes.enabled,
         })}
         value={cn({
-          "Search or filter story...": !stories.enabled,
-          [stories.search ?? ""]: stories.enabled,
+          "Search or filter landscape...": !landscapes.enabled,
+          [landscapes.search ?? ""]: landscapes.enabled,
         })}
-        placeholder={"Search or filter story..."}
+        placeholder={"Search or filter landscape..."}
         onValueChange={handleValueChange}
         onKeyUp={handleKeyUp}
         onFocus={handleFocus}
       />
 
-      {stories.enabled && (
+      {landscapes.enabled && (
         <button
           className={cn(
             "bg-foreground text-background animate-in fade-in absolute top-3 right-3 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150",

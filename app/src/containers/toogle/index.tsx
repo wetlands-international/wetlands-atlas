@@ -39,7 +39,7 @@ export const Toggle = () => {
               "from-accent to-border text-accent-foreground bg-linear-to-r",
           )}
         >
-          <span>{t("stories")}</span> <LuBookOpen className="size-4" />
+          <span>{t("landscapes")}</span> <LuBookOpen className="size-4" />
         </Link>
       </li>
     </ul>
