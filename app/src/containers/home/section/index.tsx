@@ -23,7 +23,7 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({ id, imageUrl, children, su
   const setCurrentSectionId = useSetAtom(currentSectionIdAtom);
   const controls = useAnimation();
   const bgControls = useAnimation();
-  const lastScrollY = useRef(window.scrollY);
+  const lastScrollY = useRef(0);
   const [bgImageDone, setBgImageDone] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(true);
   const showBgAnimation = id === "climate-resilience";

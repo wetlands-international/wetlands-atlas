@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 
 const Footer: FC = () => {
   return (
-    <footer className="px-28 pt-20 pb-10 text-[14px]">
+    <footer className="snap-start px-28 pt-20 pb-10 text-[14px]">
       <div className="flex justify-between">
         <div className="space-y-6">
           <h2 className="text-3xl font-normal whitespace-pre-line">
