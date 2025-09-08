@@ -13,7 +13,7 @@ export const Hero = () => {
   const t = useTranslations("home.hero");
 
   return (
-    <div className="relative mt-[theme(spacing.16)] grid min-h-[calc(100svh_-_theme(spacing.16))] snap-start items-center justify-items-center overflow-hidden">
+    <section className="relative mt-[theme(spacing.16)] grid min-h-screen snap-start items-center justify-items-center overflow-hidden">
       <div className="absolute top-1/2 left-1/2 container h-full w-full -translate-x-1/2 -translate-y-1/2 transform 2xl:max-w-full">
         <Circle size="l" className="absolute top-0 left-[5%] 2xl:top-[5%] 2xl:left-[15%]" />
         <Circle size="s" className="absolute top-[15%] left-[90%]" />
@@ -71,6 +71,6 @@ export const Hero = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };

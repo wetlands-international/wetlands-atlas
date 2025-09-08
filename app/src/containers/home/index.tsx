@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactLenis } from "lenis/react";
+import React from "react";
 
 import Footer from "@/containers/home/footer";
 import { Hero } from "@/containers/home/hero";
@@ -18,18 +18,16 @@ export default function Home({
   sections: HomeSectionProps[];
 }) {
   return (
-    <main>
-      <div className="fixed top-0 left-0 z-20 w-full px-20 pt-2">
+    <main className="h-screen snap-y snap-mandatory overflow-y-scroll">
+      <div className="sticky top-0 left-0 z-20 w-full px-20 pt-2">
         <Navbar />
       </div>
-      <ReactLenis root>
-        <Hero />
-        {sections.map((section) => (
-          <HomeSectionContainer key={`home-section-${section.id}`} {...section} />
-        ))}
-        <Landscapes data={landscapes} />
-        <Footer />
-      </ReactLenis>
+      <Hero />
+      {sections.map((section) => (
+        <HomeSectionContainer key={`home-section-${section.id}`} {...section} />
+      ))}
+      <Landscapes data={landscapes} />
+      <Footer />
     </main>
   );
 }
