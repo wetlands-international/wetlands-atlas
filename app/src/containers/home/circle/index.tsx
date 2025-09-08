@@ -14,7 +14,7 @@ interface CircleProps {
     id: string;
     imageUrl: string;
   };
-  story?: {
+  landscape?: {
     id: string;
     name: string;
     imageUrl: string;
@@ -25,7 +25,7 @@ interface CircleProps {
 }
 const Circle: FC<CircleProps> = ({
   section,
-  story,
+  landscape,
   enableAnimation = true,
   size = "m",
   className,
@@ -36,7 +36,7 @@ const Circle: FC<CircleProps> = ({
   const textRadius = radius + 12;
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const enablePause = enableAnimation && story;
+  const enablePause = enableAnimation && landscape;
 
   useEffect(() => {
     if (!enableAnimation) return;
@@ -104,10 +104,10 @@ const Circle: FC<CircleProps> = ({
           />
         </Link>
       )}
-      {story && (
-        <Link href={`/stories/${story.id}`} className="group">
+      {landscape && (
+        <Link href={`/landscapes/${landscape.id}`} className="group">
           <Image
-            src={story.imageUrl}
+            src={landscape.imageUrl}
             className="rounded-full object-cover"
             sizes="100vw"
             alt=""
@@ -120,7 +120,7 @@ const Circle: FC<CircleProps> = ({
             <circle cx={radius} cy={radius} r={radius} fill="none" />
 
             <path
-              id={`text-circle-${story?.id}`}
+              id={`text-circle-${landscape?.id}`}
               d={`
       M ${radius},${radius}
       m -${textRadius},0
@@ -131,8 +131,8 @@ const Circle: FC<CircleProps> = ({
             />
 
             <text textAnchor="middle" fill="#fff">
-              <textPath href={`#text-circle-${story?.id}`} startOffset="14%">
-                Discover the story
+              <textPath href={`#text-circle-${landscape?.id}`} startOffset="14%">
+                Discover the landscape
               </textPath>
             </text>
           </svg>
@@ -145,7 +145,7 @@ const Circle: FC<CircleProps> = ({
           ></div>
           <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <span className="px-2 text-center text-2xl font-bold text-white select-none">
-              {story.name}
+              {landscape.name}
             </span>
           </div>
         </Link>

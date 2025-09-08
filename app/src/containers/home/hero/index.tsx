@@ -43,7 +43,7 @@ export const Hero = () => {
         <Circle
           size="l"
           className="absolute top-[80%] left-[58%] md:left-[70%] xl:left-[75%]"
-          story={{
+          landscape={{
             id: "the-ziway-shalla-landscape",
             name: "The Ziway-Shalla Landscape",
             imageUrl: homeSections[3].imageUrl,

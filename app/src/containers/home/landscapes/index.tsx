@@ -13,9 +13,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
-const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
+const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
   const t = useTranslations("home.landscapes");
 
   return (
@@ -46,7 +46,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
             {t.rich("description", { p: (chunk) => <p>{chunk}</p> })}
           </div>
           <Button size="lg" className="rounded-full" asChild>
-            <Link href="/stories">
+            <Link href="/landscapes">
               <span>{t("button-discover")}</span>
               <CircleArrowRightIcon />
             </Link>
@@ -60,14 +60,17 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
         >
           <Carousel opts={{ align: "start" }} className="w-full">
             <CarouselContent className="-ml-4">
-              {stories.map((s) => (
-                <CarouselItem key={`story-carousel-item-${s.id}`} className="basis-[40%] pl-4">
+              {data.map((item) => (
+                <CarouselItem
+                  key={`landscape-carousel-item-${item.id}`}
+                  className="basis-[40%] pl-4"
+                >
                   <div className="group relative flex h-full flex-col items-start justify-between gap-4 rounded-4xl border border-[rgba(169,169,169,0.34)] bg-[rgba(125,125,125,0.32)] p-6 text-white backdrop-blur-lg select-none">
-                    {isValidMedia(s.cover) ? (
+                    {isValidMedia(item.cover) ? (
                       <Image
-                        src={s.cover.url}
-                        width={s.cover.width}
-                        height={s.cover.height}
+                        src={item.cover.url}
+                        width={item.cover.width}
+                        height={item.cover.height}
                         alt=""
                         className="absolute inset-0 -z-10 h-full w-full rounded-4xl object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-50"
                       />
@@ -80,9 +83,9 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
                       <MapPinIcon className="text-blue-300" />
                       <span>Mali</span>
                     </Badge>
-                    <h3 className="font-semibold">{s.name}</h3>
+                    <h3 className="font-semibold">{item.name}</h3>
                     <p className="text-xs opacity-0 transition-opacity group-hover:opacity-100">
-                      {s.description}
+                      {item.description}
                     </p>
                     <Button
                       variant="secondary"
@@ -90,7 +93,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
                       className="hover:bg-primary/90 rounded-full text-[10px] uppercase"
                       asChild
                     >
-                      <Link href={`/stories/${s.id}`}>{t("button-read")}</Link>
+                      <Link href={`/landscapes/${item.id}`}>{t("button-read")}</Link>
                     </Button>
                   </div>
                 </CarouselItem>

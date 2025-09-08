@@ -8,13 +8,13 @@ import Landscapes from "@/containers/home/landscapes";
 import Navbar from "@/containers/home/navbar";
 import HomeSectionContainer, { HomeSectionProps } from "@/containers/home/section";
 
-import { Story } from "@/payload-types";
+import { Landscape } from "@/payload-types";
 
 export default function Home({
-  stories,
+  landscapes,
   sections,
 }: {
-  stories: Story[];
+  landscapes: Landscape[];
   sections: HomeSectionProps[];
 }) {
   return (
@@ -27,7 +27,7 @@ export default function Home({
         {sections.map((section) => (
           <HomeSectionContainer key={`home-section-${section.id}`} {...section} />
         ))}
-        <Landscapes stories={stories} />
+        <Landscapes data={landscapes} />
         <Footer />
       </ReactLenis>
     </main>

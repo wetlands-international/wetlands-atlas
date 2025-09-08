@@ -11,8 +11,8 @@ export default async function LandingPage() {
   const locale = await getLocale();
   const payload = await getPayload({ config: payloadConfig });
 
-  const stories = await payload.find({
-    collection: "stories",
+  const landscapes = await payload.find({
+    collection: "landscapes",
     depth: 1,
     limit: 100,
     page: 1,
@@ -25,5 +25,5 @@ export default async function LandingPage() {
     },
   });
 
-  return <Home stories={stories.docs} sections={homeSections} />;
+  return <Home landscapes={landscapes.docs} sections={homeSections} />;
 }
