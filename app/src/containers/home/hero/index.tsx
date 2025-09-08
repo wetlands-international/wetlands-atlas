@@ -8,15 +8,12 @@ import Circle from "@/containers/home/circle";
 import { homeSections } from "@/containers/home/constants";
 
 import { Button } from "@/components/ui/button";
-import { useSetAtom } from "jotai";
-import { currentSectionIdAtom } from "@/containers/home/store";
 
 export const Hero = () => {
   const t = useTranslations("home.hero");
-  const setCurrentSectionId = useSetAtom(currentSectionIdAtom);
 
   return (
-    <div className="relative mt-[theme(spacing.16)] grid min-h-[calc(100svh_-_theme(spacing.16))] items-center justify-items-center overflow-hidden">
+    <div className="relative mt-[theme(spacing.16)] grid min-h-[calc(100svh_-_theme(spacing.16))] snap-start items-center justify-items-center overflow-hidden">
       <div className="absolute top-1/2 left-1/2 container h-full w-full -translate-x-1/2 -translate-y-1/2 transform 2xl:max-w-full">
         <Circle size="l" className="absolute top-0 left-[5%] 2xl:top-[5%] 2xl:left-[15%]" />
         <Circle size="s" className="absolute top-[15%] left-[90%]" />
@@ -66,15 +63,8 @@ export const Hero = () => {
           </p>
         </header>
         <div className="flex justify-center gap-2">
-          <Button
-            size="lg"
-            variant="outline"
-            className="rounded-full"
-            onClick={() => {
-              setCurrentSectionId(homeSections[0].id);
-            }}
-          >
-            {t("discover-button")}
+          <Button size="lg" variant="outline" className="rounded-full" asChild>
+            <Link href={`#${homeSections[0].id}`}>{t("discover-button")}</Link>
           </Button>
           <Button size="lg" className="rounded-full" asChild>
             <Link href="/map">{t("explore-button")}</Link>

@@ -19,7 +19,7 @@ const Landscapes: FC<{ stories: Story[] }> = ({ stories }) => {
   const t = useTranslations("home.landscapes");
 
   return (
-    <section className="relative min-h-[calc(100vh-7rem)] overflow-hidden pt-28 pl-20">
+    <section className="relative min-h-[calc(100vh-7rem)] snap-start overflow-hidden pt-28 pl-20">
       <motion.div
         initial={{ scale: 3 }}
         animate={{ scale: 1 }}

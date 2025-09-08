@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { homeSections } from "@/containers/home/constants";
 import { currentSectionIdAtom } from "@/containers/home/store";
 
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const SectionStepper: FC = () => {
   const currentSectionId = useAtomValue(currentSectionIdAtom);
@@ -25,7 +25,7 @@ const SectionStepper: FC = () => {
       <ul className="flex justify-center gap-2 p-4">
         {homeSections.map((s, i) => (
           <li key={s.id} className="group relative w-20">
-            <Button variant="link" className="w-full cursor-pointer p-0">
+            <Link href={`#${s.id}`} className="w-full cursor-pointer p-0">
               <div
                 className={cn({
                   "bg-secondary-foreground/25 h-1 w-full rounded-xl transition-colors hover:bg-white":
@@ -36,7 +36,7 @@ const SectionStepper: FC = () => {
               <span className="text-secondary-foreground pointer-events-none absolute -top-4 left-1/2 -translate-x-1/2 translate-y-3 rounded px-2 text-[10px] whitespace-nowrap uppercase opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100">
                 {labels[i]}
               </span>
-            </Button>
+            </Link>
           </li>
         ))}
       </ul>

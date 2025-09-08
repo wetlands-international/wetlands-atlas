@@ -51,7 +51,7 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({ id, imageUrl, children, su
   };
 
   return (
-    <section id={id} className="relative min-h-screen overflow-hidden px-20 pt-28">
+    <section id={id} className="relative min-h-screen snap-start overflow-hidden px-20 pt-28">
       <AnimatePresence mode="wait">
         <motion.div
           key={`bg-${imageUrl}`}
