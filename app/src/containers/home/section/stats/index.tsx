@@ -25,7 +25,7 @@ const Stats: FC<StatsProps> = ({ items, size = "m", title }) => {
               <motion.div
                 className="h-full bg-white"
                 initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
+                whileInView={{ width: "100%" }}
                 transition={{ duration: 1, ease: "easeInOut" }}
               />
             </div>

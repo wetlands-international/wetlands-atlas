@@ -111,7 +111,7 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({ id, imageUrl, children, su
                 <motion.div
                   key={`droplet-${imageUrl}`}
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
+                  whileInView={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.8, ease: "easeInOut" }}
                   style={{
