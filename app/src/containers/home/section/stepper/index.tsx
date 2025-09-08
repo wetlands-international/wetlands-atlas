@@ -1,5 +1,7 @@
 import { FC } from "react";
 
+import Link from "next/link";
+
 import { useAtomValue } from "jotai";
 import { useTranslations } from "next-intl";
 
@@ -7,8 +9,6 @@ import { cn } from "@/lib/utils";
 
 import { homeSections } from "@/containers/home/constants";
 import { currentSectionIdAtom } from "@/containers/home/store";
-
-import Link from "next/link";
 
 const SectionStepper: FC = () => {
   const currentSectionId = useAtomValue(currentSectionIdAtom);
