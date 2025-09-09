@@ -17,9 +17,16 @@ export interface HomeSectionProps extends PropsWithChildren {
   id: string;
   imageUrl: string;
   supContent?: React.ReactNode;
+  scrollContainerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
-const HomeSectionContainer: FC<HomeSectionProps> = ({ id, imageUrl, children, supContent }) => {
+const HomeSectionContainer: FC<HomeSectionProps> = ({
+  id,
+  imageUrl,
+  children,
+  supContent,
+  scrollContainerRef,
+}) => {
   const setCurrentSectionId = useSetAtom(currentSectionIdAtom);
   const controls = useAnimation();
   const bgControls = useAnimation();
@@ -39,8 +46,15 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({ id, imageUrl, children, su
     },
   });
 
+  const getScrollTop = () => {
+    const node = scrollContainerRef?.current;
+    if (node && typeof node.scrollTop === "number") return node.scrollTop;
+    if (typeof window !== "undefined") return window.scrollY;
+    return 0;
+  };
+
   const handleViewportEnter = () => {
-    const currentScrollY = window.scrollY;
+    const currentScrollY = getScrollTop();
     const scrollDirection = currentScrollY > lastScrollY.current ? "down" : "up";
 
     // slide-in effect, depending on scroll movement (up/down):
@@ -61,7 +75,7 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({ id, imageUrl, children, su
           transition={{ duration: 1.4, ease: "easeInOut" }}
           style={{ transformOrigin: "left center" }}
           onViewportEnter={() => {
-            const currentScrollY = window.scrollY;
+            const currentScrollY = getScrollTop();
             const isScrollingDown = currentScrollY > lastScrollY.current;
             setIsScrollingDown(isScrollingDown);
 

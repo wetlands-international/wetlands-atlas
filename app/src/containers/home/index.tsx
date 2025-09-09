@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 
 import Footer from "@/containers/home/footer";
 import { Hero } from "@/containers/home/hero";
@@ -17,14 +17,19 @@ export default function Home({
   landscapes: Landscape[];
   sections: HomeSectionProps[];
 }) {
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   return (
-    <main className="h-screen snap-y snap-mandatory overflow-y-scroll">
+    <main ref={scrollContainerRef} className="h-screen snap-y snap-mandatory overflow-y-scroll">
       <div className="sticky top-0 left-0 z-20 w-full px-20 pt-2">
         <Navbar />
       </div>
       <Hero />
       {sections.map((section) => (
-        <HomeSectionContainer key={`home-section-${section.id}`} {...section} />
+        <HomeSectionContainer
+          key={`home-section-${section.id}`}
+          scrollContainerRef={scrollContainerRef}
+          {...section}
+        />
       ))}
       <Landscapes data={landscapes} />
       <Footer />
