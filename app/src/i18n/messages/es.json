@@ -23,9 +23,70 @@
   },
   "home": {
     "hero": {
-      "title": "Zonas húmedas!",
-      "description": "Una aplicación web sencilla para visualizar las zonas húmedas del mundo.",
-      "tooltip": "Comenzar"
+      "kicker": "Descubre los humedales",
+      "title": "Los ecosistemas dinámicos donde el agua se encuentra con la tierra.",
+      "description": "Que abarcan desde manglares y turberas hasta ríos, lagos, llanuras de inundación y costas. Aunque <strong>cubren solo alrededor del 6% de la superficie de la Tierra</strong>, su impacto es inmenso. Los humedales son indispensables para la estabilidad climática, la biodiversidad y los medios de vida humanos.",
+      "discover-button": "Descubre los humedales",
+      "explore-button": "Explorar datos"
+    },
+    "climate-resilience": {
+      "kicker": "resiliencia climática",
+      "title": "La capacidad de los humedales para estabilizar los climas locales y los sistemas hidrológicos los convierte en aliados indispensables en la lucha contra el cambio climático.",
+      "description": "Los humedales son sumideros naturales de carbono muy eficientes, por ejemplo, las turberas <strong>cubren solo el 3% de la superficie terrestre mundial</strong>, pero almacenan el doble de carbono que todos los bosques del mundo juntos. Los humedales costeros, como los manglares, también capturan cantidades significativas de carbono azul y protegen las costas de marejadas y del aumento del nivel del mar.",
+      "stats": {
+        "1": "Cobertura de turberas",
+        "2": "Cobertura forestal"
+      },
+      "sup": "1. FAO, 2022"
+    },
+    "biodiversity-strongholds": {
+      "kicker": "Bastiones de biodiversidad",
+      "title": "Casi el 40% de todas las especies dependen de los humedales en algún momento de su ciclo vital",
+      "description": "<p>Los humedales se encuentran entre los ecosistemas biológicamente más diversos del planeta. Proporcionan hábitats vitales para una inmensa variedad de especies: aves, anfibios, peces, invertebrados y plantas.</p><p>Los humedales de agua dulce, en particular, albergan aproximadamente la mitad de todas las especies de peces, a pesar de cubrir menos del 1% de la superficie terrestre.</p>",
+      "stats": {
+        "1": "poblaciones de peces migratorios restantes\n(desde 1970 hemos perdido el 81%)<sup>2</sup>"
+      },
+      "sup": "1. IPBES, 2019 | 2. Stefanie Deinet et al., 2024"
+    },
+    "engines-for-economic-development": {
+      "kicker": "Motores del desarrollo económico",
+      "title": "Los humedales proporcionan servicios ecosistémicos valorados en hasta 39 billones de dólares anuales.",
+      "description": "<p>Los humedales tienen un inmenso valor económico, aunque a menudo se pasan por alto. <strong>Más de mil millones de personas dependen de ellos para la agricultura, la pesca y el ecoturismo.</strong></p><p>Los humedales saludables reducen la pobreza, mejoran la seguridad alimentaria y fortalecen las economías. Invertir en ellos es crucial tanto para el medio ambiente como para la economía.</p>",
+      "stats": {
+        "1": "del PIB mundial se estima que procede de los servicios\necosistémicos de los humedales<sup>1</sup>"
+      },
+      "sup": "1. Global Wetland Outlook, 2025"
+    },
+    "wetlands-under-threat": {
+      "kicker": "Humedales bajo amenaza",
+      "title": "Desde 1970 hemos perdido el 35% de los humedales—3× más rápido que los bosques<sup>1</sup>.",
+      "description": "<p>A pesar de sus funciones vitales, los humedales están desapareciendo a un ritmo alarmante.</p><p>Las turberas están siendo drenadas e incendiadas, los manglares se eliminan para la acuicultura y el turismo, y las llanuras aluviales fluviales quedan aisladas por presas y diques. A medida que los humedales desaparecen, perdemos no solo biodiversidad y servicios ecosistémicos, sino también las redes de seguridad que protegen a las personas más vulnerables frente a crisis ambientales y económicas.</p>",
+      "stats": {
+        "title": "HUMEDALES PERDIDOS DESDE 1970 <sup>2</sup>",
+        "1": "Pantanos y marismas interiores",
+        "2": "Lagos",
+        "3": "Turberas",
+        "4": "Otros"
+      },
+      "sup": "1. Ramsar Global Wetland Outlook, 2018 | 2. Global Wetlands Outlook, 2025"
+    },
+    "landscapes": {
+      "title": "Un salvavidas en el Sahel",
+      "description": "<p>La región del Sahel en África subraya la importancia de los humedales. En esta zona árida, los humedales estacionales y las llanuras de inundación proporcionan tierras fértiles para la agricultura, pastos para el ganado y pescado para las comunidades.</p><p>También apoyan tradiciones culturales y lazos sociales.</p><p>A medida que el Sahel enfrenta el cambio climático y los conflictos, proteger los humedales es crucial para la estabilidad regional.</p>",
+      "button-discover": "Descubrir todos los paisajes",
+      "button-read": "Leer la historia"
+    },
+    "footer": {
+      "title": {
+        "prefix": "Actúa para",
+        "highlight": "proteger los humedales"
+      },
+      "description": "La plataforma Gap Map se creó para apoyar a los responsables políticos, las comunidades y los inversores a actuar ante esta urgencia. La plataforma funciona como un punto de acceso único que ofrece a estos usuarios la información que necesitan para decidir dónde centrar sus acciones. Esto se consigue integrando los trabajos de teledetección más recientes e innovadores en el Sahel y combinándolos con información y relatos fáciles de comprender sobre los distintos papeles vitales que desempeñan los humedales y dónde se encuentran.",
+      "button": "Actuar",
+      "navigation": {
+        "terms": "Condiciones de uso",
+        "privacy-policy": "Política de privacidad"
+      }
     }
   },
   "landscapes": {

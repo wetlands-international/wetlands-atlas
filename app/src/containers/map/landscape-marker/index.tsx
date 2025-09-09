@@ -5,26 +5,10 @@ import Link from "next/link";
 
 import { Marker } from "react-map-gl/mapbox";
 
-import { cn } from "@/lib/utils";
+import { cn, isValidMedia } from "@/lib/utils";
 
 import { Media } from "@/payload-types";
 
-interface ValidMedia extends Media {
-  url: string;
-  width: number;
-  height: number;
-}
-
-function isValidMedia(media?: Media): media is ValidMedia {
-  return (
-    typeof media?.url === "string" &&
-    media.url.trim() !== "" &&
-    typeof media.width === "number" &&
-    !isNaN(media.width) &&
-    typeof media.height === "number" &&
-    !isNaN(media.height)
-  );
-}
 interface LandscapeMarkerProps {
   name: string;
   location: [number, number];

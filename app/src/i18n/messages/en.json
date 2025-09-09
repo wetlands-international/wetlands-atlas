@@ -23,9 +23,70 @@
   },
   "home": {
     "hero": {
-      "title": "Wetlands!",
-      "description": "A simple web app to visualize the wetlands in the world.",
-      "tooltip": "Get started"
+      "kicker": "Discover wetlands",
+      "title": "The dynamic ecosystems where water meets land.",
+      "description": "Ranging from mangroves and peatlands to rivers, lakes, floodplains, and coasts. Though they <strong>cover only about 6% of Earth&rsquo;s surface</strong>, but their impact is immense. Wetlands are indispensable for climate stability, biodiversity, and human livelihoods.",
+      "discover-button": "Discover wetlands",
+      "explore-button": "Explore data"
+    },
+    "climate-resilience": {
+      "kicker": "climate resilience",
+      "title": "Wetlands capacity to stabilise local climates and hydrological systems make them indispensable allies in the fight against climate change.",
+      "description": "Wetlands are efficient natural carbon sinks, for example peatlands <strong>cover only 3% of the global land area</strong>, but store twice as much carbon than all the world’s forests combined. Coastal wetlands such as mangroves also trap significant amounts of blue carbon and buffer coastlines from storm surges and sea-level rise.",
+      "stats": {
+        "1": "Peatlands coverage",
+        "2": "Forest coverage"
+      },
+      "sup": "1. FAO, 2022"
+    },
+    "biodiversity-strongholds": {
+      "kicker": "Biodiversity strongholds",
+      "title": "Nearly 40% of all species rely on wetlands at some point in their life cycle",
+      "description": "<p>Wetlands rank among the most biologically diverse ecosystems on Earth. They provide vital habitat for an immense variety of species, birds, amphibians, fish, invertebrates, and plants.</p><p>Freshwater wetlands, in particular, are home to about half of all fish species, despite covering less than 1% of the earth’s surface.</p>",
+      "stats": {
+        "1": "remaining migratory fish populations\n(since 1970 we loss 81%)<sup>2</sup>"
+      },
+      "sup": "1. IPBES, 2019 | 2. Stefanie Deinet et al., 2024"
+    },
+    "engines-for-economic-development": {
+      "kicker": "Engines for economic development",
+      "title": "Wetlands deliver ecosystem services worth up to $39 trillion annually.",
+      "description": "<p>Wetlands hold immense economic value, yet they are often overlooked. <strong>Over a billion people rely on them for farming, fishing, and ecotourism.</strong></p><p>Healthy wetlands reduce poverty, enhance food security, and boost economies. Investing in them is crucial for both the environment and the economy.</p>",
+      "stats": {
+        "1": "of global GDP is estimated to come from wetland\necosystem services<sup>1</sup>"
+      },
+      "sup": "1. Global Wetland Outlook, 2025"
+    },
+    "wetlands-under-threat": {
+      "kicker": "Wetlands Under Threat",
+      "title": "Since 1970 we’ve lost 35% of wetlands—3× faster than forests<sup>1</sup>.",
+      "description": "<p>Despite their vital roles, wetlands are disappearing at an alarming rate.</p><p>Peatlands are being drained and burned, mangroves are being cleared for aquaculture and tourism, and river floodplains are being cut off by dams and levees. As wetlands vanish, we lose not only biodiversity and ecosystem services, but also the safety nets that protect the most vulnerable people from environmental end economic shocks.</p>",
+      "stats": {
+        "title": "WETLANDS LOST SINCE 1970 <sup>2</sup>",
+        "1": "inland marshes and swamps",
+        "2": "Lakes",
+        "3": "Peatlands",
+        "4": "Others"
+      },
+      "sup": "1. Ramsar Global Wetland Outlook, 2018 | 2. Global Wetlands Outlook, 2025"
+    },
+    "landscapes": {
+      "title": "A lifeline in the Sahel",
+      "description": "<p>The Sahel region of Africa underscores the importance of wetlands. In this dry area, seasonal wetlands and floodplains provide fertile land for farming, pastures for livestock, and fish for communities.</p><p>They also support cultural traditions and social ties.</p><p>As the Sahel faces climate change and conflict, protecting wetlands is crucial for regional stability.</p>",
+      "button-discover": "Discover all landscapes",
+      "button-read": "Read story"
+    },
+    "footer": {
+      "title": {
+        "prefix": "Take action to",
+        "highlight": "protect wetlands"
+      },
+      "description": "The Gap Map platform was created to support policy makers, communities and investors to act on this urgency. The platform serves as a one stop shop to provide these users with the information they need to make decisions on where to focus their actions. This is done by integrating the latest and most innovative remote sensing work within the Sahel and combining this with easy to digest insights and stories on the different vital roles wetlands play and where they are located.",
+      "button": "Take action",
+      "navigation": {
+        "terms": "Terms of use",
+        "privacy-policy": "Privacy policy"
+      }
     }
   },
   "landscapes": {

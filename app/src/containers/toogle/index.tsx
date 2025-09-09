@@ -19,11 +19,11 @@ export const Toggle = () => {
     <ul className="bg-background inline-flex items-center gap-1 rounded-4xl p-0.5">
       <li>
         <Link
-          href={`/${searchParams ? `${searchParams}` : ""}`}
+          href={`/map${searchParams ? `${searchParams}` : ""}`}
           className={cn(
             "pointer-events-auto flex items-center gap-2 rounded-4xl px-4 py-2 text-sm",
-            pathname !== "/" && "hover:underline",
-            pathname === "/" && "from-accent to-border text-accent-foreground bg-linear-to-r",
+            pathname !== "/map" && "hover:underline",
+            pathname === "/map" && "from-accent to-border text-accent-foreground bg-linear-to-r",
           )}
         >
           <span>{t("insights")}</span> <LuLightbulb className="size-4" />
