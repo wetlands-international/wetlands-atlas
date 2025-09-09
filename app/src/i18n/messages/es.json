@@ -75,6 +75,18 @@
       "description": "<p>La región del Sahel en África subraya la importancia de los humedales. En esta zona árida, los humedales estacionales y las llanuras de inundación proporcionan tierras fértiles para la agricultura, pastos para el ganado y pescado para las comunidades.</p><p>También apoyan tradiciones culturales y lazos sociales.</p><p>A medida que el Sahel enfrenta el cambio climático y los conflictos, proteger los humedales es crucial para la estabilidad regional.</p>",
       "button-discover": "Descubrir todos los paisajes",
       "button-read": "Leer la historia"
+    },
+    "footer": {
+      "title": {
+        "prefix": "Actúa para",
+        "highlight": "proteger los humedales"
+      },
+      "description": "La plataforma Gap Map se creó para apoyar a los responsables políticos, las comunidades y los inversores a actuar ante esta urgencia. La plataforma funciona como un punto de acceso único que ofrece a estos usuarios la información que necesitan para decidir dónde centrar sus acciones. Esto se consigue integrando los trabajos de teledetección más recientes e innovadores en el Sahel y combinándolos con información y relatos fáciles de comprender sobre los distintos papeles vitales que desempeñan los humedales y dónde se encuentran.",
+      "button": "Actuar",
+      "navigation": {
+        "terms": "Condiciones de uso",
+        "privacy-policy": "Política de privacidad"
+      }
     }
   },
   "landscapes": {

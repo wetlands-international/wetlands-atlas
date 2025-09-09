@@ -75,6 +75,18 @@
       "description": "<p>The Sahel region of Africa underscores the importance of wetlands. In this dry area, seasonal wetlands and floodplains provide fertile land for farming, pastures for livestock, and fish for communities.</p><p>They also support cultural traditions and social ties.</p><p>As the Sahel faces climate change and conflict, protecting wetlands is crucial for regional stability.</p>",
       "button-discover": "Discover all landscapes",
       "button-read": "Read story"
+    },
+    "footer": {
+      "title": {
+        "prefix": "Take action to",
+        "highlight": "protect wetlands"
+      },
+      "description": "The Gap Map platform was created to support policy makers, communities and investors to act on this urgency. The platform serves as a one stop shop to provide these users with the information they need to make decisions on where to focus their actions. This is done by integrating the latest and most innovative remote sensing work within the Sahel and combining this with easy to digest insights and stories on the different vital roles wetlands play and where they are located.",
+      "button": "Take action",
+      "navigation": {
+        "terms": "Terms of use",
+        "privacy-policy": "Privacy policy"
+      }
     }
   },
   "landscapes": {

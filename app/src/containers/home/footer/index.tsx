@@ -2,29 +2,26 @@ import { FC } from "react";
 
 import Link from "next/link";
 
+import { useTranslations } from "next-intl";
+
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 const Footer: FC = () => {
+  const t = useTranslations("home.footer");
+
   return (
     <footer className="snap-start px-28 pt-20 pb-10 text-[14px]">
       <div className="flex justify-between">
         <div className="space-y-6">
           <h2 className="text-3xl font-normal whitespace-pre-line">
-            Take action to <span className="block">protect wetlands</span>
+            {t("title.prefix")} <span className="block">{t("title.highlight")}</span>
           </h2>
           <Button variant="outline" className="rounded-full">
-            Take action
+            {t("button")}
           </Button>
         </div>
-        <p className="max-w-md">
-          The Gap Map platform was created to support policy makers, communities and investors to
-          act on this urgency. The platform serves as a one stop shop to provide these users with
-          the information they need to make decisions on where to focus their actions. This is done
-          by integrating the latest and most innovative remote sensing work within the Sahel and
-          combining this with easy to digest insights and stories on the different vital roles
-          wetlands play and where they are located.
-        </p>
+        <p className="max-w-md">{t("description")}</p>
       </div>
       <Separator className="my-10" />
       <div className="flex justify-between">
@@ -32,10 +29,10 @@ const Footer: FC = () => {
         <nav>
           <ul className="flex gap-8">
             <li>
-              <Link href="#">Terms of use</Link>
+              <Link href="#">{t("navigation.terms")}</Link>
             </li>
             <li>
-              <Link href="#">Privacy policy</Link>
+              <Link href="#">{t("navigation.privacy-policy")}</Link>
             </li>
           </ul>
         </nav>
