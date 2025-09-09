@@ -6,9 +6,26 @@ import Link from "next/link";
 import { motion, useAnimation, useMotionValue } from "motion/react";
 
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type CircleSize = "s" | "m" | "l" | "xl";
 const sizeMap: Record<CircleSize, number> = { s: 120, m: 160, l: 240, xl: 320 };
+function getRandomBouncingAnimation() {
+  const randomOffsetX = (Math.random() * 5 + 3) * (Math.random() < 0.5 ? -1 : 1);
+  const randomOffsetY = (Math.random() * 5 + 3) * (Math.random() < 0.5 ? -1 : 1);
+  const duration = Math.random() * 1.5 + 2.5;
+
+  return {
+    x: [0, randomOffsetX, 0],
+    y: [0, randomOffsetY, 0],
+    transition: {
+      repeat: Infinity,
+      duration,
+      ease: "easeInOut",
+    },
+  };
+}
+
 interface CircleProps {
   section?: {
     id: string;
@@ -30,6 +47,7 @@ const Circle: FC<CircleProps> = ({
   size = "m",
   className,
 }) => {
+  const t = useTranslations("home.hero");
   const controls = useAnimation();
   const dimension = sizeMap[size];
   const radius = dimension / 2;
@@ -40,11 +58,7 @@ const Circle: FC<CircleProps> = ({
 
   useEffect(() => {
     if (!enableAnimation) return;
-    controls.start({
-      x: [0, 5, 0],
-      y: [0, -5, 0],
-      transition: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-    });
+    controls.start(getRandomBouncingAnimation());
   }, [enableAnimation, controls]);
 
   const handleMouseEnter = () => {
@@ -64,11 +78,7 @@ const Circle: FC<CircleProps> = ({
       transition: { duration: 1, ease: "easeInOut" },
     });
 
-    controls.start({
-      x: [0, 5, 0],
-      y: [0, -5, 0],
-      transition: { repeat: Infinity, duration: 3, ease: "easeInOut" },
-    });
+    controls.start(getRandomBouncingAnimation());
   };
 
   return (
@@ -132,7 +142,7 @@ const Circle: FC<CircleProps> = ({
 
             <text textAnchor="middle" fill="#fff">
               <textPath href={`#text-circle-${landscape?.id}`} startOffset="14%">
-                Discover the landscape
+                {t("circle")}
               </textPath>
             </text>
           </svg>
