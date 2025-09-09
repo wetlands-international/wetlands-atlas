@@ -94,6 +94,7 @@ COPY --from=node-build /usr/local/bin/node /usr/local/bin/node
 # Copy built Node app
 COPY --from=node-build /app /app
 COPY --from=node-build /app/.next/static /app/.next/standalone/.next/static
+COPY --from=node-build /app/public /app/.next/standalone/public
 
 # Copy config files
 COPY nginx/nginx.conf /etc/nginx/nginx.template.conf
