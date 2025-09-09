@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, useAnimation, useMotionValue } from "motion/react";
 
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 type CircleSize = "s" | "m" | "l" | "xl";
 const sizeMap: Record<CircleSize, number> = { s: 120, m: 160, l: 240, xl: 320 };
@@ -46,6 +47,7 @@ const Circle: FC<CircleProps> = ({
   size = "m",
   className,
 }) => {
+  const t = useTranslations("home.hero");
   const controls = useAnimation();
   const dimension = sizeMap[size];
   const radius = dimension / 2;
@@ -140,7 +142,7 @@ const Circle: FC<CircleProps> = ({
 
             <text textAnchor="middle" fill="#fff">
               <textPath href={`#text-circle-${landscape?.id}`} startOffset="14%">
-                Discover the landscape
+                {t("circle")}
               </textPath>
             </text>
           </svg>

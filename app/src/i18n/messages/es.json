@@ -27,7 +27,14 @@
       "title": "Los ecosistemas dinámicos donde el agua se encuentra con la tierra.",
       "description": "Que abarcan desde manglares y turberas hasta ríos, lagos, llanuras de inundación y costas. Aunque <strong>cubren solo alrededor del 6% de la superficie de la Tierra</strong>, su impacto es inmenso. Los humedales son indispensables para la estabilidad climática, la biodiversidad y los medios de vida humanos.",
       "discover-button": "Descubre los humedales",
-      "explore-button": "Explorar datos"
+      "explore-button": "Explorar datos",
+      "circle": "Descubra el paisaje"
+    },
+    "navigation": {
+      "about": "Acerca de",
+      "faq": "FAQ’s",
+      "contact": "Contacto",
+      "explore-data": "Explorar datos"
     },
     "climate-resilience": {
       "kicker": "resiliencia climática",
