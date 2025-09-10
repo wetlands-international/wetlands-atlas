@@ -6,7 +6,13 @@ import { useAtom } from "jotai";
 import Map, { LngLatBoundsLike, MapProps, useMap } from "react-map-gl/mapbox";
 import { useDebounceCallback } from "usehooks-ts";
 
-import { tmpBboxAtom, useSyncBasemap, useSyncBbox } from "@/app/(frontend)/[locale]/(app)/store";
+import {
+  tmpBboxAtom,
+  useSyncBasemap,
+  useSyncBbox,
+  useSyncLayers,
+  useSyncLayersSettings,
+} from "@/app/(frontend)/[locale]/(app)/store";
 
 import { Layers } from "@/containers/layers";
 import LandscapeMarker from "@/containers/map/landscape-marker";
@@ -30,6 +36,8 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
   const [bbox, setBbox] = useSyncBbox();
   const [basemap, setBasemap] = useSyncBasemap();
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
+  const [layers] = useSyncLayers();
+  const [layersSettings, setLayersSettings] = useSyncLayersSettings();
 
   const { exploreMap } = useMap();
 
@@ -76,6 +84,32 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
     }
   }, [tmpBbox, handleFitBounds]);
 
+  // Sync layers settings with layers
+  useMemo(() => {
+    if (!layers?.length && !layersSettings) return;
+
+    if (!layers?.length && layersSettings) {
+      setTimeout(() => {
+        setLayersSettings(null);
+      }, 0);
+      return;
+    }
+
+    const lSettingsKeys = Object.keys(layersSettings || {});
+
+    lSettingsKeys.forEach((key) => {
+      if (layers.includes(key)) return;
+
+      setTimeout(() => {
+        setLayersSettings((prev) => {
+          const current = { ...prev };
+          delete current[key];
+          return current;
+        });
+      }, 0);
+    });
+  }, [layers, layersSettings, setLayersSettings]);
+
   return (
     <div className="fixed top-0 left-0 z-0 h-full w-full overflow-hidden bg-[#326E82]">
       <Map
@@ -109,7 +143,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
           />
         ))}
 
-        {loaded && <LayerManager />}
+        {loaded && <LayerManager layers={layers} layersSettings={layersSettings} />}
 
         <Controls>
           <ZoomControl />
