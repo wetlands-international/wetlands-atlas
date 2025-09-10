@@ -39,7 +39,7 @@ export const MapFieldLayers = ({ layers }: { layers: Layer[] }) => {
             />
             <button
               type="button"
-              className="text-md w-full border-0 bg-transparent p-2 text-left hover:underline"
+              className="text-md w-full border-0 bg-transparent p-2 text-left text-white hover:underline"
               onClick={() => handleToogleLayer(layer.id)}
             >
               {layer.name}
