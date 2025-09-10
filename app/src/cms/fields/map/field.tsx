@@ -1,6 +1,6 @@
 import { JSONFieldServerComponent } from "payload";
 
-import { FieldDescription, FieldLabel, SectionTitle } from "@payloadcms/ui";
+import { FieldDescription, FieldLabel } from "@payloadcms/ui";
 
 import { MapFieldLayers } from "@/cms/fields/map/layers";
 import { MapfieldMap } from "@/cms/fields/map/map";
@@ -29,7 +29,7 @@ export const MapFieldComponent: JSONFieldServerComponent = async ({
 
       <section className="flex pt-6">
         <aside className="bg-background relative z-10 w-1/3 shrink-0 space-y-2 p-4 shadow-2xl">
-          <SectionTitle customValue="Layers" path={path} readOnly />
+          <h2 className="text-xl text-white">Layers</h2>
           <MapFieldLayers layers={layers.docs} />
         </aside>
 
