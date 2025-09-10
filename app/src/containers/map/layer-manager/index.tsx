@@ -1,14 +1,17 @@
 "use client";
 
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 
 import { Layer, useMap } from "react-map-gl/mapbox";
 
-import { useSyncLayers, useSyncLayersSettings } from "@/app/(frontend)/[locale]/(app)/store";
+import { LayersSettings } from "@/app/(frontend)/[locale]/(app)/parsers";
 
 import LayerManagerItem from "./item";
 
-export const LayerManager = () => {
+export const LayerManager: FC<{
+  layers: string[];
+  layersSettings: LayersSettings<unknown> | null;
+}> = ({ layers, layersSettings }) => {
   const { current: map } = useMap();
 
   const baseLayer = useMemo(() => {
@@ -21,35 +24,6 @@ export const LayerManager = () => {
       return customLayer ? customLayer.id : labelLayer?.id;
     }
   }, [map]);
-
-  const [layers] = useSyncLayers();
-  const [layersSettings, setLayersSettings] = useSyncLayersSettings();
-
-  // Sync layers settings with layers
-  useMemo(() => {
-    if (!layers?.length && !layersSettings) return;
-
-    if (!layers?.length && layersSettings) {
-      setTimeout(() => {
-        setLayersSettings(null);
-      }, 0);
-      return;
-    }
-
-    const lSettingsKeys = Object.keys(layersSettings || {});
-
-    lSettingsKeys.forEach((key) => {
-      if (layers.includes(key)) return;
-
-      setTimeout(() => {
-        setLayersSettings((prev) => {
-          const current = { ...prev };
-          delete current[key];
-          return current;
-        });
-      }, 0);
-    });
-  }, [layers, layersSettings, setLayersSettings]);
 
   const LAYERS = useMemo(() => {
     return layers.toReversed();

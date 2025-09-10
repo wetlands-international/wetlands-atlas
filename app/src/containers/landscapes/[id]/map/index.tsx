@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { useAtomValue } from "jotai";
 import Map, { LngLatBoundsLike } from "react-map-gl/mapbox";
@@ -8,22 +8,23 @@ import Map, { LngLatBoundsLike } from "react-map-gl/mapbox";
 import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
 import { LandscapeFitBounds } from "@/containers/landscapes/[id]/map/fit-bounds";
+import { LayerManager } from "@/containers/map/layer-manager";
 
 import { env } from "@/env";
 import { Landscape } from "@/payload-types";
 
 export const LandscapeMapContainer = (props: Landscape) => {
   const { steps } = props;
-
+  const [loaded, setLoaded] = useState(false);
   const step = useAtomValue(stepAtom);
 
-  // const LAYERS = useMemo(() => {
-  //   const s = steps?.[step];
-  //   if (s && "map" in s) {
-  //     return s.map?.layers || [];
-  //   }
-  //   return [];
-  // }, [step, steps]);
+  const LAYERS = useMemo(() => {
+    const s = steps?.[step];
+    if (s && "map" in s) {
+      return s.map?.layers || [];
+    }
+    return [];
+  }, [step, steps]);
 
   const BBOX = useMemo(() => {
     const s = steps?.[step];
@@ -59,7 +60,9 @@ export const LandscapeMapContainer = (props: Landscape) => {
         dragRotate={false}
         touchPitch={false}
         touchZoomRotate={false}
+        onLoad={() => setLoaded(true)}
       >
+        {loaded && <LayerManager layers={LAYERS} layersSettings={{}} />}
         <LandscapeFitBounds {...props} />
       </Map>
     </div>
