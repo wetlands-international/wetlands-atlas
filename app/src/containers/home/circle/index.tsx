@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { motion, useAnimation, useMotionValue } from "motion/react";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
-import { useTranslations } from "next-intl";
 
 type CircleSize = "s" | "m" | "l" | "xl";
 const sizeMap: Record<CircleSize, number> = { s: 120, m: 160, l: 240, xl: 320 };

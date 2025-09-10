@@ -34,7 +34,7 @@ export const MapFieldComponent: JSONFieldServerComponent = async ({
         </aside>
 
         <div className="relative flex aspect-square w-2/3 grow flex-col overflow-hidden bg-[#326E82]">
-          <MapfieldMap />
+          <MapfieldMap layers={layers.docs} />
         </div>
       </section>
     </>
