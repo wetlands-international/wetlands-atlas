@@ -1,5 +1,5 @@
 {
-  "id": "afb84f73-d637-4949-b628-28b96693f5f1",
+  "id": "b5de7764-873f-48fe-9371-6c6578c726ac",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1872,7 +1872,7 @@
         },
         "description": {
           "name": "description",
-          "type": "varchar",
+          "type": "jsonb",
           "primaryKey": false,
           "notNull": true
         },
@@ -2742,8 +2742,10 @@
       "schema": "public",
       "values": [
         "ADMIN_REGION",
+        "ECO_REGION",
         "HYDRO_BASIN",
         "GLOBAL",
+        "LANDSCAPES",
         "WDPA"
       ]
     },

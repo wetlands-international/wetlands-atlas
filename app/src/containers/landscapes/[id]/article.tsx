@@ -1,3 +1,5 @@
+import { RichText } from "@payloadcms/richtext-lexical/react";
+
 import { LandscapeImage } from "@/containers/landscapes/[id]/image";
 import { LandscapeSteps } from "@/containers/landscapes/[id]/steps";
 
@@ -16,7 +18,7 @@ export const LandscapesIdArticle = (props: Landscape) => {
           {props.name}
         </h1>
         <p className="animate-in fade-in slide-in-from-top-10 my-4 text-lg text-gray-400">
-          {props.description}
+          <RichText data={props.description} />
         </p>
         {embeddedVideo ? (
           <EmbeddedVideo src={embeddedVideo.source} title={embeddedVideo.title} />
