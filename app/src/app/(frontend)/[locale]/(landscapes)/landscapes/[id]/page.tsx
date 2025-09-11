@@ -4,6 +4,8 @@ import { Metadata } from "next";
 
 import { notFound } from "next/navigation";
 
+import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
+
 import { getLandscapeById } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/actions";
 
 import { LandscapesIdArticle } from "@/containers/landscapes/[id]/article";
@@ -23,7 +25,9 @@ export async function generateMetadata({ params }: LandscapesIdPageProps): Promi
 
     return {
       title: landscape.name,
-      description: landscape.description,
+      description: convertLexicalToPlaintext({
+        data: landscape.description,
+      }),
     };
   } catch (error) {
     console.error("Error fetching landscape:", error);

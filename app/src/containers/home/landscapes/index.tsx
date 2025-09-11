@@ -3,6 +3,8 @@ import { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { RichText } from "@payloadcms/richtext-lexical/react";
+
 import { useSetAtom } from "jotai";
 import { CircleArrowRightIcon, MapPinIcon } from "lucide-react";
 import { motion } from "motion/react";
@@ -102,7 +104,7 @@ const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
                     </Badge>
                     <h3 className="font-semibold">{item.name}</h3>
                     <p className="text-xs opacity-0 transition-opacity group-hover:opacity-100">
-                      {item.description}
+                      <RichText data={item.description} />
                     </p>
                     <Button
                       variant="secondary"
