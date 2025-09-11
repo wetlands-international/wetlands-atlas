@@ -3,11 +3,15 @@ import { FC } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useSetAtom } from "jotai";
 import { CircleArrowRightIcon, MapPinIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
+import { useIntersectionObserver } from "usehooks-ts";
 
 import { isValidMedia } from "@/lib/utils";
+
+import { currentSectionIdAtom } from "@/containers/home/store";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,9 +21,22 @@ import { Landscape } from "@/payload-types";
 
 const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
   const t = useTranslations("home.landscapes");
+  const setCurrentSectionId = useSetAtom(currentSectionIdAtom);
+  const { ref } = useIntersectionObserver({
+    threshold: 0.4,
+    rootMargin: "-30% 0% 0% 0%",
+    onChange: (isIntersecting) => {
+      if (isIntersecting) {
+        setCurrentSectionId(null);
+      }
+    },
+  });
 
   return (
-    <section className="relative min-h-[calc(100vh-7rem)] snap-start overflow-hidden pt-28 pl-20">
+    <section
+      ref={ref}
+      className="relative min-h-[calc(100vh-7rem)] snap-start overflow-hidden pt-28 pl-20"
+    >
       <motion.div
         initial={{ scale: 3 }}
         whileInView={{ scale: 1 }}
