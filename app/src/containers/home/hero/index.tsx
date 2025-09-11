@@ -2,18 +2,34 @@
 
 import Link from "next/link";
 
+import { useSetAtom } from "jotai";
 import { useTranslations } from "next-intl";
+import { useIntersectionObserver } from "usehooks-ts";
 
 import Circle from "@/containers/home/circle";
 import { homeSections } from "@/containers/home/constants";
+import { currentSectionIdAtom } from "@/containers/home/store";
 
 import { Button } from "@/components/ui/button";
 
 export const Hero = () => {
   const t = useTranslations("home.hero");
+  const setCurrentSectionId = useSetAtom(currentSectionIdAtom);
+  const { ref } = useIntersectionObserver({
+    threshold: 0.4,
+    rootMargin: "-30% 0% 0% 0%",
+    onChange: (isIntersecting) => {
+      if (isIntersecting) {
+        setCurrentSectionId(null);
+      }
+    },
+  });
 
   return (
-    <section className="relative mt-[theme(spacing.16)] grid min-h-screen snap-start items-center justify-items-center overflow-hidden">
+    <section
+      ref={ref}
+      className="relative mt-[theme(spacing.16)] grid min-h-screen snap-start items-center justify-items-center overflow-hidden"
+    >
       <div className="absolute top-1/2 left-1/2 container h-full w-full -translate-x-1/2 -translate-y-1/2 transform 2xl:max-w-full">
         <Circle size="l" className="absolute top-0 left-[5%] 2xl:top-[5%] 2xl:left-[15%]" />
         <Circle size="s" className="absolute top-[15%] left-[90%]" />
