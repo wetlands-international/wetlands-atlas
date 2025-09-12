@@ -103,9 +103,10 @@ const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
                       <span>Mali</span>
                     </Badge>
                     <h3 className="font-semibold">{item.name}</h3>
-                    <p className="text-xs opacity-0 transition-opacity group-hover:opacity-100">
-                      <RichText data={item.description} />
-                    </p>
+                    <RichText
+                      className="text-xs opacity-0 transition-opacity group-hover:opacity-100"
+                      data={item.description}
+                    />
                     <Button
                       variant="secondary"
                       size="sm"

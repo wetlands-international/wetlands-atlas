@@ -17,9 +17,10 @@ export const LandscapesIdArticle = (props: Landscape) => {
         <h1 className="font-display animate-in fade-in slide-in-from-top-10 text-6xl font-bold text-blue-300 2xl:text-7xl">
           {props.name}
         </h1>
-        <p className="animate-in fade-in slide-in-from-top-10 my-4 text-lg text-gray-400">
-          <RichText data={props.description} />
-        </p>
+        <RichText
+          className="animate-in fade-in slide-in-from-top-10 my-4 text-lg text-gray-400"
+          data={props.description}
+        />
         {embeddedVideo ? (
           <EmbeddedVideo src={embeddedVideo.source} title={embeddedVideo.title} />
         ) : imageUrl ? (
