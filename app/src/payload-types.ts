@@ -292,7 +292,7 @@ export interface Layer {
     [k: string]: unknown;
   };
   indicator?: (string | null) | Indicator;
-  type: 'INDICATOR' | 'CONTEXTUAL';
+  type: 'indicator' | 'contextual';
   updatedAt: string;
   createdAt: string;
 }
@@ -431,7 +431,7 @@ export interface Location {
    * @maxItems 4
    */
   bbox: [number, number, number, number];
-  type: 'ADMIN_REGION' | 'ECO_REGION' | 'HYDRO_BASIN' | 'GLOBAL' | 'LANDSCAPES' | 'WDPA';
+  type: 'admin_region' | 'eco_region' | 'hydro_basin' | 'global' | 'landscapes' | 'wdpa';
   parent?: (string | null) | Location;
   updatedAt: string;
   createdAt: string;

@@ -16,6 +16,8 @@ import * as migration_20250829_091954_remove_media_img_sizes from './20250829_09
 import * as migration_20250903_141307_add_location_types from './20250903_141307_add_location_types';
 import * as migration_20250904_144044_rename_stories_to_landscapes from './20250904_144044_rename_stories_to_landscapes';
 import * as migration_20250911_063931_change_landscapes_description_type from './20250911_063931_change_landscapes_description_type';
+import * as migration_20250912_141903_change_layers_and_location_types from './20250912_141903_change_layers_and_location_types';
+import * as migration_20250912_142826_multipolygon_geometry_support from './20250912_142826_multipolygon_geometry_support';
 
 export const migrations = [
   {
@@ -106,6 +108,16 @@ export const migrations = [
   {
     up: migration_20250911_063931_change_landscapes_description_type.up,
     down: migration_20250911_063931_change_landscapes_description_type.down,
-    name: '20250911_063931_change_landscapes_description_type'
+    name: '20250911_063931_change_landscapes_description_type',
+  },
+  {
+    up: migration_20250912_141903_change_layers_and_location_types.up,
+    down: migration_20250912_141903_change_layers_and_location_types.down,
+    name: '20250912_141903_change_layers_and_location_types',
+  },
+  {
+    up: migration_20250912_142826_multipolygon_geometry_support.up,
+    down: migration_20250912_142826_multipolygon_geometry_support.down,
+    name: '20250912_142826_multipolygon_geometry_support'
   },
 ];
