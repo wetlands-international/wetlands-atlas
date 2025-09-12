@@ -18,6 +18,7 @@ import { PublicAccessControl } from "@/cms/access/public";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
 import { landscapesReadLocationCriteriaExtension } from "@/cms/hooks/landscapes-read-location-criteria-extension";
+import { env } from "@/env";
 
 const validateEmbeddedVideoSource = (value: any, opts: any) => {
   const { embedded_video } = opts.data;
@@ -40,6 +41,14 @@ export const Landscapes: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     defaultColumns: ["id", "title", "insight", "published"],
+    preview: ({ id }) => {
+      const encodedParams = new URLSearchParams({
+        path: `/landscapes/${String(id)}`,
+        previewSecret: env.PREVIEW_SECRET,
+      });
+
+      return `/api/preview?${encodedParams.toString()}`;
+    },
   },
   defaultSort: ["-createdAt"],
   access: PublicAccessControl, // TODO revise permissions and uncomment later

@@ -11,6 +11,7 @@ export const env = createEnv({
     NODE_ENV: z.enum(["development", "production", "test"]),
     DATABASE_URI: z.string().url(),
     PAYLOAD_SECRET: z.string().min(1),
+    PREVIEW_SECRET: z.string().min(1),
     // Google Cloud Storage configuration
     GCS_PROJECT_ID: z.string().min(1, "GCS Project ID is required"),
     GCS_BUCKET_NAME: z.string().min(1, "GCS Bucket name is required"),
@@ -37,6 +38,7 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     DATABASE_URI: process.env.DATABASE_URI,
     PAYLOAD_SECRET: process.env.PAYLOAD_SECRET,
+    PREVIEW_SECRET: process.env.PREVIEW_SECRET,
     NEXT_PUBLIC_MAPBOX_TOKEN: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
     NEXT_PUBLIC_TILER_URL: process.env.NEXT_PUBLIC_TILER_URL,
     // Google Cloud Storage configuration

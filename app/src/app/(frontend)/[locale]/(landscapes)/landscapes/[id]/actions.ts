@@ -6,7 +6,7 @@ import { getLocale } from "next-intl/server";
 
 import payloadConfig from "@/payload.config";
 
-export const getLandscapeById = async (id: string) => {
+export const getLandscapeById = async (id: string, isDraftMode: boolean) => {
   try {
     const locale = await getLocale();
     const payload = await getPayload({ config: payloadConfig });
@@ -15,6 +15,7 @@ export const getLandscapeById = async (id: string) => {
       id,
       collection: "landscapes",
       depth: 1,
+      draft: isDraftMode,
       locale,
     });
 
