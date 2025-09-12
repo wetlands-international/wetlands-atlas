@@ -39,6 +39,7 @@ jobs:
 
           echo "DATABASE_URI=$(echo $response | jq -r '.DATABASE_URI')" >> $GITHUB_ENV
           echo "PAYLOAD_SECRET=$(echo $response | jq -r '.PAYLOAD_SECRET')" >> $GITHUB_ENV
+          echo "PREVIEW_SECRET=$(echo $response | jq -r '.PREVIEW_SECRET')" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_MAPBOX_TOKEN=$(echo $response | jq -r '.NEXT_PUBLIC_MAPBOX_TOKEN')" >> $GITHUB_ENV
           echo "NEXT_PUBLIC_API_URL=$(echo $response | jq -r '.NEXT_PUBLIC_API_URL')" >> $GITHUB_ENV
           echo "GCS_PROJECT_ID=$(echo $response | jq -r '.GCS_PROJECT_ID')" >> $GITHUB_ENV
@@ -53,6 +54,7 @@ jobs:
         run: |
           docker buildx build --platform=linux/amd64 \
             --build-arg PAYLOAD_SECRET=$PAYLOAD_SECRET \
+            --build-arg PREVIEW_SECRET=$PREVIEW_SECRET \
             --build-arg DATABASE_URI=$DATABASE_URI \
             --build-arg NEXT_PUBLIC_MAPBOX_TOKEN=$NEXT_PUBLIC_MAPBOX_TOKEN \
             --build-arg NEXT_PUBLIC_TILER_URL=$NEXT_PUBLIC_TILER_URL \

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import { Metadata } from "next";
 
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
@@ -20,8 +21,8 @@ export type LandscapesIdPageProps = {
 export async function generateMetadata({ params }: LandscapesIdPageProps): Promise<Metadata> {
   try {
     const { id } = await params;
-
-    const landscape = await getLandscapeById(id);
+    const { isEnabled: isDraftMode } = await draftMode();
+    const landscape = await getLandscapeById(id, isDraftMode);
 
     return {
       title: landscape.name,
@@ -37,9 +38,10 @@ export async function generateMetadata({ params }: LandscapesIdPageProps): Promi
 
 export default async function LandscapesIdPage({ params }: LandscapesIdPageProps) {
   const { id } = await params;
-  const landscape = await getLandscapeById(id);
+  const { isEnabled: isDraftMode } = await draftMode();
+  const landscape = await getLandscapeById(id, isDraftMode);
 
-  if (!landscape || !landscape.published) {
+  if (!landscape || (!isDraftMode && !landscape.published)) {
     notFound();
   }
 
