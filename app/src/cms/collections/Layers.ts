@@ -10,8 +10,8 @@ import { SlugIDField } from "@/cms/fields/slug";
 import { LayerTypeValidation } from "@/cms/utils/layer-validation";
 
 export const enum LAYER_TYPE {
-  INDICATOR = "INDICATOR",
-  CONTEXTUAL = "CONTEXTUAL",
+  INDICATOR = "indicator",
+  CONTEXTUAL = "contextual",
 }
 
 export const Layers: CollectionConfig = {

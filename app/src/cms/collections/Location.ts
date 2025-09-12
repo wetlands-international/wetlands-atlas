@@ -5,12 +5,12 @@ import { BBoxField } from "@/cms/fields/bbox-field";
 import { formatCompoundSlug } from "@/cms/utils/formatSlug";
 
 export const LOCATION_TYPE = {
-  ADMIN_REGION: "ADMIN_REGION",
-  HYDRO_BASIN: "HYDRO_BASIN",
-  GLOBAL: "GLOBAL",
-  WDPA: "WDPA",
-  ECO_REGION: "ECO_REGION",
-  LANDSCAPES: "LANDSCAPES",
+  ADMIN_REGION: "admin_region",
+  HYDRO_BASIN: "hydro_basin",
+  GLOBAL: "global",
+  WDPA: "wdpa",
+  ECO_REGION: "eco_region",
+  LANDSCAPES: "landscapes",
 };
 export const Locations: CollectionConfig = {
   slug: "locations",

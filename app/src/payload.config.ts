@@ -78,11 +78,11 @@ export default buildConfig({
     afterSchemaInit: [
       async ({ schema, extendTable }) => {
         const { customType } = await import("drizzle-orm/pg-core");
-        // Hack to make the geometry(polygon) column work with Postgres
-        const polygonGeometryColumn = (name: string) =>
+        // Hack to make the geometry(multiPolygon) column work with Postgres
+        const multiPolygonGeometryColumn = (name: string) =>
           customType<{ data: string }>({
             dataType() {
-              return "geometry(Polygon,4326)";
+              return "geometry(MultiPolygon,4326)";
             },
           })(name);
 
@@ -90,7 +90,7 @@ export default buildConfig({
           table: schema.tables.locations,
           columns: {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            geometry_4326: polygonGeometryColumn("geometry_4326") as any,
+            geometry_4326: multiPolygonGeometryColumn("geometry_4326") as any,
           },
         });
         return schema;
