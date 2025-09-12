@@ -39,7 +39,7 @@ export default buildConfig({
     },
   },
   upload: {
-    useTempFiles: true,
+    useTempFiles: false,
   },
   collections: [
     Users,
