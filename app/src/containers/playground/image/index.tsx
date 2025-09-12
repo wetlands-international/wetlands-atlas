@@ -1,8 +1,8 @@
 "use client";
 // components/ImageReveal.tsx
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import { useAspect, useTexture } from "@react-three/drei";
+import { useAspect } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { extend } from "@react-three/fiber";
 import { createNoise2D } from "simplex-noise";
@@ -58,15 +58,26 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
   // Flag to track readiness
   const readyRef = useRef(false);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
-  const imageTexture = useTexture(imageUrl);
-
+  const [imageTexture, setImageTexture] = useState<THREE.Texture | null>(null);
   const randomCenter = useMemo(() => {
     return new THREE.Vector2(
       Math.random() < 0.5 ? Math.random() * 0.25 : Math.random() * 0.25 + 0.75, // x-coordinate close to edges
       Math.random() < 0.5 ? Math.random() * 0.25 : Math.random() * 0.25 + 0.75, // y-coordinate close to edges
     );
   }, []);
-  const scale = useAspect(imageTexture.image.width, imageTexture.image.height, 1);
+  const scale = useAspect(imageTexture?.image.width, imageTexture?.image.height, 1);
+
+  useEffect(() => {
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      imageUrl,
+      (texture) => setImageTexture(texture),
+      undefined,
+      (error) => {
+        console.warn("Failed to load texture:", error);
+      },
+    );
+  }, [imageUrl]);
 
   useEffect(() => {
     if (imageTexture) {
@@ -86,6 +97,8 @@ export function ImageReveal({ imageUrl }: { imageUrl: string }) {
       );
     }
   }, 1);
+
+  if (!imageTexture) return null;
 
   return (
     <mesh scale={scale}>
