@@ -56,10 +56,13 @@ export const Landscapes: CollectionConfig = {
     SlugIDField(),
     {
       name: "name",
-      type: "text",
+      type: "richText",
       localized: true,
       required: true,
       unique: true,
+      editor: lexicalEditor({
+        features: () => [BoldFeature(), ItalicFeature(), InlineToolbarFeature()],
+      }),
     },
     {
       name: "description",

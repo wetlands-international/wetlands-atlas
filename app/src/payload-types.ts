@@ -305,7 +305,21 @@ export interface Landscape {
    * This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name.
    */
   id: string;
-  name: string;
+  name: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   description: {
     root: {
       type: string;

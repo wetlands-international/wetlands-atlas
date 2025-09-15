@@ -367,7 +367,7 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, renderingConfig, paramsConfig, legendConfig, indicator, type } = row;
+    const { id, name, config, paramsConfig, legendConfig, indicator, type } = row;
 
     // Optional: validate indicator exists for LAYER_TYPE.INDICATOR
     if (type === "INDICATOR" && indicator) {
@@ -386,7 +386,7 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
       .insert(layers)
       .values({
         id,
-        config: renderingConfig,
+        config,
         params_config: paramsConfig,
         legend_config: legendConfig,
         indicator: indicator ?? null,
@@ -397,7 +397,7 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
       .onConflictDoUpdate({
         target: layers.id,
         set: {
-          config: renderingConfig,
+          config,
           params_config: paramsConfig,
           legend_config: legendConfig,
           indicator: indicator ?? null,

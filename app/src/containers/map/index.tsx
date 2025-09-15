@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 
+import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
+
 import { useAtom } from "jotai";
 import Map, { LngLatBoundsLike, MapProps, useMap } from "react-map-gl/mapbox";
 import { useDebounceCallback } from "usehooks-ts";
@@ -136,7 +138,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
         {landscapes.map((s) => (
           <LandscapeMarker
             key={`landscape-marker-${s.id}`}
-            name={s.name}
+            name={convertLexicalToPlaintext({ data: s.name })}
             location={s.location}
             href={`/landscapes/${s.id}`}
             media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
