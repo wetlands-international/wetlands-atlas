@@ -904,7 +904,7 @@ export interface components {
       };
       indicator?: (string | null) | components["schemas"]["Indicator"];
       /** @enum {string} */
-      type: "INDICATOR" | "CONTEXTUAL";
+      type: "indicator" | "contextual";
       updatedAt: string;
       createdAt: string;
     };
@@ -928,7 +928,7 @@ export interface components {
       geometry: Record<string, never> | unknown[] | string | number | boolean | null;
       bbox: [number, number, number, number];
       /** @enum {string} */
-      type: "ADMIN_REGION" | "HYDRO_BASIN";
+      type: "admin_region" | "hydro_basin";
       updatedAt: string;
       createdAt: string;
     };
