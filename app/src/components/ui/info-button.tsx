@@ -6,7 +6,13 @@ import { InfoIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import { buttonVariants } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function InfoButton({
@@ -38,6 +44,7 @@ export default function InfoButton({
         </div>
       </DialogTrigger>
       <DialogContent className={cn(className, "max-h-[80%] overflow-auto")}>
+        <DialogTitle className="sr-only">Info</DialogTitle>
         <DialogHeader className="space-y-4">
           <ScrollArea className="h-full">{children}</ScrollArea>
         </DialogHeader>

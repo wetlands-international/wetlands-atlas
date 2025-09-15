@@ -1,3 +1,5 @@
+import { RichText } from "@payloadcms/richtext-lexical/react";
+
 import { LuChevronRight } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
@@ -19,7 +21,7 @@ export const LandscapesIdHeader = async (props: Landscape) => {
       <div className="relative z-20 flex items-center gap-2">
         <Link href="/landscapes">Landscapes</Link>
         <LuChevronRight />
-        <span className="text-blue-300">{props.name}</span>
+        <RichText className="text-blue-300" data={props.name} />
       </div>
     </Header>
   );

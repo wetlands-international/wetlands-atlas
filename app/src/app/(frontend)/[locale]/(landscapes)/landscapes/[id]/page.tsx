@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: LandscapesIdPageProps): Promi
     const landscape = await getLandscapeById(id, isDraftMode);
 
     return {
-      title: landscape.name,
+      title: convertLexicalToPlaintext({ data: landscape.name }),
       description: convertLexicalToPlaintext({
         data: landscape.description,
       }),

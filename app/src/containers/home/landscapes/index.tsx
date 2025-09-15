@@ -102,7 +102,9 @@ const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
                       <MapPinIcon className="text-blue-300" />
                       <span>Mali</span>
                     </Badge>
-                    <h3 className="font-semibold">{item.name}</h3>
+                    <h3 className="font-semibold">
+                      <RichText data={item.name} />
+                    </h3>
                     <RichText
                       className="text-xs opacity-0 transition-opacity group-hover:opacity-100"
                       data={item.description}
