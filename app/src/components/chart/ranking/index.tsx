@@ -9,11 +9,48 @@ import { cn } from "@/lib/utils";
 
 import { IndicatorChartData } from "@/containers/indicators/types";
 
+type ValidIndicatorData = IndicatorChartData & { value: number };
+type RankingChartSection = {
+  data: ValidIndicatorData[];
+  title: string;
+  type: "bars" | "list";
+  unit: string;
+};
 interface Props {
-  data: IndicatorChartData[];
+  data: Array<ValidIndicatorData>;
 }
 
-const HorizontalBars: FC<Props & { title: string; unit: string }> = ({ data, title, unit }) => {
+const RankingChartSectionHeader: FC<{ title: string; unit: string }> = ({ title, unit }) => (
+  <header className="text-2xs mb-1 flex items-center justify-between leading-[22px] uppercase">
+    <h3 className="font-medium">{title}</h3>
+    <p className="font-normal">{unit}</p>
+  </header>
+);
+
+const RankingChartList: FC<Props & { title: string; unit: string }> = ({ data, title, unit }) => {
+  if (data.length === 0) return null;
+
+  return (
+    <section>
+      <RankingChartSectionHeader title={title} unit={unit} />
+      <ul className="space-y-3">
+        {data
+          .sort((a, b) => b.value - a.value)
+          .map((item, index) => (
+            <li key={index} className="flex flex-col gap-2">
+              <div className="flex items-baseline justify-between gap-2 text-base font-normal">
+                <span>{item.label}</span>
+                <span className="flex-1 border-b border-dotted"></span>
+                <span>{formatNumber(item.value)}</span>
+              </div>
+            </li>
+          ))}
+      </ul>
+    </section>
+  );
+};
+
+const RankingChartBars: FC<Props & { title: string; unit: string }> = ({ data, title, unit }) => {
   const scale = useMemo(() => {
     const maxValue = Math.max(...data.map((item) => item.value));
     return (value: number) => (value / maxValue) * 100; // Scale to percentage
@@ -23,10 +60,7 @@ const HorizontalBars: FC<Props & { title: string; unit: string }> = ({ data, tit
 
   return (
     <section>
-      <header className="text-2xs mb-1 flex items-center justify-between leading-[22px] uppercase">
-        <h3 className="font-medium">{title}</h3>
-        <p className="font-normal">{unit}</p>
-      </header>
+      <RankingChartSectionHeader title={title} unit={unit} />
       <ul className="space-y-3">
         {data
           .sort((a, b) => b.value - a.value)
@@ -54,41 +88,59 @@ const HorizontalBars: FC<Props & { title: string; unit: string }> = ({ data, tit
   );
 };
 
-function RankingChartComponent({ data }: Props) {
-  const unit = data[0].unit;
-  const wetlands = data.filter((d) => d.group === "wetlands");
-  const nonWetlands = data.filter((d) => d.group === "non-wetlands");
+const RankingChartLegend: FC = () => {
   const t = useTranslations("insights.widgets");
 
-  if (data.length === 0) return null;
-
   return (
-    <div className="px-6">
-      {wetlands.length > 0 && (
-        <>
-          <div className="mt-7 w-full border-t border-dashed" />
-          <HorizontalBars data={wetlands} title={t("wetlands")} unit={unit} />
-        </>
-      )}
-      {nonWetlands.length > 0 && (
-        <>
-          <div className="mt-3.5 w-full border-t border-dashed" />
-          <HorizontalBars data={nonWetlands} title={t("non-wetlands")} unit={unit} />
-        </>
-      )}
-      <div className="mt-5 flex justify-center gap-1.5 text-xs">
-        <div className="flex items-center justify-center gap-1.5">
-          <span className="h-2 w-2 rounded-full bg-green-700"></span>
-          <span>{t("restoration")}</span>
-        </div>
+    <div className="mt-5 flex justify-center gap-1.5 text-xs">
+      <div className="flex items-center justify-center gap-1.5">
+        <span className="h-2 w-2 rounded-full bg-green-700"></span>
+        <span>{t("restoration")}</span>
+      </div>
 
-        <div className="flex items-center space-x-2">
-          <span className="h-2 w-2 rounded-full bg-green-100"></span>
-          <span>{t("protection")}</span>
-        </div>
+      <div className="flex items-center space-x-2">
+        <span className="h-2 w-2 rounded-full bg-green-100"></span>
+        <span>{t("protection")}</span>
       </div>
     </div>
   );
-}
+};
 
-export default RankingChartComponent;
+const RankingSection: FC<{
+  section: RankingChartSection;
+  isFirst?: boolean;
+}> = ({ section, isFirst = false }) => {
+  const { title, unit, data, type } = section;
+  if (data.length === 0) return null;
+
+  return (
+    <>
+      <div className={`${isFirst ? "mt-7" : "mt-3.5"} w-full border-t border-dashed`} />
+      {type === "bars" ? (
+        <RankingChartBars data={data} title={title} unit={unit} />
+      ) : type === "list" ? (
+        <RankingChartList data={data} title={title} unit={unit} />
+      ) : null}
+    </>
+  );
+};
+
+const RankingChart: FC<{
+  sections: Array<RankingChartSection>;
+  withLegend?: boolean;
+}> = ({ sections, withLegend }) => {
+  return (
+    <div className="px-6">
+      {sections.map((section, index) => (
+        <RankingSection
+          key={`ranking-chart-section-${section.title}`}
+          section={section}
+          isFirst={index === 0}
+        />
+      ))}
+      {withLegend && <RankingChartLegend />}
+    </div>
+  );
+};
+
+export { RankingChart, RankingChartLegend, type RankingChartSection };

@@ -295,9 +295,7 @@ const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, location, data, locale } = row;
-    // All entries in the indicator-data.json are for the wetlands-mitigation-potential indicator
-    const indicator = "wetlands-mitigation-potential";
+    const { id, indicator, location, data, locale } = row;
 
     // Optional: Check that both referenced rows exist
     const [indicatorExists, locationExists] = await Promise.all([

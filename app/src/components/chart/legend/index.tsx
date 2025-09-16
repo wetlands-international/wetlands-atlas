@@ -16,9 +16,9 @@ const ChartLegendContent: FC<Props> = ({ items }) => {
           <li key={`chart-legend-item-${i.label}`} className="flex items-center gap-1.5">
             <span
               className={cn({
-                "h-2 w-2 border border-white": true,
+                "h-2 w-2 bg-green-100": true,
                 "rounded-full": i.shape === "circle",
-                "bg-white": i.filled,
+                "bg-green-700": i.filled,
               })}
             >
               {i.pattern && (

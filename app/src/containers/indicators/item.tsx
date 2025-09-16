@@ -16,7 +16,7 @@ import {
 
 import { IndicatorChartData } from "@/containers/indicators/types";
 
-import RankingChartComponent from "@/components/chart/ranking";
+import WidgetChart from "@/components/chart";
 import InfoButton from "@/components/ui/info-button";
 import { Lexical } from "@/components/ui/lexical";
 import { Switch } from "@/components/ui/switch";
@@ -155,7 +155,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       {chartData.length > 0 && (
         <>
           <div className="-mx-6 aspect-video">
-            <RankingChartComponent data={chartData} />
+            <WidgetChart indicator={indicator.id} data={chartData} />
           </div>
         </>
       )}

@@ -25,7 +25,9 @@ import { Tick } from "@/components/chart/tick";
 
 export default function StackedBarChartComponent({ data }: { data: IndicatorChartData[] }) {
   const wetlandsCount = data.filter((d) => d.group === "wetlands").length;
-  const yMax = Math.max(...data.map((item) => item.value));
+  const yMax = Math.max(
+    ...data.map((item) => (Array.isArray(item.value) ? Math.max(...item.value) : item.value)),
+  );
 
   return (
     <ResponsiveContainer width="100%" height="100%">
