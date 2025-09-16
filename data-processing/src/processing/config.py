@@ -7,6 +7,7 @@ from pathlib import Path
 # Directory paths
 RAW_DATA_DIR = Path("data/raw/")
 OUTPUT_DIR = Path("data/processed/")
+OUTPUT_COG_DIR = OUTPUT_DIR / "cogs"
 
 # File paths
 SAHEL_BOUNDARY_FILE = RAW_DATA_DIR / "sahel_boundary.gpkg"
