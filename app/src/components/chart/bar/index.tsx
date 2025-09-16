@@ -24,13 +24,17 @@ import { Tick } from "@/components/chart/tick";
 import { ChartTooltip } from "@/components/chart/tooltip";
 
 export default function BarChartComponent({ data }: { data: IndicatorChartData[] }) {
-  const wetlandsCount = data.filter((d) => d.group === "wetlands").length;
-  const yMax = Math.max(...data.map((item) => item.value));
+  const numericData = data.filter(
+    (d): d is IndicatorChartData & { value: number } => typeof d.value === "number",
+  );
+
+  const wetlandsCount = numericData.filter((d) => d.group === "wetlands").length;
+  const yMax = Math.max(...numericData.map((item) => item.value));
 
   return (
     <ResponsiveContainer width="100%" height={280}>
       <BarChart
-        data={data}
+        data={numericData}
         margin={{
           top: 50,
           right: 30,
@@ -75,7 +79,7 @@ export default function BarChartComponent({ data }: { data: IndicatorChartData[]
           tick={Tick}
           label={
             <Label
-              value={data[0].unit}
+              value={numericData[0]?.unit || ""}
               position="top"
               dy={-16}
               fill="var(--muted-foreground)"
@@ -84,8 +88,12 @@ export default function BarChartComponent({ data }: { data: IndicatorChartData[]
           }
         />
 
-        {data[wetlandsCount - 1] ? (
-          <ReferenceArea x1={data[0].label} x2={data[wetlandsCount - 1].label} fill="none">
+        {numericData[wetlandsCount - 1] ? (
+          <ReferenceArea
+            x1={numericData[0].label}
+            x2={numericData[wetlandsCount - 1].label}
+            fill="none"
+          >
             <Label
               value="Wetlands"
               position="insideTopRight"
@@ -98,23 +106,23 @@ export default function BarChartComponent({ data }: { data: IndicatorChartData[]
           </ReferenceArea>
         ) : null}
 
-        {data[wetlandsCount - 1] && data[wetlandsCount] ? (
+        {numericData[wetlandsCount - 1] && numericData[wetlandsCount] ? (
           <ReferenceLine
             stroke="var(--foreground)"
             strokeDasharray="3 3"
             position="start"
             ifOverflow="visible"
             segment={[
-              { x: data[wetlandsCount].label, y: 0 },
-              { x: data[wetlandsCount].label, y: yMax + yMax / 2 },
+              { x: numericData[wetlandsCount].label, y: 0 },
+              { x: numericData[wetlandsCount].label, y: yMax + yMax / 2 },
             ]}
           />
         ) : null}
 
-        {data[wetlandsCount] ? (
+        {numericData[wetlandsCount] ? (
           <ReferenceArea
-            x1={data[wetlandsCount].label}
-            x2={data[data.length - 1].label}
+            x1={numericData[wetlandsCount].label}
+            x2={numericData[numericData.length - 1].label}
             fill="none"
           >
             <Label
@@ -153,7 +161,7 @@ export default function BarChartComponent({ data }: { data: IndicatorChartData[]
           }}
           activeBar={{ fill: "url(#activeColor)" }}
         >
-          {data.map((_, index) => (
+          {numericData.map((_, index) => (
             <Cell key={`cell-${index}`} fill="url(#color)" stroke={"var(--foreground)"} />
           ))}
         </Bar>

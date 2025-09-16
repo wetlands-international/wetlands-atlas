@@ -1,11 +1,11 @@
 export interface IndicatorChartData {
   id: string;
   key: string;
-  type: "protection" | "restoration";
+  type: "restoration" | "protection";
   unit: string;
   color: string;
   group: "wetlands" | "non-wetlands";
   label: string;
-  value: number;
+  value: number | number[];
   format: string;
 }

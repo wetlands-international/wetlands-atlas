@@ -20,6 +20,11 @@ import { Tick } from "@/components/chart/tick";
 import { ChartLabelTooltip } from "@/components/chart/tooltip";
 
 export default function ScatterChartComponent({ data }: { data: IndicatorChartData[] }) {
+  const points = data.map((d) => {
+    const tuple = Array.isArray(d.value) ? d.value : [d.value, 0];
+    const [x, y] = tuple;
+    return { ...d, x, y, name: d.label };
+  });
   return (
     <ResponsiveContainer width="100%" height="100%">
       <ScatterChart
@@ -36,7 +41,7 @@ export default function ScatterChartComponent({ data }: { data: IndicatorChartDa
           stroke="rgba(255, 255, 255, 0.11)"
         />
         <XAxis
-          dataKey="restoration"
+          dataKey="x"
           tick={Tick}
           tickLine={false}
           stroke="#fff"
@@ -51,13 +56,13 @@ export default function ScatterChartComponent({ data }: { data: IndicatorChartDa
           }
         />
         <YAxis
-          dataKey="protection"
+          dataKey="y"
           tick={Tick}
           stroke="#fff"
           tickLine={false}
           label={
             <Label
-              value="Mitigation Potential (tCO2/ha)"
+              value={data[0].unit}
               position="insideTopLeft"
               dy={-30}
               fill="var(--muted-foreground)"
@@ -72,18 +77,19 @@ export default function ScatterChartComponent({ data }: { data: IndicatorChartDa
           content={
             <ChartLegendContent
               items={[
-                { label: "Wetlands", shape: "circle", filled: true },
-                { label: "Non-wetlands", shape: "circle" },
+                { label: "Restoration", shape: "circle", filled: true },
+                { label: "Protection", shape: "circle" },
               ]}
             />
           }
         />
-        <Scatter data={data} fill="#fff">
-          {data.map((entry, index) => (
+        <Scatter data={points} fill="#fff">
+          {points.map((entry, index) => (
             <Cell
               key={`scatter-cell-${index}`}
-              fill={entry.group === "wetlands" ? "#fff" : "rgba(255, 255, 255, 0.10)"}
-              stroke="#fff"
+              fill={
+                entry.type === "restoration" ? "var(--color-green-700)" : "var(--color-green-100)"
+              }
             />
           ))}
         </Scatter>
