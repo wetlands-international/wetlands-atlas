@@ -2,22 +2,40 @@
 Script to create Cloud Optimized GeoTIFFs (COGs) from TIFF files.
 """
 
-from pathlib import Path
+from rich.console import Console
 
+from processing.config import OUTPUT_COG_DIR, RAW_DATA_DIR
 from processing.converters.cogs import convert_tif_to_cog
 from processing.data.storage.gcs import remove_file_from_local_storage, upload_file_to_gcs
-from rich.console import Console
 
 console = Console()
 
-DATA_PATH = Path("data/processed")
-COGS_PATH = Path("data/processed/cogs")
-
 DATASETS = {
-    "wetlands": {
-        "source": DATA_PATH / "IUCN_Classified_Sahel_2019-2023.tif",
-        "output": COGS_PATH / "IUCN_Classified_Sahel_2019-2023.tif",
+    "Wetlands (by type)": {
+        "source": RAW_DATA_DIR
+        / "Classification_Test_V1-0_Iv_Ow_Classes_BurnMF_BurnSM_BurnGMW_Mask_Clip.tif",
+        "output": OUTPUT_COG_DIR / "wetlands_by_type_cog.tif",
         "resampling": "nearest",
+        "nodata_value": 0,
+        "upload_to_gcs": False,
+    },
+    "Wetlands (by Ramsar)": {
+        "source": RAW_DATA_DIR / "tropwet_sahel_basic_ramsar_typology_v1.tif",
+        "output": OUTPUT_COG_DIR / "wetlands_by_ramsar_cog.tif",
+        "resampling": "nearest",
+        "nodata_value": 0,
+        "upload_to_gcs": False,
+    },
+    "Peatlands": {
+        "source": RAW_DATA_DIR / "peatlands_sahel_CLIPPED.tif",
+        "output": OUTPUT_COG_DIR / "peatlands_cog.tif",
+        "resampling": "nearest",
+        "upload_to_gcs": False,
+    },
+    "Irrecoverable Carbon": {
+        "source": RAW_DATA_DIR / "irrecoverable_carbon_CLIPPED.tif",
+        "output": OUTPUT_COG_DIR / "irrecoverable_carbon_cog.tif",
+        "resampling": "bilinear",
         "upload_to_gcs": False,
     },
 }
@@ -27,7 +45,7 @@ def main():
     """Main function to create COGs from TIFF files."""
     console.print("🚀 Starting COG creation workflow...")
 
-    COGS_PATH.mkdir(parents=True, exist_ok=True)
+    OUTPUT_COG_DIR.mkdir(parents=True, exist_ok=True)
 
     for name, paths in DATASETS.items():
         console.print(f"\nProcessing {name} dataset...")
@@ -40,7 +58,12 @@ def main():
             continue
 
         console.print(f"🌍 Converting {source_path} to {output_path}...")
-        convert_tif_to_cog(source_path, output_path, resampling)
+        if paths.get("nodata_value") is None:
+            convert_tif_to_cog(source_path, output_path, resampling)
+        else:
+            convert_tif_to_cog(
+                source_path, output_path, resampling, nodata_value=paths.get("nodata_value")
+            )
 
         if paths.get("upload_to_gcs", True):
             console.print(f"📤 Uploading {output_path} to GCS...")
