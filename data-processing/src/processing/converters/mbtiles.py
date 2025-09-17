@@ -38,6 +38,9 @@ class VectorConverter(MBTilesConverter):
             f"MINZOOM={min_zoom}",
             "-dsco",
             f"MAXZOOM={max_zoom}",
+            "-dsco",
+            "MAX_SIZE=10000000",
+            "-makevalid",
             output_path.as_posix(),
             input_path.as_posix(),
         ]
