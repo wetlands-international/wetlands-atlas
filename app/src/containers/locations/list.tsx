@@ -62,15 +62,6 @@ export const LocationsList = () => {
           className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-bold [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:uppercase"
         >
           <div className="py-2">
-            {/* 
-            <LocationsItem>Location</LocationsItem>
-            <LocationsItem>Location 2</LocationsItem>
-            <LocationsItem>Location 3</LocationsItem>
-            <LocationsItem>Location 4</LocationsItem>
-            <LocationsItem>Location 5</LocationsItem>
-            <LocationsItem>Location 6</LocationsItem>
-            <LocationsItem>Location 7</LocationsItem> */}
-
             {locationsData?.docs.map((location) => (
               <LocationsItem key={location.id} {...location} />
             ))}
