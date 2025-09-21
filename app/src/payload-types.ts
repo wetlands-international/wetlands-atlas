@@ -372,6 +372,7 @@ export interface Landscape {
         map?: {
           bbox: unknown[];
           layers?: string[];
+          basemap?: 'default' | 'satellite';
         };
         chart?:
           | {

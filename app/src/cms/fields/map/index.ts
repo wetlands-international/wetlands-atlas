@@ -1,5 +1,7 @@
 import { deepMerge, type JSONField } from "payload";
 
+import { BASEMAPS } from "@/components/map/controls/settings/basemap";
+
 export const MapField = (props?: Partial<JSONField>): JSONField => {
   return deepMerge(
     {
@@ -20,6 +22,10 @@ export const MapField = (props?: Partial<JSONField>): JSONField => {
               items: {
                 type: "string",
               },
+            },
+            basemap: {
+              type: "string",
+              enum: Object.keys(BASEMAPS),
             },
           },
           required: ["bbox"],

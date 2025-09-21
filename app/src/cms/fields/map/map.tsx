@@ -19,6 +19,7 @@ import { parseConfig } from "@/lib/json-converter";
 
 import Controls from "@/components/map/controls";
 import SettingsControl from "@/components/map/controls/settings";
+import { BasemapControl, BASEMAPS } from "@/components/map/controls/settings/basemap";
 import ZoomControl from "@/components/map/controls/zoom";
 
 import { env } from "@/env";
@@ -40,6 +41,10 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
   const [collapsed] = useDebounceValue(isCollapsed, 500);
 
   const { stepMap } = useMap();
+
+  const MAP_STYLE = useMemo(() => {
+    return BASEMAPS[value?.basemap ?? "default"].mapStyle;
+  }, [value?.basemap]);
 
   const baseLayer = useMemo(() => {
     if (stepMap && stepMap.isStyleLoaded()) {
@@ -93,7 +98,7 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
         },
       }}
       style={{ width: "100%", height: "100%" }}
-      mapStyle="mapbox://styles/wetlands-vizzuality/cmaoz7mg901l701qoaj2a6v0h"
+      mapStyle={MAP_STYLE}
       minZoom={2}
       scrollZoom={false}
       onMove={handleMovedDebounced}
@@ -148,9 +153,15 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
       <Controls className="absolute top-4 right-4">
         <ZoomControl />
         <SettingsControl>
-          <div className="flex flex-col space-y-0.5">
-            <span>Basemap</span>
-          </div>
+          <BasemapControl
+            basemap={value?.basemap ?? "default"}
+            onBasemapChange={(basemapId) => {
+              setValue({
+                ...value,
+                basemap: basemapId,
+              });
+            }}
+          />
         </SettingsControl>
       </Controls>
     </Map>

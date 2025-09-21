@@ -14,8 +14,8 @@ export const BASEMAPS = {
   satellite: {
     id: "satellite",
     name: "Satellite",
-    mapStyle: "mapbox://styles/wetlands-vizzuality/cmbkp0emy00pj01sm9ggihl1q",
-    image: `https://api.mapbox.com/styles/v1/wetlands-vizzuality/cmbkp0emy00pj01sm9ggihl1q/static/7.1924,4.7851,3.85,0/200x200?access_token=${env.NEXT_PUBLIC_MAPBOX_TOKEN}&attribution=false&logo=false`,
+    mapStyle: "mapbox://styles/wetlands-vizzuality/cmftx03qk00jl01qrg1u37qap",
+    image: `https://api.mapbox.com/styles/v1/wetlands-vizzuality/cmftx03qk00jl01qrg1u37qap/static/7.1924,4.7851,3.85,0/200x200?access_token=${env.NEXT_PUBLIC_MAPBOX_TOKEN}&attribution=false&logo=false`,
   },
 } as const;
 
@@ -31,10 +31,13 @@ export const BasemapControl = ({ basemap, onBasemapChange }: BasemapControlProps
         <button
           key={b.id}
           type="button"
-          className={cn(`flex items-center gap-2 py-2 pr-4 pl-2`, {
-            "hover:bg-gray-300": basemap !== b.id,
-            "bg-blue-500/25": basemap === b.id,
-          })}
+          className={cn(
+            `text-background shadow-muted flex appearance-none items-center gap-2 border-0 bg-white py-2 pr-4 pl-2`,
+            {
+              "hover:bg-gray-300": basemap !== b.id,
+              "bg-blue-500/25": basemap === b.id,
+            },
+          )}
           onClick={() => onBasemapChange(b.id)}
         >
           <Image

@@ -10,6 +10,8 @@ import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]
 import { LandscapeFitBounds } from "@/containers/landscapes/[id]/map/fit-bounds";
 import { LayerManager } from "@/containers/map/layer-manager";
 
+import { BASEMAPS } from "@/components/map/controls/settings/basemap";
+
 import { env } from "@/env";
 import { Landscape } from "@/payload-types";
 
@@ -34,6 +36,19 @@ export const LandscapeMapContainer = (props: Landscape) => {
     return null;
   }, [step, steps]);
 
+  const MAP_STYLE = useMemo(() => {
+    const s = steps?.[step];
+
+    if (s && "map" in s) {
+      const b = s.map?.basemap;
+      if (b) {
+        return BASEMAPS[b].mapStyle;
+      }
+      return BASEMAPS["default"].mapStyle;
+    }
+    return BASEMAPS["default"].mapStyle;
+  }, [step, steps]);
+
   return (
     <div className="relative flex grow flex-col overflow-hidden bg-[#326E82]">
       <Map
@@ -51,7 +66,7 @@ export const LandscapeMapContainer = (props: Landscape) => {
           },
         }}
         style={{ width: "100%", height: "100%" }}
-        mapStyle="mapbox://styles/wetlands-vizzuality/cmaoz7mg901l701qoaj2a6v0h"
+        mapStyle={MAP_STYLE}
         minZoom={2}
         interactive={false}
         scrollZoom={false}
