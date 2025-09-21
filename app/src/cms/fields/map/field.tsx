@@ -28,7 +28,7 @@ export const MapFieldComponent: JSONFieldServerComponent = async ({
       <FieldDescription path={path} description={clientField.admin?.description} />
 
       <section className="flex aspect-square overflow-hidden pt-6 xl:aspect-video">
-        <aside className="bg-background relative z-10 w-1/3 max-w-md shrink-0 overflow-auto px-4 pb-4 shadow-2xl">
+        <aside className="bg-background relative z-0 w-1/3 max-w-md shrink-0 overflow-auto px-4 pb-4 shadow-2xl">
           <h2 className="from-background sticky top-0 bg-gradient-to-b to-transparent py-4 text-2xl text-white">
             Layers
           </h2>
