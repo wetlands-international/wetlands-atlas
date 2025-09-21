@@ -904,7 +904,7 @@ export interface components {
       };
       indicator?: (string | null) | components["schemas"]["Indicator"];
       /** @enum {string} */
-      type: "indicator" | "contextual";
+      type: "indicator" | "contextual" | "landscape";
       updatedAt: string;
       createdAt: string;
     };
@@ -994,6 +994,7 @@ export interface components {
             map?: {
               bbox: unknown[];
               layers?: string[];
+              basemap?: "satellite" | "default";
             };
             chart?: Record<string, never> | unknown[] | string | number | boolean | null;
             id?: string | null;

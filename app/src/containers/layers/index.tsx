@@ -16,7 +16,7 @@ export const Layers = () => {
 
   const where: Where = {
     type: {
-      equals: "CONTEXTUAL",
+      equals: "contextual",
     },
   };
   const {

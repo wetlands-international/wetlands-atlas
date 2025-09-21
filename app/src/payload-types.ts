@@ -292,7 +292,7 @@ export interface Layer {
     [k: string]: unknown;
   };
   indicator?: (string | null) | Indicator;
-  type: 'indicator' | 'contextual';
+  type: 'indicator' | 'contextual' | 'landscape';
   updatedAt: string;
   createdAt: string;
 }
