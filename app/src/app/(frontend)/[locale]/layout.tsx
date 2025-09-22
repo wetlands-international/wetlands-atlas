@@ -51,7 +51,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${workSans.variable} ${philosopher.variable} scroll-smooth font-sans`}
+      className={`${workSans.variable} ${philosopher.variable} scroll-smooth font-sans antialiased`}
     >
       <body>
         <QueryProvider>

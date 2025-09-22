@@ -133,18 +133,20 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       <header className="space-y-2">
         <div className="flex items-center justify-between gap-2">
           <h2 className="text-base font-semibold uppercase">{indicator.name}</h2>
-          {indicator.description &&
-            !!convertLexicalToPlaintext({ data: indicator.description }) && (
-              <InfoButton>
-                <div className="prose prose-invert prose-sm">
-                  <Lexical data={indicator.description} variables={lexicalVariables} />
-                </div>
-              </InfoButton>
-            )}
-          <Switch
-            checked={!!indicators?.includes(indicator.id)}
-            onCheckedChange={handleSwitchChange}
-          />
+          <div className="flex items-center gap-2">
+            {indicator.description &&
+              !!convertLexicalToPlaintext({ data: indicator.description }) && (
+                <InfoButton>
+                  <div className="prose prose-invert prose-sm">
+                    <Lexical data={indicator.description} variables={lexicalVariables} />
+                  </div>
+                </InfoButton>
+              )}
+            <Switch
+              checked={!!indicators?.includes(indicator.id)}
+              onCheckedChange={handleSwitchChange}
+            />
+          </div>
         </div>
         {indicator.widget && Object.keys(lexicalVariables).length > 0 && (
           <div className="prose prose-invert prose-sm">

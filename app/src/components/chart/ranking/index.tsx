@@ -61,7 +61,7 @@ const RankingChartBars: FC<Props & { title: string; unit: string }> = ({ data, t
   return (
     <section className="border-t border-dashed">
       <RankingChartSectionHeader title={title} unit={unit} />
-      <ul className="space-y-3">
+      <ul className="space-y-4">
         {data
           .sort((a, b) => b.value - a.value)
           .map((item, index) => (
