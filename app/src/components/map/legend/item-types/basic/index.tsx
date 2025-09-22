@@ -15,7 +15,7 @@ export const LegendTypeBasic: React.FC<LegendTypeProps> = ({ className = "", ite
         {items.map(({ label, color }) => (
           <li key={`${label}`} className="flex gap-1">
             <div
-              className="border-navy-700 mt-1 h-2.5 w-2.5 shrink-0 rounded-full border"
+              className="border-navy-700 mt-1 h-2 w-2 shrink-0 rounded-full border"
               style={{
                 backgroundColor: color ?? "transparent",
               }}

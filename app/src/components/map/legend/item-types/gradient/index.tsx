@@ -14,14 +14,14 @@ export const LegendTypeGradient: React.FC<LegendTypeProps> = ({ className = "", 
     >
       <div
         className={cn({
-          "flex h-2 w-full": true,
+          "flex h-1.5 w-full rounded-sm": true,
         })}
         style={{
           backgroundImage: `linear-gradient(to right, ${items.map((i) => i.color).join(",")})`,
         }}
       />
 
-      <ul className="mt-1 flex w-full justify-between">
+      <ul className="mt-0.5 flex w-full justify-between">
         {items
           .filter(({ value }) => typeof value !== "undefined" && value !== null)
           .map(({ value }) => (
