@@ -374,46 +374,13 @@ export interface Landscape {
           layers?: string[];
           basemap?: 'default' | 'satellite';
         };
-        chart?:
-          | {
-              [k: string]: unknown;
-            }
-          | unknown[]
-          | string
-          | number
-          | boolean
-          | null;
+        chart?: {
+          title: string;
+          indicator: string | Indicator;
+          location: string | Location;
+        };
         id?: string | null;
       }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "indicator-data".
- */
-export interface IndicatorDatum {
-  id: string;
-  indicator: string | Indicator;
-  location: string | Location;
-  data:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  labels:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
     | null;
   updatedAt: string;
   createdAt: string;
@@ -448,6 +415,35 @@ export interface Location {
   bbox: [number, number, number, number];
   type: 'admin_region' | 'eco_region' | 'hydro_basin' | 'global' | 'landscapes' | 'wdpa';
   parent?: (string | null) | Location;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "indicator-data".
+ */
+export interface IndicatorDatum {
+  id: string;
+  indicator: string | Indicator;
+  location: string | Location;
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  labels:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -669,7 +665,13 @@ export interface LandscapesSelect<T extends boolean = true> {
         type?: T;
         sidebar?: T;
         map?: T;
-        chart?: T;
+        chart?:
+          | T
+          | {
+              title?: T;
+              indicator?: T;
+              location?: T;
+            };
         id?: T;
       };
   updatedAt?: T;

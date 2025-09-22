@@ -23,7 +23,7 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
   switch (indicator) {
     case "wetlands-mitigation-potential": {
       const validData = getValidData(data);
-      const unit = data[0]?.unit || "";
+      const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
 
       const wetlands = validData.filter((d) => d.group === "wetlands");
       const nonWetlands = validData.filter((d) => d.group === "non-wetlands");
@@ -38,7 +38,7 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
 
     case "cost-of-intervention": {
       const validData = getValidData(data);
-      const unit = data[0]?.unit || "";
+      const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
 
       const protection = validData.filter((d) => d.type === "protection");
       const restoration = validData.filter((d) => d.type === "restoration");

@@ -25,6 +25,8 @@ export default function ScatterChartComponent({ data }: { data: IndicatorChartDa
     const [x, y] = tuple;
     return { ...d, x, y, name: d.label };
   });
+  const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <ScatterChart
@@ -62,7 +64,7 @@ export default function ScatterChartComponent({ data }: { data: IndicatorChartDa
           tickLine={false}
           label={
             <Label
-              value={data[0].unit}
+              value={unit}
               position="insideTopLeft"
               dy={-30}
               fill="var(--muted-foreground)"

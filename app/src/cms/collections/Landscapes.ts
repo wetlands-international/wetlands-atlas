@@ -17,6 +17,7 @@ import {
 } from "@payloadcms/richtext-lexical";
 
 import { PublicAccessControl } from "@/cms/access/public";
+import { ChartField } from "@/cms/fields/chart-field";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
 import { landscapesReadLocationCriteriaExtension } from "@/cms/hooks/landscapes-read-location-criteria-extension";
@@ -171,17 +172,33 @@ export const Landscapes: CollectionConfig = {
               return siblingData.type === "map";
             },
           },
+          hooks: {
+            beforeChange: [
+              ({ value, siblingData }) => {
+                if (siblingData.type !== "map") return null;
+
+                return value;
+              },
+            ],
+          },
         }),
-        {
-          type: "json",
-          name: "chart",
+        ChartField({
           required: true,
           admin: {
             condition: (_, siblingData) => {
               return siblingData.type === "chart";
             },
           },
-        },
+          hooks: {
+            beforeChange: [
+              ({ value, siblingData }) => {
+                if (siblingData.type !== "chart") return null;
+
+                return value;
+              },
+            ],
+          },
+        }),
       ],
     },
   ],
