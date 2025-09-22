@@ -14,13 +14,10 @@ import { Button } from "@/components/ui/button";
 
 const MapLegend: FC = () => {
   const [showLegend, setShowLegend] = useState<boolean>(false);
-  const [layers] = useSyncLayers();
-  // temporary store layers to enable smooth hiding transition in the UI
-  const [tLayers, setTLayers] = useState(layers);
+  const [layers, setLayers] = useSyncLayers();
 
   useEffect(() => {
     if (layers.length > 0) {
-      setTLayers(layers);
       setShowLegend(true);
     }
   }, [layers]);
@@ -40,9 +37,16 @@ const MapLegend: FC = () => {
           "pointer-events-auto translate-y-0 opacity-100": showLegend,
         })}
       >
-        <Legend sortable={{ enabled: true }} onChangeOrder={(v) => setTLayers(v)}>
-          {tLayers.map((l) => (
-            <MapLegendItem key={`map-legend-item-${l}`} id={l} />
+        <Legend
+          sortable={{ enabled: true, handle: true }}
+          onChangeOrder={(v) => setLayers(v.toReversed())}
+        >
+          {layers.toReversed().map((l) => (
+            <MapLegendItem
+              sortable={{ enabled: true, handle: true }}
+              key={`map-legend-item-${l}`}
+              id={l}
+            />
           ))}
         </Legend>
       </div>

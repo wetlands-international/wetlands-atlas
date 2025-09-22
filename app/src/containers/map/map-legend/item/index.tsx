@@ -12,10 +12,11 @@ import {
   LegendTypeChoropleth,
   LegendTypeGradient,
 } from "@/components/map/legend/item-types";
+import { LegendItemProps } from "@/components/map/legend/types";
 
 import API from "@/services/api";
 
-const MapLegendItem: FC<{ id: string }> = ({ id }) => {
+const MapLegendItem: FC<LegendItemProps> = ({ id, ...props }) => {
   const { data: layer } = useQuery(
     API.queryOptions("get", `/api/layers/{id}`, {
       params: {
@@ -39,11 +40,10 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
       <LegendItem
         id={layer.id}
         name={layer.name}
-        sortable={{ enabled: true, handle: true }}
         settings={settings}
         settingsManager={{
-          opacity: settings?.opacity !== undefined,
-          visibility: settings?.visibility !== undefined,
+          opacity: true,
+          visibility: false,
         }}
         onChangeOpacity={(v) =>
           setLayersSettings({ ...layersSettings, [id]: { ...settings, opacity: v } })
@@ -54,6 +54,7 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
             [id]: { ...settings, visibility: v },
           })
         }
+        {...props}
       >
         {layer.legend_config.type === "gradient" && (
           <LegendTypeGradient items={layer.legend_config.items || []} />

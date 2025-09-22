@@ -23,27 +23,23 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
   onChangeVisibility,
 }: LegendItemToolbarProps) => {
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const { opacity = 1, visibility = "visible" } = settings || {};
+  const { opacity = 1, visibility = true } = settings || {};
 
   return (
     <div id="legend-toolbar" className="mt-0.5 flex divide-x">
-      <div className="flex space-x-1 pr-2">
+      <div className="flex space-x-1">
         {settingsManager?.opacity && (
           <div className="flex items-start">
             <Popover
+              open={popoverOpen}
               onOpenChange={(open) => {
+                console.log(open);
                 setPopoverOpen(open);
               }}
             >
               <Tooltip delayDuration={500}>
                 <PopoverTrigger asChild>
-                  <TooltipTrigger
-                    type="button"
-                    aria-label="Change layer opacity"
-                    className={cn({
-                      "pointer-events-none": popoverOpen,
-                    })}
-                  >
+                  <TooltipTrigger type="button" aria-label="Change layer opacity">
                     <LegendItemButton Icon={TbChartCircles} value={opacity} selected />
                   </TooltipTrigger>
                 </PopoverTrigger>
@@ -92,11 +88,10 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
                   "pointer-events-none": popoverOpen,
                 })}
                 onClick={() => {
-                  if (onChangeVisibility)
-                    onChangeVisibility(visibility === "visible" ? "none" : "visible");
+                  if (onChangeVisibility) onChangeVisibility(!visibility);
                 }}
               >
-                <LegendItemButton Icon={visibility === "visible" ? LuEye : LuEyeClosed} />
+                <LegendItemButton Icon={visibility ? LuEye : LuEyeClosed} />
               </TooltipTrigger>
 
               <TooltipContent side="top" align="end" alignOffset={-10}>

@@ -13,13 +13,13 @@ type Sortable = {
 
 type OnChangeOrder = (id: string[]) => void;
 type OnChangeOpacity = (opacity: number) => void;
-type OnChangeVisibility = (visibility: "visible" | "none") => void;
+type OnChangeVisibility = (visibility: boolean) => void;
 type OnChangeColumn = (column: string) => void;
 type OnRemove = () => void;
 
 export type Settings = Record<string, unknown> & {
   opacity?: number;
-  visibility?: "visible" | "none";
+  visibility?: boolean;
 };
 
 export type SettingsManager = {
