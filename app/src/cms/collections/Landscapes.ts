@@ -5,6 +5,7 @@ import { CollectionConfig } from "payload";
 
 import {
   BoldFeature,
+  FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   ItalicFeature,
@@ -12,6 +13,7 @@ import {
   LinkFeature,
   OrderedListFeature,
   UnorderedListFeature,
+  UploadFeature,
 } from "@payloadcms/richtext-lexical";
 
 import { PublicAccessControl } from "@/cms/access/public";
@@ -149,7 +151,7 @@ export const Landscapes: CollectionConfig = {
           required: true,
           editor: lexicalEditor({
             features: () => [
-              InlineToolbarFeature(),
+              FixedToolbarFeature(),
               HeadingFeature({
                 enabledHeadingSizes: ["h2", "h3"],
               }),
@@ -158,6 +160,7 @@ export const Landscapes: CollectionConfig = {
               BoldFeature(),
               ItalicFeature(),
               LinkFeature(),
+              UploadFeature(),
             ],
           }),
         },
