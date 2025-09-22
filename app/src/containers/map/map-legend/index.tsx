@@ -21,7 +21,11 @@ const MapLegend: FC = () => {
   useEffect(() => {
     if (layers.length > 0) {
       setTLayers(layers);
+      setShowLegend(true);
     }
+  }, [layers]);
+
+  useEffect(() => {
     if (layers.length === 0 && showLegend) {
       setShowLegend(false);
     }
