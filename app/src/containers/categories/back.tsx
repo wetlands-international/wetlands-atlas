@@ -6,7 +6,7 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 import { LuX } from "react-icons/lu";
 
-import { cn } from "@/lib/utils";
+import { cn, isValidMedia } from "@/lib/utils";
 
 import {
   useSyncIndicators,
@@ -53,7 +53,9 @@ export const CategoriesBack = () => {
         },
       )}
       style={{
-        backgroundImage: `url(https://picsum.photos/seed/g-${category?.id}/500/300)`,
+        backgroundImage: isValidMedia(category?.cover)
+          ? category?.cover.url
+          : `url(https://picsum.photos/seed/g-${category?.id}/500/300)`,
       }}
       onClick={handleClick}
     >

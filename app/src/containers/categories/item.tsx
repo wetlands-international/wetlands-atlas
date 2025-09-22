@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { LuChevronRight } from "react-icons/lu";
 
-import { cn } from "@/lib/utils";
+import { cn, isValidMedia } from "@/lib/utils";
 
 import { useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
 
@@ -27,7 +27,9 @@ export const CategoriesItem = (category: Category) => {
         },
       )}
       style={{
-        backgroundImage: `url(https://picsum.photos/seed/g-${category.id}/500/300)`,
+        backgroundImage: isValidMedia(category?.cover)
+          ? category.cover.url
+          : `url(https://picsum.photos/seed/g-${category.id}/500/300)`,
       }}
       onClick={handleChange}
     >
