@@ -4,14 +4,16 @@ import { useEffect, useRef } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import { CommandInput } from "cmdk";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { LucideXCircle } from "lucide-react";
 import { useLocale } from "next-intl";
 import { LuMapPin, LuSearch } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
-import { locationsAtom, useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
+import { locationsAtom, tmpBboxAtom, useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
+
+import { GLOBAL_SAHEL_BBOX } from "@/components/map/controls/constants";
 
 import API from "@/services/api";
 
@@ -20,8 +22,9 @@ export const LocationsSearch = () => {
 
   const locale = useLocale();
 
-  const [location] = useSyncLocation();
+  const [location, setLocation] = useSyncLocation();
   const [locations, setLocations] = useAtom(locationsAtom);
+  const setTmpBbox = useSetAtom(tmpBboxAtom);
 
   const { data: locationsIdData } = useQuery({
     ...API.queryOptions("get", "/api/locations/{id}", {
@@ -65,6 +68,8 @@ export const LocationsSearch = () => {
       search: undefined,
       enabled: false,
     });
+    setLocation(null);
+    setTmpBbox(GLOBAL_SAHEL_BBOX);
   };
 
   useEffect(() => {

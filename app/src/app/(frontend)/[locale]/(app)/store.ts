@@ -1,6 +1,8 @@
 import { atom } from "jotai";
 import { createSerializer, useQueryState } from "nuqs";
 
+import { GLOBAL_SAHEL_ID } from "@/components/map/controls/constants";
+
 import {
   basemapParser,
   bboxParser,
@@ -28,7 +30,7 @@ export const useSyncInsight = () => {
 
 // LOCATIONS
 export const useSyncLocation = () => {
-  return useQueryState("location", locationParser);
+  return useQueryState("location", locationParser.withDefault(GLOBAL_SAHEL_ID));
 };
 
 export const locationsAtom = atom<{

@@ -35,7 +35,7 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
       <LegendItem
         id={layer.id}
         name={layer.name}
-        sortable={{ enabled: false, handle: false }}
+        sortable={{ enabled: true, handle: true }}
         settings={settings}
         settingsManager={{
           opacity: settings?.opacity !== undefined,
