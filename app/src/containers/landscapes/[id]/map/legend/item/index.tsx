@@ -4,8 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getParams } from "@/lib/json-converter";
 
-import { useSyncLayersSettings } from "@/app/(frontend)/[locale]/(app)/store";
-
 import LegendItem from "@/components/map/legend/item";
 import {
   LegendTypeBasic,
@@ -15,7 +13,7 @@ import {
 
 import API from "@/services/api";
 
-const MapLegendItem: FC<{ id: string }> = ({ id }) => {
+const LandscapesLegendItem: FC<{ id: string }> = ({ id }) => {
   const { data: layer } = useQuery(
     API.queryOptions("get", `/api/layers/{id}`, {
       params: {
@@ -25,13 +23,12 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
       },
     }),
   );
-  const [layersSettings, setLayersSettings] = useSyncLayersSettings();
 
   if (!layer) return null;
 
   const settings = getParams({
     params_config: layer.params_config,
-    settings: layersSettings?.[id] || {},
+    settings: {},
   });
 
   return (
@@ -39,21 +36,12 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
       <LegendItem
         id={layer.id}
         name={layer.name}
-        sortable={{ enabled: true, handle: true }}
+        sortable={{ enabled: false, handle: false }}
         settings={settings}
         settingsManager={{
-          opacity: settings?.opacity !== undefined,
-          visibility: settings?.visibility !== undefined,
+          opacity: false,
+          visibility: false,
         }}
-        onChangeOpacity={(v) =>
-          setLayersSettings({ ...layersSettings, [id]: { ...settings, opacity: v } })
-        }
-        onChangeVisibility={(v) =>
-          setLayersSettings({
-            ...layersSettings,
-            [id]: { ...settings, visibility: v },
-          })
-        }
       >
         {layer.legend_config.type === "gradient" && (
           <LegendTypeGradient items={layer.legend_config.items || []} />
@@ -69,4 +57,4 @@ const MapLegendItem: FC<{ id: string }> = ({ id }) => {
   );
 };
 
-export default MapLegendItem;
+export default LandscapesLegendItem;
