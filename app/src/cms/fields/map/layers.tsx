@@ -8,6 +8,53 @@ import { Switch } from "@/components/ui/switch";
 
 import { Layer, Landscape } from "@/payload-types";
 
+const MapFieldLayersGroup = ({
+  layers,
+  type,
+  value,
+  handleToogleLayer,
+}: {
+  layers: Layer[];
+  type: Layer["type"];
+  value: NonNullable<Landscape["steps"]>[number]["map"];
+  setValue: (value: NonNullable<Landscape["steps"]>[number]["map"]) => void;
+  handleToogleLayer: (layerId: Layer["id"]) => void;
+}) => {
+  const LAYERS = layers.filter((layer) => layer.type === type);
+
+  if (LAYERS.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-2.5 overflow-auto pb-3">
+      <h3 className="text-xs font-bold text-white uppercase">{type} layers</h3>
+      <ul className="list-none space-y-0 p-0">
+        {LAYERS.map((layer) => {
+          const isActive = value?.layers?.includes(layer.id);
+
+          return (
+            <li key={layer.id} className="flex gap-1 py-1">
+              <Switch
+                className="mt-px shrink-0"
+                checked={isActive}
+                onCheckedChange={() => handleToogleLayer(layer.id)}
+              />
+              <button
+                type="button"
+                className="text-md w-full cursor-pointer border-0 bg-transparent px-2 py-0 text-left text-sm text-white hover:underline"
+                onClick={() => handleToogleLayer(layer.id)}
+              >
+                {layer.name}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
+
 export const MapFieldLayers = ({ layers }: { layers: Layer[] }) => {
   const { value, setValue } = useField<NonNullable<Landscape["steps"]>[number]["map"]>();
 
@@ -26,27 +73,28 @@ export const MapFieldLayers = ({ layers }: { layers: Layer[] }) => {
   );
 
   return (
-    <ul className="list-none space-y-1 p-0">
-      {layers.map((layer) => {
-        const isActive = value?.layers?.includes(layer.id);
-
-        return (
-          <li key={layer.id} className="flex items-center gap-1">
-            <Switch
-              checked={isActive}
-              className="shrink-0"
-              onCheckedChange={() => handleToogleLayer(layer.id)}
-            />
-            <button
-              type="button"
-              className="text-md w-full border-0 bg-transparent p-2 text-left text-white hover:underline"
-              onClick={() => handleToogleLayer(layer.id)}
-            >
-              {layer.name}
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <div className="divide-accent/50 space-y-4 divide-y">
+      <MapFieldLayersGroup
+        layers={layers}
+        type="indicator"
+        value={value}
+        setValue={setValue}
+        handleToogleLayer={handleToogleLayer}
+      />
+      <MapFieldLayersGroup
+        layers={layers}
+        type="contextual"
+        value={value}
+        setValue={setValue}
+        handleToogleLayer={handleToogleLayer}
+      />
+      <MapFieldLayersGroup
+        layers={layers}
+        type="landscape"
+        value={value}
+        setValue={setValue}
+        handleToogleLayer={handleToogleLayer}
+      />
+    </div>
   );
 };

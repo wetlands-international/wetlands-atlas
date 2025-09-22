@@ -21,7 +21,7 @@ interface Props {
 }
 
 const RankingChartSectionHeader: FC<{ title: string; unit: string }> = ({ title, unit }) => (
-  <header className="text-2xs mb-1 flex items-center justify-between leading-[22px] uppercase">
+  <header className="text-2xs mb-1 flex items-center justify-between py-1 leading-[22px] uppercase">
     <h3 className="font-medium">{title}</h3>
     <p className="font-normal">{unit}</p>
   </header>
@@ -38,7 +38,7 @@ const RankingChartList: FC<Props & { title: string; unit: string }> = ({ data, t
           .sort((a, b) => b.value - a.value)
           .map((item, index) => (
             <li key={index} className="flex flex-col gap-2">
-              <div className="flex items-baseline justify-between gap-2 text-base font-normal">
+              <div className="flex items-baseline justify-between gap-1 text-sm font-normal">
                 <span>{item.label}</span>
                 <span className="flex-1 border-b border-dotted"></span>
                 <span>{formatNumber(item.value)}</span>
@@ -59,18 +59,18 @@ const RankingChartBars: FC<Props & { title: string; unit: string }> = ({ data, t
   if (data.length === 0) return null;
 
   return (
-    <section>
+    <section className="border-t border-dashed">
       <RankingChartSectionHeader title={title} unit={unit} />
       <ul className="space-y-4">
         {data
           .sort((a, b) => b.value - a.value)
           .map((item, index) => (
-            <li key={index} className="flex flex-col gap-2">
-              <div className="flex items-center justify-between gap-2 text-base font-normal">
+            <li key={index} className="flex flex-col gap-1">
+              <div className="flex items-center justify-between gap-2 text-sm font-normal">
                 <span className="flex-1">{item.label}</span>
                 <span>{formatNumber(item.value)}</span>
               </div>
-              <div className="h-[7px] w-full rounded-lg bg-[rgba(250,250,250,0.05)]">
+              <div className="h-1.5 w-full rounded-lg bg-[rgba(250,250,250,0.05)]">
                 <div
                   className={cn({
                     "h-full rounded-l-lg": true,
@@ -108,14 +108,12 @@ const RankingChartLegend: FC = () => {
 
 const RankingSection: FC<{
   section: RankingChartSection;
-  isFirst?: boolean;
 }> = ({ section }) => {
   const { title, unit, data, type } = section;
   if (data.length === 0) return null;
 
   return (
     <>
-      <div className="mt-7 w-full border-t border-dashed border-t-white" />
       {type === "bars" ? (
         <RankingChartBars data={data} title={title} unit={unit} />
       ) : type === "list" ? (
@@ -130,7 +128,7 @@ const RankingChart: FC<{
   withLegend?: boolean;
 }> = ({ sections, withLegend }) => {
   return (
-    <div className="px-6">
+    <div className="w-full space-y-7">
       {sections.map((section) => (
         <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
       ))}

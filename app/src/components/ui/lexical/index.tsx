@@ -6,6 +6,7 @@ import { JSXConverters, JSXConvertersFunction, RichText } from "@payloadcms/rich
 
 import { NumberBlock } from "@/components/ui/lexical/blocks/number-block";
 import { VariableBlock } from "@/components/ui/lexical/blocks/variable-block";
+import { CustomUploadComponent } from "@/components/ui/lexical/converters/upload";
 
 export type LexicalProps = {
   variables?: Record<string, number | string | boolean>;
@@ -42,6 +43,7 @@ export const Lexical = (props: LexicalProps) => {
 
   const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters }) => ({
     ...defaultConverters,
+    upload: ({ node }) => <CustomUploadComponent node={node} />, // Use custom upload component
     blocks: {},
     inlineBlocks: {
       number: ({

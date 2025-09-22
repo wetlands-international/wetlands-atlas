@@ -1,5 +1,7 @@
 import { deepMerge, type JSONField } from "payload";
 
+import { BASEMAPS } from "@/components/map/controls/settings/basemap";
+
 export const MapField = (props?: Partial<JSONField>): JSONField => {
   return deepMerge(
     {
@@ -21,6 +23,10 @@ export const MapField = (props?: Partial<JSONField>): JSONField => {
                 type: "string",
               },
             },
+            basemap: {
+              type: "string",
+              enum: Object.keys(BASEMAPS),
+            },
           },
           required: ["bbox"],
           additionalProperties: false,
@@ -30,8 +36,7 @@ export const MapField = (props?: Partial<JSONField>): JSONField => {
         components: {
           Field: "@/cms/fields/map/field",
         },
-        description:
-          "This field allows you to select a bounding box and layers for the map. The bounding box is defined by an array of four numbers: [minX, minY, maxX, maxY]. The layers are an array of layer IDs that you want to display on the map. You can toggle the visibility of each layer in the layers section.",
+        description: `This field allows you to select a bounding box and layers for the map. The bounding box is defined by an array of four numbers: [minX, minY, maxX, maxY]. The layers are an array of layer IDs that you want to display on the map. You can toggle the visibility of each layer in the layers section. The basemap can be selected by using the control from the map settings. The available basemaps are: ${Object.keys(BASEMAPS).join(", ")}.`,
       },
     },
     props ?? {},

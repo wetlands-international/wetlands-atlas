@@ -1,5 +1,7 @@
 import { Text } from "recharts";
 
+import { formatNumber } from "@/lib/formats";
+
 interface TickProps {
   payload: {
     value: string;
@@ -10,7 +12,10 @@ interface TickProps {
 export const Tick = (props: TickProps) => {
   return (
     <Text {...props} className="fill-foreground text-2xs">
-      {props.payload.value}
+      {formatNumber(+props.payload.value, {
+        notation: "compact",
+        maximumFractionDigits: 2,
+      })}
     </Text>
   );
 };

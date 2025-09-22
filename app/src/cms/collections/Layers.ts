@@ -12,13 +12,14 @@ import { LayerTypeValidation } from "@/cms/utils/layer-validation";
 export const enum LAYER_TYPE {
   INDICATOR = "indicator",
   CONTEXTUAL = "contextual",
+  LANDSCAPE = "landscape",
 }
 
 export const Layers: CollectionConfig = {
   slug: "layers",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["id", "name"],
+    defaultColumns: ["id", "name", "type"],
   },
   defaultSort: ["name"],
   access: PublicAccessControl, // TODO revise permissions and uncomment later
@@ -64,6 +65,10 @@ export const Layers: CollectionConfig = {
         {
           label: "Contextual",
           value: LAYER_TYPE.CONTEXTUAL,
+        },
+        {
+          label: "Landscape",
+          value: LAYER_TYPE.LANDSCAPE,
         },
       ],
       defaultValue: LAYER_TYPE.CONTEXTUAL,
