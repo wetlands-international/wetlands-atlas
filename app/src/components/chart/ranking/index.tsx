@@ -128,7 +128,7 @@ const RankingChart: FC<{
   withLegend?: boolean;
 }> = ({ sections, withLegend }) => {
   return (
-    <div className="space-y-7">
+    <div className="w-full space-y-7">
       {sections.map((section) => (
         <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
       ))}

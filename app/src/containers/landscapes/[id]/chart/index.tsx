@@ -34,8 +34,6 @@ export const LandscapeChartContainer = (props: Landscape) => {
     return null;
   }, [step, steps]);
 
-  console.log({ STEP, CHART });
-
   return (
     <div
       className={cn(

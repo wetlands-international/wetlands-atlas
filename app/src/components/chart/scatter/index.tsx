@@ -28,7 +28,7 @@ export default function ScatterChartComponent({ data }: { data: IndicatorChartDa
   const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
 
   return (
-    <div className="aspect-square">
+    <div className="h-full w-full">
       <ResponsiveContainer width="100%" height="100%">
         <ScatterChart
           margin={{
