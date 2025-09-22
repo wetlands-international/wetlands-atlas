@@ -10,10 +10,11 @@ import {
   LegendTypeChoropleth,
   LegendTypeGradient,
 } from "@/components/map/legend/item-types";
+import { LegendItemProps } from "@/components/map/legend/types";
 
 import API from "@/services/api";
 
-const LandscapesLegendItem: FC<{ id: string }> = ({ id }) => {
+const LandscapesLegendItem: FC<LegendItemProps> = ({ id, ...props }) => {
   const { data: layer } = useQuery(
     API.queryOptions("get", `/api/layers/{id}`, {
       params: {
@@ -36,12 +37,12 @@ const LandscapesLegendItem: FC<{ id: string }> = ({ id }) => {
       <LegendItem
         id={layer.id}
         name={layer.name}
-        sortable={{ enabled: false, handle: false }}
         settings={settings}
         settingsManager={{
           opacity: false,
           visibility: false,
         }}
+        {...props}
       >
         {layer.legend_config.type === "gradient" && (
           <LegendTypeGradient items={layer.legend_config.items || []} />

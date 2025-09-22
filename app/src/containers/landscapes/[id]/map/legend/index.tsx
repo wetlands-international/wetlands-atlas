@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 
@@ -11,22 +11,7 @@ import { Button } from "@/components/ui/button";
 import LandscapesLegendItem from "./item";
 
 export const LandscapesLegend: FC<{ layers: string[] }> = ({ layers }) => {
-  const [showLegend, setShowLegend] = useState<boolean>(false);
-  // temporary store layers to enable smooth hiding transition in the UI
-  const [tLayers, setTLayers] = useState(layers);
-
-  useEffect(() => {
-    if (layers.length > 0) {
-      setTLayers(layers);
-      setShowLegend(true);
-    }
-  }, [layers]);
-
-  useEffect(() => {
-    if (layers.length === 0 && showLegend) {
-      setShowLegend(false);
-    }
-  }, [layers, showLegend]);
+  const [showLegend, setShowLegend] = useState<boolean>(true);
 
   return (
     <div className="pointer-events-auto">
@@ -37,9 +22,13 @@ export const LandscapesLegend: FC<{ layers: string[] }> = ({ layers }) => {
           "pointer-events-auto translate-y-0 opacity-100": showLegend,
         })}
       >
-        <Legend sortable={{ enabled: true }} onChangeOrder={(v) => setTLayers(v)}>
-          {tLayers.map((l) => (
-            <LandscapesLegendItem key={`map-legend-item-${l}`} id={l} />
+        <Legend sortable={{ enabled: false }}>
+          {layers.toReversed().map((l) => (
+            <LandscapesLegendItem
+              sortable={{ enabled: false }}
+              key={`map-legend-item-${l}`}
+              id={l}
+            />
           ))}
         </Legend>
       </div>
