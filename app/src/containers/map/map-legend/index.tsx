@@ -40,12 +40,7 @@ const MapLegend: FC = () => {
           "pointer-events-auto translate-y-0 opacity-100": showLegend,
         })}
       >
-        <Legend
-          sortable={{ enabled: false, handle: false }}
-          onChangeOrder={(v) => {
-            console.log(v);
-          }}
-        >
+        <Legend sortable={{ enabled: true }} onChangeOrder={(v) => setTLayers(v)}>
           {tLayers.map((l) => (
             <MapLegendItem key={`map-legend-item-${l}`} id={l} />
           ))}
