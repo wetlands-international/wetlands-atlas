@@ -154,7 +154,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       </header>
       {chartData.length > 0 && (
         <>
-          <div className="-mx-6 aspect-video">
+          <div className="aspect-video">
             <WidgetChart indicator={indicator.id} data={chartData} />
           </div>
         </>

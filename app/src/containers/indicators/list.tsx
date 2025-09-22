@@ -10,6 +10,8 @@ import { useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
 import { CategoriesBack } from "@/containers/categories/back";
 import { IndicatorsItem } from "@/containers/indicators/item";
 
+import { Indicator } from "@/payload-types";
+
 import API from "@/services/api";
 
 export const IndicatorsList = () => {
@@ -43,7 +45,7 @@ export const IndicatorsList = () => {
       <CategoriesBack />
 
       {indicatorsData?.docs.map((indicator) => (
-        <IndicatorsItem key={indicator.id} indicator={indicator} />
+        <IndicatorsItem key={indicator.id} indicator={indicator as Indicator} />
       ))}
     </div>
   );

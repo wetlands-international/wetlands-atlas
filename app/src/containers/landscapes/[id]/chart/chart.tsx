@@ -65,7 +65,7 @@ export const LandscapeChart = (props: {
     <div className="flex h-full w-full flex-col space-y-4 p-10">
       <h2>{title}</h2>
 
-      <div className="flex grow">
+      <div className="grow">
         <WidgetChart
           indicator={typeof indicator === "string" ? indicator : indicator.id}
           data={data || []}

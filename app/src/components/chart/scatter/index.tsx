@@ -8,9 +8,9 @@ import {
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
-  Label,
   Cell,
   Legend,
+  Label,
 } from "recharts";
 
 import { IndicatorChartData } from "@/containers/indicators/types";
@@ -28,74 +28,80 @@ export default function ScatterChartComponent({ data }: { data: IndicatorChartDa
   const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <ScatterChart
-        margin={{
-          top: 30,
-          right: 30,
-          bottom: 20,
-          left: 10,
-        }}
-      >
-        <CartesianGrid
-          strokeDasharray={"1.5 1.5"}
-          syncWithTicks={false}
-          stroke="rgba(255, 255, 255, 0.11)"
-        />
-        <XAxis
-          dataKey="x"
-          tick={Tick}
-          tickLine={false}
-          stroke="#fff"
-          label={
-            <Label
-              value="Cost of intervention($/ha)"
-              position="insideBottomRight"
-              dy={10}
-              fill="var(--muted-foreground)"
-              fontSize={10}
-            />
-          }
-        />
-        <YAxis
-          dataKey="y"
-          tick={Tick}
-          stroke="#fff"
-          tickLine={false}
-          label={
-            <Label
-              value={unit}
-              position="insideTopLeft"
-              dy={-30}
-              fill="var(--muted-foreground)"
-              fontSize={10}
-            />
-          }
-        />
-        <Tooltip content={ChartLabelTooltip} isAnimationActive={false} cursor={false} />
-        <Legend
-          verticalAlign="bottom"
-          wrapperStyle={{ position: "relative" }}
-          content={
-            <ChartLegendContent
-              items={[
-                { label: "Restoration", shape: "circle", filled: true },
-                { label: "Protection", shape: "circle" },
-              ]}
-            />
-          }
-        />
-        <Scatter data={points} fill="#fff">
-          {points.map((entry, index) => (
-            <Cell
-              key={`scatter-cell-${index}`}
-              fill={
-                entry.type === "restoration" ? "var(--color-green-700)" : "var(--color-green-100)"
-              }
-            />
-          ))}
-        </Scatter>
-      </ScatterChart>
-    </ResponsiveContainer>
+    <div className="aspect-square">
+      <ResponsiveContainer width="100%" height="100%">
+        <ScatterChart
+          margin={{
+            top: 30,
+            right: 0,
+            bottom: 20,
+            left: 0,
+          }}
+        >
+          <CartesianGrid
+            strokeDasharray={"1.5 1.5"}
+            syncWithTicks={false}
+            stroke="rgba(255, 255, 255, 0.11)"
+          />
+          <XAxis
+            dataKey="x"
+            tick={Tick}
+            tickLine={false}
+            stroke="#fff"
+            label={
+              <Label
+                value="Cost of intervention($/ha)"
+                position="insideBottomRight"
+                dy={5}
+                dx={5}
+                fill="var(--muted-foreground)"
+                fontSize={10}
+              />
+            }
+          />
+          <YAxis
+            dataKey="y"
+            tick={Tick}
+            stroke="#fff"
+            tickLine={false}
+            tickMargin={0}
+            width={35}
+            label={
+              <Label
+                value={unit}
+                position="insideTopLeft"
+                dy={-30}
+                dx={-5}
+                fill="var(--muted-foreground)"
+                fontSize={10}
+              />
+            }
+          />
+          <Tooltip content={ChartLabelTooltip} isAnimationActive={false} cursor={false} />
+          <Legend
+            verticalAlign="bottom"
+            wrapperStyle={{ position: "relative" }}
+            content={
+              <ChartLegendContent
+                items={[
+                  { label: "Restoration", shape: "circle", filled: true },
+                  { label: "Protection", shape: "circle" },
+                ]}
+              />
+            }
+          />
+          <Scatter data={points} fill="#fff">
+            {points.map((entry, index) => (
+              <Cell
+                key={`scatter-cell-${index}`}
+                fill={
+                  entry.type === "restoration" ? "var(--color-green-700)" : "var(--color-green-100)"
+                }
+              />
+            ))}
+          </Scatter>
+        </ScatterChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
