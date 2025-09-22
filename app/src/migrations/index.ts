@@ -19,6 +19,7 @@ import * as migration_20250911_063931_change_landscapes_description_type from '.
 import * as migration_20250912_141903_change_layers_and_location_types from './20250912_141903_change_layers_and_location_types';
 import * as migration_20250912_142826_multipolygon_geometry_support from './20250912_142826_multipolygon_geometry_support';
 import * as migration_20250915_141326_change_landscapes_name_type from './20250915_141326_change_landscapes_name_type';
+import * as migration_20250922_132929 from './20250922_132929';
 
 export const migrations = [
   {
@@ -124,6 +125,11 @@ export const migrations = [
   {
     up: migration_20250915_141326_change_landscapes_name_type.up,
     down: migration_20250915_141326_change_landscapes_name_type.down,
-    name: '20250915_141326_change_landscapes_name_type'
+    name: '20250915_141326_change_landscapes_name_type',
+  },
+  {
+    up: migration_20250922_132929.up,
+    down: migration_20250922_132929.down,
+    name: '20250922_132929'
   },
 ];
