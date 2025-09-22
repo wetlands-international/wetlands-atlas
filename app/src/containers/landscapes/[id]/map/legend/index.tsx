@@ -1,32 +1,17 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-import { useSyncLayers } from "@/app/(frontend)/[locale]/(app)/store";
-
-import MapLegendItem from "@/containers/map/map-legend/item";
-
 import Legend from "@/components/map/legend";
 import { Button } from "@/components/ui/button";
 
-const MapLegend: FC = () => {
-  const [showLegend, setShowLegend] = useState<boolean>(false);
-  const [layers, setLayers] = useSyncLayers();
+import LandscapesLegendItem from "./item";
 
-  useEffect(() => {
-    if (layers.length > 0) {
-      setShowLegend(true);
-    }
-  }, [layers]);
-
-  useEffect(() => {
-    if (layers.length === 0 && showLegend) {
-      setShowLegend(false);
-    }
-  }, [layers, showLegend]);
+export const LandscapesLegend: FC<{ layers: string[] }> = ({ layers }) => {
+  const [showLegend, setShowLegend] = useState<boolean>(true);
 
   return (
     <div className="pointer-events-auto">
@@ -37,13 +22,10 @@ const MapLegend: FC = () => {
           "pointer-events-auto translate-y-0 opacity-100": showLegend,
         })}
       >
-        <Legend
-          sortable={{ enabled: true, handle: true }}
-          onChangeOrder={(v) => setLayers(v.toReversed())}
-        >
+        <Legend sortable={{ enabled: false }}>
           {layers.toReversed().map((l) => (
-            <MapLegendItem
-              sortable={{ enabled: true, handle: true }}
+            <LandscapesLegendItem
+              sortable={{ enabled: false }}
               key={`map-legend-item-${l}`}
               id={l}
             />
@@ -78,5 +60,3 @@ const MapLegend: FC = () => {
     </div>
   );
 };
-
-export default MapLegend;

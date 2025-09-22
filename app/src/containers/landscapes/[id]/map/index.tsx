@@ -8,6 +8,7 @@ import Map, { LngLatBoundsLike } from "react-map-gl/mapbox";
 import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
 import { LandscapeFitBounds } from "@/containers/landscapes/[id]/map/fit-bounds";
+import { LandscapesLegend } from "@/containers/landscapes/[id]/map/legend";
 import { LayerManager } from "@/containers/map/layer-manager";
 
 import { BASEMAPS } from "@/components/map/controls/settings/basemap";
@@ -80,6 +81,10 @@ export const LandscapeMapContainer = (props: Landscape) => {
         {loaded && <LayerManager layers={LAYERS} layersSettings={{}} />}
         <LandscapeFitBounds {...props} />
       </Map>
+
+      <div className="pointer-events-none absolute right-5 bottom-7 z-10">
+        <LandscapesLegend layers={LAYERS} />
+      </div>
     </div>
   );
 };

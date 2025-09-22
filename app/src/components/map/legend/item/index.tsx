@@ -42,11 +42,11 @@ export const LegendItem: React.FC<PropsWithChildren & LegendItemProps> = ({
       <AccordionItem value={`${id}`} asChild>
         <div
           className={cn({
-            "w-full border-none px-4": true,
+            "w-full overflow-hidden rounded-lg border-none": true,
             [className]: !!className,
           })}
         >
-          <header className="sticky top-0 z-10 flex items-start justify-between space-x-8 border-t border-neutral-200 bg-white py-2.5">
+          <header className="sticky top-0 z-10 flex items-start justify-between space-x-8 border-t border-neutral-200 bg-white px-4 py-2.5">
             <div
               className={cn({
                 "relative flex items-start space-x-0.5": true,
@@ -60,14 +60,13 @@ export const LegendItem: React.FC<PropsWithChildren & LegendItemProps> = ({
                   className="text-navy-700 hover:text-navy-700/50 mt-0.5 cursor-pointer transition-colors"
                   {...listeners}
                 >
-                  <LuGripVertical className="text-muted-foreground h-5 w-5" />
+                  <LuGripVertical className="text-muted-foreground h-4 w-4" />
                 </button>
               )}
 
               <div
                 className={cn({
-                  "text-muted-foreground mt-px text-[10px] leading-snug font-medium uppercase":
-                    true,
+                  "text-muted-foreground mt-1 text-[10px] leading-3 font-medium uppercase": true,
                 })}
               >
                 {name}
@@ -86,8 +85,8 @@ export const LegendItem: React.FC<PropsWithChildren & LegendItemProps> = ({
           </header>
 
           {validChildren && (
-            <AccordionContent className="grow bg-white px-2.5 pb-4 transition-all">
-              <div className="pl-2">{children}</div>
+            <AccordionContent className="grow bg-white px-4.5 pb-4 transition-all">
+              {children}
             </AccordionContent>
           )}
         </div>
