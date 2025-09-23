@@ -61,7 +61,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
               chartData: (doc.data as IndicatorChartData[]).map((d) => ({
                 ...d,
                 key: d.label,
-                label: doc.labels[d.label],
+                label: doc?.labels?.[d.label] ?? d.label,
               })),
             }),
           );

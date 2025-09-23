@@ -11,7 +11,8 @@ import LayerManagerItem from "./item";
 export const LayerManager: FC<{
   layers: string[];
   layersSettings: LayersSettings<unknown> | null;
-}> = ({ layers, layersSettings }) => {
+  children?: React.ReactNode;
+}> = ({ layers, layersSettings, children }) => {
   const { current: map } = useMap();
 
   const baseLayer = useMemo(() => {
@@ -31,6 +32,7 @@ export const LayerManager: FC<{
 
   return (
     <>
+      {children}
       {/*
           Generate all transparent backgrounds to be able to sort by layers without an error
           - https://github.com/visgl/react-map-gl/issues/939#issuecomment-625290200

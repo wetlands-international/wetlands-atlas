@@ -29,10 +29,17 @@ export const LocationsList = () => {
       params: {
         query: {
           depth: 1,
-          limit: 25,
+          limit: 3000,
           page: 1,
           sort: "name",
           locale,
+          select: {
+            id: true,
+            name: true,
+            type: true,
+            code: true,
+            bbox: true,
+          },
           where: {
             ...(!!search && {
               name: {
@@ -48,7 +55,7 @@ export const LocationsList = () => {
 
   return (
     <CommandList className="bg-foreground relative rounded-4xl p-6">
-      <Loader isLoading={isFetching && !isFetched} />
+      <Loader isLoading={isFetching} />
 
       {!isFetching && isFetched && (
         <CommandEmpty>

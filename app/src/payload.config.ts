@@ -15,17 +15,16 @@ import {
   FixedToolbarFeature,
 } from "@payloadcms/richtext-lexical";
 
+import { Categories } from "@/cms/collections/Categories";
 import { IndicatorDatas } from "@/cms/collections/IndicatorDatas";
 import { Indicators } from "@/cms/collections/Indicators";
 import { Landscapes } from "@/cms/collections/Landscapes";
 import { Layers } from "@/cms/collections/Layers";
 import { Locations } from "@/cms/collections/Location";
+import { Media } from "@/cms/collections/Media";
+import { Users } from "@/cms/collections/Users";
 import { plugins } from "@/cms/plugins";
 import { env } from "@/env";
-
-import { Categories } from "./cms/collections/Categories";
-import { Media } from "./cms/collections/Media";
-import { Users } from "./cms/collections/Users";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);

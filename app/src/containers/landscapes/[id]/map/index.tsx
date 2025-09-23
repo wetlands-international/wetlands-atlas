@@ -9,9 +9,9 @@ import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]
 
 import { LandscapeFitBounds } from "@/containers/landscapes/[id]/map/fit-bounds";
 import { LandscapesLegend } from "@/containers/landscapes/[id]/map/legend";
-import { LayerManager } from "@/containers/map/layer-manager";
 
 import { BASEMAPS } from "@/components/map/controls/settings/basemap";
+import { LayerManager } from "@/components/map/layer-manager";
 
 import { env } from "@/env";
 import { Landscape } from "@/payload-types";
