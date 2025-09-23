@@ -2,6 +2,8 @@
 
 import { useCallback } from "react";
 
+import Image from "next/image";
+
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 import { LuX } from "react-icons/lu";
@@ -52,13 +54,17 @@ export const CategoriesBack = () => {
           "pointer-events-none grayscale": !category?.indicators?.docs?.length,
         },
       )}
-      style={{
-        backgroundImage: isValidMedia(category?.cover)
-          ? category?.cover.url
-          : `url(https://picsum.photos/seed/g-${category?.id}/500/300)`,
-      }}
       onClick={handleClick}
     >
+      {isValidMedia(category?.cover) && (
+        <Image
+          src={category.cover.url}
+          alt={category.cover.alt}
+          width={category.cover.width}
+          height={category.cover.height}
+          className="absolute h-full w-full rounded-4xl object-cover"
+        />
+      )}
       {!category?.indicators?.docs?.length && (
         <span className="text-foreground bg-foreground/20 text-2xs pointer-events-none absolute top-3 left-4 z-10 rounded-4xl px-2.5 py-1.5 font-medium uppercase backdrop-blur-xs">
           Coming soon

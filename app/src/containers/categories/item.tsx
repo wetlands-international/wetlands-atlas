@@ -2,6 +2,8 @@
 
 import { useCallback } from "react";
 
+import Image from "next/image";
+
 import { LuChevronRight } from "react-icons/lu";
 
 import { cn, isValidMedia } from "@/lib/utils";
@@ -26,13 +28,17 @@ export const CategoriesItem = (category: Category) => {
           "pointer-events-none grayscale": !category.indicators?.docs?.length,
         },
       )}
-      style={{
-        backgroundImage: isValidMedia(category?.cover)
-          ? category.cover.url
-          : `url(https://picsum.photos/seed/g-${category.id}/500/300)`,
-      }}
       onClick={handleChange}
     >
+      {isValidMedia(category?.cover) && (
+        <Image
+          src={category.cover.url}
+          alt={category.cover.alt}
+          width={category.cover.width}
+          height={category.cover.height}
+          className="absolute h-full w-full rounded-4xl object-cover"
+        />
+      )}
       {!category.indicators?.docs?.length && (
         <span className="text-foreground bg-foreground/20 text-2xs pointer-events-none absolute top-3 left-4 z-10 rounded-4xl px-2.5 py-1.5 font-medium uppercase backdrop-blur-xs">
           Coming soon
@@ -47,16 +53,6 @@ export const CategoriesItem = (category: Category) => {
         <header className="relative flex min-h-28 w-full flex-col justify-center">
           <div className="relative w-full">
             <h2 className="font-display text-2xl">{category.name}</h2>
-            {/* {!!category.description && (
-              <div
-                className={cn(
-                  "prose prose-invert prose-sm w-full duration-300",
-                  // "-translate-y-2 opacity-0 duration-500 group-hover:translate-y-0 group-hover:opacity-100",
-                )}
-              >
-                {category.description}
-              </div>
-            )} */}
           </div>
         </header>
 
