@@ -157,13 +157,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
           </div>
         )}
       </header>
-      {chartData.length > 0 && (
-        <>
-          <div className="aspect-square">
-            <WidgetChart indicator={indicator.id} data={chartData} />
-          </div>
-        </>
-      )}
+      {chartData.length > 0 && <WidgetChart indicator={indicator.id} data={chartData} />}
     </div>
   );
 };
