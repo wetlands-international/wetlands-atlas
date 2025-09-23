@@ -27,12 +27,12 @@ const RankingChartSectionHeader: FC<{ title: string; unit: string }> = ({ title,
   </header>
 );
 
-const RankingChartList: FC<Props & { title: string; unit: string }> = ({ data, title, unit }) => {
+const RankingChartList: FC<Props & { title?: string; unit?: string }> = ({ data, title, unit }) => {
   if (data.length === 0) return null;
 
   return (
     <section>
-      <RankingChartSectionHeader title={title} unit={unit} />
+      {title && unit && <RankingChartSectionHeader title={title} unit={unit} />}
       <ul className="space-y-3">
         {data
           .sort((a, b) => b.value - a.value)
@@ -124,14 +124,19 @@ const RankingSection: FC<{
 };
 
 const RankingChart: FC<{
-  sections: Array<RankingChartSection>;
+  sections?: Array<RankingChartSection>;
+  data?: ValidIndicatorData[];
   withLegend?: boolean;
-}> = ({ sections, withLegend }) => {
+}> = ({ sections, data, withLegend }) => {
   return (
     <div className="w-full space-y-7">
-      {sections.map((section) => (
-        <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
-      ))}
+      {data ? (
+        <RankingChartList data={data} />
+      ) : sections ? (
+        sections.map((section) => (
+          <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
+        ))
+      ) : null}
       {withLegend && <RankingChartLegend />}
     </div>
   );

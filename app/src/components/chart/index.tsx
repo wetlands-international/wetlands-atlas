@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { IndicatorChartData } from "@/containers/indicators/types";
 
 import { RankingChart, RankingChartSection } from "@/components/chart/ranking";
-import ScatterChartComponent from "@/components/chart/scatter";
 
 type ValidIndicatorData = IndicatorChartData & { value: number };
 const getValidData = (data: IndicatorChartData[]): ValidIndicatorData[] => {
@@ -37,22 +36,11 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
     }
 
     case "cost-of-intervention": {
-      const validData = getValidData(data);
-      const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
-
-      const protection = validData.filter((d) => d.type === "protection");
-      const restoration = validData.filter((d) => d.type === "restoration");
-
-      const sections: RankingChartSection[] = [
-        { data: protection, title: t("protection"), type: "list", unit },
-        { data: restoration, title: t("restoration"), type: "list", unit },
-      ];
-
-      return <RankingChart sections={sections} />;
+      return <RankingChart data={getValidData(data)} />;
     }
 
     case "return-on-investment": {
-      return <ScatterChartComponent data={data} />;
+      return <RankingChart data={getValidData(data)} />;
     }
 
     default: {
