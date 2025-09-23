@@ -33,7 +33,6 @@ export const LegendItemToolbar: React.FC<LegendItemToolbarProps> = ({
             <Popover
               open={popoverOpen}
               onOpenChange={(open) => {
-                console.log(open);
                 setPopoverOpen(open);
               }}
             >
