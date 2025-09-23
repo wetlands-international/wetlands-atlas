@@ -3,10 +3,6 @@
  * Do not make direct changes to the file.
  */
 
-import { Where } from "payload";
-
-import { IndicatorChartData } from "@/containers/indicators/types";
-
 export interface paths {
   "/api/users": {
     parameters: {
@@ -521,7 +517,7 @@ export interface components {
     };
     /** Media */
     Media: {
-      id: number;
+      id: string;
       alt: string;
       updatedAt: string;
       createdAt: string;
@@ -541,7 +537,7 @@ export interface components {
       id: string;
       name: string;
       description?: string | null;
-      cover?: (number | null) | components["schemas"]["Media"];
+      cover?: (string | null) | components["schemas"]["Media"];
       indicators?: {
         docs?: (string | components["schemas"]["Indicator"])[];
         hasNextPage?: boolean;
@@ -634,8 +630,8 @@ export interface components {
       id: string;
       indicator: string | components["schemas"]["Indicator"];
       location: string | components["schemas"]["Location"];
-      data: IndicatorChartData[];
-      labels: Record<string, never>;
+      data: Record<string, never> | unknown[] | string | number | boolean | null;
+      labels: Record<string, never> | unknown[] | string | number | boolean | null;
       updatedAt: string;
       createdAt: string;
     };
@@ -690,7 +686,7 @@ export interface components {
           version: number;
         };
       };
-      cover?: (number | null) | components["schemas"]["Media"];
+      cover?: (string | null) | components["schemas"]["Media"];
       embedded_video?: {
         /** @enum {string|null} */
         type?: "youtube" | null;
@@ -722,7 +718,7 @@ export interface components {
               };
             };
             map?: {
-              bbox: [number, number, number, number];
+              bbox: unknown[];
               layers?: string[];
               /** @enum {string} */
               basemap?: "default" | "satellite";
@@ -2372,7 +2368,7 @@ export interface components {
         "application/json": {
           name: string;
           description?: string | null;
-          cover?: (number | null) | components["schemas"]["Media"];
+          cover?: (string | null) | components["schemas"]["Media"];
           indicators?: {
             docs?: (string | components["schemas"]["Indicator"])[];
             hasNextPage?: boolean;
@@ -2394,7 +2390,7 @@ export interface components {
         "application/json": {
           name?: string;
           description?: string | null;
-          cover?: (number | null) | components["schemas"]["Media"];
+          cover?: (string | null) | components["schemas"]["Media"];
           indicators?: {
             docs?: (string | components["schemas"]["Indicator"])[];
             hasNextPage?: boolean;
@@ -2592,7 +2588,7 @@ export interface components {
           /** @description A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location. */
           code: string;
           geometry: Record<string, never> | unknown[] | string | number | boolean | null;
-          bbox: [number, number, number, number];
+          bbox: number[];
           /** @enum {string} */
           type: "admin_region" | "eco_region" | "hydro_basin" | "global" | "landscapes" | "wdpa";
           /** @description ID of the locations */
@@ -2608,7 +2604,7 @@ export interface components {
           /** @description A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location. */
           code?: string;
           geometry?: Record<string, never> | unknown[] | string | number | boolean | null;
-          bbox?: [number, number, number, number];
+          bbox?: number[];
           /** @enum {string} */
           type?: "admin_region" | "eco_region" | "hydro_basin" | "global" | "landscapes" | "wdpa";
           /** @description ID of the locations */
@@ -2652,7 +2648,7 @@ export interface components {
               version: number;
             };
           };
-          cover?: (number | null) | components["schemas"]["Media"];
+          cover?: (string | null) | components["schemas"]["Media"];
           embedded_video?: {
             /** @enum {string|null} */
             type?: "youtube" | null;
@@ -2685,7 +2681,7 @@ export interface components {
                   };
                 };
                 map?: {
-                  bbox: [number, number, number, number];
+                  bbox: unknown[];
                   layers?: string[];
                   /** @enum {string} */
                   basemap?: "default" | "satellite";
@@ -2737,7 +2733,7 @@ export interface components {
               version: number;
             };
           };
-          cover?: (number | null) | components["schemas"]["Media"];
+          cover?: (string | null) | components["schemas"]["Media"];
           embedded_video?: {
             /** @enum {string|null} */
             type?: "youtube" | null;
@@ -2770,7 +2766,7 @@ export interface components {
                   };
                 };
                 map?: {
-                  bbox: [number, number, number, number];
+                  bbox: unknown[];
                   layers?: string[];
                   /** @enum {string} */
                   basemap?: "default" | "satellite";
@@ -2883,7 +2879,12 @@ export interface operations {
           | "-loginAttempts"
           | "lockUntil"
           | "-lockUntil";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["UserQueryOperations"]
+            | components["schemas"]["UserQueryOperationsAnd"]
+            | components["schemas"]["UserQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3002,7 +3003,12 @@ export interface operations {
           | "-focalX"
           | "focalY"
           | "-focalY";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["MediaQueryOperations"]
+            | components["schemas"]["MediaQueryOperationsAnd"]
+            | components["schemas"]["MediaQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3105,7 +3111,12 @@ export interface operations {
           | "-updatedAt"
           | "createdAt"
           | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["CategoryQueryOperations"]
+            | components["schemas"]["CategoryQueryOperationsAnd"]
+            | components["schemas"]["CategoryQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3208,7 +3219,12 @@ export interface operations {
           | "-updatedAt"
           | "createdAt"
           | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["IndicatorQueryOperations"]
+            | components["schemas"]["IndicatorQueryOperationsAnd"]
+            | components["schemas"]["IndicatorQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3311,7 +3327,12 @@ export interface operations {
           | "-updatedAt"
           | "createdAt"
           | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["LayerQueryOperations"]
+            | components["schemas"]["LayerQueryOperationsAnd"]
+            | components["schemas"]["LayerQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3406,7 +3427,12 @@ export interface operations {
         locale?: string;
         "fallback-locale"?: string;
         sort?: "id" | "-id" | "updatedAt" | "-updatedAt" | "createdAt" | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["IndicatorDatumQueryOperations"]
+            | components["schemas"]["IndicatorDatumQueryOperationsAnd"]
+            | components["schemas"]["IndicatorDatumQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3511,7 +3537,12 @@ export interface operations {
           | "-updatedAt"
           | "createdAt"
           | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["LocationQueryOperations"]
+            | components["schemas"]["LocationQueryOperationsAnd"]
+            | components["schemas"]["LocationQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3606,7 +3637,12 @@ export interface operations {
         locale?: string;
         "fallback-locale"?: string;
         sort?: "id" | "-id" | "updatedAt" | "-updatedAt" | "createdAt" | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["LandscapeQueryOperations"]
+            | components["schemas"]["LandscapeQueryOperationsAnd"]
+            | components["schemas"]["LandscapeQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3707,7 +3743,12 @@ export interface operations {
           | "-updatedAt"
           | "createdAt"
           | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["PayloadLockedDocumentQueryOperations"]
+            | components["schemas"]["PayloadLockedDocumentQueryOperationsAnd"]
+            | components["schemas"]["PayloadLockedDocumentQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3802,7 +3843,12 @@ export interface operations {
         locale?: string;
         "fallback-locale"?: string;
         sort?: "key" | "-key" | "updatedAt" | "-updatedAt" | "createdAt" | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["PayloadPreferenceQueryOperations"]
+            | components["schemas"]["PayloadPreferenceQueryOperationsAnd"]
+            | components["schemas"]["PayloadPreferenceQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;
@@ -3905,7 +3951,12 @@ export interface operations {
           | "-updatedAt"
           | "createdAt"
           | "-createdAt";
-        where?: Where;
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["PayloadMigrationQueryOperations"]
+            | components["schemas"]["PayloadMigrationQueryOperationsAnd"]
+            | components["schemas"]["PayloadMigrationQueryOperationsOr"]
+          );
       };
       header?: never;
       path?: never;

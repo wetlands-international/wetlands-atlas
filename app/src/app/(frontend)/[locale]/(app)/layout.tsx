@@ -43,21 +43,29 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           limit: 100,
           sort: "name",
           locale,
+          where: {},
         },
       },
     }),
   );
 
+  // Default locations
   await queryClient.prefetchQuery(
     API.queryOptions("get", "/api/locations", {
       params: {
         query: {
           depth: 1,
-          limit: 25,
+          limit: 3000,
           page: 1,
           sort: "name",
           locale,
-          where: {},
+          select: {
+            id: true,
+            name: true,
+            type: true,
+            code: true,
+            bbox: true,
+          },
         },
       },
     }),

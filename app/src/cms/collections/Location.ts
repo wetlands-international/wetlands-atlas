@@ -59,7 +59,9 @@ export const Locations: CollectionConfig = {
       name: "geometry",
       type: "json",
       required: true,
-      hidden: true,
+      admin: {
+        hidden: true,
+      },
     },
     BBoxField,
     {

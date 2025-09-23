@@ -14,17 +14,19 @@ import {
   useSyncBbox,
   useSyncLayers,
   useSyncLayersSettings,
+  useSyncLocation,
 } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { Layers } from "@/containers/layers";
 import LandscapeMarker from "@/containers/map/landscape-marker";
-import { LayerManager } from "@/containers/map/layer-manager";
 
 import Controls from "@/components/map/controls";
 import LayersControl from "@/components/map/controls/layers";
 import SettingsControl from "@/components/map/controls/settings";
 import { BasemapControl, BASEMAPS } from "@/components/map/controls/settings/basemap";
 import ZoomControl from "@/components/map/controls/zoom";
+import { LayerManager } from "@/components/map/layer-manager";
+import { LocationLayer } from "@/components/map/layers/location";
 
 import { env } from "@/env";
 import { Landscape } from "@/payload-types";
@@ -40,6 +42,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
   const [layers] = useSyncLayers();
   const [layersSettings, setLayersSettings] = useSyncLayersSettings();
+  const [location] = useSyncLocation();
 
   const { exploreMap } = useMap();
 
@@ -145,7 +148,11 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
           />
         ))}
 
-        {loaded && <LayerManager layers={layers} layersSettings={layersSettings} />}
+        {loaded && (
+          <LayerManager layers={layers} layersSettings={layersSettings}>
+            <LocationLayer location={location} />
+          </LayerManager>
+        )}
 
         <Controls>
           <ZoomControl />

@@ -97,7 +97,7 @@
 }
 
 :root {
-  --accent: hsl(69 61% 64%);
+  --accent: hsl(69, 61%, 64%);
   --accent-foreground: hsl(200 71% 7%);
   --background: hsl(201 69% 14%);
   --border: hsl(197 87% 28%);

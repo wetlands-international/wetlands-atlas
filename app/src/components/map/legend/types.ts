@@ -97,7 +97,7 @@ export interface LegendTypeProps {
   className?: string;
   items: Array<{
     color: string;
-    label: string;
+    label?: string;
     value?: string | number;
   }>;
 }
