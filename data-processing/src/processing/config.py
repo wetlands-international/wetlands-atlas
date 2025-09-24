@@ -6,8 +6,11 @@ from pathlib import Path
 
 # Directory paths
 RAW_DATA_DIR = Path("data/raw/")
-OUTPUT_DIR = Path("data/processed/")
-OUTPUT_COG_DIR = OUTPUT_DIR / "cogs"
+PROCESSED_DATA_DIR = Path("data/processed/")
+INPUT_COG_DIR = RAW_DATA_DIR / "rasters"
+INPUT_VECTOR_DIR = RAW_DATA_DIR / "vectors"
+OUTPUT_COG_DIR = PROCESSED_DATA_DIR / "cogs"
+OUTPUT_MBTILES_DIR = PROCESSED_DATA_DIR / "mbtiles"
 
 # File paths
 SAHEL_BOUNDARY_FILE = RAW_DATA_DIR / "sahel_boundary.gpkg"
