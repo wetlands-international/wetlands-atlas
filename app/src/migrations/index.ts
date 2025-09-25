@@ -21,6 +21,7 @@ import * as migration_20250912_142826_multipolygon_geometry_support from './2025
 import * as migration_20250915_141326_change_landscapes_name_type from './20250915_141326_change_landscapes_name_type';
 import * as migration_20250922_132929 from './20250922_132929';
 import * as migration_20250925_123437 from './20250925_123437';
+import * as migration_20250925_220412 from './20250925_220412';
 
 export const migrations = [
   {
@@ -136,6 +137,11 @@ export const migrations = [
   {
     up: migration_20250925_123437.up,
     down: migration_20250925_123437.down,
-    name: '20250925_123437'
+    name: '20250925_123437',
+  },
+  {
+    up: migration_20250925_220412.up,
+    down: migration_20250925_220412.down,
+    name: '20250925_220412'
   },
 ];

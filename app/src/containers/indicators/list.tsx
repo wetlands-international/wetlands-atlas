@@ -30,7 +30,6 @@ export const IndicatorsList = () => {
           depth: 1,
           limit: 100,
           page: 1,
-          sort: "-createdAt",
           locale,
           where: query,
         },

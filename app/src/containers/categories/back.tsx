@@ -29,9 +29,8 @@ export const CategoriesBack = () => {
       params: {
         query: {
           depth: 1,
-          limit: 100,
-          sort: "name",
-          locale, // Replace with the actual locale if needed
+          limit: 0,
+          locale,
         },
       },
     }),

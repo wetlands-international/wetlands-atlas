@@ -537,6 +537,7 @@ export interface components {
       id: string;
       name: string;
       description?: string | null;
+      order: number;
       cover?: (string | null) | components["schemas"]["Media"];
       indicators?: {
         docs?: (string | components["schemas"]["Indicator"])[];
@@ -575,6 +576,7 @@ export interface components {
         };
       } | null;
       category: string | components["schemas"]["Category"];
+      order: number;
       layers?: {
         docs?: (string | components["schemas"]["Layer"])[];
         hasNextPage?: boolean;
@@ -619,7 +621,7 @@ export interface components {
           label?: string;
         }[];
       };
-      indicator?: (string | components["schemas"]["Indicator"])[] | null;
+      indicators?: (string | components["schemas"]["Indicator"])[] | null;
       /** @enum {string} */
       type: "indicator" | "contextual" | "landscape";
       updatedAt: string;
@@ -1094,6 +1096,16 @@ export interface components {
         like?: string;
         contains?: string;
       };
+      order?: {
+        equals?: number;
+        not_equals?: number;
+        in?: string;
+        not_in?: string;
+        greater_than?: number;
+        greater_than_equal?: number;
+        less_than?: number;
+        less_than_equal?: number;
+      };
       updatedAt?: {
         /** Format: date-time */
         equals?: string;
@@ -1160,6 +1172,16 @@ export interface components {
         not_in?: string;
         like?: string;
         contains?: string;
+      };
+      order?: {
+        equals?: number;
+        not_equals?: number;
+        in?: string;
+        not_in?: string;
+        greater_than?: number;
+        greater_than_equal?: number;
+        less_than?: number;
+        less_than_equal?: number;
       };
       updatedAt?: {
         /** Format: date-time */
@@ -2368,6 +2390,7 @@ export interface components {
         "application/json": {
           name: string;
           description?: string | null;
+          order: number;
           cover?: (string | null) | components["schemas"]["Media"];
           indicators?: {
             docs?: (string | components["schemas"]["Indicator"])[];
@@ -2390,6 +2413,7 @@ export interface components {
         "application/json": {
           name?: string;
           description?: string | null;
+          order?: number;
           cover?: (string | null) | components["schemas"]["Media"];
           indicators?: {
             docs?: (string | components["schemas"]["Indicator"])[];
@@ -2429,6 +2453,7 @@ export interface components {
           } | null;
           /** @description ID of the categories */
           category: string;
+          order: number;
           layers?: {
             docs?: (string | components["schemas"]["Layer"])[];
             hasNextPage?: boolean;
@@ -2476,6 +2501,7 @@ export interface components {
           } | null;
           /** @description ID of the categories */
           category?: string;
+          order?: number;
           layers?: {
             docs?: (string | components["schemas"]["Layer"])[];
             hasNextPage?: boolean;
@@ -2521,7 +2547,7 @@ export interface components {
             }[];
           };
           /** @description ID of the indicators */
-          indicator?: string;
+          indicators?: string;
           /** @enum {string} */
           type: "indicator" | "contextual" | "landscape";
         };
@@ -2548,7 +2574,7 @@ export interface components {
             }[];
           };
           /** @description ID of the indicators */
-          indicator?: string;
+          indicators?: string;
           /** @enum {string} */
           type?: "indicator" | "contextual" | "landscape";
         };
@@ -3107,6 +3133,8 @@ export interface operations {
           | "-id"
           | "name"
           | "-name"
+          | "order"
+          | "-order"
           | "updatedAt"
           | "-updatedAt"
           | "createdAt"
@@ -3215,6 +3243,8 @@ export interface operations {
           | "-id"
           | "name"
           | "-name"
+          | "order"
+          | "-order"
           | "updatedAt"
           | "-updatedAt"
           | "createdAt"

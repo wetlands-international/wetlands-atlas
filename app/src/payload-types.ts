@@ -187,6 +187,7 @@ export interface Category {
   id: string;
   name: string;
   description?: string | null;
+  order: number;
   cover?: (number | null) | Media;
   indicators?: {
     docs?: (string | Indicator)[];
@@ -231,6 +232,7 @@ export interface Indicator {
     [k: string]: unknown;
   } | null;
   category: string | Category;
+  order: number;
   layers?: {
     docs?: (string | Layer)[];
     hasNextPage?: boolean;
@@ -576,6 +578,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   description?: T;
+  order?: T;
   cover?: T;
   indicators?: T;
   landscapes?: T;
@@ -592,6 +595,7 @@ export interface IndicatorsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   category?: T;
+  order?: T;
   layers?: T;
   widget?: T;
   updatedAt?: T;

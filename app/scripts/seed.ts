@@ -148,7 +148,7 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, description, category, widget } = row;
+    const { id, name, description, category, widget, order } = row;
 
     // Step 1: Ensure category exists (foreign key)
     const categoryExists = await tx.query.categories.findFirst({
@@ -166,6 +166,7 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
       .values({
         id,
         category,
+        order,
         createdAt: now,
         updatedAt: now,
       })
@@ -173,6 +174,7 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
         target: indicators.id,
         set: {
           category,
+          order,
           updatedAt: now,
         },
       });
@@ -208,13 +210,14 @@ const seedCategories = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, description, cover } = row;
+    const { id, name, description, cover, order } = row;
 
     // Step 1: Upsert into categories table
     await tx
       .insert(categories)
       .values({
         id,
+        order,
         cover: cover ?? null,
         createdAt: now,
         updatedAt: now,
@@ -222,6 +225,7 @@ const seedCategories = async (db: DB, tx: TX): Promise<void> => {
       .onConflictDoUpdate({
         target: categories.id,
         set: {
+          order,
           cover: cover ?? null,
           updatedAt: now,
         },

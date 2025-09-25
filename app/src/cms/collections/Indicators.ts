@@ -20,10 +20,10 @@ export const Indicators: CollectionConfig = {
   slug: "indicators",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["slug_id", "name", "category", "layers"],
+    defaultColumns: ["slug_id", "name", "category", "layers", "order"],
   },
   access: PublicAccessControl, // TODO revise permissions and uncomment later
-  defaultSort: ["name"],
+  defaultSort: ["order"],
   fields: [
     SlugIDField(),
     {
@@ -44,6 +44,12 @@ export const Indicators: CollectionConfig = {
       relationTo: "categories",
       hasMany: false,
       required: true,
+    },
+    {
+      name: "order",
+      type: "number",
+      required: true,
+      min: 0,
     },
     {
       name: "layers",
