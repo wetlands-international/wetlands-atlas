@@ -199,7 +199,7 @@ export interface Category {
     totalDocs?: number;
   };
   /**
-   * Define the default indicators for this category. These will be activated by default when a user selects this category.
+   * Define the default indicators for this category. These will be activated by default when a user selects this category. Only indicators that belongs to this category and has layers can be selected.
    */
   defaultIndicators?: (string | Indicator)[] | null;
   updatedAt: string;

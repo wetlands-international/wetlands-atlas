@@ -59,9 +59,15 @@ export const Categories: CollectionConfig = {
       type: "relationship",
       relationTo: "indicators",
       hasMany: true,
+      filterOptions: (args) => ({
+        category: {
+          equals: args?.id,
+        },
+        layers: { exists: true },
+      }),
       admin: {
         description:
-          "Define the default indicators for this category. These will be activated by default when a user selects this category.",
+          "Define the default indicators for this category. These will be activated by default when a user selects this category. Only indicators that belongs to this category and has layers can be selected.",
       },
     },
   ],

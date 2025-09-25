@@ -40,10 +40,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       params: {
         query: {
           depth: 1,
-          limit: 100,
+          limit: 0,
           sort: "name",
           locale,
-          where: {},
         },
       },
     }),
@@ -55,7 +54,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       params: {
         query: {
           depth: 1,
-          limit: 3000,
+          limit: 0,
           page: 1,
           sort: "name",
           locale,
