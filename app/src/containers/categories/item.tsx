@@ -8,16 +8,41 @@ import { LuChevronRight } from "react-icons/lu";
 
 import { cn, isValidMedia } from "@/lib/utils";
 
-import { useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
+import {
+  useSyncIndicators,
+  useSyncInsight,
+  useSyncLayers,
+} from "@/app/(frontend)/[locale]/(app)/store";
 
 import { Category } from "@/payload-types";
 
 export const CategoriesItem = (category: Category) => {
   const [, setInsight] = useSyncInsight();
+  const [, setIndicators] = useSyncIndicators();
+  const [, setLayers] = useSyncLayers();
 
   const handleChange = useCallback(() => {
     setInsight(category.id);
-  }, [category.id, setInsight]);
+
+    // Enable default indicators and layers
+    setIndicators(
+      category.defaultIndicators?.map((doc) => {
+        if (typeof doc === "string") return doc;
+        return doc.id;
+      }) || [],
+    );
+    setLayers(
+      category.defaultIndicators
+        ?.map((doc) => {
+          if (typeof doc === "string") return [];
+
+          if (!doc.layers || !doc.layers?.docs?.length) return [];
+
+          return doc.layers.docs.map((layer) => (typeof layer === "string" ? layer : layer.id));
+        })
+        .flat() || [],
+    );
+  }, [category, setInsight, setIndicators, setLayers]);
 
   return (
     <button
