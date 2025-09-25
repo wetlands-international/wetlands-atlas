@@ -360,22 +360,26 @@ const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
 const seedLayers = async (db: DB, tx: TX): Promise<void> => {
   const layers = db.query.layers.table;
   const layersLocales = db.query.layers_locales.table;
+  const layersRels = db.query.layers_rels?.table;
 
   const rows = JSON.parse(await fs.promises.readFile(LAYERS_FILE_PATH, "utf-8"));
   const now = new Date().toISOString();
 
+  await tx.delete(layersRels);
+
   for (const row of rows) {
-    const { id, name, config, params_config, legend_config, indicator, type } = row;
+    const { id, name, config, params_config, legend_config, indicators, type } = row;
 
     // Optional: validate indicator exists for LAYER_TYPE.INDICATOR
-    if (type === "INDICATOR" && indicator) {
-      const indicatorExists = await tx.query.indicators.findFirst({
-        where: eq(db.query.indicators.table.id, indicator),
-      });
+    if (type === "indicator" && indicators) {
+      for (const indicatorId of indicators) {
+        const indicatorExists = await tx.query.indicators.findFirst({
+          where: eq(db.query.indicators.table.id, indicatorId),
+        });
 
-      if (!indicatorExists) {
-        console.warn(`⚠️ Skipping layer '${id}' — indicator '${indicator}' not found.`);
-        continue;
+        if (!indicatorExists) {
+          console.warn(`⚠️ Skipping layer '${id}' — indicator '${indicatorId}' not found.`);
+        }
       }
     }
 
@@ -387,7 +391,6 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
         config,
         params_config,
         legend_config,
-        indicator: indicator ?? null,
         type,
         createdAt: now,
         updatedAt: now,
@@ -398,7 +401,6 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
           config,
           params_config,
           legend_config,
-          indicator: indicator ?? null,
           type,
           updatedAt: now,
         },
@@ -418,6 +420,23 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
           name,
         },
       });
+
+    // Insert relationships into layers_rels join table
+    if (Array.isArray(indicators) && layersRels) {
+      await tx
+        .insert(layersRels)
+        .values(
+          indicators.map((indicatorId, order) => {
+            return {
+              parent: id,
+              indicatorsID: indicatorId,
+              order,
+              path: "indicators",
+            };
+          }),
+        )
+        .onConflictDoNothing();
+    }
   }
 
   console.log("✅ Seeded layers.");

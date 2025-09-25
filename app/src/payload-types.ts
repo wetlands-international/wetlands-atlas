@@ -291,7 +291,7 @@ export interface Layer {
     }[];
     [k: string]: unknown;
   };
-  indicator?: (string | null) | Indicator;
+  indicators?: (string | Indicator)[] | null;
   type: 'indicator' | 'contextual' | 'landscape';
   updatedAt: string;
   createdAt: string;
@@ -607,7 +607,7 @@ export interface LayersSelect<T extends boolean = true> {
   config?: T;
   params_config?: T;
   legend_config?: T;
-  indicator?: T;
+  indicators?: T;
   type?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -619,7 +619,7 @@ export interface components {
           label?: string;
         }[];
       };
-      indicator?: (string | null) | components["schemas"]["Indicator"];
+      indicator?: (string | components["schemas"]["Indicator"])[] | null;
       /** @enum {string} */
       type: "indicator" | "contextual" | "landscape";
       updatedAt: string;
@@ -643,7 +643,7 @@ export interface components {
       /** @description A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location. */
       code: string;
       geometry: Record<string, never> | unknown[] | string | number | boolean | null;
-      bbox: [number, number, number, number];
+      bbox: number[];
       /** @enum {string} */
       type: "admin_region" | "eco_region" | "hydro_basin" | "global" | "landscapes" | "wdpa";
       parent?: (string | null) | components["schemas"]["Location"];

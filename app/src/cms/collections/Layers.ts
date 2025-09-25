@@ -43,10 +43,10 @@ export const Layers: CollectionConfig = {
     ParamsConfigField,
     LegendConfigField,
     {
-      name: "indicator",
+      name: "indicators",
       type: "relationship",
       relationTo: "indicators",
-      hasMany: false,
+      hasMany: true,
       admin: {
         condition: (_, siblingData) => {
           // Don't show this field if the layer type is CONTEXTUAL

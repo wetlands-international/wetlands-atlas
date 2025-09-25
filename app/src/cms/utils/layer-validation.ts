@@ -7,26 +7,26 @@ import { Layer } from "@/payload-types";
 // or that it does not have an indicator if it is of type CONTEXTUAL.
 export const LayerTypeValidation: CollectionBeforeValidateHook<Layer> = (args) => {
   const { data } = args;
-  if (data && data.type === LAYER_TYPE.INDICATOR && !data.indicator) {
+  if (data && data.type === LAYER_TYPE.INDICATOR && !data.indicators) {
     throw new ValidationError({
       collection: "layers",
       errors: [
         {
-          label: "Indicator",
-          path: "indicator",
-          message: "Indicator is required for indicator layers.",
+          label: "Indicators",
+          path: "indicators",
+          message: "At least one indicator is required for indicator layers.",
         },
       ],
     });
   }
-  if (data && data.type === LAYER_TYPE.CONTEXTUAL && data.indicator) {
+  if (data && data.type === LAYER_TYPE.CONTEXTUAL && data.indicators) {
     throw new ValidationError({
       collection: "layers",
       errors: [
         {
-          label: "Indicator",
-          path: "indicator",
-          message: "Contextual Layers cannot have an indicator.",
+          label: "Indicators",
+          path: "indicators",
+          message: "Contextual Layers cannot have indicators.",
         },
       ],
     });

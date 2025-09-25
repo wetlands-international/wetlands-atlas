@@ -49,7 +49,7 @@ export const Indicators: CollectionConfig = {
       name: "layers",
       type: "join",
       collection: "layers",
-      on: "indicator",
+      on: "indicators",
       admin: {
         defaultColumns: ["id", "name"],
       },

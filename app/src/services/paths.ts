@@ -623,7 +623,7 @@ export interface components {
           label?: string;
         }[];
       };
-      indicator?: (string | null) | components["schemas"]["Indicator"];
+      indicator?: (string | components["schemas"]["Indicator"])[] | null;
       /** @enum {string} */
       type: "indicator" | "contextual" | "landscape";
       updatedAt: string;
