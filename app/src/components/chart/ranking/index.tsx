@@ -7,9 +7,8 @@ import { useTranslations } from "next-intl";
 import { formatNumber } from "@/lib/formats";
 import { cn } from "@/lib/utils";
 
-import { IndicatorChartData } from "@/containers/indicators/types";
+import { ValidIndicatorData } from "@/components/chart/types";
 
-type ValidIndicatorData = IndicatorChartData & { value: number };
 type RankingChartSection = {
   data: ValidIndicatorData[];
   title: string;
