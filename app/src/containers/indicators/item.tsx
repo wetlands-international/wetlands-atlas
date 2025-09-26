@@ -137,7 +137,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
             {indicator.description &&
               !!convertLexicalToPlaintext({ data: indicator.description }) && (
                 <InfoButton>
-                  <div className="prose prose-invert prose-sm">
+                  <div className="prose prose-invert prose-sm prose-p:leading-5">
                     <Lexical data={indicator.description} variables={lexicalVariables} />
                   </div>
                 </InfoButton>
@@ -152,7 +152,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
         </div>
 
         {indicator.widget && Object.keys(lexicalVariables).length > 0 && (
-          <div className="prose prose-invert prose-sm">
+          <div className="prose prose-invert prose-sm prose-p:leading-5">
             <Lexical data={indicator.widget} variables={lexicalVariables} />
           </div>
         )}

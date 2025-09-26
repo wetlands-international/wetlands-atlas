@@ -99,7 +99,8 @@
   "landscapes": {
     "title": "Landscapes",
     "description": "A collection of landscapes about wetlands.",
-    "empty": "No landscapes available."
+    "empty": "No landscapes available.",
+    "indicator": "Explore fascinating landscapes from this area related to {category}"
   },
   "landscapesId": {
     "title": "Landscape Details",

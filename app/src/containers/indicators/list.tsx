@@ -9,6 +9,7 @@ import { useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { CategoriesBack } from "@/containers/categories/back";
 import { IndicatorsItem } from "@/containers/indicators/item";
+import { LandscapesIndicator } from "@/containers/landscapes/indicator";
 
 import API from "@/services/api";
 
@@ -40,6 +41,8 @@ export const IndicatorsList = () => {
   return (
     <div className="flex flex-col gap-1">
       <CategoriesBack />
+
+      <LandscapesIndicator />
 
       {indicatorsData?.docs.map((indicator) => (
         <IndicatorsItem key={indicator.id} indicator={indicator} />
