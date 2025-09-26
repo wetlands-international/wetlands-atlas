@@ -8,6 +8,7 @@ import {
   bboxParser,
   indicatorsParser,
   insightParser,
+  landscapeLayerParser,
   layersParser,
   layersSettingsParser,
   locationParser,
@@ -53,6 +54,10 @@ export const useSyncLayers = () => {
 
 export const useSyncLayersSettings = () => {
   return useQueryState("layers-settings", layersSettingsParser);
+};
+
+export const useSyncLandscapeLayer = () => {
+  return useQueryState("landscape-layer", landscapeLayerParser);
 };
 
 // LANDSCAPES

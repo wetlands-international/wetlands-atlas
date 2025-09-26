@@ -76,12 +76,12 @@ export const CategoriesBack = () => {
         )}
       >
         <header className="relative flex min-h-28 w-full flex-col justify-center">
-          <div className="relative w-full">
+          <div className="relative w-full space-y-2">
             <h2 className="font-display text-2xl">{category?.name}</h2>
             {!!category?.description && (
               <div
                 className={cn(
-                  "prose prose-invert prose-sm w-full duration-300",
+                  "prose prose-invert prose-sm prose-p:leading-5 w-full duration-300",
                   // "-translate-y-2 opacity-0 duration-500 group-hover:translate-y-0 group-hover:opacity-100",
                 )}
               >

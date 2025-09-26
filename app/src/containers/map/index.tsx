@@ -12,6 +12,7 @@ import {
   tmpBboxAtom,
   useSyncBasemap,
   useSyncBbox,
+  useSyncLandscapeLayer,
   useSyncLayers,
   useSyncLayersSettings,
   useSyncLocation,
@@ -43,6 +44,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
   const [layers] = useSyncLayers();
   const [layersSettings, setLayersSettings] = useSyncLayersSettings();
   const [location] = useSyncLocation();
+  const [landscapeLayer] = useSyncLandscapeLayer();
 
   const { exploreMap } = useMap();
 
@@ -138,15 +140,16 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
         onLoad={handleLoad}
         {...props}
       >
-        {landscapes.map((s) => (
-          <LandscapeMarker
-            key={`landscape-marker-${s.id}`}
-            name={convertLexicalToPlaintext({ data: s.name })}
-            location={s.location}
-            href={`/landscapes/${s.id}`}
-            media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
-          />
-        ))}
+        {landscapeLayer &&
+          landscapes.map((s) => (
+            <LandscapeMarker
+              key={`landscape-marker-${s.id}`}
+              name={convertLexicalToPlaintext({ data: s.name })}
+              location={s.location}
+              href={`/landscapes/${s.id}`}
+              media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
+            />
+          ))}
 
         {loaded && (
           <LayerManager layers={layers} layersSettings={layersSettings}>
