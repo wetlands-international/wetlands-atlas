@@ -17,7 +17,6 @@ export const CategoriesList = () => {
         query: {
           depth: 1,
           limit: 0,
-          sort: "name",
           locale, // Replace with the actual locale if needed
         },
       },

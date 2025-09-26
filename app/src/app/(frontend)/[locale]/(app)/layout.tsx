@@ -41,7 +41,6 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         query: {
           depth: 1,
           limit: 0,
-          sort: "name",
           locale,
         },
       },

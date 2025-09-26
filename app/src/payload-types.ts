@@ -187,6 +187,7 @@ export interface Category {
   id: string;
   name: string;
   description?: string | null;
+  order: number;
   cover?: (number | null) | Media;
   /**
    * Define the default indicators for this category. These will be activated by default when a user selects this category. Only indicators that belongs to this category and has layers can be selected.
@@ -231,6 +232,7 @@ export interface Indicator {
     [k: string]: unknown;
   } | null;
   category: string | Category;
+  order: number;
   layers?: {
     docs?: (string | Layer)[];
     hasNextPage?: boolean;
@@ -291,7 +293,7 @@ export interface Layer {
     }[];
     [k: string]: unknown;
   };
-  indicator?: (string | null) | Indicator;
+  indicators?: (string | Indicator)[] | null;
   type: 'indicator' | 'contextual' | 'landscape';
   updatedAt: string;
   createdAt: string;
@@ -576,6 +578,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   id?: T;
   name?: T;
   description?: T;
+  order?: T;
   cover?: T;
   defaultIndicators?: T;
   indicators?: T;
@@ -592,6 +595,7 @@ export interface IndicatorsSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   category?: T;
+  order?: T;
   layers?: T;
   widget?: T;
   updatedAt?: T;
@@ -607,7 +611,7 @@ export interface LayersSelect<T extends boolean = true> {
   config?: T;
   params_config?: T;
   legend_config?: T;
-  indicator?: T;
+  indicators?: T;
   type?: T;
   updatedAt?: T;
   createdAt?: T;

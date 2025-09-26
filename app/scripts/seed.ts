@@ -5,7 +5,7 @@ import path from "path";
 import { DatabaseAdapter } from "payload";
 
 import dotenv from "dotenv";
-import { and, eq, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import minimist from "minimist";
 
 const argv = minimist(process.argv.slice(2));
@@ -148,7 +148,7 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, description, category, widget } = row;
+    const { id, name, description, category, widget, order } = row;
 
     // Step 1: Ensure category exists (foreign key)
     const categoryExists = await tx.query.categories.findFirst({
@@ -166,6 +166,7 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
       .values({
         id,
         category,
+        order,
         createdAt: now,
         updatedAt: now,
       })
@@ -173,6 +174,7 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
         target: indicators.id,
         set: {
           category,
+          order,
           updatedAt: now,
         },
       });
@@ -208,13 +210,14 @@ const seedCategories = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, description, cover } = row;
+    const { id, name, description, cover, order } = row;
 
     // Step 1: Upsert into categories table
     await tx
       .insert(categories)
       .values({
         id,
+        order,
         cover: cover ?? null,
         createdAt: now,
         updatedAt: now,
@@ -222,6 +225,7 @@ const seedCategories = async (db: DB, tx: TX): Promise<void> => {
       .onConflictDoUpdate({
         target: categories.id,
         set: {
+          order,
           cover: cover ?? null,
           updatedAt: now,
         },
@@ -254,34 +258,25 @@ const seedCategoryIndicatorRels = async (db: DB, tx: TX): Promise<void> => {
 
   const rows = JSON.parse(await fs.promises.readFile(CATEGORIES_FILE_PATH, "utf-8"));
 
+  await tx.delete(categoriesRels);
+
   for (const row of rows) {
     const { id: categoryId, defaultIndicators } = row;
     if (!Array.isArray(defaultIndicators)) continue;
 
-    let order = 0;
-    for (const indicatorID of defaultIndicators) {
-      const foundRelationships = await tx.query.categories_rels.findFirst({
-        where: and(
-          eq(categoriesRels.parent, categoryId),
-          eq(categoriesRels.indicatorsID, indicatorID),
-          eq(categoriesRels.order, order),
-          eq(categoriesRels.path, `${categoryId}.${indicatorID}`),
-        ),
-      });
-
-      if (foundRelationships) continue;
-
-      await tx
-        .insert(categoriesRels)
-        .values({
-          parent: categoryId,
-          indicatorsID: indicatorID,
-          order,
-          path: `${categoryId}.${indicatorID}`,
-        })
-        .onConflictDoNothing();
-      order++;
-    }
+    await tx
+      .insert(categoriesRels)
+      .values(
+        defaultIndicators.map((indicatorId, order) => {
+          return {
+            parent: categoryId,
+            indicatorsID: indicatorId,
+            order,
+            path: "defaultIndicators",
+          };
+        }),
+      )
+      .onConflictDoNothing();
   }
 
   console.log("✅ Seeded category–indicator relationships.");
@@ -360,22 +355,26 @@ const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
 const seedLayers = async (db: DB, tx: TX): Promise<void> => {
   const layers = db.query.layers.table;
   const layersLocales = db.query.layers_locales.table;
+  const layersRels = db.query.layers_rels?.table;
 
   const rows = JSON.parse(await fs.promises.readFile(LAYERS_FILE_PATH, "utf-8"));
   const now = new Date().toISOString();
 
+  await tx.delete(layersRels);
+
   for (const row of rows) {
-    const { id, name, config, params_config, legend_config, indicator, type } = row;
+    const { id, name, config, params_config, legend_config, indicators, type } = row;
 
     // Optional: validate indicator exists for LAYER_TYPE.INDICATOR
-    if (type === "INDICATOR" && indicator) {
-      const indicatorExists = await tx.query.indicators.findFirst({
-        where: eq(db.query.indicators.table.id, indicator),
-      });
+    if (type === "indicator" && indicators) {
+      for (const indicatorId of indicators) {
+        const indicatorExists = await tx.query.indicators.findFirst({
+          where: eq(db.query.indicators.table.id, indicatorId),
+        });
 
-      if (!indicatorExists) {
-        console.warn(`⚠️ Skipping layer '${id}' — indicator '${indicator}' not found.`);
-        continue;
+        if (!indicatorExists) {
+          console.warn(`⚠️ Skipping layer '${id}' — indicator '${indicatorId}' not found.`);
+        }
       }
     }
 
@@ -387,7 +386,6 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
         config,
         params_config,
         legend_config,
-        indicator: indicator ?? null,
         type,
         createdAt: now,
         updatedAt: now,
@@ -398,7 +396,6 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
           config,
           params_config,
           legend_config,
-          indicator: indicator ?? null,
           type,
           updatedAt: now,
         },
@@ -418,6 +415,23 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
           name,
         },
       });
+
+    // Insert relationships into layers_rels join table
+    if (Array.isArray(indicators) && layersRels) {
+      await tx
+        .insert(layersRels)
+        .values(
+          indicators.map((indicatorId, order) => {
+            return {
+              parent: id,
+              indicatorsID: indicatorId,
+              order,
+              path: "indicators",
+            };
+          }),
+        )
+        .onConflictDoNothing();
+    }
   }
 
   console.log("✅ Seeded layers.");

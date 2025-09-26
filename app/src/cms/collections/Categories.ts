@@ -9,8 +9,9 @@ export const Categories: CollectionConfig = {
   slug: "categories",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["id", "name"],
+    defaultColumns: ["id", "name", "order"],
   },
+  defaultSort: ["order"],
   access: PublicAccessControl, // TODO revise permissions and uncomment later
   fields: [
     SlugIDField(),
@@ -26,6 +27,12 @@ export const Categories: CollectionConfig = {
       label: "Description",
       type: "textarea",
       localized: true,
+    },
+    {
+      name: "order",
+      type: "number",
+      required: true,
+      min: 0,
     },
     {
       name: "cover",
