@@ -189,6 +189,10 @@ export interface Category {
   description?: string | null;
   order: number;
   cover?: (number | null) | Media;
+  /**
+   * Define the default indicators for this category. These will be activated by default when a user selects this category. Only indicators that belongs to this category and has layers can be selected.
+   */
+  defaultIndicators?: (string | Indicator)[] | null;
   indicators?: {
     docs?: (string | Indicator)[];
     hasNextPage?: boolean;
@@ -199,10 +203,6 @@ export interface Category {
     hasNextPage?: boolean;
     totalDocs?: number;
   };
-  /**
-   * Define the default indicators for this category. These will be activated by default when a user selects this category.
-   */
-  defaultIndicators?: (string | Indicator)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -580,9 +580,9 @@ export interface CategoriesSelect<T extends boolean = true> {
   description?: T;
   order?: T;
   cover?: T;
+  defaultIndicators?: T;
   indicators?: T;
   landscapes?: T;
-  defaultIndicators?: T;
   updatedAt?: T;
   createdAt?: T;
 }

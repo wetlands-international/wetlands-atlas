@@ -1,142 +1,100 @@
 """
-Module for tippecanoe functions.
+A module to convert different file formats to MBTiles format using a factory pattern.
 """
 
 import subprocess
+from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Union
+from typing import Dict, Type
 
-import geopandas as gpd
 from rich.console import Console
 
 console = Console()
 
 
-def convert_dataframe_to_geojson(
-    df: gpd.GeoDataFrame, output_path: Path, tolerance: float = None
-) -> Path:
-    """
-    Convert DataFrame to GeoJSON file.
+class MBTilesConverter(ABC):
+    """Abstract base class for MBTiles converters."""
 
-    Args:
-        df (gpd.GeoDataFrame): The GeoDataFrame to convert.
-        output_path (Path): The path to the output file.
-        tolerance (float, optional): Tolerance for geometry simplification.
+    @abstractmethod
+    def convert(self, input_path: Path, output_path: Path, **kwargs) -> None:
+        """Convert input file to MBTiles format."""
+        pass
 
-    Returns:
-        Path: The path to the output file.
-    """
-    try:
-        if df.empty:
-            raise ValueError("GeoDataFrame is empty")
 
-        if not hasattr(df, "geometry") or df.geometry.isnull().all():
-            raise ValueError("GeoDataFrame has no valid geometries")
+class VectorConverter(MBTilesConverter):
+    """Converter for vector files (Shapefile, GeoJSON, etc.)."""
 
+    def convert(
+        self, input_path: Path, output_path: Path, min_zoom: int = 4, max_zoom: int = 12
+    ) -> None:
+        """Convert a vector file to MBTiles format."""
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
-        if tolerance:
-            console.print(f"[yellow]Simplifying geometries with tolerance: {tolerance}[/yellow]")
-            # Simplify geometries with a specified tolerance
-            df = df.copy()  # Avoid modifying the original dataframe
-            df["geometry"] = df["geometry"].simplify(tolerance)
+        command = [
+            "ogr2ogr",
+            "-f",
+            "MBTiles",
+            "-dsco",
+            f"MINZOOM={min_zoom}",
+            "-dsco",
+            f"MAXZOOM={max_zoom}",
+            "-dsco",
+            "MAX_SIZE=10000000",
+            "-makevalid",
+            output_path.as_posix(),
+            input_path.as_posix(),
+        ]
 
-        console.print(f"[green]Writing GeoJSON to: {output_path}[/green]")
-        df.to_file(output_path, driver="GeoJSON")
-
-        return output_path
-
-    except Exception as e:
-        console.print(f"[red]Error converting DataFrame to GeoJSON: {str(e)}[/red]")
-        raise IOError(f"Failed to write GeoJSON file to {output_path}: {str(e)}") from e
+        try:
+            file_type = input_path.suffix.upper().replace(".", "")
+            console.print(f"🔧 Converting {file_type} to MBTiles...", style="white")
+            subprocess.run(command, check=True)
+        except subprocess.CalledProcessError as e:
+            raise RuntimeError(f"Error converting {input_path.suffix} with OGR: {e}") from e
 
 
-def convert_geojson_to_mbtiles(source_path: Path, output_path: Union[Path, None] = None) -> Path:
+class MBTilesConverterFactory:
     """
-    Convert GeoJSON file to mbtiles file using tippecanoe.
-
-    Args:
-        source_path (Path): The path to the source GeoJSON file.
-        output_path (Union[Path, None], optional): The path to the output mbtiles file.
-                                                  Defaults to source_path with .mbtiles extension.
-
-    Returns:
-        output_path (Path): The path to the output mbtiles file.
+    Factory class to create appropriate converters based on file type.
+    Usage:
+    1. Auto-detect format and convert
+       MBTilesConverterFactory.convert(input_path, output_path, **kwargs)
+    2. Create converter manually
+       converter = MBTilesConverterFactory.create_converter(file_path)
+       converter.convert(input_path, output_path, **kwargs)
+    3. Register a new converter
+       MBTilesConverterFactory.register_converter(".newext", NewConverterClass)
     """
-    if not source_path.exists():
-        raise FileNotFoundError(f"Source file not found: {source_path}")
 
-    if not output_path:
-        output_path = source_path.with_suffix(".mbtiles")
+    _converters: Dict[str, Type[MBTilesConverter]] = {
+        ".shp": VectorConverter,
+        ".geojson": VectorConverter,
+        ".json": VectorConverter,
+        ".gpkg": VectorConverter,
+        ".kml": VectorConverter,
+    }
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    @classmethod
+    def create_converter(cls, file_path: Path) -> MBTilesConverter:
+        """Create appropriate converter based on file extension."""
+        file_extension = file_path.suffix.lower()
 
-    console.print("[blue]Converting GeoJSON to mbtiles...[/blue]")
-    console.print(f"[dim]Source: {source_path}[/dim]")
-    console.print(f"[dim]Output: {output_path}[/dim]")
+        converter_class = cls._converters.get(file_extension)
+        if not converter_class:
+            supported_formats = ", ".join(cls._converters.keys())
+            raise ValueError(
+                f"Unsupported file format: {file_extension}. Supported formats: {supported_formats}"
+            )
 
-    # Check if tippecanoe is available
-    try:
-        subprocess.run(["tippecanoe", "--version"], capture_output=True, check=True)
-    except (subprocess.CalledProcessError, FileNotFoundError) as e:
-        raise RuntimeError(
-            "tippecanoe is not installed or not available in PATH. "
-            "Please install tippecanoe: https://github.com/mapbox/tippecanoe"
-        ) from e
+        return converter_class()
 
-    # Run tippecanoe command
-    subprocess.run(
-        [
-            "tippecanoe",
-            "-zg",  # Automatically choose a maximum zoom level
-            "-f",  # Force overwrite of existing files
-            "-P",  # Use multiple processes
-            "-o",
-            str(output_path),
-            "--extend-zooms-if-still-dropping",
-            str(source_path),
-        ],
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+    @classmethod
+    def convert(cls, input_path: Path, output_path: Path, **kwargs) -> None:
+        """Convenience method to convert file using appropriate converter."""
+        converter = cls.create_converter(input_path)
+        converter.convert(input_path, output_path, **kwargs)
 
-    console.print(f"[green]Successfully created mbtiles file: {output_path}[/green]")
-
-    return output_path
-
-
-def mbtile_generation(data: gpd.GeoDataFrame, output_path: Path, tolerance: float = None) -> Path:
-    """
-    Generate mbtiles file from GeoDataFrame.
-
-    Args:
-        data (gpd.GeoDataFrame): The GeoDataFrame to convert.
-        output_path (Path): The path to the output mbtiles file.
-        tolerance (float, optional): Tolerance for geometry simplification.
-
-    Returns:
-        Path: The path to the output mbtiles file.
-    """
-    if data.empty:
-        raise ValueError("Input GeoDataFrame is empty")
-
-    console.print("[blue]Starting mbtiles generation process...[/blue]")
-
-    # Step 1: Create GeoJSON file
-    console.print("[cyan]Step 1: Creating GeoJSON file...[/cyan]")
-    data_path = convert_dataframe_to_geojson(data, output_path.with_suffix(".json"), tolerance)
-
-    # Step 2: Convert to mbtiles
-    console.print("[cyan]Step 2: Converting to mbtiles...[/cyan]")
-    mbtiles_path = convert_geojson_to_mbtiles(data_path, output_path.with_suffix(".mbtiles"))
-
-    # Clean up temporary GeoJSON file
-    try:
-        data_path.unlink()
-        console.print(f"[dim]Cleaned up temporary file: {data_path}[/dim]")
-    except OSError as e:
-        console.print(f"[yellow]Warning: Could not remove temporary file {data_path}: {e}[/yellow]")
-
-    console.print(f"[green]✓ Successfully generated mbtiles file: {mbtiles_path}[/green]")
-    return mbtiles_path
+    @classmethod
+    def register_converter(cls, extension: str, converter_class: Type[MBTilesConverter]) -> None:
+        """Register a new converter for a file extension."""
+        cls._converters[extension.lower()] = converter_class
