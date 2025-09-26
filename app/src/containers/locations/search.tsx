@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CommandInput } from "cmdk";
 import { useAtom, useSetAtom } from "jotai";
 import { LucideXCircle } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { LuMapPin, LuSearch } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
@@ -14,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { locationsAtom, tmpBboxAtom, useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { GLOBAL_SAHEL_BBOX } from "@/components/map/controls/constants";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 import API from "@/services/api";
 
@@ -21,6 +22,7 @@ export const LocationsSearch = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const locale = useLocale();
+  const t = useTranslations();
 
   const [location, setLocation] = useSyncLocation();
   const [locations, setLocations] = useAtom(locationsAtom);
@@ -68,8 +70,15 @@ export const LocationsSearch = () => {
       search: undefined,
       enabled: false,
     });
+  };
+
+  const handleReset = () => {
     setLocation(null);
     setTmpBbox(GLOBAL_SAHEL_BBOX);
+    setLocations({
+      search: undefined,
+      enabled: false,
+    });
   };
 
   useEffect(() => {
@@ -130,6 +139,26 @@ export const LocationsSearch = () => {
         >
           <LucideXCircle className="h-6 w-6 text-current" />
         </button>
+      )}
+
+      {!locations.enabled && locationsIdData && locationsIdData?.type !== "global" && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <button
+              onClick={handleReset}
+              className={cn(
+                "text-foreground animate-in fade-in absolute top-3 right-3 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150",
+                "hover:text-accent",
+              )}
+            >
+              <LucideXCircle className="h-6 w-6 text-current" />
+            </button>
+          </TooltipTrigger>
+
+          <TooltipContent side="right" align="center">
+            {t("common.reset")}
+          </TooltipContent>
+        </Tooltip>
       )}
     </div>
   );

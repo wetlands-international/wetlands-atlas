@@ -40,7 +40,7 @@ export const Header = ({
 
       <div
         className={cn("animate-in fade-in slide-in-from-top-10 relative z-20 w-full duration-500", {
-          "rounded-4xl bg-white/10 backdrop-blur-lg": blur,
+          "bg-background/75 rounded-4xl backdrop-blur-lg": blur,
         })}
       >
         {children}
