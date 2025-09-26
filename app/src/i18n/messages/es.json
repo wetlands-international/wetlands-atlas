@@ -129,5 +129,8 @@
       "title": "Zona de juegos | Wetlands",
       "description": "Un lugar para jugar con los datos de las zonas húmedas."
     }
+  },
+  "common": {
+    "reset": "Restablecer"
   }
 }

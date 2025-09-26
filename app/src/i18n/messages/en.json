@@ -129,5 +129,8 @@
       "title": "Playground | Wetlands",
       "description": "A place to play with the wetlands data."
     }
+  },
+  "common": {
+    "reset": "Reset"
   }
 }
