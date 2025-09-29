@@ -233,6 +233,7 @@ export interface Indicator {
   } | null;
   category: string | Category;
   order: number;
+  group?: 'others' | null;
   layers?: {
     docs?: (string | Layer)[];
     hasNextPage?: boolean;
@@ -596,6 +597,7 @@ export interface IndicatorsSelect<T extends boolean = true> {
   description?: T;
   category?: T;
   order?: T;
+  group?: T;
   layers?: T;
   widget?: T;
   updatedAt?: T;

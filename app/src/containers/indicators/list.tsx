@@ -38,12 +38,8 @@ export const IndicatorsList = () => {
       },
     }),
   );
-  const widgets =
-    indicatorsData?.docs.filter((d) => d.widget && Object.keys(d.widget).length > 0) || [];
-  const others =
-    indicatorsData?.docs.filter(
-      (d) => (!d.widget || Object.keys(d.widget).length === 0) && d.layers?.docs?.length,
-    ) || [];
+  const widgets = indicatorsData?.docs.filter((d) => !d.group) || [];
+  const others = indicatorsData?.docs.filter((d) => d.group === "others") || [];
 
   return (
     <div className="flex flex-col gap-1">
