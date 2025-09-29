@@ -11,18 +11,23 @@ import { ValidIndicatorData } from "@/components/chart/types";
 
 type RankingChartSection = {
   data: ValidIndicatorData[];
-  title: string;
   type: "bars" | "list";
-  unit: string;
+  title?: string;
+  unit?: string;
 };
 interface Props {
   data: Array<ValidIndicatorData>;
 }
 
-const RankingChartSectionHeader: FC<{ title: string; unit: string }> = ({ title, unit }) => (
-  <header className="text-2xs mb-1 flex items-center justify-between py-1 leading-[22px] uppercase">
-    <h3 className="font-medium">{title}</h3>
-    <p className="font-normal">{unit}</p>
+const RankingChartSectionHeader: FC<{ title?: string; unit?: string }> = ({ title, unit }) => (
+  <header
+    className={cn({
+      "text-2xs mb-1 flex items-center justify-end py-1 leading-[22px] uppercase": true,
+      "justify-between": !!title && !!unit,
+    })}
+  >
+    {!!title && <h3 className="font-medium">{title}</h3>}
+    {!!unit && <p className="font-normal">{unit}</p>}
   </header>
 );
 
@@ -31,7 +36,7 @@ const RankingChartList: FC<Props & { title?: string; unit?: string }> = ({ data,
 
   return (
     <section>
-      {title && unit && <RankingChartSectionHeader title={title} unit={unit} />}
+      <RankingChartSectionHeader title={title} unit={unit} />
       <ul className="space-y-3">
         {data
           .sort((a, b) => b.value - a.value)
@@ -49,7 +54,11 @@ const RankingChartList: FC<Props & { title?: string; unit?: string }> = ({ data,
   );
 };
 
-const RankingChartBars: FC<Props & { title: string; unit: string }> = ({ data, title, unit }) => {
+const RankingChartCategorizedBars: FC<Props & { title?: string; unit?: string }> = ({
+  data,
+  title,
+  unit,
+}) => {
   const scale = useMemo(() => {
     const maxValue = Math.max(...data.map((item) => item.value));
     return (value: number) => (value / maxValue) * 100; // Scale to percentage
@@ -58,7 +67,7 @@ const RankingChartBars: FC<Props & { title: string; unit: string }> = ({ data, t
   if (data.length === 0) return null;
 
   return (
-    <section className="border-t border-dashed">
+    <section className={cn({ "border-t border-dashed": !!title })}>
       <RankingChartSectionHeader title={title} unit={unit} />
       <ul className="space-y-4">
         {data
@@ -114,7 +123,7 @@ const RankingSection: FC<{
   return (
     <>
       {type === "bars" ? (
-        <RankingChartBars data={data} title={title} unit={unit} />
+        <RankingChartCategorizedBars data={data} title={title} unit={unit} />
       ) : type === "list" ? (
         <RankingChartList data={data} title={title} unit={unit} />
       ) : null}
@@ -122,23 +131,4 @@ const RankingSection: FC<{
   );
 };
 
-const RankingChart: FC<{
-  sections?: Array<RankingChartSection>;
-  data?: ValidIndicatorData[];
-  withLegend?: boolean;
-}> = ({ sections, data, withLegend }) => {
-  return (
-    <div className="w-full space-y-7">
-      {data ? (
-        <RankingChartList data={data} />
-      ) : sections ? (
-        sections.map((section) => (
-          <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
-        ))
-      ) : null}
-      {withLegend && <RankingChartLegend />}
-    </div>
-  );
-};
-
-export { RankingChart, RankingChartLegend, type RankingChartSection };
+export { RankingSection, RankingChartList, RankingChartLegend, type RankingChartSection };
