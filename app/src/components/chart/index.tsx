@@ -5,7 +5,12 @@ import { useTranslations } from "next-intl";
 import { IndicatorChartData } from "@/containers/indicators/types";
 
 import PieChart from "@/components/chart/pie";
-import { RankingChart, RankingChartSection } from "@/components/chart/ranking";
+import {
+  RankingChartLegend,
+  RankingChartList,
+  RankingChartSection,
+  RankingSection,
+} from "@/components/chart/ranking";
 
 type ValidIndicatorData = IndicatorChartData & { value: number };
 const getValidData = (data: IndicatorChartData[]): ValidIndicatorData[] => {
@@ -33,15 +38,45 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
         { data: nonWetlands, title: t("non-wetlands"), type: "bars", unit },
       ];
 
-      return <RankingChart sections={sections} withLegend />;
+      return (
+        <div className="w-full space-y-7">
+          {sections.map((section) => (
+            <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
+          ))}
+          <RankingChartLegend />
+        </div>
+      );
     }
 
     case "cost-of-intervention": {
-      return <RankingChart data={getValidData(data)} />;
+      const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
+
+      return (
+        <div className="w-full space-y-7">
+          <RankingChartList data={getValidData(data)} unit={unit} />
+        </div>
+      );
     }
 
     case "return-on-investment": {
-      return <RankingChart data={getValidData(data)} />;
+      const validData = getValidData(data);
+      const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
+
+      const wetlands = validData.filter((d) => d.group === "wetlands");
+      const nonWetlands = validData.filter((d) => d.group === "non-wetlands");
+
+      const sections: RankingChartSection[] = [
+        { data: wetlands, type: "bars", unit },
+        { data: nonWetlands, type: "bars", unit },
+      ];
+
+      return (
+        <div className="w-full space-y-7">
+          {sections.map((section) => (
+            <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
+          ))}
+        </div>
+      );
     }
 
     case "wetland-types-get":
