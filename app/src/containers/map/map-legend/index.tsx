@@ -11,6 +11,7 @@ import MapLegendItem from "@/containers/map/map-legend/item";
 
 import Legend from "@/components/map/legend";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const MapLegend: FC = () => {
   const [showLegend, setShowLegend] = useState<boolean>(false);
@@ -32,23 +33,25 @@ const MapLegend: FC = () => {
     <div className="pointer-events-auto">
       <div
         className={cn({
-          "bg-popover text-popover-foreground legend-container pointer-events-none absolute bottom-16 left-1/2 z-50 w-xs -translate-x-10/12 translate-y-full rounded-lg opacity-0 transition-all duration-500 ease-in-out":
+          "legend-container pointer-events-none absolute bottom-16 left-1/2 z-50 w-xs -translate-x-10/12 translate-y-full opacity-0 transition-all duration-500 ease-in-out":
             true,
           "pointer-events-auto translate-y-0 opacity-100": showLegend,
         })}
       >
-        <Legend
-          sortable={{ enabled: true, handle: true }}
-          onChangeOrder={(v) => setLayers(v.toReversed())}
-        >
-          {layers.toReversed().map((l) => (
-            <MapLegendItem
-              sortable={{ enabled: true, handle: true }}
-              key={`map-legend-item-${l}`}
-              id={l}
-            />
-          ))}
-        </Legend>
+        <ScrollArea className="h-full rounded-lg px-2.5">
+          <Legend
+            sortable={{ enabled: true, handle: true }}
+            onChangeOrder={(v) => setLayers(v.toReversed())}
+          >
+            {layers.toReversed().map((l) => (
+              <MapLegendItem
+                sortable={{ enabled: true, handle: true }}
+                key={`map-legend-item-${l}`}
+                id={l}
+              />
+            ))}
+          </Legend>
+        </ScrollArea>
       </div>
 
       <Button

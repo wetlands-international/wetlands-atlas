@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { IndicatorChartData } from "@/containers/indicators/types";
 
+import PieChart from "@/components/chart/pie";
 import { RankingChart, RankingChartSection } from "@/components/chart/ranking";
 
 type ValidIndicatorData = IndicatorChartData & { value: number };
@@ -43,13 +44,16 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
       return <RankingChart data={getValidData(data)} />;
     }
 
+    case "wetland-types-get":
+    case "wetland-types-ramsar":
+    case "ndp-composite":
+    case "ndp-water": {
+      return <PieChart data={getValidData(data)} />;
+    }
+
     default: {
       console.warn(`Unknown indicator type: ${indicator}`);
-      return (
-        <div className="px-6">
-          <p className="py-8 text-center text-gray-500">Unsupported chart type: {indicator}</p>
-        </div>
-      );
+      return null;
     }
   }
 };
