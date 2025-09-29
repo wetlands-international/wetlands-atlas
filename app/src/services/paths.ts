@@ -564,6 +564,7 @@ export interface components {
       id: string;
       name: string;
       order: number;
+      group?: "others" | null;
       description?: {
         root: {
           type: string;
@@ -2458,6 +2459,7 @@ export interface components {
           /** @description ID of the categories */
           category: string;
           order: number;
+          group?: "others" | null;
           layers?: {
             docs?: (string | components["schemas"]["Layer"])[];
             hasNextPage?: boolean;

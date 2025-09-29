@@ -52,6 +52,13 @@ export const Indicators: CollectionConfig = {
       min: 0,
     },
     {
+      type: "select",
+      name: "group",
+      label: "Group",
+      required: false,
+      options: [{ label: "Others", value: "others" }],
+    },
+    {
       name: "layers",
       type: "join",
       collection: "layers",
