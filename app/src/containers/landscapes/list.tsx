@@ -35,9 +35,9 @@ export const LandscapesList = async () => {
         <li className="bg-background w-96 shrink-0 space-y-4 rounded-4xl p-6">
           <h1 className="font-display text-4xl text-blue-500">Highlighted landscapes</h1>
           <p className="text-foreground text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, similique magnam tenetur
-            eligendi beatae aut architecto deleniti iste autem adipisci ipsam hic nisi, quia, dicta
-            quam animi vel. Et, nihil!
+            Discover iconic wetland landscapes, see the different values they bring for nature and
+            the communities around them and explore why additional efforts are needed for better
+            management and protection.
           </p>
         </li>
 

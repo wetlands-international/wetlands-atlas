@@ -76,8 +76,14 @@ export const CategoriesItem = (category: Category) => {
         )}
       >
         <header className="relative flex min-h-28 w-full flex-col justify-center">
-          <div className="relative w-full">
+          <div className="group relative w-full">
             <h2 className="font-display text-2xl">{category.name}</h2>
+            <p
+              className="invisible max-h-0 overflow-hidden text-sm font-normal opacity-0 transition-[opacity_max-height_visibility] duration-500 group-hover:visible group-hover:max-h-40 group-hover:opacity-100"
+              style={{ transitionProperty: "opacity, max-height, visibility" }}
+            >
+              {category.description}
+            </p>
           </div>
         </header>
 
