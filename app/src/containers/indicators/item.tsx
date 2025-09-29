@@ -28,6 +28,7 @@ import API from "@/services/api";
 interface IndicatorsItemProps {
   indicator: Indicator;
 }
+
 export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
   const [indicators, setIndicators] = useSyncIndicators();
   const [, setLayers] = useSyncLayers();

@@ -20,8 +20,6 @@ interface WidgetChartProps {
 const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
   const t = useTranslations("insights.widgets");
 
-  console.log({ indicator, data });
-
   switch (indicator) {
     case "wetlands-mitigation-potential": {
       const validData = getValidData(data);
