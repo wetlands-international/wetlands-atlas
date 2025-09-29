@@ -25,6 +25,7 @@ import { Media } from "@/cms/collections/Media";
 import { Users } from "@/cms/collections/Users";
 import { plugins } from "@/cms/plugins";
 import { env } from "@/env";
+import { routing } from "@/i18n/routing";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -61,8 +62,8 @@ export default buildConfig({
   }),
   secret: env.PAYLOAD_SECRET,
   localization: {
-    locales: ["en", "es"], // required
-    defaultLocale: "en", // required
+    locales: [...routing.locales], // required
+    defaultLocale: routing.defaultLocale, // required
   },
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
