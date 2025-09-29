@@ -1,5 +1,6 @@
 import {
   parseAsArrayOf,
+  parseAsBoolean,
   parseAsFloat,
   parseAsJson,
   parseAsString,
@@ -27,6 +28,8 @@ export const createLayersSettingsParser = <T>() =>
   parseAsJson<LayersSettings<T>>(layerSettingsSchema.parse);
 
 export const layersSettingsParser = createLayersSettingsParser<unknown>();
+
+export const landscapeLayerParser = parseAsBoolean.withDefault(true);
 
 export const locationParser = parseAsString;
 export const insightParser = parseAsString;
