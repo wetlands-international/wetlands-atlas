@@ -543,6 +543,8 @@ export interface components {
       order: number;
       description?: string | null;
       cover?: (number | null) | components["schemas"]["Media"];
+      /** @description Define the default indicators for this category. These will be activated by default when a user selects this category. Only indicators that belongs to this category and has layers can be selected. */
+      defaultIndicators?: (string | components["schemas"]["Indicator"])[] | null;
       indicators?: {
         docs?: (string | components["schemas"]["Indicator"])[];
         hasNextPage?: boolean;
@@ -553,8 +555,6 @@ export interface components {
         hasNextPage?: boolean;
         totalDocs?: number;
       };
-      /** @description Define the default indicators for this category. These will be activated by default when a user selects this category. */
-      defaultIndicators?: (string | components["schemas"]["Indicator"])[] | null;
       updatedAt: string;
       createdAt: string;
     };
@@ -2407,7 +2407,7 @@ export interface components {
             totalDocs?: number;
           };
           /** @description ID of the indicators */
-          defaultIndicators?: string;
+          defaultIndicators?: string[];
         };
       };
     };
@@ -2430,7 +2430,7 @@ export interface components {
             totalDocs?: number;
           };
           /** @description ID of the indicators */
-          defaultIndicators?: string;
+          defaultIndicators?: string[];
         };
       };
     };
