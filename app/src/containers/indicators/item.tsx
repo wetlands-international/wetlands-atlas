@@ -1,18 +1,15 @@
 "use client";
 
-import { FC, useCallback } from "react";
+import { FC } from "react";
 
 import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
 
 import { useQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 
-import {
-  useSyncIndicators,
-  useSyncLayers,
-  useSyncLocation,
-  useSyncLayersSettings,
-} from "@/app/(frontend)/[locale]/(app)/store";
+import { useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
+
+import { useToggleLayers } from "@/hooks/use-toggle-layers";
 
 import { IndicatorChartData } from "@/containers/indicators/types";
 
@@ -30,8 +27,7 @@ interface IndicatorsItemProps {
 }
 
 export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
-  const [indicators, setIndicators] = useSyncIndicators();
-  const [, setLayers] = useSyncLayers();
+  const { indicators, toggleLayer } = useToggleLayers(indicator);
   const locale = useLocale();
   const [location] = useSyncLocation();
   const { data } = useQuery(
@@ -77,54 +73,6 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
     (acc, curr) => ({ [curr.key]: curr.value, ...acc }),
     {},
   );
-  const [layersSettings, setLayersSettings] = useSyncLayersSettings();
-
-  const handleSwitchChange = useCallback(
-    (checked: boolean) => {
-      if (!checked && layersSettings) {
-        setLayersSettings(null);
-      }
-
-      setIndicators((prev) => {
-        if (prev?.includes(indicator.id)) {
-          const updatedIndicators = prev.filter((id) => id !== indicator.id);
-          // If no indicators are left, reset layers
-          if (updatedIndicators.length === 0) {
-            return null;
-          }
-
-          return updatedIndicators;
-        } else {
-          return [...(prev || []), indicator.id];
-        }
-      });
-
-      setLayers((prev) => {
-        const newLayers = indicator?.layers?.docs?.map((l) => {
-          if (typeof l !== "string" && "id" in l) {
-            return l.id;
-          }
-          return l; // If l is already a string, return it as is
-        });
-
-        if (!newLayers?.length) return prev;
-
-        // If the layers are already present, remove them
-        if (prev?.length) {
-          const filteredLayers = prev.filter((layer) => !newLayers.includes(layer));
-          if (filteredLayers.length === prev.length) {
-            // If no layers were removed, add the new layers
-            return [...new Set([...prev, ...newLayers])]; // Ensure unique layers
-          }
-          return filteredLayers;
-        }
-
-        // If no layers are present, add the new layers
-        return newLayers;
-      });
-    },
-    [indicator.id, indicator.layers, layersSettings, setIndicators, setLayers, setLayersSettings],
-  );
 
   return (
     <div
@@ -146,7 +94,7 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
             {!!indicator.layers && !!indicator.layers.docs?.length && (
               <Switch
                 checked={!!indicators?.includes(indicator.id)}
-                onCheckedChange={handleSwitchChange}
+                onCheckedChange={toggleLayer}
               />
             )}
           </div>
