@@ -74,7 +74,7 @@ const PieChart: FC<{ data: ValidIndicatorData[] }> = ({ data }) => {
                   >
                     <div className="flex h-full flex-col items-center justify-center px-4 py-2 text-center">
                       <div className="fill-foreground mb-3 text-4xl leading-none font-bold">
-                        {center ? `${center.value}%` : ""}
+                        {center ? `${center.value.toFixed(1)}%` : ""}
                       </div>
                       <div className="fill-foreground text-sm leading-tight font-normal break-words">
                         {center ? center.label : ""}
