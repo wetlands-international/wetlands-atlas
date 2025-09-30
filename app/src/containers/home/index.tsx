@@ -72,9 +72,7 @@ export default function Home({
       )}
 
       <div className="relative z-10">
-        <div className="sticky top-0 left-0 z-20 w-full px-20 pt-2">
-          <Navbar />
-        </div>
+        <Navbar />
         <Hero />
         {sections.map((section) => (
           <HomeSectionContainer
