@@ -3,7 +3,6 @@
     "title": "Zonas húmedas!",
     "home": "Inicio",
     "admin": "Administración",
-    "playground": "Zona de juegos",
     "landscapes": "Historias",
     "insights": "Descubrimientos"
   },
@@ -125,10 +124,6 @@
     "landscapes": {
       "title": "Historias | Wetlands",
       "description": "Una colección de historias sobre zonas húmedas."
-    },
-    "playground": {
-      "title": "Zona de juegos | Wetlands",
-      "description": "Un lugar para jugar con los datos de las zonas húmedas."
     }
   },
   "common": {

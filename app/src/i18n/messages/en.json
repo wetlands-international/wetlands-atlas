@@ -3,7 +3,6 @@
     "title": "Wetlands!",
     "home": "Home",
     "admin": "Admin",
-    "playground": "Playground",
     "landscapes": "Landscapes",
     "insights": "Insights"
   },
@@ -125,10 +124,6 @@
     "landscapes": {
       "title": "Landscapes | Wetlands",
       "description": "A collection of landscapes about wetlands."
-    },
-    "playground": {
-      "title": "Playground | Wetlands",
-      "description": "A place to play with the wetlands data."
     }
   },
   "common": {
