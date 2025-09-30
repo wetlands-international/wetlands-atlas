@@ -11,8 +11,6 @@ import { useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { useToggleLayers } from "@/hooks/use-toggle-layers";
 
-import { IndicatorChartData } from "@/containers/indicators/types";
-
 import WidgetChart from "@/components/chart";
 import InfoButton from "@/components/ui/info-button";
 import { Lexical } from "@/components/ui/lexical";
@@ -38,13 +36,15 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
         params: {
           query: {
             depth: 1,
-            limit: 100,
-            page: 1,
+            pagination: false,
             sort: "-createdAt",
             locale,
             where: {
               "indicator.id": {
                 equals: indicator.id,
+              },
+              "location.id": {
+                equals: location,
               },
             },
           },
@@ -52,27 +52,20 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       },
       {
         select: (data) => {
-          const result: { location: string; chartData: IndicatorChartData[] }[] = data.docs.map(
-            (doc) => ({
-              location: typeof doc.location === "object" ? doc.location.id : doc.location,
-              chartData: (doc.data as IndicatorChartData[]).map((d) => ({
+          return data.docs
+            .map((doc) =>
+              doc.data.map((d) => ({
                 ...d,
                 key: d.label,
                 label: doc?.labels?.[d.label] ?? d.label,
               })),
-            }),
-          );
-
-          return result;
+            )
+            .flat();
         },
       },
     ),
   );
-  const chartData = data?.find((doc) => doc.location === location)?.chartData || [];
-  const lexicalVariables = chartData.reduce(
-    (acc, curr) => ({ [curr.key]: curr.value, ...acc }),
-    {},
-  );
+  const lexicalVariables = data?.reduce((acc, curr) => ({ [curr.key]: curr.value, ...acc }), {});
 
   return (
     <div
@@ -100,13 +93,13 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
           </div>
         </div>
 
-        {indicator.widget && Object.keys(lexicalVariables).length > 0 && (
+        {indicator.widget && lexicalVariables && Object.keys(lexicalVariables).length > 0 && (
           <div className="prose prose-invert prose-sm prose-p:leading-5">
             <Lexical data={indicator.widget} variables={lexicalVariables} />
           </div>
         )}
       </header>
-      {chartData.length > 0 && <WidgetChart indicator={indicator.id} data={chartData} />}
+      {!!data?.length && <WidgetChart indicator={indicator.id} data={data} />}
     </div>
   );
 };
