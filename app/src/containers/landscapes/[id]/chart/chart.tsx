@@ -28,8 +28,7 @@ export const LandscapeChart = (props: {
         params: {
           query: {
             depth: 1,
-            limit: 100,
-            page: 1,
+            pagination: false,
             sort: "-createdAt",
             locale,
             where: {
