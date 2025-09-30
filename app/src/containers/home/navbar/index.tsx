@@ -19,8 +19,8 @@ const Navbar: FC = () => {
   const t = useTranslations();
   const links = [
     { label: t("home.navigation.about"), href: "/about" },
-    { label: t("home.navigation.faq"), href: "/faq" },
-    { label: t("home.navigation.contact"), href: "/contact" },
+    { label: t("home.navigation.faq"), href: "#" },
+    { label: t("home.navigation.contact"), href: "#" },
   ];
   return (
     <div className="sticky top-0 left-0 z-20 w-full px-20 pt-2">
