@@ -1,6 +1,10 @@
 import React, { HTMLAttributes, JSX } from "react";
 
-import { DefaultNodeTypes, SerializedInlineBlockNode } from "@payloadcms/richtext-lexical";
+import {
+  DefaultNodeTypes,
+  SerializedInlineBlockNode,
+  SerializedListNode,
+} from "@payloadcms/richtext-lexical";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import { JSXConverters, JSXConvertersFunction, RichText } from "@payloadcms/richtext-lexical/react";
 
@@ -44,6 +48,26 @@ export const Lexical = (props: LexicalProps) => {
   const jsxConverters: JSXConvertersFunction<DefaultNodeTypes> = ({ defaultConverters }) => ({
     ...defaultConverters,
     upload: ({ node }) => <CustomUploadComponent node={node} />, // Use custom upload component
+    list: (args: unknown) => {
+      const node = (args as { node?: SerializedListNode }).node;
+      const nodesToJSX = (
+        args as {
+          nodesToJSX?: (a: { nodes: unknown[] }) => React.ReactNode[];
+        }
+      ).nodesToJSX;
+      if (node?.type === "list" && node?.listType === "bullet") {
+        return nodesToJSX ? (
+          <ul className="list-disc pl-4">
+            {nodesToJSX({ nodes: (node.children as unknown[]) || [] })}
+          </ul>
+        ) : null;
+      }
+
+      const base = defaultConverters.list as unknown;
+      return typeof base === "function"
+        ? (base as (a: unknown) => React.ReactNode)(args)
+        : (base as React.ReactNode);
+    },
     blocks: {},
     inlineBlocks: {
       number: ({

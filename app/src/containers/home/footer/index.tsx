@@ -17,13 +17,13 @@ const Footer: FC = () => {
           <h2 className="text-3xl font-normal whitespace-pre-line">
             {t("title.prefix")} <span className="block">{t("title.highlight")}</span>
           </h2>
-          <Button variant="outline" className="rounded-full">
+          <Button variant="outline" className="rounded-full" size="lg">
             {t("button")}
           </Button>
         </div>
         <p className="max-w-md">{t("description")}</p>
       </div>
-      <Separator className="my-10" />
+      <Separator className="my-10 bg-gradient-to-r from-[rgba(133,148,157,0)] via-[#85949D] to-[rgba(133,148,157,0)]" />
       <div className="flex justify-between">
         <p>Copyright 2025</p>
         <nav>

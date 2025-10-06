@@ -19,7 +19,7 @@ const Navbar: FC = () => {
   const t = useTranslations();
   const links = [
     { label: t("home.navigation.about"), href: "/about" },
-    { label: t("home.navigation.faq"), href: "#" },
+    { label: t("home.navigation.faq"), href: "/faqs" },
     { label: t("home.navigation.contact"), href: "#" },
   ];
   return (
