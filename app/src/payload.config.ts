@@ -16,6 +16,7 @@ import {
 } from "@payloadcms/richtext-lexical";
 
 import { Categories } from "@/cms/collections/Categories";
+import { Faqs } from "@/cms/collections/Faqs";
 import { IndicatorDatas } from "@/cms/collections/IndicatorDatas";
 import { Indicators } from "@/cms/collections/Indicators";
 import { Landscapes } from "@/cms/collections/Landscapes";
@@ -50,6 +51,7 @@ export default buildConfig({
     IndicatorDatas,
     Locations,
     Landscapes,
+    Faqs,
   ],
   editor: lexicalEditor({
     features: () => [

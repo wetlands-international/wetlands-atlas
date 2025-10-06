@@ -39,9 +39,50 @@ const INDICATORS_FILE_PATH = `../app-initial-data/indicators.json`;
 const INDICATOR_DATA_FILE_PATH = `../app-initial-data/indicator-data.json`;
 const LAYERS_FILE_PATH = `../app-initial-data/layers.json`;
 const LANDSCAPES_FILE_PATH = `../app-initial-data/landscapes.json`;
+const FAQS_FILE_PATH = `../app-initial-data/faqs.json`;
 
 type DB = DatabaseAdapter["drizzle"] & { query: Record<string, any> };
 type TX = Parameters<Parameters<DB["transaction"]>[0]>[0] & { query: Record<string, any> };
+
+const seedFaqs = async (db: DB, tx: TX) => {
+  const faqs = db.query.faqs.table;
+  const faqsLocales = db.query.faqs_locales.table;
+  const rows = JSON.parse(await fs.promises.readFile(FAQS_FILE_PATH, "utf-8"));
+  const now = new Date().toISOString();
+
+  for (const row of rows) {
+    const { id, question, answer, order } = row;
+
+    await tx
+      .insert(faqs)
+      .values({ id, order })
+      .onConflictDoUpdate({
+        target: faqs.id,
+        set: {
+          order,
+          updatedAt: now,
+        },
+      });
+
+    await tx
+      .insert(faqsLocales)
+      .values({
+        _locale: "en",
+        _parentID: id,
+        question,
+        answer,
+      })
+      .onConflictDoUpdate({
+        target: [faqsLocales._locale, faqsLocales._parentID],
+        set: {
+          question,
+          answer,
+        },
+      });
+  }
+
+  console.log("✅ Seeded faqs.");
+};
 
 const seedMedia = async (db: DB, tx: TX) => {
   const media = db.query.media.table;
@@ -572,6 +613,7 @@ const seed = async () => {
     await seedIndicatorsData(db, tx);
     await seedLayers(db, tx);
     await seedLandscapes(db, tx);
+    await seedFaqs(db, tx);
   });
 
   process.exit(0);

@@ -23,6 +23,7 @@ import * as migration_20250922_132929 from './20250922_132929';
 import * as migration_20250925_123437 from './20250925_123437';
 import * as migration_20250925_220412 from './20250925_220412';
 import * as migration_20250929_165419_add_group_column_to_indicators from './20250929_165419_add_group_column_to_indicators';
+import * as migration_20250930_123011_add_faqs_table from './20250930_123011_add_faqs_table';
 
 export const migrations = [
   {
@@ -148,6 +149,11 @@ export const migrations = [
   {
     up: migration_20250929_165419_add_group_column_to_indicators.up,
     down: migration_20250929_165419_add_group_column_to_indicators.down,
-    name: '20250929_165419_add_group_column_to_indicators'
+    name: '20250929_165419_add_group_column_to_indicators',
+  },
+  {
+    up: migration_20250930_123011_add_faqs_table.up,
+    down: migration_20250930_123011_add_faqs_table.down,
+    name: '20250930_123011_add_faqs_table'
   },
 ];
