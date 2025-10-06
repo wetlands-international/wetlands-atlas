@@ -1,5 +1,5 @@
 "use client";
-import { FC } from "react";
+import { FC, Suspense } from "react";
 
 import Link from "next/link";
 
@@ -51,7 +51,9 @@ const Navbar: FC = () => {
               </li>
             ))}
             <li>
-              <Language />
+              <Suspense>
+                <Language />
+              </Suspense>
             </li>
             <li>
               <Button className="rounded-full leading-5 font-normal" asChild>

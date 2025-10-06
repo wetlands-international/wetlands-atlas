@@ -59,7 +59,7 @@ export default function Home({
       </div>
 
       {currentImageUrl && (
-        <div className="pointer-events-none fixed inset-0 z-10">
+        <div className="pointer-events-none fixed inset-0 z-50">
           <div className="absolute top-0 right-20 bottom-0 flex h-full flex-col items-center justify-center gap-6">
             <div className="pointer-events-none">
               <DropletImage imageUrl={currentImageUrl} />
