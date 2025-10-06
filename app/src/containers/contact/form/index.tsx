@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import { useForm } from "react-hook-form";
 
@@ -32,6 +32,7 @@ const formSchema = z.object({
 });
 
 const ContactForm: FC = () => {
+  const [submitted, setSubmitted] = useState(false);
   const t = useTranslations("contact.form");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,8 +44,18 @@ const ContactForm: FC = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await fetch("/api/send", { method: "POST", body: JSON.stringify(values) });
+    setSubmitted(true);
+  }
+
+  if (submitted) {
+    return (
+      <div>
+        <h2 className="font-display text-xl">{t("submitted.title")}</h2>
+        <p>{t("submitted.description")}</p>
+      </div>
+    );
   }
 
   return (

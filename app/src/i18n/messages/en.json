@@ -145,6 +145,10 @@
         "label": "Message",
         "placeholder": "Type your message here"
       },
+      "submitted": {
+        "title": "Thank you!",
+        "description": "Your message has been sent."
+      },
       "button": "Send message"
     }
   },
