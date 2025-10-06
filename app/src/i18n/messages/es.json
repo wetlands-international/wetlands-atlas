@@ -111,6 +111,17 @@
       "description": "<p>Users can explore the current <strong>state of knowledge, discover where gaps exist,</strong> and <strong>connect to iconic wetland landscapes.</strong></p><p>Continuously updated with input from global partners, the platform reflects the latest science and practice, helping guide decisions for a sustainable future.</p>"
     }
   },
+  "faqs": {
+    "header": {
+      "kicker": "FAQ’s",
+      "title": "We are here to answer your questions",
+      "description": "Got questions about the Gap Map?\nWe’ve put together quick, simple answers to help you get the most out of the platform."
+    },
+    "aside": {
+      "title": "Have any more questions?",
+      "button": "Reach us"
+    }
+  },
   "landscapes": {
     "title": "Landscapes",
     "description": "A collection of landscapes about wetlands.",
