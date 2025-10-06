@@ -23,7 +23,7 @@ const formSchema = z.object({
     message: "Name must be at least 2 characters.",
   }),
   organization: z.string().optional(),
-  email: z.string().email({
+  email: z.email({
     message: "Invalid email address.",
   }),
   message: z.string().min(2, {
