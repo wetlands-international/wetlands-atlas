@@ -122,6 +122,32 @@
       "button": "Reach us"
     }
   },
+  "contact": {
+    "header": {
+      "kicker": "Contact",
+      "title": "Reach out to us",
+      "description": "We’d love to hear from you! Whether you have a question, feedback, or just want to share your thoughts, feel free to reach out—we’re here to help."
+    },
+    "form": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Insert your name"
+      },
+      "organization": {
+        "label": "Organization",
+        "placeholder": "Insert your organization"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "Insert your email"
+      },
+      "message": {
+        "label": "Message",
+        "placeholder": "Type your message here"
+      },
+      "button": "Send message"
+    }
+  },
   "landscapes": {
     "title": "Landscapes",
     "description": "A collection of landscapes about wetlands.",

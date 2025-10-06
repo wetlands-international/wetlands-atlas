@@ -20,7 +20,7 @@ const Navbar: FC = () => {
   const links = [
     { label: t("home.navigation.about"), href: "/about" },
     { label: t("home.navigation.faq"), href: "/faqs" },
-    { label: t("home.navigation.contact"), href: "#" },
+    { label: t("home.navigation.contact"), href: "/contact" },
   ];
   return (
     <div className="sticky top-0 left-0 z-20 w-full px-20 pt-2">
@@ -54,7 +54,7 @@ const Navbar: FC = () => {
               <Language />
             </li>
             <li>
-              <Button className="rounded-full" asChild>
+              <Button className="rounded-full leading-5 font-normal" asChild>
                 <Link href="/map">{t("home.navigation.explore-data")}</Link>
               </Button>
             </li>

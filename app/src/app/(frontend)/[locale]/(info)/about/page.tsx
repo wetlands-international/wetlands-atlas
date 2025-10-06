@@ -2,15 +2,10 @@ import Image from "next/image";
 
 import { useTranslations } from "next-intl";
 
-import Footer from "@/containers/home/footer";
-import Navbar from "@/containers/home/navbar";
-
 export default function AboutPage() {
   const t = useTranslations("about");
   return (
-    <main>
-      <Navbar />
-
+    <>
       <header className="px-28 py-44">
         <div>
           <h3 className="mb-4 text-base leading-[19px] font-semibold text-blue-300 uppercase">
@@ -111,8 +106,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </main>
+    </>
   );
 }
