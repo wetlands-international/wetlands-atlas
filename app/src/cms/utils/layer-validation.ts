@@ -19,7 +19,8 @@ export const LayerTypeValidation: CollectionBeforeValidateHook<Layer> = (args) =
       ],
     });
   }
-  if (data && data.type === LAYER_TYPE.CONTEXTUAL && data.indicators) {
+  console.log(data);
+  if (data && data.type === LAYER_TYPE.CONTEXTUAL && data.indicators?.length) {
     throw new ValidationError({
       collection: "layers",
       errors: [
