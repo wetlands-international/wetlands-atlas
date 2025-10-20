@@ -10,7 +10,7 @@ import { landscapesAtom } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-export const LandscapesFilters = ({ children }: PropsWithChildren) => {
+const LandscapesFilters = ({ children }: PropsWithChildren) => {
   const { enabled } = useAtomValue(landscapesAtom);
 
   const visible = enabled;
@@ -35,3 +35,5 @@ export const LandscapesFilters = ({ children }: PropsWithChildren) => {
     </section>
   );
 };
+
+export default LandscapesFilters;
