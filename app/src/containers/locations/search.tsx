@@ -143,7 +143,14 @@ export const LocationsSearch = () => {
       )}
 
       {!locations.enabled && (
-        <button type="button" className="cursor-pointer" onClick={() => inputRef.current?.focus()}>
+        <button
+          type="button"
+          className={cn({
+            "cursor-pointer": true,
+            hidden: locationsIdData && locationsIdData?.type !== "global",
+          })}
+          onClick={() => inputRef.current?.focus()}
+        >
           <SearchIcon className="mr-4 h-6 w-6 text-current" />
         </button>
       )}
