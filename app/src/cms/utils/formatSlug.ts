@@ -1,5 +1,7 @@
 import type { FieldHook } from "payload";
 
+import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
+
 import slugify from "slugify";
 
 const slugifyOptions = {
@@ -19,8 +21,11 @@ const formatSlug =
     if (operation === "create") {
       const fallbackData = data?.[fallback] || originalDoc?.[fallback];
 
-      if (fallbackData && typeof fallbackData === "string") {
-        console.log(`Slugify fallback data: ${fallbackData} from field: ${fallback}`);
+      if (typeof fallbackData === "object" && convertLexicalToPlaintext({ data: fallbackData })) {
+        return slugify(convertLexicalToPlaintext({ data: fallbackData }));
+      }
+
+      if (typeof fallbackData === "string") {
         return slugify(fallbackData, slugifyOptions);
       }
     }
