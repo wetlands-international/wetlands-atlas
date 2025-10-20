@@ -22,7 +22,7 @@ const Faqs: FC<{ items: Faq[] }> = ({ items }) => {
   const t = useTranslations("faqs");
 
   return (
-    <section className="flex h-screen justify-between border-b px-28 py-32">
+    <section className="flex min-h-screen justify-between border-b px-28 py-32">
       <section className="flex flex-1 flex-col justify-between">
         <header>
           <h3 className="mb-4 text-base font-semibold text-blue-300 uppercase">
