@@ -35,6 +35,15 @@ export const Categories: CollectionConfig = {
       min: 0,
     },
     {
+      name: "published",
+      type: "checkbox",
+      defaultValue: false,
+      admin: {
+        position: "sidebar",
+        description: "Uncheck to hide this category from the public view.",
+      },
+    },
+    {
       name: "cover",
       type: "upload",
       relationTo: "media",

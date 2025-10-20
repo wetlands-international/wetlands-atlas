@@ -17,7 +17,12 @@ export const CategoriesList = () => {
         query: {
           depth: 1,
           limit: 0,
-          locale, // Replace with the actual locale if needed
+          locale,
+          where: {
+            published: {
+              equals: true,
+            },
+          },
         },
       },
     }),

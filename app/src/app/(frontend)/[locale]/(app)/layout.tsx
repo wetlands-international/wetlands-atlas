@@ -42,6 +42,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           depth: 1,
           limit: 0,
           locale,
+          where: {
+            published: {
+              equals: true,
+            },
+          },
         },
       },
     }),
