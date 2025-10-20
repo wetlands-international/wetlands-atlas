@@ -116,10 +116,11 @@ export const LocationsSearch = () => {
           "text-background placeholder:text-muted-foreground outline-0": locations.enabled,
           "text-foreground placeholder:text-foreground outline-0": !locations.enabled,
         })}
-        value={cn({
-          [`${locationsIdData?.name}`]: !locations.enabled && locationsIdData?.name,
-          [locations.search ?? ""]: locations.enabled,
-        })}
+        value={
+          !locations.enabled && locationsIdData?.name
+            ? locationsIdData.name
+            : locations.search || ""
+        }
         placeholder={cn({
           [`${locationsIdData?.name}`]: !locations.enabled && locationsIdData?.name,
           "Search for a location...": locations.enabled || !location,
