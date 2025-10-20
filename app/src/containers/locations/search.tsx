@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { CommandInput } from "cmdk";
 import { useAtom, useSetAtom } from "jotai";
-import { LucideXCircle } from "lucide-react";
+import { LucideXCircle, SearchIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { LuMapPin, LuSearch } from "react-icons/lu";
 
@@ -138,6 +138,12 @@ export const LocationsSearch = () => {
           onClick={handleClose}
         >
           <LucideXCircle className="h-6 w-6 text-current" />
+        </button>
+      )}
+
+      {!locations.enabled && (
+        <button type="button" className="cursor-pointer" onClick={() => inputRef.current?.focus()}>
+          <SearchIcon className="mr-4 h-6 w-6 text-current" />
         </button>
       )}
 
