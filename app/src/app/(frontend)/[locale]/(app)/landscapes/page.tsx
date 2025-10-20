@@ -7,7 +7,8 @@ import { getTranslations } from "next-intl/server";
 
 import { Header } from "@/containers/header";
 import { Landscapes } from "@/containers/landscapes";
-import { LandscapesFilters } from "@/containers/landscapes/filters";
+import LandscapesFilters from "@/containers/landscapes/filters";
+import { LandscapesFilteredList } from "@/containers/landscapes/filters/list";
 import { LandscapesSearch } from "@/containers/landscapes/search";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,12 +33,7 @@ export default async function LandscapesPage() {
 
           <Suspense>
             <LandscapesFilters>
-              <p className="text-background bg-foreground p-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit magni porro
-                ipsum accusantium natus sunt blanditiis repudiandae, eum minus reiciendis,
-                architecto ut veritatis eius exercitationem aperiam perspiciatis qui doloribus
-                debitis?
-              </p>
+              <LandscapesFilteredList />
             </LandscapesFilters>
           </Suspense>
         </Command>
