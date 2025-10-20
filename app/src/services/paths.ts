@@ -555,6 +555,7 @@ export interface components {
         hasNextPage?: boolean;
         totalDocs?: number;
       };
+      published?: boolean | null;
       updatedAt: string;
       createdAt: string;
     };

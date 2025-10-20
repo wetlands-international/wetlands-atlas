@@ -29,6 +29,11 @@ export const LandscapesIndicator = () => {
           query: {
             depth: 1,
             locale,
+            where: {
+              published: {
+                equals: true,
+              },
+            },
           },
         },
       },

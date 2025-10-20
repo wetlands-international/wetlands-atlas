@@ -31,6 +31,11 @@ export const CategoriesBack = () => {
           depth: 1,
           limit: 0,
           locale,
+          where: {
+            published: {
+              equals: true,
+            },
+          },
         },
       },
     }),

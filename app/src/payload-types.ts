@@ -190,6 +190,10 @@ export interface Category {
   name: string;
   description?: string | null;
   order: number;
+  /**
+   * Uncheck to hide this category from the public view.
+   */
+  published?: boolean | null;
   cover?: (number | null) | Media;
   /**
    * Define the default indicators for this category. These will be activated by default when a user selects this category. Only indicators that belongs to this category and has layers can be selected.
@@ -615,6 +619,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   order?: T;
+  published?: T;
   cover?: T;
   defaultIndicators?: T;
   indicators?: T;
