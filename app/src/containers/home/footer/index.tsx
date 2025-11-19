@@ -17,8 +17,8 @@ const Footer: FC = () => {
           <h2 className="text-3xl font-normal whitespace-pre-line">
             {t("title.prefix")} <span className="block">{t("title.highlight")}</span>
           </h2>
-          <Button variant="outline" className="rounded-full" size="lg">
-            {t("button")}
+          <Button variant="outline" className="rounded-full" size="lg" asChild>
+            <Link href="/contact">{t("button")}</Link>
           </Button>
         </div>
         <p className="max-w-md">{t("description")}</p>
