@@ -38,7 +38,6 @@ export const formatCompoundSlug =
   ({ operation, value, siblingData }) => {
     if (operation === "create" || operation === "update") {
       const slugData = `${siblingData[field1]}_${siblingData[field2]}`;
-      console.log(slugify(siblingData[field1], slugifyOptions));
       return slugify(slugData, slugifyOptions); // TODO doesn't seem to work for updates
     }
 
