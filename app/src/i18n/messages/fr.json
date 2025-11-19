@@ -26,15 +26,15 @@
       "kicker": "Discover wetlands",
       "title": "The dynamic ecosystems where water meets land.",
       "description": "Ranging from mangroves and peatlands to rivers, lakes, floodplains, and coasts. Though they <strong>cover only about 6% of Earth's surface</strong>, but their impact is immense. Wetlands are indispensable for climate stability, biodiversity, and human livelihoods.",
-      "discover-button": "Discover wetlands",
-      "explore-button": "Explore data",
+      "discover-button": "Discover wetlands values",
+      "explore-button": "Explore wetland maps",
       "circle": "Discover the landscape"
     },
     "navigation": {
       "about": "About",
       "faq": "FAQ’s",
       "contact": "Contact",
-      "explore-data": "Explore data"
+      "explore-data": "Explore wetland maps"
     },
     "climate-resilience": {
       "kicker": "climate resilience",
