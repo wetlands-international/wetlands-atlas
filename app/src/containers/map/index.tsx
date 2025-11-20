@@ -145,7 +145,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
             <LandscapeMarker
               key={`landscape-marker-${s.id}`}
               name={convertLexicalToPlaintext({ data: s.name })}
-              location={s.location}
+              location={s.geoLocation}
               href={`/landscapes/${s.id}`}
               media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
             />

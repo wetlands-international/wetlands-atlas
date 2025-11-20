@@ -702,7 +702,8 @@ export interface components {
         title?: string | null;
       };
       category: string | components["schemas"]["Category"];
-      location: [number, number];
+      geoLocation: [number, number];
+      location?: (string | null) | components["schemas"]["Location"];
       /** @description Uncheck to hide this landscape from the public view. */
       published?: boolean | null;
       steps?:

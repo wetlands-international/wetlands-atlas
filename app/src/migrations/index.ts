@@ -25,6 +25,7 @@ import * as migration_20250925_220412 from './20250925_220412';
 import * as migration_20250929_165419_add_group_column_to_indicators from './20250929_165419_add_group_column_to_indicators';
 import * as migration_20250930_123011_add_faqs_table from './20250930_123011_add_faqs_table';
 import * as migration_20251020_073201_add_published_to_categories from './20251020_073201_add_published_to_categories';
+import * as migration_20251120_174722_add_locations_relationship_to_landscapes from './20251120_174722_add_locations_relationship_to_landscapes';
 
 export const migrations = [
   {
@@ -160,6 +161,11 @@ export const migrations = [
   {
     up: migration_20251020_073201_add_published_to_categories.up,
     down: migration_20251020_073201_add_published_to_categories.down,
-    name: '20251020_073201_add_published_to_categories'
+    name: '20251020_073201_add_published_to_categories',
+  },
+  {
+    up: migration_20251120_174722_add_locations_relationship_to_landscapes.up,
+    down: migration_20251120_174722_add_locations_relationship_to_landscapes.down,
+    name: '20251120_174722_add_locations_relationship_to_landscapes'
   },
 ];
