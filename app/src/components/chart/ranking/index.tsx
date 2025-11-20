@@ -54,15 +54,12 @@ const RankingChartList: FC<Props & { title?: string; unit?: string }> = ({ data,
   );
 };
 
-const RankingChartCategorizedBars: FC<Props & { title?: string; unit?: string }> = ({
-  data,
-  title,
-  unit,
-}) => {
+const RankingChartCategorizedBars: FC<
+  Props & { title?: string; unit?: string; maxValue: number }
+> = ({ data, title, unit, maxValue }) => {
   const scale = useMemo(() => {
-    const maxValue = Math.max(...data.map((item) => item.value));
-    return (value: number) => (value / maxValue) * 100; // Scale to percentage
-  }, [data]);
+    return (value: number) => (value / maxValue) * 100;
+  }, [maxValue]);
 
   if (data.length === 0) return null;
 
@@ -116,14 +113,15 @@ const RankingChartLegend: FC = () => {
 
 const RankingSection: FC<{
   section: RankingChartSection;
-}> = ({ section }) => {
+  maxValue: number;
+}> = ({ section, maxValue }) => {
   const { title, unit, data, type } = section;
   if (data.length === 0) return null;
 
   return (
     <>
       {type === "bars" ? (
-        <RankingChartCategorizedBars data={data} title={title} unit={unit} />
+        <RankingChartCategorizedBars data={data} title={title} unit={unit} maxValue={maxValue} />
       ) : type === "list" ? (
         <RankingChartList data={data} title={title} unit={unit} />
       ) : null}

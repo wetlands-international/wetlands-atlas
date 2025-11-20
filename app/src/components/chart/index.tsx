@@ -28,6 +28,7 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
   switch (indicator) {
     case "wetlands-mitigation-potential": {
       const validData = getValidData(data);
+      const maxValue = Math.max(...validData.map((d) => d.value));
       const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
 
       const wetlands = validData.filter((d) => d.group === "wetlands");
@@ -41,7 +42,11 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
       return (
         <div className="w-full space-y-7">
           {sections.map((section) => (
-            <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
+            <RankingSection
+              key={`ranking-chart-section-${section.title}`}
+              section={section}
+              maxValue={maxValue}
+            />
           ))}
           <RankingChartLegend />
         </div>
@@ -60,6 +65,7 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
 
     case "return-on-investment": {
       const validData = getValidData(data);
+      const maxValue = Math.max(...validData.map((d) => d.value));
       const unit = data.reduce((acc, d) => d.unit || acc, "") || "";
 
       const wetlands = validData.filter((d) => d.group === "wetlands");
@@ -73,7 +79,11 @@ const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
       return (
         <div className="w-full space-y-7">
           {sections.map((section) => (
-            <RankingSection key={`ranking-chart-section-${section.title}`} section={section} />
+            <RankingSection
+              key={`ranking-chart-section-${section.title}`}
+              section={section}
+              maxValue={maxValue}
+            />
           ))}
         </div>
       );
