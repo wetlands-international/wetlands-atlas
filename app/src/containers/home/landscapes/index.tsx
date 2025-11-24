@@ -11,7 +11,7 @@ import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { useIntersectionObserver } from "usehooks-ts";
 
-import { isValidMedia } from "@/lib/utils";
+import { isValidLocation, isValidMedia } from "@/lib/utils";
 
 import { currentSectionIdAtom } from "@/containers/home/store";
 
@@ -95,13 +95,15 @@ const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
                       />
                     ) : null}
                     <div className="absolute inset-0 -z-10 h-full w-full rounded-4xl transition group-hover:bg-black/20" />
-                    <Badge
-                      variant="secondary"
-                      className="rounded-full bg-slate-900/50 px-2.5 py-1 backdrop-blur-xs"
-                    >
-                      <MapPinIcon className="text-blue-300" />
-                      <span>Mali</span>
-                    </Badge>
+                    {isValidLocation(item.location) ? (
+                      <Badge
+                        variant="secondary"
+                        className="rounded-full bg-slate-900/50 px-2.5 py-1 backdrop-blur-xs"
+                      >
+                        <MapPinIcon className="text-blue-300" />
+                        <span>{item.location.name}</span>
+                      </Badge>
+                    ) : null}
                     <h3 className="font-semibold">
                       <RichText data={item.name} />
                     </h3>

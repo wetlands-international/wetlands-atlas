@@ -113,9 +113,16 @@ export const Landscapes: CollectionConfig = {
       hasMany: false,
     },
     {
-      name: "location",
+      name: "geoLocation",
       type: "point",
       required: true,
+    },
+    {
+      name: "location",
+      type: "relationship",
+      relationTo: "locations",
+      hasMany: false,
+      required: false,
     },
     {
       name: "published",

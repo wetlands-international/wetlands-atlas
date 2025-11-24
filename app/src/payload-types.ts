@@ -355,7 +355,8 @@ export interface Landscape {
    * @minItems 2
    * @maxItems 2
    */
-  location: [number, number];
+  geoLocation: [number, number];
+  location?: (string | null) | Location;
   /**
    * Uncheck to hide this landscape from the public view.
    */
@@ -703,6 +704,7 @@ export interface LandscapesSelect<T extends boolean = true> {
         title?: T;
       };
   category?: T;
+  geoLocation?: T;
   location?: T;
   published?: T;
   steps?:
