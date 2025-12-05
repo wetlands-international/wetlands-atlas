@@ -1,188 +1,188 @@
 {
   "header": {
-    "title": "Wetlands!",
-    "home": "Home",
+    "title": "Zones humides!",
+    "home": "Accueil",
     "admin": "Admin",
-    "landscapes": "Landscapes",
-    "insights": "Insights"
+    "landscapes": "Paysages",
+    "insights": "Aperçus"
   },
   "language": {
-    "en": "English",
-    "es": "Spanish",
-    "fr": "French"
+    "en": "Anglais",
+    "es": "Espagnol",
+    "fr": "Français"
   },
   "insights": {
-    "title": "Discover wetlands",
-    "description": "Dive into different topics that define these unique ecosystems and uncover their significant impact on our environment.",
+    "title": "Découvrir les zones humides",
+    "description": "Plongez au cœur des différents sujets qui définissent ces écosystèmes uniques et découvrez leur impact significatif sur notre environnement.",
     "widgets": {
-      "wetlands": "Wetlands",
-      "non-wetlands": "Non-wetlands",
-      "restoration": "Restoration",
+      "wetlands": "Zones humides",
+      "non-wetlands": "Zones non humides",
+      "restoration": "Restauration",
       "protection": "Protection"
     }
   },
   "home": {
     "hero": {
-      "kicker": "Discover wetlands",
-      "title": "The dynamic ecosystems where water meets land.",
-      "description": "Ranging from mangroves and peatlands to rivers, lakes, floodplains, and coasts. Though they <strong>cover only about 6% of Earth's surface</strong>, but their impact is immense. Wetlands are indispensable for climate stability, biodiversity, and human livelihoods.",
-      "discover-button": "Discover wetlands values",
-      "explore-button": "Explore wetland maps",
-      "circle": "Discover the landscape"
+      "kicker": "Découvrir les zones humides",
+      "title": "Les écosystèmes dynamiques où l'eau rencontre la terre.",
+      "description": "Des mangroves et tourbières aux rivières, lacs, plaines inondables et zones côtières. Bien qu'elles ne <strong>couvrent qu'environ 6 % de la surface de la Terre</strong>, leur impact est immense. Les zones humides sont indispensables à la stabilité climatique, à la biodiversité et aux moyens de subsistance humains.",
+      "discover-button": "Découvrir les valeurs des zones humides",
+      "explore-button": "Explorer les cartes des zones humides",
+      "circle": "Découvrir le paysage"
     },
     "navigation": {
-      "about": "About",
-      "faq": "FAQ’s",
+      "about": "À propos",
+      "faq": "FAQ",
       "contact": "Contact",
-      "explore-data": "Explore wetland maps"
+      "explore-data": "Explorer les cartes"
     },
     "climate-resilience": {
-      "kicker": "climate resilience",
-      "title": "Wetlands capacity to stabilise local climates and hydrological systems make them indispensable allies in the fight against climate change.",
-      "description": "Wetlands are efficient natural carbon sinks, for example peatlands <strong>cover only 3% of the global land area</strong>, but store twice as much carbon than all the world’s forests combined. Coastal wetlands such as mangroves also trap significant amounts of blue carbon and buffer coastlines from storm surges and sea-level rise.",
+      "kicker": "Résilience climatique",
+      "title": "La capacité des zones humides à stabiliser les climats locaux et les systèmes hydrologiques en fait des alliées indispensables dans la lutte contre le changement climatique.",
+      "description": "Les zones humides sont des puits de carbone naturels efficaces. Par exemple, les tourbières <strong>ne couvrent que 3 % des terres émergées</strong>, mais stockent deux fois plus de carbone que toutes les forêts du monde réunies. Les zones humides côtières, telles que les mangroves, piègent également des quantités importantes de carbone bleu et protègent les côtes des ondes de tempête et de l'élévation du niveau de la mer.",
       "stats": {
-        "1": "Peatlands coverage",
-        "2": "Forest coverage"
+        "1": "Couverture des tourbières",
+        "2": "Couverture forestière"
       },
-      "sup": "1. FAO, 2022"
+      "sup": "1. FAO, 2022"
     },
     "biodiversity-strongholds": {
-      "kicker": "Biodiversity strongholds",
-      "title": "Nearly 40% of all species rely on wetlands at some point in their life cycle",
-      "description": "<p>Wetlands rank among the most biologically diverse ecosystems on Earth. They provide vital habitat for an immense variety of species, birds, amphibians, fish, invertebrates, and plants.</p><p>Freshwater wetlands, in particular, are home to about half of all fish species, despite covering less than 1% of the earth’s surface.</p>",
+      "kicker": "Bastions de biodiversité",
+      "title": "Près de 40 % de toutes les espèces dépendent des zones humides à un moment donné de leur cycle de vie",
+      "description": "<p>Les zones humides comptent parmi les écosystèmes les plus diversifiés biologiquement sur Terre. Elles fournissent un habitat vital à une immense variété d'espèces : oiseaux, amphibiens, poissons, invertébrés et plantes.</p><p>Les zones humides d'eau douce, en particulier, abritent environ la moitié de toutes les espèces de poissons, bien qu'elles couvrent moins de 1 % de la surface de la terre.</p>",
       "stats": {
-        "1": "remaining migratory fish populations\n(since 1970 we loss 81%)<sup>2</sup>"
+        "1": "populations restantes de poissons migrateurs\n(nous en avons perdu 81 % depuis 1970)<sup>2</sup>"
       },
       "sup": "1. IPBES, 2019 | 2. Stefanie Deinet et al., 2024"
     },
     "engines-for-economic-development": {
-      "kicker": "Engines for economic development",
-      "title": "Wetlands deliver ecosystem services worth up to $39 trillion annually.",
-      "description": "<p>Wetlands hold immense economic value, yet they are often overlooked. <strong>Over a billion people rely on them for farming, fishing, and ecotourism.</strong></p><p>Healthy wetlands reduce poverty, enhance food security, and boost economies. Investing in them is crucial for both the environment and the economy.</p>",
+      "kicker": "Moteurs de développement économique",
+      "title": "Les zones humides fournissent des services écosystémiques d'une valeur allant jusqu'à 39 000 milliards de dollars par an.",
+      "description": "<p>Les zones humides possèdent une immense valeur économique, pourtant souvent négligée. <strong>Plus d'un milliard de personnes en dépendent pour l'agriculture, la pêche et l'écotourisme.</strong></p><p>Des zones humides saines réduisent la pauvreté, renforcent la sécurité alimentaire et stimulent les économies. Investir dans celles-ci est crucial tant pour l'environnement que pour l'économie.</p>",
       "stats": {
-        "1": "of global GDP is estimated to come from wetland\necosystem services<sup>1</sup>"
+        "1": "du PIB mondial proviendrait des services\nécosystémiques des zones humides<sup>1</sup>"
       },
       "sup": "1. Global Wetland Outlook, 2025"
     },
     "wetlands-under-threat": {
-      "kicker": "Wetlands Under Threat",
-      "title": "Since 1970 we’ve lost 35% of wetlands—3× faster than forests<sup>1</sup>.",
-      "description": "<p>Despite their vital roles, wetlands are disappearing at an alarming rate.</p><p>Peatlands are being drained and burned, mangroves are being cleared for aquaculture and tourism, and river floodplains are being cut off by dams and levees. As wetlands vanish, we lose not only biodiversity and ecosystem services, but also the safety nets that protect the most vulnerable people from environmental end economic shocks.</p>",
+      "kicker": "Zones humides menacées",
+      "title": "Depuis 1970, nous avons perdu 35 % des zones humides, soit une disparition 3 fois plus rapide que celle des forêts<sup>1</sup>.",
+      "description": "<p>Malgré leur rôle vital, les zones humides disparaissent à un rythme alarmant.</p><p>Les tourbières sont drainées et brûlées, les mangroves sont défrichées pour l'aquaculture et le tourisme, et les plaines inondables des rivières sont coupées par des barrages et des digues. À mesure que les zones humides disparaissent, nous perdons non seulement la biodiversité et les services écosystémiques, mais aussi les filets de sécurité qui protègent les personnes les plus vulnérables des chocs environnementaux et économiques.</p>",
       "stats": {
-        "title": "WETLANDS LOST SINCE 1970 <sup>2</sup>",
-        "1": "inland marshes and swamps",
-        "2": "Lakes",
-        "3": "Peatlands",
-        "4": "Others"
+        "title": "ZONES HUMIDES PERDUES DEPUIS 1970 <sup>2</sup>",
+        "1": "Marais et marécages intérieurs",
+        "2": "Lacs",
+        "3": "Tourbières",
+        "4": "Autres"
       },
       "sup": "1. Ramsar Global Wetland Outlook, 2018 | 2. Global Wetlands Outlook, 2025"
     },
     "landscapes": {
-      "title": "A lifeline in the Extended Sahel",
-      "description": "<p>The extended Sahel region of Africa underscores the importance of wetlands. In this dry area, seasonal wetlands and floodplains provide fertile land for farming, pastures for livestock, and fish for communities.</p><p>They also support cultural traditions and social ties.</p><p>As the extended Sahel faces climate change and conflict, protecting wetlands is crucial for regional stability.</p>",
-      "button-discover": "Discover all landscapes",
-      "button-read": "Read story"
+      "title": "Une ligne de vie dans le Sahel étendu",
+      "description": "<p>La région du Sahel étendu en Afrique souligne l'importance des zones humides. Dans cette zone aride, les zones humides saisonnières et les plaines inondables fournissent des terres fertiles pour l'agriculture, des pâturages pour le bétail et du poisson pour les communautés.</p><p>Elles soutiennent également les traditions culturelles et les liens sociaux.</p><p>Alors que le Sahel étendu fait face au changement climatique et aux conflits, la protection des zones humides est cruciale pour la stabilité régionale.</p>",
+      "button-discover": "Découvrir tous les paysages",
+      "button-read": "Lire l'histoire"
     },
     "footer": {
       "title": {
-        "prefix": "Take action to",
-        "highlight": "protect wetlands"
+        "prefix": "Agir pour",
+        "highlight": "protéger les zones humides"
       },
-      "description": "The Wetlands Gap Map platform was created to support policy makers, communities and investors to act on this urgency. The platform serves as a one stop shop to provide these users with the information they need to make decisions on where to focus their actions. This is done by integrating the latest and most innovative remote sensing work within the Sahel and combining this with easy to digest insights and stories on the different vital roles wetlands play and where they are located.",
-      "button": "Take action",
+      "description": "La plateforme Wetlands Gap Map a été créée pour aider les décideurs politiques, les communautés et les investisseurs à agir face à cette urgence. La plateforme sert de guichet unique pour fournir à ces utilisateurs les informations dont ils ont besoin pour décider où concentrer leurs actions. Cela se fait en intégrant les travaux de télédétection les plus récents et les plus innovants au sein du Sahel et en les combinant avec des analyses et des histoires faciles à assimiler sur les différents rôles vitaux que jouent les zones humides et leur localisation.",
+      "button": "Agir",
       "navigation": {
-        "terms": "Terms of use",
-        "privacy-policy": "Privacy policy"
+        "terms": "Conditions d'utilisation",
+        "privacy-policy": "Politique de confidentialité"
       }
     }
   },
   "about": {
     "header": {
-      "kicker": "about",
-      "title": "The Importance of Wetlands",
-      "description": "Wetlands are among the most productive and threatened ecosystems on Earth, yet decisions about their future are often constrained by incomplete data and an information mismatch."
+      "kicker": "À propos",
+      "title": "L'importance des zones humides",
+      "description": "Les zones humides comptent parmi les écosystèmes les plus productifs et les plus menacés de la Terre, pourtant les décisions concernant leur avenir sont souvent limitées par des données incomplètes et une inadéquation de l'information."
     },
     "the-gap-map": {
-      "title": "The Wetlands Gap Map",
-      "description": "<p>The Wetlands Gap Map bridges diverse data sources and tells compelling stories to <strong>highlight the value of wetlands,</strong> making it easier to target investments,guide policy advocacy, and build stronger collaborations across sectors and regions.</p><p>Built on open-access principles<strong>, it brings scattered data together into one easy-to-use platform,</strong> showing where wetlands are, why they are important, and where conservation and restoration efforts can have the greatest impact.</p>"
+      "title": "Le Wetlands Gap Map",
+      "description": "<p>Le Wetlands Gap Map relie diverses sources de données et raconte des histoires captivantes pour <strong>mettre en valeur les zones humides,</strong> facilitant le ciblage des investissements, l'orientation du plaidoyer politique et l'établissement de collaborations plus fortes entre les secteurs et les régions.</p><p>Fondé sur les principes de l'accès libre<strong>, il rassemble des données éparses sur une plateforme facile à utiliser,</strong> montrant où se trouvent les zones humides, pourquoi elles sont importantes et où les efforts de conservation et de restauration peuvent avoir le plus grand impact.</p>"
     },
     "explore": {
-      "title": "Explore,\ndiscover, act",
-      "description": "<p>Users can explore the current <strong>state of knowledge, discover where gaps exist,</strong> and <strong>connect to iconic wetland landscapes.</strong></p><p>Continuously updated with input from global partners, the platform reflects the latest science and practice, helping guide decisions for a sustainable future.</p>"
+      "title": "Explorer,\ndécouvrir, agir",
+      "description": "<p>Les utilisateurs peuvent explorer <strong>l'état actuel des connaissances, découvrir où existent des lacunes</strong> et <strong>se connecter à des paysages emblématiques de zones humides.</strong></p><p>Continuellement mise à jour avec la contribution de partenaires mondiaux, la plateforme reflète les dernières avancées scientifiques et pratiques, aidant à guider les décisions pour un avenir durable.</p>"
     }
   },
   "faqs": {
     "header": {
-      "kicker": "FAQ’s",
-      "title": "We are here to answer your questions",
-      "description": "Got questions about the Gap Map?\nWe’ve put together quick, simple answers to help you get the most out of the platform."
+      "kicker": "FAQ",
+      "title": "Nous sommes là pour répondre à vos questions",
+      "description": "Vous avez des questions sur le Gap Map ?\nNous avons rassemblé des réponses simples et rapides pour vous aider à tirer le meilleur parti de la plateforme."
     },
     "aside": {
-      "title": "Have any more questions?",
-      "button": "Reach us"
+      "title": "Vous avez d'autres questions ?",
+      "button": "Contactez-nous"
     }
   },
   "contact": {
     "header": {
       "kicker": "Contact",
-      "title": "Reach out to us",
-      "description": "We’d love to hear from you! Whether you have a question, feedback, or just want to share your thoughts, feel free to reach out—we’re here to help."
+      "title": "Contactez-nous",
+      "description": "Nous serions ravis de vous lire ! Que vous ayez une question, un commentaire ou que vous souhaitiez simplement partager vos réflexions, n'hésitez pas à nous contacter — nous sommes là pour vous aider."
     },
     "form": {
       "name": {
-        "label": "Name",
-        "placeholder": "Insert your name"
+        "label": "Nom",
+        "placeholder": "Insérez votre nom"
       },
       "organization": {
-        "label": "Organization",
-        "placeholder": "Insert your organization"
+        "label": "Organisation",
+        "placeholder": "Insérez votre organisation"
       },
       "email": {
-        "label": "Email",
-        "placeholder": "Insert your email"
+        "label": "E-mail",
+        "placeholder": "Insérez votre e-mail"
       },
       "message": {
         "label": "Message",
-        "placeholder": "Type your message here"
+        "placeholder": "Tapez votre message ici"
       },
       "submitted": {
-        "title": "Thank you!",
-        "description": "Your message has been sent."
+        "title": "Merci !",
+        "description": "Votre message a été envoyé."
       },
-      "button": "Send message"
+      "button": "Envoyer le message"
     }
   },
   "landscapes": {
-    "title": "Landscapes",
-    "description": "A collection of landscapes about wetlands.",
-    "empty": "No landscapes available.",
-    "indicator": "Explore fascinating landscapes from this area related to {category}"
+    "title": "Paysages",
+    "description": "Une collection de paysages sur les zones humides.",
+    "empty": "Aucun paysage disponible.",
+    "indicator": "Explorez des paysages fascinants de cette région liés à {category}"
   },
   "landscapesId": {
-    "title": "Landscape Details",
-    "description": "Details of the selected landscape.",
+    "title": "Détails du paysage",
+    "description": "Détails du paysage sélectionné.",
     "not-found": {
-      "title": "Landscape not found",
-      "description": "The landscape you are looking for does not exist. Please check the URL or return to the homepage. If you believe this is an error, please contact support.",
-      "back": "Go back to landscapes"
+      "title": "Paysage introuvable",
+      "description": "Le paysage que vous recherchez n'existe pas. Veuillez vérifier l'URL ou retourner à l'accueil. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le support.",
+      "back": "Retourner aux paysages"
     }
   },
   "not-found": {
-    "title": "Page not found",
-    "description": "The page you are looking for does not exist.",
-    "back": "Go back to the homepage"
+    "title": "Page introuvable",
+    "description": "La page que vous recherchez n'existe pas.",
+    "back": "Retourner à l'accueil"
   },
   "metadata": {
     "home": {
-      "title": "Wetlands",
-      "description": "Wetlands is a web application that helps you to manage your wetlands."
+      "title": "Zones humides",
+      "description": "Wetlands est une application web qui vous aide à gérer vos zones humides."
     },
     "landscapes": {
-      "title": "Landscapes | Wetlands",
-      "description": "A collection of landscapes about wetlands."
+      "title": "Paysages | Zones humides",
+      "description": "Une collection de paysages sur les zones humides."
     }
   },
   "common": {
-    "reset": "Reset"
+    "reset": "Réinitialiser"
   }
 }
