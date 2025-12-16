@@ -5,7 +5,6 @@ import { useMemo } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { CommandEmpty, CommandGroup, CommandList } from "cmdk";
 import { useAtomValue } from "jotai";
-import { useLocale } from "next-intl";
 import { useDebounceValue } from "usehooks-ts";
 
 import { locationsAtom } from "@/app/(frontend)/[locale]/(app)/store";
@@ -36,7 +35,6 @@ const typeLabels: Record<string, string> = {
 } as const;
 
 export const LocationsList = () => {
-  const locale = useLocale();
   const locations = useAtomValue(locationsAtom);
 
   const [search] = useDebounceValue(locations.search, 300);
@@ -53,7 +51,8 @@ export const LocationsList = () => {
           limit: 0,
           page: 1,
           sort: "name",
-          locale,
+          // Locations are currently only in English
+          locale: "en",
           select: {
             id: true,
             name: true,

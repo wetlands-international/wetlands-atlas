@@ -61,7 +61,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           limit: 0,
           page: 1,
           sort: "name",
-          locale,
+          // Locations are currently only in English
+          locale: "en",
           select: {
             id: true,
             name: true,
