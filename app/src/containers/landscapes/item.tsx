@@ -8,7 +8,6 @@ import { Link } from "@/i18n/navigation";
 import { Landscape } from "@/payload-types";
 
 export const LandscapesListItem = ({ id, name, cover }: Landscape) => {
-  console.info({ id, name, cover });
   const thumbnailStyle = useMemo(() => {
     if (typeof cover === "object" && cover?.url) {
       return {
