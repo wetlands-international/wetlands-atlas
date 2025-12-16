@@ -88,7 +88,7 @@
         "prefix": "Agir pour",
         "highlight": "protéger les zones humides"
       },
-      "description": "La plateforme Wetlands Gap Map a été créée pour aider les décideurs politiques, les communautés et les investisseurs à agir face à cette urgence. La plateforme sert de guichet unique pour fournir à ces utilisateurs les informations dont ils ont besoin pour décider où concentrer leurs actions. Cela se fait en intégrant les travaux de télédétection les plus récents et les plus innovants au sein du Sahel et en les combinant avec des analyses et des histoires faciles à assimiler sur les différents rôles vitaux que jouent les zones humides et leur localisation.",
+      "description": "La plateforme Wetland Atlas a été créée pour aider les décideurs politiques, les communautés et les investisseurs à agir face à cette urgence. La plateforme sert de guichet unique pour fournir à ces utilisateurs les informations dont ils ont besoin pour décider où concentrer leurs actions. Cela se fait en intégrant les travaux de télédétection les plus récents et les plus innovants au sein du Sahel et en les combinant avec des analyses et des histoires faciles à assimiler sur les différents rôles vitaux que jouent les zones humides et leur localisation.",
       "button": "Agir",
       "navigation": {
         "terms": "Conditions d'utilisation",
@@ -103,8 +103,8 @@
       "description": "Les zones humides comptent parmi les écosystèmes les plus productifs et les plus menacés de la Terre, pourtant les décisions concernant leur avenir sont souvent limitées par des données incomplètes et une inadéquation de l'information."
     },
     "the-gap-map": {
-      "title": "Le Wetlands Gap Map",
-      "description": "<p>Le Wetlands Gap Map relie diverses sources de données et raconte des histoires captivantes pour <strong>mettre en valeur les zones humides,</strong> facilitant le ciblage des investissements, l'orientation du plaidoyer politique et l'établissement de collaborations plus fortes entre les secteurs et les régions.</p><p>Fondé sur les principes de l'accès libre<strong>, il rassemble des données éparses sur une plateforme facile à utiliser,</strong> montrant où se trouvent les zones humides, pourquoi elles sont importantes et où les efforts de conservation et de restauration peuvent avoir le plus grand impact.</p>"
+      "title": "Le Wetland Atlas",
+      "description": "<p>Le Wetland Atlas relie diverses sources de données et raconte des histoires captivantes pour <strong>mettre en valeur les zones humides,</strong> facilitant le ciblage des investissements, l'orientation du plaidoyer politique et l'établissement de collaborations plus fortes entre les secteurs et les régions.</p><p>Fondé sur les principes de l'accès libre<strong>, il rassemble des données éparses sur une plateforme facile à utiliser,</strong> montrant où se trouvent les zones humides, pourquoi elles sont importantes et où les efforts de conservation et de restauration peuvent avoir le plus grand impact.</p>"
     },
     "explore": {
       "title": "Explorer,\ndécouvrir, agir",
