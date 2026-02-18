@@ -260,6 +260,7 @@ const seedCategories = async (db: DB, tx: TX): Promise<void> => {
         id,
         order,
         cover: cover ?? null,
+        published: true,
         createdAt: now,
         updatedAt: now,
       })
@@ -268,6 +269,7 @@ const seedCategories = async (db: DB, tx: TX): Promise<void> => {
         set: {
           order,
           cover: cover ?? null,
+          published: true,
           updatedAt: now,
         },
       });
@@ -511,7 +513,7 @@ const seedLandscapes = async (db: DB, tx: TX): Promise<void> => {
         id,
         category,
         cover: cover ?? null,
-        location: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
+        geoLocation: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
         published: published ?? false,
         embedded_video_type: embeddedVideo?.type,
         embedded_video_source: embeddedVideo?.source,
@@ -523,7 +525,7 @@ const seedLandscapes = async (db: DB, tx: TX): Promise<void> => {
         set: {
           category,
           cover: cover ?? null,
-          location: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
+          geoLocation: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
           published: published ?? false,
           embedded_video_type: embeddedVideo?.type,
           embedded_video_source: embeddedVideo?.source,

@@ -1,4 +1,3 @@
-import { HookOperationType, PayloadRequest, RequestContext } from "payload";
 import { CollectionBeforeOperationHook } from "payload";
 
 import { sql } from "@payloadcms/db-postgres";
@@ -7,21 +6,15 @@ export const landscapesReadLocationCriteriaExtension: CollectionBeforeOperationH
   operation,
   req,
   args,
-}: {
-  operation: HookOperationType;
-  req: PayloadRequest;
-  /* eslint-disable  @typescript-eslint/no-explicit-any */
-  args?: any;
-  context?: RequestContext;
 }) => {
   if (operation !== "read") {
-    return;
+    return args;
   }
 
   const locationId = req?.query?.locationId; // should be included as a query parameter
   if (!locationId || typeof locationId !== "string") {
     // No locationId provided, skip the extra geospatial query
-    return;
+    return args;
   }
 
   const location = await req.payload.findByID({
@@ -30,7 +23,7 @@ export const landscapesReadLocationCriteriaExtension: CollectionBeforeOperationH
   });
 
   if (!location?.geometry) {
-    return;
+    return args;
   }
 
   interface LandscapeQueryResult {
@@ -47,13 +40,15 @@ export const landscapesReadLocationCriteriaExtension: CollectionBeforeOperationH
 
   const landscapesIDs = result.rows.map((row) => row.id);
 
-  //Add the landscapes within the specified location to the query
-  args.where = {
-    ...args.where,
-    id: {
-      in: landscapesIDs,
-    },
-  };
+  // Add the landscapes within the specified location to the query
+  if ("where" in args) {
+    args.where = {
+      ...args.where,
+      id: {
+        in: landscapesIDs,
+      },
+    };
+  }
 
   return args;
 };
