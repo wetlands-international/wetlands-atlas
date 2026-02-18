@@ -150,6 +150,10 @@
         "description": "Your message has been sent."
       },
       "button": "Send message"
+    },
+    "mailing-list": {
+      "title": "Stay updated on wetlands news",
+      "button": "Join our mailing list"
     }
   },
   "landscapes": {

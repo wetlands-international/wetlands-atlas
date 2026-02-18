@@ -150,6 +150,10 @@
         "description": "Votre message a été envoyé."
       },
       "button": "Envoyer le message"
+    },
+    "mailing-list": {
+      "title": "Restez informé des actualités sur les zones humides",
+      "button": "Rejoindre notre liste de diffusion"
     }
   },
   "landscapes": {
