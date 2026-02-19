@@ -30,12 +30,12 @@ export const LandscapeMapContainer = (props: Landscape) => {
   }, [step, steps]);
 
   const BBOX = useMemo(() => {
-    const s = steps?.[step];
+    const s = steps?.[0];
     if (s && "map" in s) {
       return s.map?.bbox;
     }
     return null;
-  }, [step, steps]);
+  }, [steps]);
 
   const MAP_STYLE = useMemo(() => {
     const s = steps?.[step];

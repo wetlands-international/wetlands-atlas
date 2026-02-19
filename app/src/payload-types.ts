@@ -383,6 +383,8 @@ export interface Landscape {
         };
         map?: {
           bbox: unknown[];
+          bearing?: number;
+          pitch?: number;
           layers?: string[];
           basemap?: 'default' | 'satellite';
         };

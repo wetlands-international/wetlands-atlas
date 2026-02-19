@@ -14,22 +14,36 @@ export const LandscapeFitBounds = (props: Landscape) => {
 
   const step = useAtomValue(stepAtom);
 
-  const BBOX = useMemo(() => {
+  const mapData = useMemo(() => {
     const s = steps?.[step];
     if (s && "map" in s) {
-      return s.map?.bbox;
+      return {
+        bbox: s.map?.bbox as LngLatBoundsLike | null,
+        bearing: (s.map?.bearing as number) ?? 0,
+        pitch: (s.map?.pitch as number) ?? 0,
+      };
     }
-    return null;
+    return { bbox: null, bearing: 0, pitch: 0 };
   }, [step, steps]);
 
   useEffect(() => {
-    if (current && BBOX) {
-      current.fitBounds(BBOX as LngLatBoundsLike, {
+    if (current && mapData.bbox) {
+      const camera = current.cameraForBounds(mapData.bbox, {
         padding: 50,
-        duration: 1000,
+        bearing: mapData.bearing,
+        pitch: mapData.pitch,
       });
+
+      if (camera) {
+        current.flyTo({
+          ...camera,
+          bearing: mapData.bearing,
+          pitch: mapData.pitch,
+          duration: 1000,
+        });
+      }
     }
-  }, [current, step, BBOX]);
+  }, [current, step, mapData]);
 
   return null;
 };
