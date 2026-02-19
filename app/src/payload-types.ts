@@ -224,6 +224,10 @@ export interface Indicator {
    */
   id: string;
   name: string;
+  /**
+   * Unit of measurement for this indicator (e.g., ha, %, tCO2e/yr). Displayed in the map legend.
+   */
+  unit?: string | null;
   description?: {
     root: {
       type: string;
@@ -654,6 +658,7 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface IndicatorsSelect<T extends boolean = true> {
   id?: T;
   name?: T;
+  unit?: T;
   description?: T;
   category?: T;
   order?: T;

@@ -356,6 +356,94 @@ export interface paths {
     patch: operations["updateLandscape"];
     trace?: never;
   };
+  "/api/faqs": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Retrieve a list of Faqs */
+    get: operations["listFaqs"];
+    put?: never;
+    /** Create a new Faq */
+    post: operations["createFaq"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/faqs/{id}": {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Faq */
+        id: string;
+      };
+      cookie?: never;
+    };
+    /** Find a Faq by ID */
+    get: operations["findFaqById"];
+    put?: never;
+    post?: never;
+    /** Delete a Faq */
+    delete: operations["deleteFaq"];
+    options?: never;
+    head?: never;
+    /** Update a Faq */
+    patch: operations["updateFaq"];
+    trace?: never;
+  };
+  "/api/payload-kv": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** Retrieve a list of Payload Kvs */
+    get: operations["listPayloadKvs"];
+    put?: never;
+    /** Create a new Payload Kv */
+    post: operations["createPayloadKv"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/payload-kv/{id}": {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Payload Kv */
+        id: string;
+      };
+      cookie?: never;
+    };
+    /** Find a Payload Kv by ID */
+    get: operations["findPayloadKvById"];
+    put?: never;
+    post?: never;
+    /** Delete a Payload Kv */
+    delete: operations["deletePayloadKv"];
+    options?: never;
+    head?: never;
+    /** Update a Payload Kv */
+    patch: operations["updatePayloadKv"];
+    trace?: never;
+  };
   "/api/payload-locked-documents": {
     parameters: {
       query?: never;
@@ -514,6 +602,8 @@ export interface components {
           }[]
         | null;
       password?: string | null;
+      /** @enum {string} */
+      collection: "users";
     };
     /** Media */
     Media: {
@@ -538,6 +628,8 @@ export interface components {
       name: string;
       description?: string | null;
       order: number;
+      /** @description Uncheck to hide this category from the public view. */
+      published?: boolean | null;
       cover?: (string | null) | components["schemas"]["Media"];
       /** @description Define the default indicators for this category. These will be activated by default when a user selects this category. Only indicators that belongs to this category and has layers can be selected. */
       defaultIndicators?: (string | components["schemas"]["Indicator"])[] | null;
@@ -559,6 +651,8 @@ export interface components {
       /** @description This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name. */
       id: string;
       name: string;
+      /** @description Unit of measurement for this indicator (e.g., ha, %, tCO2e/yr). Displayed in the map legend. */
+      unit?: string | null;
       description?: {
         root: {
           type: string;
@@ -577,6 +671,8 @@ export interface components {
       } | null;
       category: string | components["schemas"]["Category"];
       order: number;
+      /** @enum {string|null} */
+      group?: "others" | null;
       layers?: {
         docs?: (string | components["schemas"]["Layer"])[];
         hasNextPage?: boolean;
@@ -696,7 +792,8 @@ export interface components {
         title?: string | null;
       };
       category: string | components["schemas"]["Category"];
-      location: [number, number];
+      geoLocation: [number, number];
+      location?: (string | null) | components["schemas"]["Location"];
       /** @description Uncheck to hide this landscape from the public view. */
       published?: boolean | null;
       steps?:
@@ -735,6 +832,37 @@ export interface components {
         | null;
       updatedAt: string;
       createdAt: string;
+    };
+    /** Faq */
+    Faq: {
+      /** @description This field is automatically generated from the 'question' field. It is usually used to create a URL-friendly version of the name. */
+      id: string;
+      question: string;
+      answer: {
+        root: {
+          type: string;
+          children: ({
+            type: string;
+            version: number;
+          } & {
+            [key: string]: unknown;
+          })[];
+          direction: ("ltr" | "rtl") | null;
+          /** @enum {string} */
+          format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+          indent: number;
+          version: number;
+        };
+      };
+      order: number;
+      updatedAt: string;
+      createdAt: string;
+    };
+    /** Payload Kv */
+    PayloadKv: {
+      id: string;
+      key: string;
+      data: Record<string, never> | unknown[] | string | number | boolean | null;
     };
     /** Payload Locked Document */
     PayloadLockedDocument: {
@@ -779,6 +907,11 @@ export interface components {
             /** @constant */
             relationTo: "landscapes";
             value: string | components["schemas"]["Landscape"];
+          } | null)
+        | ({
+            /** @constant */
+            relationTo: "faqs";
+            value: string | components["schemas"]["Faq"];
           } | null);
       globalSlug?: string | null;
       user: {
@@ -1106,6 +1239,12 @@ export interface components {
         less_than?: number;
         less_than_equal?: number;
       };
+      published?: {
+        equals?: boolean;
+        not_equals?: boolean;
+        in?: string;
+        not_in?: string;
+      };
       updatedAt?: {
         /** Format: date-time */
         equals?: string;
@@ -1173,6 +1312,14 @@ export interface components {
         like?: string;
         contains?: string;
       };
+      unit?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
       order?: {
         equals?: number;
         not_equals?: number;
@@ -1182,6 +1329,14 @@ export interface components {
         greater_than_equal?: number;
         less_than?: number;
         less_than_equal?: number;
+      };
+      group?: {
+        /** @enum {string} */
+        equals?: "others";
+        /** @enum {string} */
+        not_equals?: "others";
+        in?: string;
+        not_in?: string;
       };
       updatedAt?: {
         /** Format: date-time */
@@ -1518,6 +1673,110 @@ export interface components {
         | components["schemas"]["LandscapeQueryOperations"]
         | components["schemas"]["LandscapeQueryOperationsAnd"]
         | components["schemas"]["LandscapeQueryOperationsOr"]
+      )[];
+    };
+    /** Faq query operations */
+    FaqQueryOperations: {
+      id?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+      question?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+      order?: {
+        equals?: number;
+        not_equals?: number;
+        in?: string;
+        not_in?: string;
+        greater_than?: number;
+        greater_than_equal?: number;
+        less_than?: number;
+        less_than_equal?: number;
+      };
+      updatedAt?: {
+        /** Format: date-time */
+        equals?: string;
+        /** Format: date-time */
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        /** Format: date-time */
+        greater_than?: string;
+        /** Format: date-time */
+        greater_than_equal?: string;
+        /** Format: date-time */
+        less_than?: string;
+        /** Format: date-time */
+        less_than_equal?: string;
+      };
+      createdAt?: {
+        /** Format: date-time */
+        equals?: string;
+        /** Format: date-time */
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        /** Format: date-time */
+        greater_than?: string;
+        /** Format: date-time */
+        greater_than_equal?: string;
+        /** Format: date-time */
+        less_than?: string;
+        /** Format: date-time */
+        less_than_equal?: string;
+      };
+    };
+    /** Faq query conjunction */
+    FaqQueryOperationsAnd: {
+      and: (
+        | components["schemas"]["FaqQueryOperations"]
+        | components["schemas"]["FaqQueryOperationsAnd"]
+        | components["schemas"]["FaqQueryOperationsOr"]
+      )[];
+    };
+    /** Faq query disjunction */
+    FaqQueryOperationsOr: {
+      or: (
+        | components["schemas"]["FaqQueryOperations"]
+        | components["schemas"]["FaqQueryOperationsAnd"]
+        | components["schemas"]["FaqQueryOperationsOr"]
+      )[];
+    };
+    /** Payload Kv query operations */
+    PayloadKvQueryOperations: {
+      key?: {
+        equals?: string;
+        not_equals?: string;
+        in?: string;
+        not_in?: string;
+        like?: string;
+        contains?: string;
+      };
+    };
+    /** Payload Kv query conjunction */
+    PayloadKvQueryOperationsAnd: {
+      and: (
+        | components["schemas"]["PayloadKvQueryOperations"]
+        | components["schemas"]["PayloadKvQueryOperationsAnd"]
+        | components["schemas"]["PayloadKvQueryOperationsOr"]
+      )[];
+    };
+    /** Payload Kv query disjunction */
+    PayloadKvQueryOperationsOr: {
+      or: (
+        | components["schemas"]["PayloadKvQueryOperations"]
+        | components["schemas"]["PayloadKvQueryOperationsAnd"]
+        | components["schemas"]["PayloadKvQueryOperationsOr"]
       )[];
     };
     /** Payload Locked Document query operations */
@@ -2141,6 +2400,114 @@ export interface components {
         };
       };
     };
+    /** @description Faq object */
+    FaqResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": components["schemas"]["Faq"];
+      };
+    };
+    /** @description Faq object */
+    NewFaqResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          message: string;
+          doc: components["schemas"]["Faq"] & {
+            id: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+          };
+        };
+      };
+    };
+    /** @description Faq not found */
+    FaqNotFoundResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content?: never;
+    };
+    /** @description List of Faqs */
+    FaqListResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          docs: components["schemas"]["Faq"][];
+          totalDocs: number;
+          limit: number;
+          totalPages: number;
+          page: number;
+          pagingCounter: number;
+          hasPrevPage: boolean;
+          hasNextPage: boolean;
+          prevPage: number | null;
+          nextPage: number | null;
+        };
+      };
+    };
+    /** @description Payload Kv object */
+    PayloadKvResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": components["schemas"]["PayloadKv"];
+      };
+    };
+    /** @description Payload Kv object */
+    NewPayloadKvResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          message: string;
+          doc: components["schemas"]["PayloadKv"] & {
+            id: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+          };
+        };
+      };
+    };
+    /** @description Payload Kv not found */
+    PayloadKvNotFoundResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content?: never;
+    };
+    /** @description List of Payload Kvs */
+    PayloadKvListResponse: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content: {
+        "application/json": {
+          docs: components["schemas"]["PayloadKv"][];
+          totalDocs: number;
+          limit: number;
+          totalPages: number;
+          page: number;
+          pagingCounter: number;
+          hasPrevPage: boolean;
+          hasNextPage: boolean;
+          prevPage: number | null;
+          nextPage: number | null;
+        };
+      };
+    };
     /** @description Payload Locked Document object */
     PayloadLockedDocumentResponse: {
       headers: {
@@ -2325,6 +2692,8 @@ export interface components {
               }[]
             | null;
           password?: string | null;
+          /** @enum {string} */
+          collection: "users";
         };
       };
     };
@@ -2347,6 +2716,8 @@ export interface components {
               }[]
             | null;
           password?: string | null;
+          /** @enum {string} */
+          collection?: "users";
         };
       };
     };
@@ -2391,6 +2762,8 @@ export interface components {
           name: string;
           description?: string | null;
           order: number;
+          /** @description Uncheck to hide this category from the public view. */
+          published?: boolean | null;
           cover?: (string | null) | components["schemas"]["Media"];
           /** @description ID of the indicators */
           defaultIndicators?: string;
@@ -2414,6 +2787,8 @@ export interface components {
           name?: string;
           description?: string | null;
           order?: number;
+          /** @description Uncheck to hide this category from the public view. */
+          published?: boolean | null;
           cover?: (string | null) | components["schemas"]["Media"];
           /** @description ID of the indicators */
           defaultIndicators?: string;
@@ -2435,6 +2810,8 @@ export interface components {
       content: {
         "application/json": {
           name: string;
+          /** @description Unit of measurement for this indicator (e.g., ha, %, tCO2e/yr). Displayed in the map legend. */
+          unit?: string | null;
           description?: {
             root: {
               type: string;
@@ -2454,6 +2831,8 @@ export interface components {
           /** @description ID of the categories */
           category: string;
           order: number;
+          /** @enum {string|null} */
+          group?: "others" | null;
           layers?: {
             docs?: (string | components["schemas"]["Layer"])[];
             hasNextPage?: boolean;
@@ -2483,6 +2862,8 @@ export interface components {
       content: {
         "application/json": {
           name?: string;
+          /** @description Unit of measurement for this indicator (e.g., ha, %, tCO2e/yr). Displayed in the map legend. */
+          unit?: string | null;
           description?: {
             root: {
               type: string;
@@ -2502,6 +2883,8 @@ export interface components {
           /** @description ID of the categories */
           category?: string;
           order?: number;
+          /** @enum {string|null} */
+          group?: "others" | null;
           layers?: {
             docs?: (string | components["schemas"]["Layer"])[];
             hasNextPage?: boolean;
@@ -2683,7 +3066,9 @@ export interface components {
           };
           /** @description ID of the categories */
           category: string;
-          location: [number, number];
+          geoLocation: [number, number];
+          /** @description ID of the locations */
+          location?: string;
           /** @description Uncheck to hide this landscape from the public view. */
           published?: boolean | null;
           steps?:
@@ -2768,7 +3153,9 @@ export interface components {
           };
           /** @description ID of the categories */
           category?: string;
-          location?: [number, number];
+          geoLocation?: [number, number];
+          /** @description ID of the locations */
+          location?: string;
           /** @description Uncheck to hide this landscape from the public view. */
           published?: boolean | null;
           steps?:
@@ -2808,11 +3195,79 @@ export interface components {
         };
       };
     };
+    /** @description Faq */
+    FaqRequestBody: {
+      content: {
+        "application/json": {
+          question: string;
+          answer: {
+            root: {
+              type: string;
+              children: ({
+                type: string;
+                version: number;
+              } & {
+                [key: string]: unknown;
+              })[];
+              direction: ("ltr" | "rtl") | null;
+              /** @enum {string} */
+              format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+              indent: number;
+              version: number;
+            };
+          };
+          order: number;
+        };
+      };
+    };
+    /** @description Faq */
+    FaqPatchRequestBody: {
+      content: {
+        "application/json": {
+          question?: string;
+          answer?: {
+            root: {
+              type: string;
+              children: ({
+                type: string;
+                version: number;
+              } & {
+                [key: string]: unknown;
+              })[];
+              direction: ("ltr" | "rtl") | null;
+              /** @enum {string} */
+              format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+              indent: number;
+              version: number;
+            };
+          };
+          order?: number;
+        };
+      };
+    };
+    /** @description Payload Kv */
+    PayloadKvRequestBody: {
+      content: {
+        "application/json": {
+          key: string;
+          data: Record<string, never> | unknown[] | string | number | boolean | null;
+        };
+      };
+    };
+    /** @description Payload Kv */
+    PayloadKvPatchRequestBody: {
+      content: {
+        "application/json": {
+          key?: string;
+          data?: Record<string, never> | unknown[] | string | number | boolean | null;
+        };
+      };
+    };
     /** @description Payload Locked Document */
     PayloadLockedDocumentRequestBody: {
       content: {
         "application/json": {
-          /** @description ID of the users/media/categories/indicators/layers/indicator-data/locations/landscapes */
+          /** @description ID of the users/media/categories/indicators/layers/indicator-data/locations/landscapes/faqs */
           document?: string;
           globalSlug?: string | null;
           /** @description ID of the users */
@@ -2824,7 +3279,7 @@ export interface components {
     PayloadLockedDocumentPatchRequestBody: {
       content: {
         "application/json": {
-          /** @description ID of the users/media/categories/indicators/layers/indicator-data/locations/landscapes */
+          /** @description ID of the users/media/categories/indicators/layers/indicator-data/locations/landscapes/faqs */
           document?: string;
           globalSlug?: string | null;
           /** @description ID of the users */
@@ -3243,6 +3698,8 @@ export interface operations {
           | "-id"
           | "name"
           | "-name"
+          | "unit"
+          | "-unit"
           | "order"
           | "-order"
           | "updatedAt"
@@ -3756,6 +4213,216 @@ export interface operations {
     responses: {
       200: components["responses"]["LandscapeResponse"];
       404: components["responses"]["LandscapeNotFoundResponse"];
+    };
+  };
+  listFaqs: {
+    parameters: {
+      query?: {
+        page?: number;
+        limit?: number;
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+        sort?:
+          | "id"
+          | "-id"
+          | "question"
+          | "-question"
+          | "order"
+          | "-order"
+          | "updatedAt"
+          | "-updatedAt"
+          | "createdAt"
+          | "-createdAt";
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["FaqQueryOperations"]
+            | components["schemas"]["FaqQueryOperationsAnd"]
+            | components["schemas"]["FaqQueryOperationsOr"]
+          );
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: components["responses"]["FaqListResponse"];
+    };
+  };
+  createFaq: {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: components["requestBodies"]["FaqRequestBody"];
+    responses: {
+      201: components["responses"]["NewFaqResponse"];
+    };
+  };
+  findFaqById: {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Faq */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: components["responses"]["FaqResponse"];
+      404: components["responses"]["FaqNotFoundResponse"];
+    };
+  };
+  deleteFaq: {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Faq */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: components["responses"]["FaqResponse"];
+      404: components["responses"]["FaqNotFoundResponse"];
+    };
+  };
+  updateFaq: {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Faq */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: components["requestBodies"]["FaqPatchRequestBody"];
+    responses: {
+      200: components["responses"]["FaqResponse"];
+      404: components["responses"]["FaqNotFoundResponse"];
+    };
+  };
+  listPayloadKvs: {
+    parameters: {
+      query?: {
+        page?: number;
+        limit?: number;
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+        sort?: "key" | "-key";
+        where?: Record<string, never> &
+          (
+            | components["schemas"]["PayloadKvQueryOperations"]
+            | components["schemas"]["PayloadKvQueryOperationsAnd"]
+            | components["schemas"]["PayloadKvQueryOperationsOr"]
+          );
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: components["responses"]["PayloadKvListResponse"];
+    };
+  };
+  createPayloadKv: {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: components["requestBodies"]["PayloadKvRequestBody"];
+    responses: {
+      201: components["responses"]["NewPayloadKvResponse"];
+    };
+  };
+  findPayloadKvById: {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Payload Kv */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: components["responses"]["PayloadKvResponse"];
+      404: components["responses"]["PayloadKvNotFoundResponse"];
+    };
+  };
+  deletePayloadKv: {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Payload Kv */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      200: components["responses"]["PayloadKvResponse"];
+      404: components["responses"]["PayloadKvNotFoundResponse"];
+    };
+  };
+  updatePayloadKv: {
+    parameters: {
+      query?: {
+        depth?: number;
+        locale?: string;
+        "fallback-locale"?: string;
+      };
+      header?: never;
+      path: {
+        /** @description ID of the Payload Kv */
+        id: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: components["requestBodies"]["PayloadKvPatchRequestBody"];
+    responses: {
+      200: components["responses"]["PayloadKvResponse"];
+      404: components["responses"]["PayloadKvNotFoundResponse"];
     };
   };
   listPayloadLockedDocuments: {
