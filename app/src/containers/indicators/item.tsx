@@ -11,6 +11,8 @@ import { useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
 
 import { useToggleLayers } from "@/hooks/use-toggle-layers";
 
+import { IndicatorChartData } from "@/containers/indicators/types";
+
 import WidgetChart from "@/components/chart";
 import InfoButton from "@/components/ui/info-button";
 import { Lexical } from "@/components/ui/lexical";
@@ -18,7 +20,7 @@ import { Switch } from "@/components/ui/switch";
 
 import { Indicator } from "@/payload-types";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 interface IndicatorsItemProps {
   indicator: Indicator;
@@ -28,43 +30,35 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
   const { indicators, toggleLayer } = useToggleLayers(indicator);
   const locale = useLocale();
   const [location] = useSyncLocation();
-  const { data } = useQuery(
-    API.queryOptions(
-      "get",
-      "/api/indicator-data",
-      {
-        params: {
-          query: {
-            depth: 1,
-            pagination: false,
-            sort: "-createdAt",
-            locale,
-            where: {
-              "indicator.id": {
-                equals: indicator.id,
-              },
-              "location.id": {
-                equals: location,
-              },
-            },
-          },
+  const { data } = useQuery({
+    ...collectionQueryOptions("indicator-data", {
+      depth: 1,
+      pagination: false,
+      sort: "-createdAt",
+      locale,
+      where: {
+        "indicator.id": {
+          equals: indicator.id,
+        },
+        "location.id": {
+          equals: location,
         },
       },
-      {
-        select: (data) => {
-          return data.docs
-            .map((doc) =>
-              doc.data.map((d) => ({
-                ...d,
-                key: d.label,
-                label: doc?.labels?.[d.label] ?? d.label,
-              })),
-            )
-            .flat();
-        },
-      },
-    ),
-  );
+    }),
+    select: (data) => {
+      return data.docs
+        .map((doc) => {
+          const items = doc.data as IndicatorChartData[];
+          const labels = doc.labels as Record<string, string> | null;
+          return items.map((d) => ({
+            ...d,
+            key: d.label,
+            label: labels?.[d.label] ?? d.label,
+          }));
+        })
+        .flat();
+    },
+  });
   const lexicalVariables = data?.reduce((acc, curr) => ({ [curr.key]: curr.value, ...acc }), {});
 
   return (

@@ -12,7 +12,7 @@ import { LandscapesItem } from "@/containers/landscapes/filters/item";
 
 import { Loader } from "@/components/ui/loader";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 export const LandscapesFilteredList = () => {
   const locale = useLocale();
@@ -25,29 +25,25 @@ export const LandscapesFilteredList = () => {
     isFetched,
     isFetching,
   } = useQuery({
-    ...API.queryOptions("get", "/api/landscapes", {
-      params: {
-        query: {
-          depth: 1,
-          limit: 0,
-          page: 1,
-          sort: "id",
-          locale,
-          select: {
-            id: true,
-            name: true,
-          },
-          where: {
-            published: {
-              equals: true,
-            },
-            ...(!!search && {
-              "name.root.children.children.text": {
-                like: search,
-              },
-            }),
-          },
+    ...collectionQueryOptions("landscapes", {
+      depth: 1,
+      limit: 0,
+      page: 1,
+      sort: "id",
+      locale,
+      select: {
+        id: true,
+        name: true,
+      },
+      where: {
+        published: {
+          equals: true,
         },
+        ...(!!search && {
+          "name.root.children.children.text": {
+            like: search,
+          },
+        }),
       },
     }),
     placeholderData: keepPreviousData,

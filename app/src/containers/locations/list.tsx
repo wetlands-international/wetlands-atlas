@@ -16,7 +16,7 @@ import { Loader } from "@/components/ui/loader";
 import { LOCATION_TYPE } from "@/cms/collections/Location";
 import type { Location } from "@/payload-types";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 const typeOrder: Record<string, number> = {
   [LOCATION_TYPE.ADMIN_REGION]: 1,
@@ -44,30 +44,26 @@ export const LocationsList = () => {
     isFetched,
     isFetching,
   } = useQuery({
-    ...API.queryOptions("get", "/api/locations", {
-      params: {
-        query: {
-          depth: 1,
-          limit: 0,
-          page: 1,
-          sort: "name",
-          // Locations are currently only in English
-          locale: "en",
-          select: {
-            id: true,
-            name: true,
-            type: true,
-            code: true,
-            bbox: true,
+    ...collectionQueryOptions("locations", {
+      depth: 1,
+      limit: 0,
+      page: 1,
+      sort: "name",
+      // Locations are currently only in English
+      locale: "en",
+      select: {
+        id: true,
+        name: true,
+        type: true,
+        code: true,
+        bbox: true,
+      },
+      where: {
+        ...(!!search && {
+          name: {
+            like: `%${search}%`,
           },
-          where: {
-            ...(!!search && {
-              name: {
-                like: `%${search}%`,
-              },
-            }),
-          },
-        },
+        }),
       },
     }),
     placeholderData: keepPreviousData,

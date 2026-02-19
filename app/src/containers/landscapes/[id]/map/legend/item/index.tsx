@@ -12,18 +12,10 @@ import {
 } from "@/components/map/legend/item-types";
 import { LegendItemProps } from "@/components/map/legend/types";
 
-import API from "@/services/api";
+import { collectionByIdQueryOptions } from "@/services/sdk-query";
 
 const LandscapesLegendItem: FC<LegendItemProps> = ({ id, ...props }) => {
-  const { data: layer } = useQuery(
-    API.queryOptions("get", `/api/layers/{id}`, {
-      params: {
-        path: {
-          id,
-        },
-      },
-    }),
-  );
+  const { data: layer } = useQuery(collectionByIdQueryOptions("layers", id));
 
   if (!layer) return null;
 

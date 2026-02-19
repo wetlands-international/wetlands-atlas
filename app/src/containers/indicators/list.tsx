@@ -12,7 +12,7 @@ import { IndicatorsItem } from "@/containers/indicators/item";
 import OtherIndicators from "@/containers/indicators/others";
 import { LandscapesIndicator } from "@/containers/landscapes/indicator";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 export const IndicatorsList = () => {
   const locale = useLocale();
@@ -26,16 +26,12 @@ export const IndicatorsList = () => {
   };
 
   const { data: indicatorsData } = useQuery(
-    API.queryOptions("get", "/api/indicators", {
-      params: {
-        query: {
-          depth: 1,
-          limit: 100,
-          page: 1,
-          locale,
-          where: query,
-        },
-      },
+    collectionQueryOptions("indicators", {
+      depth: 1,
+      limit: 100,
+      page: 1,
+      locale,
+      where: query,
     }),
   );
   const widgets = indicatorsData?.docs.filter((d) => !d.group) || [];

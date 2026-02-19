@@ -9,7 +9,7 @@ import { useSyncLayers } from "@/app/(frontend)/[locale]/(app)/store";
 import { Loader } from "@/components/ui/loader";
 import { Switch } from "@/components/ui/switch";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 export const Layers = () => {
   const [layers, setLayers] = useSyncLayers();
@@ -24,12 +24,8 @@ export const Layers = () => {
     isFetching,
     isFetched,
   } = useQuery(
-    API.queryOptions("get", "/api/layers", {
-      params: {
-        query: {
-          where,
-        },
-      },
+    collectionQueryOptions("layers", {
+      where,
     }),
   );
 

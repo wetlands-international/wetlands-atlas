@@ -6,20 +6,13 @@ import { Layer, Source } from "react-map-gl/mapbox";
 
 import { Location } from "@/payload-types";
 
-import { API } from "@/services/api";
+import { collectionByIdQueryOptions } from "@/services/sdk-query";
 
 export const LocationLayer = ({ location }: { location: Location["id"] }) => {
   const locale = useLocale();
   const { data: locationsIdData } = useQuery({
-    ...API.queryOptions("get", "/api/locations/{id}", {
-      params: {
-        path: {
-          id: location ?? "",
-        },
-        query: {
-          locale,
-        },
-      },
+    ...collectionByIdQueryOptions("locations", location ?? "", {
+      locale,
     }),
     enabled: !!location, // Only run this query if location is defined
   });

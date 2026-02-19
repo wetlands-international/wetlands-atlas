@@ -1,6 +1,6 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useLocale, useTranslations } from "next-intl";
 import { LuBookOpen } from "react-icons/lu";
 
@@ -8,7 +8,7 @@ import { useSyncInsight, useSyncLandscapeLayer } from "@/app/(frontend)/[locale]
 
 import { Switch } from "@/components/ui/switch";
 
-import API from "@/services/api";
+import { collectionByIdQueryOptions } from "@/services/sdk-query";
 
 export const LandscapesIndicator = () => {
   const locale = useLocale();
@@ -17,31 +17,13 @@ export const LandscapesIndicator = () => {
 
   const [landscapeLayer, setLandscapeLayer] = useSyncLandscapeLayer();
 
-  const { data: categoryData } = useSuspenseQuery(
-    API.queryOptions(
-      "get",
-      "/api/categories/{id}",
-      {
-        params: {
-          path: {
-            id: insight || "invalid",
-          },
-          query: {
-            depth: 1,
-            locale,
-            where: {
-              published: {
-                equals: true,
-              },
-            },
-          },
-        },
-      },
-      {
-        enabled: !!insight,
-      },
-    ),
-  );
+  const { data: categoryData } = useQuery({
+    ...collectionByIdQueryOptions("categories", insight || "invalid", {
+      depth: 1,
+      locale,
+    }),
+    enabled: !!insight,
+  });
 
   return (
     <div
@@ -61,7 +43,7 @@ export const LandscapesIndicator = () => {
           </div>
 
           <div className="prose prose-invert prose-sm prose-p:leading-5 pr-4">
-            <p>{t("landscapes.indicator", { category: categoryData?.name })}</p>
+            <p>{t("landscapes.indicator", { category: categoryData?.name ?? "" })}</p>
           </div>
         </header>
       </div>
