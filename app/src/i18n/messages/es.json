@@ -150,6 +150,10 @@
         "description": "Your message has been sent."
       },
       "button": "Send message"
+    },
+    "mailing-list": {
+      "title": "Mantente al día sobre las novedades de humedales",
+      "button": "Únete a nuestra lista de correo"
     }
   },
   "landscapes": {
