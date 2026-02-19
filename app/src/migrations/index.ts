@@ -26,6 +26,7 @@ import * as migration_20250929_165419_add_group_column_to_indicators from './202
 import * as migration_20250930_123011_add_faqs_table from './20250930_123011_add_faqs_table';
 import * as migration_20251020_073201_add_published_to_categories from './20251020_073201_add_published_to_categories';
 import * as migration_20251120_174722_add_locations_relationship_to_landscapes from './20251120_174722_add_locations_relationship_to_landscapes';
+import * as migration_20260219_062652_add_unit_to_indicators from './20260219_062652_add_unit_to_indicators';
 
 export const migrations = [
   {
@@ -166,6 +167,11 @@ export const migrations = [
   {
     up: migration_20251120_174722_add_locations_relationship_to_landscapes.up,
     down: migration_20251120_174722_add_locations_relationship_to_landscapes.down,
-    name: '20251120_174722_add_locations_relationship_to_landscapes'
+    name: '20251120_174722_add_locations_relationship_to_landscapes',
+  },
+  {
+    up: migration_20260219_062652_add_unit_to_indicators.up,
+    down: migration_20260219_062652_add_unit_to_indicators.down,
+    name: '20260219_062652_add_unit_to_indicators'
   },
 ];

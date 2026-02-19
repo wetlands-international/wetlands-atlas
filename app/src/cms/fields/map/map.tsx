@@ -2,7 +2,7 @@
 
 import { useCallback, useMemo, useState } from "react";
 
-import { useField, useCollapsible } from "@payloadcms/ui";
+import { useField, useCollapsible, useForm } from "@payloadcms/ui";
 
 import Map, {
   Layer,
@@ -25,22 +25,40 @@ import ZoomControl from "@/components/map/controls/zoom";
 import { env } from "@/env";
 import { Landscape, Layer as iLayer } from "@/payload-types";
 
-export const MapfieldMap = ({ layers }: { layers: iLayer[] }) => {
+export const MapfieldMap = ({ layers, path }: { layers: iLayer[]; path: string }) => {
   return (
     <MapProvider>
-      <MapfieldMapInner layers={layers} />
+      <MapfieldMapInner layers={layers} path={path} />
     </MapProvider>
   );
 };
 
-export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
+export const MapfieldMapInner = ({ layers, path }: { layers: iLayer[]; path: string }) => {
   const [loaded, setLoaded] = useState(false);
   const { value, setValue } = useField<NonNullable<Landscape["steps"]>[number]["map"]>();
+  const { getDataByPath } = useForm();
   const { isCollapsed, isWithinCollapsible } = useCollapsible();
   // We use a debounced value to render the map only after the collapsible state has stabilized
   const [collapsed] = useDebounceValue(isCollapsed, 500);
 
   const { stepMap } = useMap();
+
+  const initialBbox = useMemo(() => {
+    if (value?.bbox) return value.bbox as LngLatBoundsLike;
+
+    const match = path.match(/^steps\.(\d+)\.map$/);
+    if (!match) return undefined;
+
+    const currentIndex = parseInt(match[1], 10);
+    for (let i = currentIndex - 1; i >= 0; i--) {
+      const prevMap = getDataByPath<NonNullable<Landscape["steps"]>[number]["map"]>(
+        `steps.${i}.map`,
+      );
+      if (prevMap?.bbox) return prevMap.bbox as LngLatBoundsLike;
+    }
+
+    return undefined;
+  }, [value?.bbox, path, getDataByPath]);
 
   const MAP_STYLE = useMemo(() => {
     return BASEMAPS[value?.basemap ?? "default"].mapStyle;
@@ -118,7 +136,7 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
       id="stepMap"
       mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
       initialViewState={{
-        ...(value?.bbox && { bounds: value?.bbox as LngLatBoundsLike }),
+        ...(initialBbox && { bounds: initialBbox }),
         fitBoundsOptions: {
           padding: {
             top: 50,

@@ -33,6 +33,16 @@ export const Indicators: CollectionConfig = {
       localized: true,
     },
     {
+      name: "unit",
+      type: "text",
+      required: false,
+      localized: true,
+      admin: {
+        description:
+          "Unit of measurement for this indicator (e.g., ha, %, tCO2e/yr). Displayed in the map legend.",
+      },
+    },
+    {
       name: "description",
       type: "richText",
       localized: true,
