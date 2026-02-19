@@ -4,6 +4,7 @@ import { LandscapeImage } from "@/containers/landscapes/[id]/image";
 import { LandscapeSteps } from "@/containers/landscapes/[id]/steps";
 
 import EmbeddedVideo from "@/components/embedded-video";
+import { ScrollArrow } from "@/components/ui/scroll-arrow";
 
 import { Landscape } from "@/payload-types";
 
@@ -13,7 +14,7 @@ export const LandscapesIdArticle = (props: Landscape) => {
 
   return (
     <article className="px-11">
-      <div className="flex min-h-[calc(100svh_-_theme(spacing.24))] flex-col">
+      <div className="relative flex min-h-[calc(100svh_-_theme(spacing.24))] flex-col">
         <h1 className="font-display animate-in fade-in slide-in-from-top-10 text-6xl font-bold text-blue-300 2xl:text-7xl">
           <RichText data={props.name} />
         </h1>
@@ -26,6 +27,7 @@ export const LandscapesIdArticle = (props: Landscape) => {
         ) : imageUrl ? (
           <LandscapeImage imageUrl={imageUrl} />
         ) : null}
+        <ScrollArrow />
       </div>
 
       <LandscapeSteps {...props} />
