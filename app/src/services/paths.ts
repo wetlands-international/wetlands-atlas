@@ -564,6 +564,8 @@ export interface components {
       /** @description This field is automatically generated from the 'name' field. It is usually used to create a URL-friendly version of the name. */
       id: string;
       name: string;
+      /** @description Unit of measurement for this indicator (e.g., ha, %, tCO2e/yr). Displayed in the map legend. */
+      unit?: string | null;
       order: number;
       group?: "others" | null;
       description?: {
