@@ -46,7 +46,7 @@ export const MapField = (props?: Partial<JSONField>): JSONField => {
         components: {
           Field: "@/cms/fields/map/field",
         },
-        description: `This field allows you to select a bounding box, bearing, pitch, and layers for the map. The bounding box is defined by an array of four numbers: [minX, minY, maxX, maxY]. Bearing (0-360) controls the map rotation and pitch (0-60) controls the camera tilt for 3D views. Use right-click drag to rotate and adjust pitch. The layers are an array of layer IDs that you want to display on the map. You can toggle the visibility of each layer in the layers section. The basemap can be selected by using the control from the map settings. The available basemaps are: ${Object.keys(BASEMAPS).join(", ")}.`,
+        description: `This field allows you to select a bounding box, bearing, pitch, and layers for the map. The bounding box is defined by an array of four numbers: [minX, minY, maxX, maxY]. Bearing (0-360) controls the map rotation and pitch (0-60) controls the camera tilt for 3D views. Use right-click drag to rotate and adjust pitch. The layers are an array of layer IDs that you want to display on the map. You can toggle the visibility of each layer in the layers section. The basemap can be selected by using the control from the map settings. The available basemaps are: ${Object.keys(BASEMAPS).join(", ")}. 3D terrain elevation (DEM) is always enabled.`,
       },
     },
     props ?? {},

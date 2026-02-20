@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { useAtomValue } from "jotai";
-import Map, { LngLatBoundsLike } from "react-map-gl/mapbox";
+import Map, { LngLatBoundsLike, Source } from "react-map-gl/mapbox";
 
 import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]/store";
 
@@ -77,7 +77,15 @@ export const LandscapeMapContainer = (props: Landscape) => {
         touchPitch={false}
         touchZoomRotate={false}
         onLoad={() => setLoaded(true)}
+        terrain={{ source: "mapbox-dem", exaggeration: 1.5 }}
       >
+        <Source
+          id="mapbox-dem"
+          type="raster-dem"
+          url="mapbox://mapbox.mapbox-terrain-dem-v1"
+          tileSize={512}
+          maxzoom={14}
+        />
         {loaded && <LayerManager layers={LAYERS} layersSettings={{}} />}
         <LandscapeFitBounds {...props} />
       </Map>

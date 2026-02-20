@@ -153,7 +153,15 @@ export const MapfieldMapInner = ({ layers, path }: { layers: iLayer[]; path: str
       scrollZoom={false}
       onMove={handleMovedDebounced}
       onLoad={handleLoad}
+      terrain={{ source: "mapbox-dem", exaggeration: 1.5 }}
     >
+      <Source
+        id="mapbox-dem"
+        type="raster-dem"
+        url="mapbox://mapbox.mapbox-terrain-dem-v1"
+        tileSize={512}
+        maxzoom={14}
+      />
       {loaded && (
         <>
           {/*
