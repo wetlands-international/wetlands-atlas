@@ -351,11 +351,6 @@ export interface Landscape {
     [k: string]: unknown;
   };
   cover?: (number | null) | Media;
-  embedded_video?: {
-    type?: 'youtube' | null;
-    source?: string | null;
-    title?: string | null;
-  };
   category: string | Category;
   /**
    * @minItems 2
@@ -722,13 +717,6 @@ export interface LandscapesSelect<T extends boolean = true> {
   name?: T;
   description?: T;
   cover?: T;
-  embedded_video?:
-    | T
-    | {
-        type?: T;
-        source?: T;
-        title?: T;
-      };
   category?: T;
   geoLocation?: T;
   location?: T;
