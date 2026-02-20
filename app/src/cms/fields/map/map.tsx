@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-import { useField, useCollapsible } from "@payloadcms/ui";
+import { useField, useCollapsible, useForm } from "@payloadcms/ui";
 
 import Map, {
   Layer,
@@ -25,22 +25,40 @@ import ZoomControl from "@/components/map/controls/zoom";
 import { env } from "@/env";
 import { Landscape, Layer as iLayer } from "@/payload-types";
 
-export const MapfieldMap = ({ layers }: { layers: iLayer[] }) => {
+export const MapfieldMap = ({ layers, path }: { layers: iLayer[]; path: string }) => {
   return (
     <MapProvider>
-      <MapfieldMapInner layers={layers} />
+      <MapfieldMapInner layers={layers} path={path} />
     </MapProvider>
   );
 };
 
-export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
+export const MapfieldMapInner = ({ layers, path }: { layers: iLayer[]; path: string }) => {
   const [loaded, setLoaded] = useState(false);
   const { value, setValue } = useField<NonNullable<Landscape["steps"]>[number]["map"]>();
+  const { getDataByPath } = useForm();
   const { isCollapsed, isWithinCollapsible } = useCollapsible();
   // We use a debounced value to render the map only after the collapsible state has stabilized
   const [collapsed] = useDebounceValue(isCollapsed, 500);
 
   const { stepMap } = useMap();
+
+  const initialBbox = useMemo(() => {
+    if (value?.bbox) return value.bbox as LngLatBoundsLike;
+
+    const match = path.match(/^steps\.(\d+)\.map$/);
+    if (!match) return undefined;
+
+    const currentIndex = parseInt(match[1], 10);
+    for (let i = currentIndex - 1; i >= 0; i--) {
+      const prevMap = getDataByPath<NonNullable<Landscape["steps"]>[number]["map"]>(
+        `steps.${i}.map`,
+      );
+      if (prevMap?.bbox) return prevMap.bbox as LngLatBoundsLike;
+    }
+
+    return undefined;
+  }, [value?.bbox, path, getDataByPath]);
 
   const MAP_STYLE = useMemo(() => {
     return BASEMAPS[value?.basemap ?? "default"].mapStyle;
@@ -57,6 +75,30 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
     }
   }, [stepMap]);
 
+  const hasBearingOrPitch = !!(value?.bearing || value?.pitch);
+
+  const handleLoad = useCallback(() => {
+    setLoaded(true);
+
+    // When bearing or pitch is saved, initialViewState with bounds doesn't properly
+    // apply them (fitBounds ignores bearing/pitch). Use cameraForBounds + jumpTo instead.
+    if (stepMap && value?.bbox && hasBearingOrPitch) {
+      const camera = stepMap.cameraForBounds(value.bbox as LngLatBoundsLike, {
+        padding: { top: 50, bottom: 50, left: 50, right: 50 },
+        bearing: value.bearing ?? 0,
+        pitch: value.pitch ?? 0,
+      });
+
+      if (camera) {
+        stepMap.jumpTo({
+          ...camera,
+          bearing: value.bearing ?? 0,
+          pitch: value.pitch ?? 0,
+        });
+      }
+    }
+  }, [stepMap, value?.bbox, value?.bearing, value?.pitch, hasBearingOrPitch]);
+
   const handleMove = () => {
     if (stepMap) {
       const b = stepMap
@@ -67,10 +109,17 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
           return parseFloat(v.toFixed(2));
         });
 
+      // Normalize bearing from [-180, 180] to [0, 360] for JSON schema validation
+      const rawBearing = stepMap.getBearing();
+      const bearing = parseFloat((((rawBearing % 360) + 360) % 360).toFixed(1));
+      const pitch = parseFloat(stepMap.getPitch().toFixed(1));
+
       if (b)
         setValue({
           ...value,
           bbox: b,
+          bearing,
+          pitch,
         });
     }
   };
@@ -87,7 +136,7 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
       id="stepMap"
       mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
       initialViewState={{
-        ...(value?.bbox && { bounds: value?.bbox as LngLatBoundsLike }),
+        ...(initialBbox && { bounds: initialBbox }),
         fitBoundsOptions: {
           padding: {
             top: 50,
@@ -100,10 +149,19 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
       style={{ width: "100%", height: "100%" }}
       mapStyle={MAP_STYLE}
       minZoom={2}
+      maxPitch={60}
       scrollZoom={false}
       onMove={handleMovedDebounced}
-      onLoad={() => setLoaded(true)}
+      onLoad={handleLoad}
+      terrain={{ source: "mapbox-dem", exaggeration: 1.5 }}
     >
+      <Source
+        id="mapbox-dem"
+        type="raster-dem"
+        url="mapbox://mapbox.mapbox-terrain-dem-v1"
+        tileSize={512}
+        maxzoom={14}
+      />
       {loaded && (
         <>
           {/*
@@ -164,6 +222,10 @@ export const MapfieldMapInner = ({ layers }: { layers: iLayer[] }) => {
           />
         </SettingsControl>
       </Controls>
+
+      <div className="absolute top-4 left-4 rounded bg-black/70 px-3 py-1.5 text-xs text-white">
+        Bearing: {value?.bearing ?? 0}° | Pitch: {value?.pitch ?? 0}°
+      </div>
     </Map>
   );
 };

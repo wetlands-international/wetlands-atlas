@@ -19,6 +19,11 @@ const LandscapesLegendItem: FC<LegendItemProps> = ({ id, ...props }) => {
 
   if (!layer) return null;
 
+  const unit =
+    layer.indicators
+      ?.map((ind: string | { unit?: string | null }) => (typeof ind === "string" ? null : ind.unit))
+      .find((u: string | null | undefined) => !!u) ?? null;
+
   const settings = getParams({
     params_config: layer.params_config,
     settings: {},
@@ -28,7 +33,7 @@ const LandscapesLegendItem: FC<LegendItemProps> = ({ id, ...props }) => {
     <>
       <LegendItem
         id={layer.id}
-        name={layer.name}
+        name={unit ? `${layer.name} (${unit})` : layer.name}
         settings={settings}
         settingsManager={{
           opacity: false,
