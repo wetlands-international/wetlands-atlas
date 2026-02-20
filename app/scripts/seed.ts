@@ -490,8 +490,7 @@ const seedLandscapes = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, cover, description, category, location, published, embeddedVideo, steps } =
-      row;
+    const { id, name, cover, description, category, location, published, steps } = row;
 
     // Optional: Check that category exists (foreign key)
     const categoryExists = await tx.query.categories.findFirst({
@@ -515,8 +514,6 @@ const seedLandscapes = async (db: DB, tx: TX): Promise<void> => {
         cover: cover ?? null,
         geoLocation: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
         published: published ?? false,
-        embedded_video_type: embeddedVideo?.type,
-        embedded_video_source: embeddedVideo?.source,
         createdAt: now,
         updatedAt: now,
       })
@@ -527,8 +524,6 @@ const seedLandscapes = async (db: DB, tx: TX): Promise<void> => {
           cover: cover ?? null,
           geoLocation: locationPoint ? sql`ST_GeomFromText(${locationPoint}, 4326)` : null,
           published: published ?? false,
-          embedded_video_type: embeddedVideo?.type,
-          embedded_video_source: embeddedVideo?.source,
           updatedAt: now,
         },
       });
@@ -541,14 +536,12 @@ const seedLandscapes = async (db: DB, tx: TX): Promise<void> => {
         _parentID: id,
         name,
         description,
-        embedded_video_title: embeddedVideo?.title ?? null,
       })
       .onConflictDoUpdate({
         target: [landscapesLocales._locale, landscapesLocales._parentID],
         set: {
           name,
           description,
-          embedded_video_title: embeddedVideo?.title ?? null,
         },
       });
 

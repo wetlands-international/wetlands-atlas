@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
 import {
+  BlocksFeature,
   BoldFeature,
   FixedToolbarFeature,
   HeadingFeature,
@@ -17,27 +17,12 @@ import {
 } from "@payloadcms/richtext-lexical";
 
 import { PublicAccessControl } from "@/cms/access/public";
+import { VideoEmbedBlock } from "@/cms/blocks/video-embed";
 import { ChartField } from "@/cms/fields/chart-field";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
 import { landscapesReadLocationCriteriaExtension } from "@/cms/hooks/landscapes-read-location-criteria-extension";
 import { env } from "@/env";
-
-const validateEmbeddedVideoSource = (value: any, opts: any) => {
-  const { embedded_video } = opts.data;
-  if (embedded_video.type && !embedded_video.source) {
-    return "Embedded video source is required.";
-  }
-  return true;
-};
-
-const validateEmbeddedVideoTitle = (value: any, opts: any) => {
-  const { embedded_video } = opts.data;
-  if (embedded_video.type && !embedded_video.title) {
-    return "Embedded video title is required.";
-  }
-  return true;
-};
 
 export const Landscapes: CollectionConfig = {
   slug: "landscapes",
@@ -78,32 +63,6 @@ export const Landscapes: CollectionConfig = {
       type: "upload",
       relationTo: "media",
       localized: false,
-    },
-    {
-      type: "group",
-      name: "embedded_video",
-      label: "Embedded video",
-      required: false,
-
-      fields: [
-        {
-          type: "select",
-          name: "type",
-          options: [{ label: "Youtube", value: "youtube" }],
-        },
-        {
-          name: "source",
-          type: "text",
-          localized: false,
-          validate: validateEmbeddedVideoSource,
-        },
-        {
-          name: "title",
-          type: "text",
-          localized: true,
-          validate: validateEmbeddedVideoTitle,
-        },
-      ],
     },
     {
       name: "category",
@@ -169,6 +128,9 @@ export const Landscapes: CollectionConfig = {
               ItalicFeature(),
               LinkFeature(),
               UploadFeature(),
+              BlocksFeature({
+                blocks: [VideoEmbedBlock],
+              }),
             ],
           }),
         },

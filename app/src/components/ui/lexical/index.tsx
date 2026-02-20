@@ -2,12 +2,14 @@ import React, { HTMLAttributes, JSX } from "react";
 
 import {
   DefaultNodeTypes,
+  SerializedBlockNode,
   SerializedInlineBlockNode,
   SerializedListNode,
 } from "@payloadcms/richtext-lexical";
 import type { SerializedEditorState } from "@payloadcms/richtext-lexical/lexical";
 import { JSXConverters, JSXConvertersFunction, RichText } from "@payloadcms/richtext-lexical/react";
 
+import EmbeddedVideo from "@/components/embedded-video";
 import { NumberBlock } from "@/components/ui/lexical/blocks/number-block";
 import { VariableBlock } from "@/components/ui/lexical/blocks/variable-block";
 import { CustomUploadComponent } from "@/components/ui/lexical/converters/upload";
@@ -68,7 +70,18 @@ export const Lexical = (props: LexicalProps) => {
         ? (base as (a: unknown) => React.ReactNode)(args)
         : (base as React.ReactNode);
     },
-    blocks: {},
+    blocks: {
+      videoEmbed: ({
+        node,
+      }: {
+        node: SerializedBlockNode<{
+          blockType: "videoEmbed";
+          type: string;
+          source: string;
+          title: string;
+        }>;
+      }) => <EmbeddedVideo src={node.fields.source} title={node.fields.title} />,
+    },
     inlineBlocks: {
       number: ({
         node,

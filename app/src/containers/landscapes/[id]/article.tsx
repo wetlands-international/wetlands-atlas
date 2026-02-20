@@ -3,13 +3,11 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 import { LandscapeImage } from "@/containers/landscapes/[id]/image";
 import { LandscapeSteps } from "@/containers/landscapes/[id]/steps";
 
-import EmbeddedVideo from "@/components/embedded-video";
 import { ScrollArrow } from "@/components/ui/scroll-arrow";
 
 import { Landscape } from "@/payload-types";
 
 export const LandscapesIdArticle = (props: Landscape) => {
-  const embeddedVideo = props["embedded_video"]?.source ? props["embedded_video"] : null;
   const imageUrl = typeof props.cover === "object" ? props.cover?.url : undefined;
 
   return (
@@ -22,11 +20,7 @@ export const LandscapesIdArticle = (props: Landscape) => {
           className="animate-in fade-in slide-in-from-top-10 my-4 text-lg text-gray-400"
           data={props.description}
         />
-        {embeddedVideo ? (
-          <EmbeddedVideo src={embeddedVideo.source} title={embeddedVideo.title} />
-        ) : imageUrl ? (
-          <LandscapeImage imageUrl={imageUrl} />
-        ) : null}
+        {imageUrl ? <LandscapeImage imageUrl={imageUrl} /> : null}
         <ScrollArrow />
       </div>
 
