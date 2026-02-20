@@ -16,7 +16,7 @@ import { locationsAtom, tmpBboxAtom, useSyncLocation } from "@/app/(frontend)/[l
 import { GLOBAL_SAHEL_BBOX } from "@/components/map/controls/constants";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
-import API from "@/services/api";
+import { collectionByIdQueryOptions } from "@/services/sdk-query";
 
 export const LocationsSearch = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -29,15 +29,8 @@ export const LocationsSearch = () => {
   const setTmpBbox = useSetAtom(tmpBboxAtom);
 
   const { data: locationsIdData } = useQuery({
-    ...API.queryOptions("get", "/api/locations/{id}", {
-      params: {
-        path: {
-          id: location ?? "",
-        },
-        query: {
-          locale,
-        },
-      },
+    ...collectionByIdQueryOptions("locations", location ?? "", {
+      locale,
     }),
     enabled: !!location, // Only run this query if location is defined
   });

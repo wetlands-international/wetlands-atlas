@@ -16,7 +16,7 @@ import {
   useSyncLayers,
 } from "@/app/(frontend)/[locale]/(app)/store";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 export const CategoriesBack = () => {
   const locale = useLocale();
@@ -25,17 +25,13 @@ export const CategoriesBack = () => {
   const [, setLayers] = useSyncLayers();
 
   const { data: categoriesData } = useSuspenseQuery(
-    API.queryOptions("get", "/api/categories", {
-      params: {
-        query: {
-          depth: 1,
-          limit: 0,
-          locale,
-          where: {
-            published: {
-              equals: true,
-            },
-          },
+    collectionQueryOptions("categories", {
+      depth: 1,
+      limit: 0,
+      locale,
+      where: {
+        published: {
+          equals: true,
         },
       },
     }),

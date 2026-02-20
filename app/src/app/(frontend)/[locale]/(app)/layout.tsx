@@ -14,7 +14,7 @@ import { Toggle } from "@/containers/toogle";
 
 import payloadConfig from "@/payload.config";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
@@ -36,17 +36,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   });
 
   await queryClient.prefetchQuery(
-    API.queryOptions("get", "/api/categories", {
-      params: {
-        query: {
-          depth: 1,
-          limit: 0,
-          locale,
-          where: {
-            published: {
-              equals: true,
-            },
-          },
+    collectionQueryOptions("categories", {
+      depth: 1,
+      limit: 0,
+      locale,
+      where: {
+        published: {
+          equals: true,
         },
       },
     }),
@@ -54,23 +50,19 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   // Default locations
   await queryClient.prefetchQuery(
-    API.queryOptions("get", "/api/locations", {
-      params: {
-        query: {
-          depth: 1,
-          limit: 0,
-          page: 1,
-          sort: "name",
-          // Locations are currently only in English
-          locale: "en",
-          select: {
-            id: true,
-            name: true,
-            type: true,
-            code: true,
-            bbox: true,
-          },
-        },
+    collectionQueryOptions("locations", {
+      depth: 1,
+      limit: 0,
+      page: 1,
+      sort: "name",
+      // Locations are currently only in English
+      locale: "en",
+      select: {
+        id: true,
+        name: true,
+        type: true,
+        code: true,
+        bbox: true,
       },
     }),
   );

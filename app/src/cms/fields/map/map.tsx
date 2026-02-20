@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { useField, useCollapsible, useForm } from "@payloadcms/ui";
 
@@ -75,6 +75,30 @@ export const MapfieldMapInner = ({ layers, path }: { layers: iLayer[]; path: str
     }
   }, [stepMap]);
 
+  const hasBearingOrPitch = !!(value?.bearing || value?.pitch);
+
+  const handleLoad = useCallback(() => {
+    setLoaded(true);
+
+    // When bearing or pitch is saved, initialViewState with bounds doesn't properly
+    // apply them (fitBounds ignores bearing/pitch). Use cameraForBounds + jumpTo instead.
+    if (stepMap && value?.bbox && hasBearingOrPitch) {
+      const camera = stepMap.cameraForBounds(value.bbox as LngLatBoundsLike, {
+        padding: { top: 50, bottom: 50, left: 50, right: 50 },
+        bearing: value.bearing ?? 0,
+        pitch: value.pitch ?? 0,
+      });
+
+      if (camera) {
+        stepMap.jumpTo({
+          ...camera,
+          bearing: value.bearing ?? 0,
+          pitch: value.pitch ?? 0,
+        });
+      }
+    }
+  }, [stepMap, value?.bbox, value?.bearing, value?.pitch, hasBearingOrPitch]);
+
   const handleMove = () => {
     if (stepMap) {
       const b = stepMap
@@ -85,10 +109,17 @@ export const MapfieldMapInner = ({ layers, path }: { layers: iLayer[]; path: str
           return parseFloat(v.toFixed(2));
         });
 
+      // Normalize bearing from [-180, 180] to [0, 360] for JSON schema validation
+      const rawBearing = stepMap.getBearing();
+      const bearing = parseFloat((((rawBearing % 360) + 360) % 360).toFixed(1));
+      const pitch = parseFloat(stepMap.getPitch().toFixed(1));
+
       if (b)
         setValue({
           ...value,
           bbox: b,
+          bearing,
+          pitch,
         });
     }
   };
@@ -118,10 +149,19 @@ export const MapfieldMapInner = ({ layers, path }: { layers: iLayer[]; path: str
       style={{ width: "100%", height: "100%" }}
       mapStyle={MAP_STYLE}
       minZoom={2}
+      maxPitch={60}
       scrollZoom={false}
       onMove={handleMovedDebounced}
-      onLoad={() => setLoaded(true)}
+      onLoad={handleLoad}
+      terrain={{ source: "mapbox-dem", exaggeration: 1.5 }}
     >
+      <Source
+        id="mapbox-dem"
+        type="raster-dem"
+        url="mapbox://mapbox.mapbox-terrain-dem-v1"
+        tileSize={512}
+        maxzoom={14}
+      />
       {loaded && (
         <>
           {/*
@@ -182,6 +222,10 @@ export const MapfieldMapInner = ({ layers, path }: { layers: iLayer[]; path: str
           />
         </SettingsControl>
       </Controls>
+
+      <div className="absolute top-4 left-4 rounded bg-black/70 px-3 py-1.5 text-xs text-white">
+        Bearing: {value?.bearing ?? 0}° | Pitch: {value?.pitch ?? 0}°
+      </div>
     </Map>
   );
 };

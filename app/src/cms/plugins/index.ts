@@ -2,15 +2,10 @@ import { Plugin } from "payload";
 
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
 
-import { openapi } from "payload-oapi";
-
 import { gcsPrefixPlugin } from "@/cms/plugins/GCS";
 import { env } from "@/env";
 
-export const plugins: Plugin[] = [
-  payloadCloudPlugin(),
-  openapi({ openapiVersion: "3.1", metadata: { title: "Dev API", version: "0.0.1" } }),
-];
+export const plugins: Plugin[] = [payloadCloudPlugin()];
 
 if (env.NODE_ENV === "production") {
   plugins.push(

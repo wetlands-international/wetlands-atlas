@@ -7,7 +7,7 @@ import { parseConfig } from "@/lib/json-converter";
 
 import { Layer } from "@/payload-types";
 
-import API from "@/services/api";
+import { collectionByIdQueryOptions } from "@/services/sdk-query";
 
 interface LayerManagerItemProps {
   settings: Record<string, unknown>;
@@ -16,15 +16,7 @@ interface LayerManagerItemProps {
 }
 
 const LayerManagerItem = ({ id, settings, beforeId }: LayerManagerItemProps) => {
-  const { data: LAYER } = useQuery(
-    API.queryOptions("get", `/api/layers/{id}`, {
-      params: {
-        path: {
-          id,
-        },
-      },
-    }),
-  );
+  const { data: LAYER } = useQuery(collectionByIdQueryOptions("layers", id));
 
   const { config, params_config } = LAYER ?? {};
 

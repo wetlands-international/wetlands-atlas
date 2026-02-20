@@ -14,25 +14,18 @@ import {
 } from "@/components/map/legend/item-types";
 import { LegendItemProps } from "@/components/map/legend/types";
 
-import API from "@/services/api";
+import { collectionByIdQueryOptions } from "@/services/sdk-query";
 
 const MapLegendItem: FC<LegendItemProps> = ({ id, ...props }) => {
-  const { data: layer } = useQuery(
-    API.queryOptions("get", `/api/layers/{id}`, {
-      params: {
-        path: {
-          id,
-        },
-      },
-    }),
-  );
+  const { data: layer } = useQuery(collectionByIdQueryOptions("layers", id));
   const [layersSettings, setLayersSettings] = useSyncLayersSettings();
 
   if (!layer) return null;
 
   const unit =
-    layer.indicator?.map((ind) => (typeof ind === "string" ? null : ind.unit)).find((u) => !!u) ??
-    null;
+    layer.indicators
+      ?.map((ind: string | { unit?: string | null }) => (typeof ind === "string" ? null : ind.unit))
+      .find((u: string | null | undefined) => !!u) ?? null;
 
   const settings = getParams({
     params_config: layer.params_config,

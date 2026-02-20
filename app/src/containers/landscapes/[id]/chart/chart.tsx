@@ -9,7 +9,7 @@ import WidgetChart from "@/components/chart";
 
 import { Indicator, Location } from "@/payload-types";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 export const LandscapeChart = (props: {
   title: string;
@@ -20,43 +20,37 @@ export const LandscapeChart = (props: {
 
   const locale = useLocale();
 
-  const { data } = useQuery(
-    API.queryOptions(
-      "get",
-      "/api/indicator-data",
-      {
-        params: {
-          query: {
-            depth: 1,
-            pagination: false,
-            sort: "-createdAt",
-            locale,
-            where: {
-              "indicator.id": {
-                equals: typeof indicator === "string" ? indicator : indicator.id,
-              },
-              "location.id": {
-                equals: typeof location === "string" ? location : location.id,
-              },
-            },
-          },
+  const { data } = useQuery({
+    ...collectionQueryOptions("indicator-data", {
+      depth: 1,
+      pagination: false,
+      sort: "-createdAt",
+      locale,
+      where: {
+        "indicator.id": {
+          equals: typeof indicator === "string" ? indicator : indicator.id,
+        },
+        "location.id": {
+          equals: typeof location === "string" ? location : location.id,
         },
       },
-      {
-        select(data) {
-          return data.docs
-            .map((doc) =>
-              (doc?.data as IndicatorChartData[])?.map((d) => ({
-                ...d,
-                key: d.label,
-                label: doc.labels[d.label],
-              })),
-            )
-            .flat();
-        },
-      },
-    ),
-  );
+    }),
+    select(data) {
+      return data.docs
+        .map((doc) => {
+          const items = doc?.data as IndicatorChartData[] | null;
+          const labels = doc.labels as Record<string, string> | null;
+          return (
+            items?.map((d) => ({
+              ...d,
+              key: d.label,
+              label: labels?.[d.label] ?? d.label,
+            })) ?? []
+          );
+        })
+        .flat();
+    },
+  });
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-center p-10">

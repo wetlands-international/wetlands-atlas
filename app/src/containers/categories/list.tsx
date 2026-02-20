@@ -6,23 +6,19 @@ import { useLocale } from "next-intl";
 import { CategoriesHeader } from "@/containers/categories/header";
 import { CategoriesItem } from "@/containers/categories/item";
 
-import API from "@/services/api";
+import { collectionQueryOptions } from "@/services/sdk-query";
 
 export const CategoriesList = () => {
   const locale = useLocale();
 
   const { data: categoriesData } = useSuspenseQuery(
-    API.queryOptions("get", "/api/categories", {
-      params: {
-        query: {
-          depth: 1,
-          limit: 0,
-          locale,
-          where: {
-            published: {
-              equals: true,
-            },
-          },
+    collectionQueryOptions("categories", {
+      depth: 1,
+      limit: 0,
+      locale,
+      where: {
+        published: {
+          equals: true,
         },
       },
     }),
