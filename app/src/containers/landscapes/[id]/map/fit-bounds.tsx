@@ -7,8 +7,8 @@ import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]
 
 import { Landscape } from "@/payload-types";
 
-const MIN_DURATION = 1000;
-const MAX_DURATION = 3000;
+const MIN_DURATION = 2000;
+const MAX_DURATION = 4000;
 
 const getBboxCenter = (bbox: LngLatBoundsLike): [number, number] => {
   const b = bbox as [number, number, number, number];
