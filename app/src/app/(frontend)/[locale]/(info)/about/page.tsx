@@ -20,7 +20,7 @@ export default function AboutPage() {
         </div>
       </header>
 
-      <section className="text-background flex items-center justify-evenly gap-32 bg-white px-28 py-36">
+      <section data-navbar-theme="light" className="text-background flex items-center justify-evenly gap-32 bg-white px-28 py-36">
         <div>
           <h2 className="font-display mb-8 text-[56px] leading-16 font-normal">
             {t("the-gap-map.title")}
@@ -41,7 +41,7 @@ export default function AboutPage() {
         />
       </section>
 
-      <section className="text-background bg-white px-28 py-36">
+      <section data-navbar-theme="light" className="text-background bg-white px-28 py-36">
         <div className="flex items-center justify-evenly gap-32">
           <Image
             src="/about/explore.avif"
