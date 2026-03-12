@@ -31,7 +31,7 @@ export const LandscapesList = async () => {
       className="animate-in fade-in-0 slide-in-from-bottom-25 w-full duration-300"
       orientation="horizontal"
     >
-      <ul className="flex w-full items-stretch gap-2">
+      <ul className="flex w-full items-stretch gap-2 pb-4">
         <li className="bg-background w-96 shrink-0 space-y-4 rounded-4xl p-6">
           <h1 className="font-display text-4xl text-blue-500">Highlighted landscapes</h1>
           <p className="text-foreground text-sm">
