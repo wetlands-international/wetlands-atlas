@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import { SerializedUploadNode } from "@payloadcms/richtext-lexical";
 
+import { GradientMediaWrapper } from "@/components/ui/gradient-media-wrapper";
+
 // Custom upload converter component that uses next/image
 export const CustomUploadComponent: React.FC<{
   node: SerializedUploadNode;
@@ -19,9 +21,9 @@ export const CustomUploadComponent: React.FC<{
     }
 
     return (
-      <div className={className}>
+      <GradientMediaWrapper className={className}>
         <Image alt={alt} height={height} src={url} width={width} />
-      </div>
+      </GradientMediaWrapper>
     );
   }
 
