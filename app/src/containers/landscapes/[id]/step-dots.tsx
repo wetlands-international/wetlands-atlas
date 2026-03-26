@@ -52,7 +52,9 @@ export const StepDots = ({ steps }: StepDotsProps) => {
             style={{ width: DOT_SIZE, height: DOT_SIZE }}
             animate={{
               scale: isActive ? 1.4 : 1,
-              backgroundColor: isActive ? "rgb(255, 255, 255)" : "rgb(180, 180, 180)",
+              backgroundColor: isActive
+                ? "rgb(255, 255, 255)"
+                : "rgb(180, 180, 180)",
             }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={() => handleClick(index)}
