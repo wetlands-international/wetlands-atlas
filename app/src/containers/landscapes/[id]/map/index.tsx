@@ -91,7 +91,7 @@ export const LandscapeMapContainer = (props: Landscape) => {
         <LandscapeFitBounds {...props} />
       </Map>
 
-      <StepDots steps={props.steps} />
+      <StepDots steps={steps} />
 
       <div className="pointer-events-none absolute right-5 bottom-7 z-10">
         <LandscapesLegend layers={LAYERS} />

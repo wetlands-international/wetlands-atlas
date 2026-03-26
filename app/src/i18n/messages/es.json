@@ -169,6 +169,9 @@
       "title": "Landscape not found",
       "description": "The landscape you are looking for does not exist. Please check the URL or return to the homepage. If you believe this is an error, please contact support.",
       "back": "Go back to landscapes"
+    },
+    "step-dots": {
+      "go-to-step": "Ir al paso {step}"
     }
   },
   "not-found": {

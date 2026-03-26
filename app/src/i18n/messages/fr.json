@@ -169,6 +169,9 @@
       "title": "Paysage introuvable",
       "description": "Le paysage que vous recherchez n'existe pas. Veuillez vérifier l'URL ou retourner à l'accueil. Si vous pensez qu'il s'agit d'une erreur, veuillez contacter le support.",
       "back": "Retourner aux paysages"
+    },
+    "step-dots": {
+      "go-to-step": "Aller à l'étape {step}"
     }
   },
   "not-found": {
