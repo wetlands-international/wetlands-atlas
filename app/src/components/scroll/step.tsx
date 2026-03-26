@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement, useEffect, useMemo, useRef } from "react";
+import { ReactNode, useEffect, useMemo, useRef } from "react";
 
 import { useInView } from "motion/react";
 
@@ -15,7 +15,7 @@ type MarginType =
 
 export interface StepProps {
   id: string;
-  children: ReactElement | ReactElement[];
+  children: ReactNode;
   offset: number;
   className?: string;
   onEnter?: (id: string) => void;
@@ -23,6 +23,8 @@ export interface StepProps {
 
 export const Step = ({ id, children, offset, className, onEnter }: StepProps) => {
   const ref = useRef<HTMLDivElement>(null);
+  const onEnterRef = useRef(onEnter);
+  onEnterRef.current = onEnter;
 
   const margin = useMemo(() => {
     return `-${offset * 100}% ${0}px -${100 - offset * 100}% ${0}px` as MarginType;
@@ -34,10 +36,10 @@ export const Step = ({ id, children, offset, className, onEnter }: StepProps) =>
   });
 
   useEffect(() => {
-    if (inView && onEnter) {
-      onEnter(id);
+    if (inView) {
+      onEnterRef.current?.(id);
     }
-  }, [id, inView, onEnter]);
+  }, [id, inView]);
 
   return (
     <div id={id} ref={ref} className={cn(className)}>
