@@ -13,11 +13,11 @@ export const GradientMediaWrapper: FC<PropsWithChildren<GradientMediaWrapperProp
   return (
     <div
       className={cn(
-        "w-full rounded-2xl bg-gradient-to-t from-[#D5EB4E] to-[#5AC4C6] p-0.5 shadow-[0_0_20px_rgba(90,196,198,0.2)] transition-all duration-500",
+        "w-full rounded-2xl bg-gradient-to-r from-[rgba(133,148,157,0)] via-[#85949D] to-[rgba(133,148,157,0)] p-px",
         className,
       )}
     >
-      <div className="overflow-hidden rounded-[14px] transition-transform duration-300 hover:scale-[1.02]">
+      <div className="overflow-hidden rounded-[14px] [&_img]:m-0">
         {children}
       </div>
     </div>
