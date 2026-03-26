@@ -9,6 +9,7 @@ import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]
 
 import { LandscapeFitBounds } from "@/containers/landscapes/[id]/map/fit-bounds";
 import { LandscapesLegend } from "@/containers/landscapes/[id]/map/legend";
+import { StepDots } from "@/containers/landscapes/[id]/step-dots";
 
 import { BASEMAPS } from "@/components/map/controls/settings/basemap";
 import { LayerManager } from "@/components/map/layer-manager";
@@ -89,6 +90,8 @@ export const LandscapeMapContainer = (props: Landscape) => {
         {loaded && <LayerManager layers={LAYERS} layersSettings={{}} />}
         <LandscapeFitBounds {...props} />
       </Map>
+
+      <StepDots steps={props.steps} />
 
       <div className="pointer-events-none absolute right-5 bottom-7 z-10">
         <LandscapesLegend layers={LAYERS} />
