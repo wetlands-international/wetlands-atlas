@@ -8,8 +8,7 @@ import { stepAtom } from "@/app/(frontend)/[locale]/(landscapes)/landscapes/[id]
 
 import { Landscape } from "@/payload-types";
 
-const DOT_SIZE_INACTIVE = 8;
-const DOT_SIZE_ACTIVE = 12;
+const DOT_SIZE = 8;
 
 interface StepDotsProps {
   steps: Landscape["steps"];
@@ -50,10 +49,11 @@ export const StepDots = ({ steps }: StepDotsProps) => {
             key={step.id}
             type="button"
             className="relative z-10 rounded-full"
+            style={{ width: DOT_SIZE, height: DOT_SIZE }}
             animate={{
-              width: isActive ? DOT_SIZE_ACTIVE : DOT_SIZE_INACTIVE,
-              height: isActive ? DOT_SIZE_ACTIVE : DOT_SIZE_INACTIVE,
-              backgroundColor: isActive ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0.4)",
+              scale: isActive ? 1.4 : 1,
+              opacity: isActive ? 1 : 0.4,
+              backgroundColor: isActive ? "rgb(255, 255, 255)" : "rgb(255, 255, 255)",
             }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={() => handleClick(index)}
