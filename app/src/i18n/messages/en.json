@@ -170,6 +170,7 @@
       "description": "The landscape you are looking for does not exist. Please check the URL or return to the homepage. If you believe this is an error, please contact support.",
       "back": "Go back to landscapes"
     },
+    "scroll-down": "Scroll down",
     "step-dots": {
       "go-to-step": "Go to step {step}"
     }

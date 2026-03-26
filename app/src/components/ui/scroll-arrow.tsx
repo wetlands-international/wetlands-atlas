@@ -4,20 +4,35 @@ import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
-export const ScrollArrow = ({ className }: { className?: string }) => {
+interface ScrollArrowProps {
+  className?: string;
+  label?: string;
+}
+
+export const ScrollArrow = ({ className, label }: ScrollArrowProps) => {
   return (
-    <motion.div
-      className={cn("absolute bottom-2 left-1/2 -translate-x-1/2", className)}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: [0, 1, 1, 0] }}
-      transition={{
-        duration: 1.7,
-        ease: "easeInOut",
-        repeat: Infinity,
-        times: [0, 0.15, 0.85, 0.86],
-      }}
+    <div
+      className={cn(
+        "absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2",
+        className,
+      )}
     >
-      <motion.svg
+      {label && (
+        <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">
+          {label}
+        </span>
+      )}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 1, 0] }}
+        transition={{
+          duration: 1.7,
+          ease: "easeInOut",
+          repeat: Infinity,
+          times: [0, 0.15, 0.85, 0.86],
+        }}
+      >
+        <motion.svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="33"
@@ -45,6 +60,7 @@ export const ScrollArrow = ({ className }: { className?: string }) => {
           fill="white"
         />
       </motion.svg>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 };

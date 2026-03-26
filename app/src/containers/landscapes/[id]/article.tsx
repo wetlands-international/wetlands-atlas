@@ -1,9 +1,8 @@
 import { RichText } from "@payloadcms/richtext-lexical/react";
 
 import { LandscapeImage } from "@/containers/landscapes/[id]/image";
+import { ScrollIndicator } from "@/containers/landscapes/[id]/scroll-indicator";
 import { LandscapeSteps } from "@/containers/landscapes/[id]/steps";
-
-import { ScrollArrow } from "@/components/ui/scroll-arrow";
 
 import { Landscape } from "@/payload-types";
 
@@ -21,9 +20,9 @@ export const LandscapesIdArticle = (props: Landscape) => {
           data={props.description}
         />
         {imageUrl ? <LandscapeImage imageUrl={imageUrl} /> : null}
-        <ScrollArrow />
       </div>
 
+      <ScrollIndicator />
       <LandscapeSteps {...props} />
     </article>
   );
