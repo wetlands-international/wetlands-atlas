@@ -1,5 +1,7 @@
 import { FC } from "react";
 
+import { GradientMediaWrapper } from "@/components/ui/gradient-media-wrapper";
+
 function toYouTubeEmbedUrl(url: string): string {
   try {
     const parsed = new URL(url);
@@ -26,15 +28,17 @@ interface EmbeddedVideoProps {
 const EmbeddedVideo: FC<EmbeddedVideoProps> = ({ src, title }) => {
   const embedSrc = src ? toYouTubeEmbedUrl(src) : undefined;
   return (
-    <iframe
-      className="aspect-video w-full"
-      src={embedSrc}
-      title={title || undefined}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerPolicy="strict-origin-when-cross-origin"
-      frameBorder="0"
-      allowFullScreen
-    ></iframe>
+    <GradientMediaWrapper>
+      <iframe
+        className="aspect-video w-full"
+        src={embedSrc}
+        title={title || undefined}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
+        frameBorder="0"
+        allowFullScreen
+      ></iframe>
+    </GradientMediaWrapper>
   );
 };
 
