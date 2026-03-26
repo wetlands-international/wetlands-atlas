@@ -48,12 +48,13 @@ export const StepDots = ({ steps }: StepDotsProps) => {
           <motion.button
             key={step.id}
             type="button"
-            className="relative z-10 rounded-full"
+            className="relative z-10 cursor-pointer rounded-full"
             style={{ width: DOT_SIZE, height: DOT_SIZE }}
             animate={{
               scale: isActive ? 1.4 : 1,
-              opacity: isActive ? 1 : 0.4,
-              backgroundColor: isActive ? "rgb(255, 255, 255)" : "rgb(255, 255, 255)",
+              backgroundColor: isActive
+                ? "rgb(255, 255, 255)"
+                : "rgb(180, 180, 180)",
             }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             onClick={() => handleClick(index)}
