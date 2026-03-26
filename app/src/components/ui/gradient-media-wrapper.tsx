@@ -17,9 +17,7 @@ export const GradientMediaWrapper: FC<PropsWithChildren<GradientMediaWrapperProp
         className,
       )}
     >
-      <div className="overflow-hidden rounded-[14px] [&_img]:m-0">
-        {children}
-      </div>
+      <div className="overflow-hidden rounded-[14px] [&_img]:m-0">{children}</div>
     </div>
   );
 };

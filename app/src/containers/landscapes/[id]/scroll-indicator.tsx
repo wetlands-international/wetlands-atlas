@@ -23,7 +23,7 @@ export const ScrollIndicator = () => {
 
   return (
     <motion.div
-      className="from-background/0 to-background pointer-events-none fixed bottom-0 left-0 z-30 flex w-xl flex-col items-center bg-gradient-to-b pb-8 pt-16"
+      className="from-background/0 to-background pointer-events-none fixed bottom-0 left-0 z-30 flex w-xl flex-col items-center bg-gradient-to-b pt-16 pb-8"
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >
