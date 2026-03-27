@@ -35,12 +35,5 @@ export const IndicatorDatas: CollectionConfig = {
       required: true,
       defaultValue: {},
     },
-    {
-      name: "labels",
-      type: "json",
-      required: true,
-      defaultValue: {},
-      localized: true,
-    },
   ],
 };

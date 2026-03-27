@@ -94,6 +94,16 @@ export const Indicators: CollectionConfig = {
         ],
       }),
     },
+    {
+      name: "labels",
+      type: "json",
+      required: false,
+      localized: true,
+      admin: {
+        description:
+          'Mapping of data label keys to human-readable translated labels (e.g., { "reduce_deforestation": "Reduce deforestation" }).',
+      },
+    },
   ],
   hooks: {
     afterChange: [
