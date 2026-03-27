@@ -46,10 +46,10 @@ export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
       },
     }),
     select: (data) => {
+      const labels = indicator.labels as Record<string, string> | null;
       return data.docs
         .map((doc) => {
           const items = doc.data as IndicatorChartData[];
-          const labels = doc.labels as Record<string, string> | null;
           return items.map((d) => ({
             ...d,
             key: d.label,

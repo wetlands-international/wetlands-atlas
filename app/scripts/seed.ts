@@ -189,7 +189,7 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, name, description, category, widget, order } = row;
+    const { id, name, description, category, widget, order, locale } = row;
 
     // Step 1: Ensure category exists (foreign key)
     const categoryExists = await tx.query.categories.findFirst({
@@ -220,24 +220,54 @@ const seedIndicators = async (db: DB, tx: TX): Promise<void> => {
         },
       });
 
-    // Step 3: Upsert into indicators_locales (en only)
-    await tx
-      .insert(indicatorsLocales)
-      .values({
-        _locale: "en",
-        _parentID: id,
-        name,
-        description,
-        widget,
-      })
-      .onConflictDoUpdate({
-        target: [indicatorsLocales._locale, indicatorsLocales._parentID],
-        set: {
+    // Step 3: Upsert into indicators_locales per locale
+    if (locale && typeof locale === "object") {
+      for (const [localeCode, localeData] of Object.entries(locale)) {
+        const labels =
+          localeData && typeof localeData === "object" && "labels" in localeData
+            ? (localeData as Record<string, unknown>).labels
+            : undefined;
+
+        await tx
+          .insert(indicatorsLocales)
+          .values({
+            _locale: localeCode,
+            _parentID: id,
+            name: localeCode === "en" ? name : undefined,
+            description: localeCode === "en" ? description : undefined,
+            widget: localeCode === "en" ? widget : undefined,
+            labels,
+          })
+          .onConflictDoUpdate({
+            target: [indicatorsLocales._locale, indicatorsLocales._parentID],
+            set: {
+              name: localeCode === "en" ? name : undefined,
+              description: localeCode === "en" ? description : undefined,
+              widget: localeCode === "en" ? widget : undefined,
+              labels,
+            },
+          });
+      }
+    } else {
+      // No locale block — upsert en locale with text fields only
+      await tx
+        .insert(indicatorsLocales)
+        .values({
+          _locale: "en",
+          _parentID: id,
           name,
           description,
           widget,
-        },
-      });
+        })
+        .onConflictDoUpdate({
+          target: [indicatorsLocales._locale, indicatorsLocales._parentID],
+          set: {
+            name,
+            description,
+            widget,
+          },
+        });
+    }
   }
 
   console.log("✅ Seeded indicators data.");
@@ -327,13 +357,12 @@ const seedCategoryIndicatorRels = async (db: DB, tx: TX): Promise<void> => {
 
 const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
   const indicatorData = db.query.indicator_data.table;
-  const indicatorDataLocales = db.query.indicator_data_locales.table;
 
   const rows = JSON.parse(await fs.promises.readFile(INDICATOR_DATA_FILE_PATH, "utf-8"));
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, indicator, location, data, locale } = row;
+    const { id, indicator, location, data } = row;
 
     // Optional: Check that both referenced rows exist
     const [indicatorExists, locationExists] = await Promise.all([
@@ -369,27 +398,6 @@ const seedIndicatorsData = async (db: DB, tx: TX): Promise<void> => {
           updatedAt: now,
         },
       });
-
-    // Handle localized labels
-    if (locale && typeof locale === "object") {
-      for (const [localeCode, localeData] of Object.entries(locale)) {
-        if (localeData && typeof localeData === "object" && "labels" in localeData) {
-          await tx
-            .insert(indicatorDataLocales)
-            .values({
-              _locale: localeCode,
-              _parentID: id,
-              labels: localeData.labels,
-            })
-            .onConflictDoUpdate({
-              target: [indicatorDataLocales._locale, indicatorDataLocales._parentID],
-              set: {
-                labels: localeData.labels,
-              },
-            });
-        }
-      }
-    }
   }
 
   console.log("✅ Seeded indicator-data entries.");
