@@ -22,13 +22,7 @@ export const CustomUploadComponent: React.FC<{
 
     return (
       <GradientMediaWrapper className={className}>
-        <Image
-          alt={alt}
-          height={height}
-          src={url}
-          width={width}
-          className={"min-w-full"}
-        />
+        <Image alt={alt} height={height} src={url} width={width} className={"min-w-full"} />
       </GradientMediaWrapper>
     );
   }
