@@ -6,18 +6,24 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ALTER TABLE "indicators_locales" ADD COLUMN "labels" jsonb;
 
     -- 2. Copy labels from indicator_data_locales into indicators_locales.
+    --    Rows in indicators_locales already exist (one per indicator+locale),
+    --    so we UPDATE rather than INSERT to avoid NOT NULL violations on other columns.
     --    Each indicator has the same labels regardless of location, so we take
     --    one row per (indicator, locale) pair using DISTINCT ON.
-    INSERT INTO "indicators_locales" ("_locale", "_parent_id", "labels")
-    SELECT DISTINCT ON (id."indicator_id", idl."_locale")
-      idl."_locale",
-      id."indicator_id",
-      idl.labels
-    FROM "indicator_data_locales" idl
-    JOIN "indicator_data" id ON id.id = idl."_parent_id"
-    WHERE idl.labels IS NOT NULL
-    ON CONFLICT ("_locale", "_parent_id")
-    DO UPDATE SET labels = EXCLUDED.labels;
+    UPDATE "indicators_locales" il
+    SET labels = source.labels
+    FROM (
+      SELECT DISTINCT ON (id."indicator_id", idl."_locale")
+        idl."_locale",
+        id."indicator_id",
+        idl.labels
+      FROM "indicator_data_locales" idl
+      JOIN "indicator_data" id ON id.id = idl."_parent_id"
+      WHERE idl.labels IS NOT NULL
+      ORDER BY id."indicator_id", idl."_locale"
+    ) source
+    WHERE il."_parent_id" = source."indicator_id"
+      AND il."_locale" = source."_locale";
 
     -- indicator_data_locales is intentionally kept here (expand phase).
     -- It will be dropped in the next deploy once the new code is confirmed live.
