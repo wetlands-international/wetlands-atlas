@@ -9,9 +9,9 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     --    Each indicator has the same labels regardless of location, so we take
     --    one row per (indicator, locale) pair using DISTINCT ON.
     INSERT INTO "indicators_locales" ("_locale", "_parent_id", "labels")
-    SELECT DISTINCT ON (id.indicator, idl."_locale")
+    SELECT DISTINCT ON (id."indicator_id", idl."_locale")
       idl."_locale",
-      id.indicator,
+      id."indicator_id",
       idl.labels
     FROM "indicator_data_locales" idl
     JOIN "indicator_data" id ON id.id = idl."_parent_id"
