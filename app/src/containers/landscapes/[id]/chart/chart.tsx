@@ -36,10 +36,11 @@ export const LandscapeChart = (props: {
       },
     }),
     select(data) {
+      const labels =
+        typeof indicator === "object" ? (indicator.labels as Record<string, string> | null) : null;
       return data.docs
         .map((doc) => {
           const items = doc?.data as IndicatorChartData[] | null;
-          const labels = doc.labels as Record<string, string> | null;
           return (
             items?.map((d) => ({
               ...d,

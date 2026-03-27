@@ -266,6 +266,18 @@ export interface Indicator {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Mapping of data label keys to human-readable translated labels (e.g., { "reduce_deforestation": "Reduce deforestation" }).
+   */
+  labels?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -440,15 +452,6 @@ export interface IndicatorDatum {
   indicator: string | Indicator;
   location: string | Location;
   data:
-    | {
-        [k: string]: unknown;
-      }
-    | unknown[]
-    | string
-    | number
-    | boolean
-    | null;
-  labels:
     | {
         [k: string]: unknown;
       }
@@ -662,6 +665,7 @@ export interface IndicatorsSelect<T extends boolean = true> {
   group?: T;
   layers?: T;
   widget?: T;
+  labels?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -689,7 +693,6 @@ export interface IndicatorDataSelect<T extends boolean = true> {
   indicator?: T;
   location?: T;
   data?: T;
-  labels?: T;
   updatedAt?: T;
   createdAt?: T;
 }
