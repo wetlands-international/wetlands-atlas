@@ -41,7 +41,7 @@ const Navbar: FC = () => {
           className="relative z-10 block items-center space-x-2"
           aria-label={t("header.title")}
         >
-          <LogoText className="shrink-0" fill={isLight ? "#0b2a3b" : "white"} />
+          <LogoText />
         </Link>
         <nav>
           <ul className="flex items-center gap-4">
