@@ -71,8 +71,8 @@ export default function AboutPage() {
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Convened by</h2>
             <Image
               src="/about/wetlands.svg"
-              width={156}
-              height={70}
+              width={144}
+              height={65}
               alt="Wetlands International"
               className="h-[65px] w-auto"
             />
@@ -81,8 +81,8 @@ export default function AboutPage() {
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Supported by</h2>
             <Image
               src="/about/aberystwyth-university.avif"
-              width={624}
-              height={200}
+              width={156}
+              height={50}
               alt="Aberystwyth University"
               className="h-[50px] w-auto"
             />
@@ -91,8 +91,8 @@ export default function AboutPage() {
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Donors</h2>
             <Image
               src="/about/effektiv-spenden.avif"
-              width={780}
-              height={260}
+              width={150}
+              height={50}
               alt="Effektiv Spenden"
               className="h-[50px] w-auto"
             />
@@ -101,8 +101,8 @@ export default function AboutPage() {
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Designed by</h2>
             <Image
               src="/about/vizzuality.svg"
-              width={145}
-              height={32}
+              width={226}
+              height={50}
               alt="Vizzuality"
               className="h-[50px] w-auto p-2"
             />
