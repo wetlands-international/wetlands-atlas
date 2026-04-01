@@ -1,8 +1,10 @@
-export const LogoText = () => (
-  <div className={"ps-4"}>
-    <h3 className={"font-black"}>
-      Wetland <span className={"font-normal"}>Atlas</span>
-    </h3>
+import Image from "next/image";
+
+import wetlandsLogo from "@/../public/about/wetlands.svg";
+
+export const Logo = () => (
+  <div>
+    <Image src={wetlandsLogo} alt="Wetland Atlas" className={"h-12"} />
   </div>
 );
 
