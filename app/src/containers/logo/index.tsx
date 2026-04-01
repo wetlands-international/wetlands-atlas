@@ -1,7 +1,7 @@
 export const LogoText = () => (
   <div className={"ps-4"}>
     <h3 className={"font-black"}>
-      Wetlands <span className={"font-normal"}>Atlas</span>
+      Wetland <span className={"font-normal"}>Atlas</span>
     </h3>
   </div>
 );
