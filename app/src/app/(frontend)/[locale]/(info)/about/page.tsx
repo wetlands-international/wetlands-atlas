@@ -67,14 +67,14 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-32 mb-20 flex justify-center gap-16">
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center">
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Convened by</h2>
             <Image
               src="/about/wetlands.svg"
               width={156}
-              height={50}
+              height={70}
               alt="Wetlands International"
-              className="p-2"
+              className="h-[65px] w-auto"
             />
           </div>
           <div className="flex flex-col items-center gap-2">
@@ -84,7 +84,7 @@ export default function AboutPage() {
               width={624}
               height={200}
               alt="Aberystwyth University"
-              className="h-auto w-[156px]"
+              className="h-[50px] w-auto"
             />
           </div>
           <div className="flex flex-col items-center gap-2">
@@ -94,7 +94,7 @@ export default function AboutPage() {
               width={780}
               height={260}
               alt="Effektiv Spenden"
-              className="h-auto w-[156px]"
+              className="h-[50px] w-auto"
             />
           </div>
           <div className="flex flex-col items-center gap-2">
@@ -104,7 +104,7 @@ export default function AboutPage() {
               width={145}
               height={32}
               alt="Vizzuality"
-              className="p-2"
+              className="h-[50px] w-auto p-2"
             />
           </div>
         </div>
