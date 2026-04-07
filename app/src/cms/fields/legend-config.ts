@@ -4,6 +4,7 @@ export const LegendConfigField: Field = {
   name: "legend_config",
   type: "json",
   required: true,
+  localized: true,
   defaultValue: {
     type: "basic",
     items: [
