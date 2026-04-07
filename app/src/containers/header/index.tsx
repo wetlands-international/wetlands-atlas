@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { Logo } from "@/containers/logo";
+import { HomeIcon } from "@/containers/logo";
 
 import { Link } from "@/i18n/navigation";
 
@@ -34,7 +34,7 @@ export const Header = ({
           className="relative z-10 block items-center space-x-2"
           aria-label={t("header.title")}
         >
-          <Logo className="size-14" />
+          <HomeIcon />
         </Link>
       </h1>
 

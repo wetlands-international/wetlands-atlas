@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 import { Language } from "@/containers/language";
-import { LogoLarge } from "@/containers/logo";
+import { LogoText } from "@/containers/logo";
 
 import { Button } from "@/components/ui/button";
 
@@ -41,7 +41,7 @@ const Navbar: FC = () => {
           className="relative z-10 block items-center space-x-2"
           aria-label={t("header.title")}
         >
-          <LogoLarge className="shrink-0" fill={isLight ? "#0b2a3b" : "white"} />
+          <LogoText />
         </Link>
         <nav>
           <ul className="flex items-center gap-4">
