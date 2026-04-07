@@ -67,44 +67,44 @@ export default function AboutPage() {
         </div>
 
         <div className="mt-32 mb-20 flex justify-center gap-16">
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center">
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Convened by</h2>
             <Image
               src="/about/wetlands.svg"
-              width={156}
-              height={50}
+              width={144}
+              height={65}
               alt="Wetlands International"
-              className="p-2"
+              className="h-[65px] w-auto"
             />
           </div>
           <div className="flex flex-col items-center gap-2">
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Supported by</h2>
             <Image
               src="/about/aberystwyth-university.avif"
-              width={624}
-              height={200}
+              width={156}
+              height={50}
               alt="Aberystwyth University"
-              className="h-auto w-[156px]"
+              className="h-[50px] w-auto"
             />
           </div>
           <div className="flex flex-col items-center gap-2">
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Donors</h2>
             <Image
               src="/about/effektiv-spenden.avif"
-              width={780}
-              height={260}
+              width={150}
+              height={50}
               alt="Effektiv Spenden"
-              className="h-auto w-[156px]"
+              className="h-[50px] w-auto"
             />
           </div>
           <div className="flex flex-col items-center gap-2">
             <h2 className="text-sm font-semibold text-[#5AC4C6] uppercase">Designed by</h2>
             <Image
               src="/about/vizzuality.svg"
-              width={145}
-              height={32}
+              width={226}
+              height={50}
               alt="Vizzuality"
-              className="p-2"
+              className="h-[50px] w-auto p-2"
             />
           </div>
         </div>
