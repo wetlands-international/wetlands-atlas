@@ -2,5 +2,5 @@
 [project]
 name = "tiler"
 version = "1.0.0"
-dependencies = ["fastapi", "uvicorn", "titiler-core", "rio-tiler", "rasterio", "python-dotenv"]
+dependencies = ["fastapi==0.116.1", "uvicorn==0.35.0", "titiler-core==0.23.1", "rio-tiler==7.8.1", "rasterio==1.4.3", "python-dotenv==1.1.1"]
 requires-python = ">=3.13"
