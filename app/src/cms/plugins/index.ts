@@ -1,11 +1,9 @@
 import { Plugin } from "payload";
 
-import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
-
 import { gcsPrefixPlugin } from "@/cms/plugins/GCS";
 import { env } from "@/env";
 
-export const plugins: Plugin[] = [payloadCloudPlugin()];
+export const plugins: Plugin[] = [];
 
 if (env.NODE_ENV === "production") {
   plugins.push(
