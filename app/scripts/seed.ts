@@ -90,7 +90,7 @@ const seedMedia = async (db: DB, tx: TX) => {
   const now = new Date().toISOString();
 
   for (const row of rows) {
-    const { id, alt, url, filename, mime_type, filesize, width, height, focal_x, focal_y } = row;
+    const { id, alt, url, filename, mime_type, filesize, width, height, focalX, focalY } = row;
 
     await tx
       .insert(media)
@@ -99,12 +99,12 @@ const seedMedia = async (db: DB, tx: TX) => {
         alt,
         url,
         filename,
-        mime_type,
+        mimeType: mime_type,
         filesize,
         width,
         height,
-        focal_x,
-        focal_y,
+        focalX,
+        focalY,
         createdAt: now,
         updatedAt: now,
       })
@@ -115,12 +115,12 @@ const seedMedia = async (db: DB, tx: TX) => {
           alt,
           url,
           filename,
-          mime_type,
+          mimeType: mime_type,
           filesize,
           width,
           height,
-          focal_x,
-          focal_y,
+          focalX,
+          focalY,
           updatedAt: now,
         },
       });

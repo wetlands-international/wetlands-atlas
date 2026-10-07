@@ -30,6 +30,7 @@ import * as migration_20260219_062652_add_unit_to_indicators from './20260219_06
 import * as migration_20260327_100000_move_labels_to_indicators from './20260327_100000_move_labels_to_indicators';
 import * as migration_20260327_120000_drop_indicator_data_locales from './20260327_120000_drop_indicator_data_locales';
 import * as migration_20260407_100000_localize_legend_config from './20260407_100000_localize_legend_config';
+import * as migration_20261007_085445_sync_schema_snapshot from './20261007_085445_sync_schema_snapshot';
 
 export const migrations = [
   {
@@ -191,5 +192,10 @@ export const migrations = [
     up: migration_20260407_100000_localize_legend_config.up,
     down: migration_20260407_100000_localize_legend_config.down,
     name: '20260407_100000_localize_legend_config',
+  },
+  {
+    up: migration_20261007_085445_sync_schema_snapshot.up,
+    down: migration_20261007_085445_sync_schema_snapshot.down,
+    name: '20261007_085445_sync_schema_snapshot'
   },
 ];

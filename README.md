@@ -28,6 +28,16 @@ This project uses git LFS for the `app-initial-data` seeding files.
 In case you cannot see the contents of a data file, use `git lfs pull`.
 [https://git-lfs.com](https://git-lfs.com)
 
+## Database migrations
+
+The database schema is managed with Payload migrations (`app/src/migrations`), applied at deployment with `payload migrate`. Each migration comes with a JSON snapshot of the whole schema, and `pnpm payload migrate:create <name>` generates the next migration by comparing the Payload config with the latest snapshot.
+
+- Any change to the schema needs a migration, including the less obvious ones: the locales of `app/src/i18n/routing.ts` (stored as a Postgres enum), a field becoming `required`, or a field added by a plugin.
+- Always create migrations with `migrate:create`, even if you then edit the SQL, so that the snapshot keeps matching the config. A hand-written migration without its snapshot makes every following migration include its changes again.
+- The schema must be the same in every environment: fields added by plugins only enabled in production (e.g. the GCS `prefix` field of `media`) must also be declared in the collection.
+- `pnpm payload migrate:create check --skip-empty` must not create any file; if it does, a migration is missing.
+- In development, Payload pushes the schema to the database on start (`pnpm dev`, seed script), which hides missing migrations. To test migrations, start from an empty database, run `pnpm payload migrate`, then seed it with `PAYLOAD_MIGRATING=true pnpm data:seed:dev`.
+
 ## Deployment
 
 ### Architecture
