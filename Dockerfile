@@ -25,8 +25,8 @@ ENV GCS_PROJECT_ID=$GCS_PROJECT_ID
 ENV GCS_BUCKET_NAME=$GCS_BUCKET_NAME
 ENV GCS_SERVICE_ACCOUNT_KEY=$GCS_SERVICE_ACCOUNT_KEY
 
-# Install pnpm
-RUN npm install -g pnpm
+# Install pnpm (keep in sync with "packageManager" in app/package.json)
+RUN npm install -g pnpm@10.34.6
 
 # Copy and build Node.js app
 WORKDIR /app
