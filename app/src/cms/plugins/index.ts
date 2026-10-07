@@ -1,6 +1,6 @@
 import { Plugin } from "payload";
 
-import { gcsPrefixPlugin } from "@/cms/plugins/GCS";
+import { gcsPrefixPlugin, storageFieldsPlugin } from "@/cms/plugins/GCS";
 import { env } from "@/env";
 
 export const plugins: Plugin[] = [];
@@ -13,4 +13,6 @@ if (env.NODE_ENV === "production") {
       serviceAccountKey: env.GCS_SERVICE_ACCOUNT_KEY,
     }),
   );
+} else {
+  plugins.push(storageFieldsPlugin());
 }

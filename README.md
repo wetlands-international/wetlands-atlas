@@ -34,7 +34,7 @@ The database schema is managed with Payload migrations (`app/src/migrations`), a
 
 - Any change to the schema needs a migration, including the less obvious ones: the locales of `app/src/i18n/routing.ts` (stored as a Postgres enum), a field becoming `required`, or a field added by a plugin.
 - Always create migrations with `migrate:create`, even if you then edit the SQL, so that the snapshot keeps matching the config. A hand-written migration without its snapshot makes every following migration include its changes again.
-- The schema must be the same in every environment: fields added by plugins only enabled in production (e.g. the GCS `prefix` field of `media`) must also be declared in the collection.
+- The schema must be the same in every environment, since migrations are generated locally but run in production. A plugin only enabled in production must still add its fields elsewhere: the GCS storage plugin is replaced outside production by `storageFieldsPlugin()` (`app/src/cms/plugins/GCS.ts`), which adds the same fields (`prefix`, `_objectKey`, …) without enabling storage. Keep `@payloadcms/plugin-cloud-storage` on the same version as `payload`.
 - `pnpm payload migrate:create check --skip-empty` must not create any file; if it does, a migration is missing.
 - In development, Payload pushes the schema to the database on start (`pnpm dev`, seed script), which hides missing migrations. To test migrations, start from an empty database, run `pnpm payload migrate`, then seed it with `PAYLOAD_MIGRATING=true pnpm data:seed:dev`.
 
