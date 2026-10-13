@@ -10,3 +10,7 @@ CLAUDE.md
 /.claude
 /.superpowers
 docs/
+# database dumps and raw data, never commit
+*.dump
+data-processing/data insert.sql
+.idea/
