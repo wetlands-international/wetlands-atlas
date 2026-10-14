@@ -1,6 +1,7 @@
 import { FC } from "react";
 
 import { useQuery } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 
 import { getParams } from "@/lib/json-converter";
 
@@ -15,7 +16,8 @@ import { LegendItemProps } from "@/components/map/legend/types";
 import { collectionByIdQueryOptions } from "@/services/sdk-query";
 
 const LandscapesLegendItem: FC<LegendItemProps> = ({ id, ...props }) => {
-  const { data: layer } = useQuery(collectionByIdQueryOptions("layers", id));
+  const locale = useLocale();
+  const { data: layer } = useQuery(collectionByIdQueryOptions("layers", id, { locale }));
 
   if (!layer) return null;
 
