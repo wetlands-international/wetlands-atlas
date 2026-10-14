@@ -3,6 +3,7 @@
 import { Where } from "payload";
 
 import { useQuery } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 
 import { useSyncLayers } from "@/app/(frontend)/[locale]/(app)/store";
 
@@ -12,6 +13,7 @@ import { Switch } from "@/components/ui/switch";
 import { collectionQueryOptions } from "@/services/sdk-query";
 
 export const Layers = () => {
+  const locale = useLocale();
   const [layers, setLayers] = useSyncLayers();
 
   const where: Where = {
@@ -25,6 +27,7 @@ export const Layers = () => {
     isFetched,
   } = useQuery(
     collectionQueryOptions("layers", {
+      locale,
       where,
     }),
   );

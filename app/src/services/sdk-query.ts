@@ -11,7 +11,7 @@ interface FindParams {
   draft?: boolean;
   fallbackLocale?: false | Locale;
   limit?: number;
-  locale?: "all" | Locale;
+  locale: "all" | Locale;
   page?: number;
   pagination?: boolean;
   select?: SelectType;
@@ -23,7 +23,7 @@ interface FindByIDParams {
   depth?: number;
   draft?: boolean;
   fallbackLocale?: false | Locale;
-  locale?: "all" | Locale;
+  locale: "all" | Locale;
   select?: SelectType;
 }
 
@@ -33,10 +33,10 @@ interface FindByIDParams {
  */
 export function collectionQueryOptions<TSlug extends CollectionSlug<Config>>(
   collection: TSlug,
-  params?: FindParams,
+  params: FindParams,
 ) {
   return {
-    queryKey: ["find", collection, params ?? {}] as const,
+    queryKey: ["find", collection, params] as const,
     queryFn: () =>
       sdk.find({
         collection,
@@ -53,10 +53,10 @@ export function collectionQueryOptions<TSlug extends CollectionSlug<Config>>(
 export function collectionByIdQueryOptions<TSlug extends CollectionSlug<Config>>(
   collection: TSlug,
   id: number | string,
-  params?: FindByIDParams,
+  params: FindByIDParams,
 ) {
   return {
-    queryKey: ["findByID", collection, id, params ?? {}] as const,
+    queryKey: ["findByID", collection, id, params] as const,
     queryFn: () =>
       sdk.findByID({
         collection,

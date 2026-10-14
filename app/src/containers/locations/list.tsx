@@ -49,7 +49,8 @@ export const LocationsList = () => {
       limit: 0,
       page: 1,
       sort: "name",
-      // Locations are currently only in English
+      // Location names are only seeded in English and Payload doesn't apply the fallback locale to
+      // filters, so searching in another locale would return no results
       locale: "en",
       select: {
         id: true,
@@ -58,13 +59,14 @@ export const LocationsList = () => {
         code: true,
         bbox: true,
       },
-      where: {
-        ...(!!search && {
+      // Only set `where` when searching so the query key matches the one prefetched in the layout
+      ...(!!search && {
+        where: {
           name: {
             like: `%${search}%`,
           },
-        }),
-      },
+        },
+      }),
     }),
     placeholderData: keepPreviousData,
   });

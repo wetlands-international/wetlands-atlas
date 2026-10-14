@@ -1,6 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
+import { useLocale } from "next-intl";
 import { LayerProps, Layer as RMLayer, Source as RMSource, SourceProps } from "react-map-gl/mapbox";
 
 import { parseConfig } from "@/lib/json-converter";
@@ -16,7 +17,8 @@ interface LayerManagerItemProps {
 }
 
 const LayerManagerItem = ({ id, settings, beforeId }: LayerManagerItemProps) => {
-  const { data: LAYER } = useQuery(collectionByIdQueryOptions("layers", id));
+  const locale = useLocale();
+  const { data: LAYER } = useQuery(collectionByIdQueryOptions("layers", id, { locale }));
 
   const { config, params_config } = LAYER ?? {};
 

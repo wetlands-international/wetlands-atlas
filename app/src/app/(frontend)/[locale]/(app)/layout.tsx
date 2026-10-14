@@ -55,7 +55,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       limit: 0,
       page: 1,
       sort: "name",
-      // Locations are currently only in English
+      // Must match the query in `LocationsList`, which searches in English (see the comment there)
       locale: "en",
       select: {
         id: true,
