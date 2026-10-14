@@ -59,13 +59,14 @@ export const LocationsList = () => {
         code: true,
         bbox: true,
       },
-      where: {
-        ...(!!search && {
+      // Only set `where` when searching so the query key matches the one prefetched in the layout
+      ...(!!search && {
+        where: {
           name: {
             like: `%${search}%`,
           },
-        }),
-      },
+        },
+      }),
     }),
     placeholderData: keepPreviousData,
   });
