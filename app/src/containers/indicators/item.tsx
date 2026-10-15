@@ -7,8 +7,7 @@ import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintex
 import { useQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 
-import { useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
-
+import { useLocationId } from "@/hooks/use-location-id";
 import { useToggleLayers } from "@/hooks/use-toggle-layers";
 
 import { IndicatorChartData } from "@/containers/indicators/types";
@@ -29,7 +28,7 @@ interface IndicatorsItemProps {
 export const IndicatorsItem: FC<IndicatorsItemProps> = ({ indicator }) => {
   const { indicators, toggleLayer } = useToggleLayers(indicator);
   const locale = useLocale();
-  const [location] = useSyncLocation();
+  const location = useLocationId();
   const { data } = useQuery({
     ...collectionQueryOptions("indicator-data", {
       depth: 1,

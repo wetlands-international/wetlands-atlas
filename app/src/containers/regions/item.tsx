@@ -11,27 +11,22 @@ import { isValidMedia } from "@/lib/utils";
 
 import { tmpBboxAtom, useSyncRegion } from "@/app/(frontend)/[locale]/(app)/store";
 
-import { useGlobalLocations } from "@/hooks/use-global-locations";
+import { useGlobalLocation } from "@/hooks/use-global-locations";
 
 import { Region } from "@/payload-types";
 
 export const RegionsItem = (region: Region) => {
   const [, setRegion] = useSyncRegion();
   const setTmpBbox = useSetAtom(tmpBboxAtom);
-  const { globalLocations } = useGlobalLocations();
+  const globalLocation = useGlobalLocation(region.id);
 
   const handleClick = useCallback(() => {
     setRegion(region.id);
 
-    const globalLocation = globalLocations.find((location) => {
-      const regionId = typeof location.region === "object" ? location.region.id : location.region;
-      return regionId === region.id;
-    });
-
     if (globalLocation) {
       setTmpBbox(globalLocation.bbox);
     }
-  }, [region.id, globalLocations, setRegion, setTmpBbox]);
+  }, [region.id, globalLocation, setRegion, setTmpBbox]);
 
   return (
     <button

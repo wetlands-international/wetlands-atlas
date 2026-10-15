@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
 
-import { Config } from "@/payload-types";
+import { Config, Region } from "@/payload-types";
 
 import { collectionQueryOptions } from "@/services/sdk-query";
 
@@ -49,4 +49,20 @@ export const useGlobalLocations = () => {
   }, [data]);
 
   return { globalLocations: data.docs, unionBbox };
+};
+
+/**
+ * Returns the global location of a region
+ */
+export const useGlobalLocation = (region: Region["id"] | null) => {
+  const { globalLocations } = useGlobalLocations();
+
+  return useMemo(
+    () =>
+      globalLocations.find((location) => {
+        const regionId = typeof location.region === "object" ? location.region.id : location.region;
+        return regionId === region;
+      }),
+    [globalLocations, region],
+  );
 };

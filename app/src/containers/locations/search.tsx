@@ -11,9 +11,16 @@ import { LuMapPin, LuSearch } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
 
-import { locationsAtom, tmpBboxAtom, useSyncLocation } from "@/app/(frontend)/[locale]/(app)/store";
+import {
+  locationsAtom,
+  tmpBboxAtom,
+  useSyncLocation,
+  useSyncRegion,
+} from "@/app/(frontend)/[locale]/(app)/store";
 
-import { GLOBAL_SAHEL_BBOX } from "@/components/map/controls/constants";
+import { useGlobalLocation } from "@/hooks/use-global-locations";
+import { useLocationId } from "@/hooks/use-location-id";
+
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 import { collectionByIdQueryOptions } from "@/services/sdk-query";
@@ -24,7 +31,10 @@ export const LocationsSearch = () => {
   const locale = useLocale();
   const t = useTranslations();
 
-  const [location, setLocation] = useSyncLocation();
+  const [region] = useSyncRegion();
+  const [, setLocation] = useSyncLocation();
+  const location = useLocationId();
+  const globalLocation = useGlobalLocation(region);
   const [locations, setLocations] = useAtom(locationsAtom);
   const setTmpBbox = useSetAtom(tmpBboxAtom);
 
@@ -67,7 +77,7 @@ export const LocationsSearch = () => {
 
   const handleReset = () => {
     setLocation(null);
-    setTmpBbox(GLOBAL_SAHEL_BBOX);
+    setTmpBbox(globalLocation?.bbox);
     setLocations({
       search: undefined,
       enabled: false,

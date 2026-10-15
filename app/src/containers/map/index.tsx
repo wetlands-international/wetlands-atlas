@@ -15,11 +15,11 @@ import {
   useSyncLandscapeLayer,
   useSyncLayers,
   useSyncLayersSettings,
-  useSyncLocation,
   useSyncRegion,
 } from "@/app/(frontend)/[locale]/(app)/store";
 
-import { useGlobalLocations } from "@/hooks/use-global-locations";
+import { useGlobalLocation, useGlobalLocations } from "@/hooks/use-global-locations";
+import { useLocationId } from "@/hooks/use-location-id";
 
 import { Layers } from "@/containers/layers";
 import LandscapeMarker from "@/containers/map/landscape-marker";
@@ -48,11 +48,12 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
   const [layers] = useSyncLayers();
   const [layersSettings, setLayersSettings] = useSyncLayersSettings();
-  const [location] = useSyncLocation();
+  const location = useLocationId();
   const [landscapeLayer] = useSyncLandscapeLayer();
 
   const { exploreMap } = useMap();
   const { unionBbox } = useGlobalLocations();
+  const globalLocation = useGlobalLocation(region);
 
   const MAP_STYLE = useMemo(() => {
     return BASEMAPS[basemap].mapStyle;
@@ -129,7 +130,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
         id="exploreMap"
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
         initialViewState={{
-          bounds: (bbox ?? unionBbox) as LngLatBoundsLike,
+          bounds: (bbox ?? globalLocation?.bbox ?? unionBbox) as LngLatBoundsLike,
           fitBoundsOptions: {
             padding: {
               top: 50,
@@ -159,7 +160,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
 
         {loaded && (
           <LayerManager layers={layers} layersSettings={layersSettings}>
-            {region ? <LocationLayer location={location} /> : <RegionsLayer />}
+            {region ? !!location && <LocationLayer location={location} /> : <RegionsLayer />}
           </LayerManager>
         )}
 
