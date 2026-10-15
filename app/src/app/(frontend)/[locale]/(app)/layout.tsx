@@ -43,19 +43,6 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   // The map needs it before mounting, for its initial bounds
   await queryClient.prefetchQuery(globalLocationsQueryOptions(locale));
 
-  await queryClient.prefetchQuery(
-    collectionQueryOptions("categories", {
-      depth: 1,
-      limit: 0,
-      locale,
-      where: {
-        published: {
-          equals: true,
-        },
-      },
-    }),
-  );
-
   // Default locations
   await queryClient.prefetchQuery(
     collectionQueryOptions("locations", {

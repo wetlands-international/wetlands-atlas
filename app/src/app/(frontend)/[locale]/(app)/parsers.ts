@@ -5,7 +5,7 @@ import {
   parseAsJson,
   parseAsString,
   parseAsStringLiteral,
-} from "nuqs";
+} from "nuqs/server";
 import { z } from "zod";
 
 import { BASEMAPS } from "@/components/map/controls/settings/basemap";

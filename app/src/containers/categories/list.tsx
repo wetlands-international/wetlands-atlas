@@ -1,28 +1,15 @@
 "use client";
 
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useLocale } from "next-intl";
+import { useSyncRegion } from "@/app/(frontend)/[locale]/(app)/store";
+
+import { useCategories } from "@/hooks/use-categories";
 
 import { CategoriesHeader } from "@/containers/categories/header";
 import { CategoriesItem } from "@/containers/categories/item";
 
-import { collectionQueryOptions } from "@/services/sdk-query";
-
 export const CategoriesList = () => {
-  const locale = useLocale();
-
-  const { data: categoriesData } = useSuspenseQuery(
-    collectionQueryOptions("categories", {
-      depth: 1,
-      limit: 0,
-      locale,
-      where: {
-        published: {
-          equals: true,
-        },
-      },
-    }),
-  );
+  const [region] = useSyncRegion();
+  const { data: categoriesData } = useCategories(region);
 
   return (
     <div className="flex flex-col gap-1">
