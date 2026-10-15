@@ -129,6 +129,41 @@ const seedMedia = async (db: DB, tx: TX) => {
   console.log("✅ Seeded media.");
 };
 
+// TODO: temporary until the seed reads the regions from the seed files. Same values as the `20261014_141103_regions`
+// migration.
+const SAHEL_REGION_ID = "sahel";
+const seedRegions = async (db: DB, tx: TX) => {
+  const regions = db.query.regions.table;
+  const regionsLocales = db.query.regions_locales.table;
+  const now = new Date().toISOString();
+
+  const region = { color: "#ADBC3D", order: 0 };
+  const regionLocales = {
+    name: "Sahel",
+    introTitle: "Discover Sahel wetlands",
+    introDescription:
+      "Dive into different topics that define these unique ecosystems and uncover their significant impact on our environment.",
+  };
+
+  await tx
+    .insert(regions)
+    .values({ id: SAHEL_REGION_ID, ...region, createdAt: now, updatedAt: now })
+    .onConflictDoUpdate({
+      target: regions.id,
+      set: { ...region, updatedAt: now },
+    });
+
+  await tx
+    .insert(regionsLocales)
+    .values({ _locale: "en", _parentID: SAHEL_REGION_ID, ...regionLocales })
+    .onConflictDoUpdate({
+      target: [regionsLocales._locale, regionsLocales._parentID],
+      set: regionLocales,
+    });
+
+  console.log("✅ Seeded regions.");
+};
+
 const seedLocations = async (db: DB, tx: TX) => {
   const locations = db.query.locations.table;
   const locationsLocales = db.query.locations_locales.table;
@@ -149,6 +184,7 @@ const seedLocations = async (db: DB, tx: TX) => {
         geometry,
         geometry_4326: sql`ST_GeomFromGeoJSON(${JSON.stringify(geometry)})`,
         parent,
+        region: SAHEL_REGION_ID,
         updatedAt: now,
       })
       .onConflictDoUpdate({
@@ -160,6 +196,7 @@ const seedLocations = async (db: DB, tx: TX) => {
           geometry,
           geometry_4326: sql`ST_GeomFromGeoJSON(${JSON.stringify(geometry)})`,
           parent,
+          region: SAHEL_REGION_ID,
           updatedAt: now,
         },
       });
@@ -291,6 +328,7 @@ const seedCategories = async (db: DB, tx: TX): Promise<void> => {
         order,
         cover: cover ?? null,
         published: true,
+        region: SAHEL_REGION_ID,
         createdAt: now,
         updatedAt: now,
       })
@@ -300,6 +338,7 @@ const seedCategories = async (db: DB, tx: TX): Promise<void> => {
           order,
           cover: cover ?? null,
           published: true,
+          region: SAHEL_REGION_ID,
           updatedAt: now,
         },
       });
@@ -438,6 +477,7 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
         params_config,
         legend_config,
         type,
+        region: type === "contextual" ? SAHEL_REGION_ID : null,
         createdAt: now,
         updatedAt: now,
       })
@@ -448,6 +488,7 @@ const seedLayers = async (db: DB, tx: TX): Promise<void> => {
           params_config,
           legend_config,
           type,
+          region: type === "contextual" ? SAHEL_REGION_ID : null,
           updatedAt: now,
         },
       });
@@ -608,6 +649,7 @@ const seed = async () => {
   const db = payload.db.drizzle;
 
   await db.transaction(async (tx) => {
+    await seedRegions(db, tx);
     await seedMedia(db, tx);
     await seedLocations(db, tx);
     await seedCategories(db, tx);

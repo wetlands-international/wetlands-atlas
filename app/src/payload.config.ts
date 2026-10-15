@@ -23,6 +23,7 @@ import { Landscapes } from "@/cms/collections/Landscapes";
 import { Layers } from "@/cms/collections/Layers";
 import { Locations } from "@/cms/collections/Location";
 import { Media } from "@/cms/collections/Media";
+import { Regions } from "@/cms/collections/Regions";
 import { Users } from "@/cms/collections/Users";
 import { plugins } from "@/cms/plugins";
 import { env } from "@/env";
@@ -45,6 +46,7 @@ export default buildConfig({
   collections: [
     Users,
     Media,
+    Regions,
     Categories,
     Indicators,
     Layers,

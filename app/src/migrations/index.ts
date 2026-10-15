@@ -33,6 +33,7 @@ import * as migration_20260407_100000_localize_legend_config from './20260407_10
 import * as migration_20261007_085445_sync_schema_snapshot from './20261007_085445_sync_schema_snapshot';
 import * as migration_20261007_092748_payload_3_90 from './20261007_092748_payload_3_90';
 import * as migration_20261007_095754_media_storage_object_key from './20261007_095754_media_storage_object_key';
+import * as migration_20261014_141103_regions from './20261014_141103_regions';
 
 export const migrations = [
   {
@@ -208,6 +209,11 @@ export const migrations = [
   {
     up: migration_20261007_095754_media_storage_object_key.up,
     down: migration_20261007_095754_media_storage_object_key.down,
-    name: '20261007_095754_media_storage_object_key'
+    name: '20261007_095754_media_storage_object_key',
+  },
+  {
+    up: migration_20261014_141103_regions.up,
+    down: migration_20261014_141103_regions.down,
+    name: '20261014_141103_regions'
   },
 ];

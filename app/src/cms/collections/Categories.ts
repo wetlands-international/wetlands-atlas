@@ -20,7 +20,12 @@ export const Categories: CollectionConfig = {
       type: "text",
       localized: true,
       required: true,
-      unique: true,
+    },
+    {
+      name: "region",
+      type: "relationship",
+      relationTo: "regions",
+      required: true,
     },
     {
       name: "description",
