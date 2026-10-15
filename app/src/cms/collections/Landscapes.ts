@@ -167,7 +167,8 @@ export const Landscapes: CollectionConfig = {
           hooks: {
             beforeChange: [
               ({ value, siblingData }) => {
-                if (siblingData.type !== "chart") return null;
+                // Payload can't traverse the sub-fields of a `null` group, so an empty one clears the chart instead
+                if (siblingData.type !== "chart") return {};
 
                 return value;
               },
