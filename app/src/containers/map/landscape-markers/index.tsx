@@ -1,14 +1,11 @@
 import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
 
-import { useSyncRegion } from "@/app/(frontend)/[locale]/(app)/store";
-
 import { useLandscapes } from "@/hooks/use-landscapes";
 
 import LandscapeMarker from "@/containers/map/landscape-marker";
 
 const LandscapeMarkers = () => {
-  const [region] = useSyncRegion();
-  const { data: landscapes } = useLandscapes(region);
+  const { data: landscapes } = useLandscapes();
 
   return landscapes.docs.map((s) => (
     <LandscapeMarker

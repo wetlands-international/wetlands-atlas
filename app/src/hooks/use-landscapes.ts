@@ -2,20 +2,37 @@ import type { Where } from "payload";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useLocale } from "next-intl";
+import { useQueryStates } from "nuqs";
 
-import { Config, Region } from "@/payload-types";
+import {
+  insightParser,
+  locationParser,
+  regionParser,
+} from "@/app/(frontend)/[locale]/(app)/parsers";
+
+import { Category, Config, Location, Region } from "@/payload-types";
 
 import { collectionQueryOptions } from "@/services/sdk-query";
 
+export interface LandscapesFilters {
+  region: Region["id"] | null;
+  insight: Category["id"] | null;
+  location: Location["id"] | null;
+}
+
 /**
- * Returns the `where` condition that keeps the landscapes of a region, or all of them if there is no region
+ * Returns the `where` condition that keeps the landscapes of the region, category and location, if any
  */
-export const getLandscapesRegionWhere = (region: Region["id"] | null): Where =>
-  region ? { "category.region": { equals: region } } : {};
+export const getLandscapesWhere = ({ region, insight, location }: LandscapesFilters): Where => ({
+  ...(region && { "category.region": { equals: region } }),
+  ...(insight && { category: { equals: insight } }),
+  // Resolved by the `landscapesReadLocationCriteriaExtension` CMS hook
+  ...(location && { geoLocation: { within: location } }),
+});
 
 // Shared by the server prefetch in `(app)/map/page.tsx` and `(app)/landscapes/page.tsx` and the client, so that
 // all use the same query key
-export const landscapesQueryOptions = (locale: Config["locale"], region: Region["id"] | null) =>
+export const landscapesQueryOptions = (locale: Config["locale"], filters: LandscapesFilters) =>
   collectionQueryOptions("landscapes", {
     depth: 1,
     limit: 100,
@@ -26,12 +43,24 @@ export const landscapesQueryOptions = (locale: Config["locale"], region: Region[
       published: {
         equals: true,
       },
-      ...getLandscapesRegionWhere(region),
+      ...getLandscapesWhere(filters),
     },
   });
 
-export const useLandscapes = (region: Region["id"] | null) => {
-  const locale = useLocale();
+// Reads the URL params with the parsers instead of `(app)/store`, which can't be imported on the server
+export const useLandscapesFilters = (): LandscapesFilters => {
+  const [filters] = useQueryStates({
+    region: regionParser,
+    insight: insightParser,
+    location: locationParser,
+  });
 
-  return useSuspenseQuery(landscapesQueryOptions(locale, region));
+  return filters;
+};
+
+export const useLandscapes = () => {
+  const locale = useLocale();
+  const filters = useLandscapesFilters();
+
+  return useSuspenseQuery(landscapesQueryOptions(locale, filters));
 };

@@ -7,7 +7,11 @@ import { Command } from "cmdk";
 import { getLocale, getTranslations } from "next-intl/server";
 import { createLoader, type SearchParams } from "nuqs/server";
 
-import { regionParser } from "@/app/(frontend)/[locale]/(app)/parsers";
+import {
+  insightParser,
+  locationParser,
+  regionParser,
+} from "@/app/(frontend)/[locale]/(app)/parsers";
 
 import { categoriesQueryOptions } from "@/hooks/use-categories";
 import { landscapesQueryOptions } from "@/hooks/use-landscapes";
@@ -32,20 +36,24 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const loadSearchParams = createLoader({ region: regionParser });
+const loadSearchParams = createLoader({
+  region: regionParser,
+  insight: insightParser,
+  location: locationParser,
+});
 
 export default async function AppPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const locale = await getLocale();
-  const { region } = await loadSearchParams(searchParams);
+  const filters = await loadSearchParams(searchParams);
   const queryClient = new QueryClient();
 
   // The categories are only listed inside a region
-  if (region) {
-    await queryClient.prefetchQuery(categoriesQueryOptions(locale, region));
+  if (filters.region) {
+    await queryClient.prefetchQuery(categoriesQueryOptions(locale, filters.region));
   }
 
   // The map's landscape markers
-  await queryClient.prefetchQuery(landscapesQueryOptions(locale, region));
+  await queryClient.prefetchQuery(landscapesQueryOptions(locale, filters));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

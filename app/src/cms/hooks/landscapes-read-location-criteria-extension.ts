@@ -1,54 +1,44 @@
-import { CollectionBeforeOperationHook } from "payload";
+import { CollectionBeforeOperationHook, Where } from "payload";
 
 import { sql } from "@payloadcms/db-postgres";
 
+/**
+ * Keeps the landscapes whose `geoLocation` point is inside a location's geometry.
+ *
+ * The REST SDK only sends the standard query params, so the location's ID is passed as
+ * `where: { geoLocation: { within: locationId } }`. Payload's own `within` operator expects a GeoJSON object, so a
+ * string value can't be mistaken for it.
+ */
 export const landscapesReadLocationCriteriaExtension: CollectionBeforeOperationHook = async ({
   operation,
   req,
   args,
 }) => {
-  if (operation !== "read") {
+  if (operation !== "read" || !("where" in args) || !args.where) {
     return args;
   }
 
-  const locationId = req?.query?.locationId; // should be included as a query parameter
-  if (!locationId || typeof locationId !== "string") {
-    // No locationId provided, skip the extra geospatial query
-    return args;
-  }
+  const { geoLocation, ...where } = args.where as Where;
+  const locationId = geoLocation && "within" in geoLocation ? geoLocation.within : undefined;
 
-  const location = await req.payload.findByID({
-    collection: "locations",
-    id: locationId,
-  });
-
-  if (!location?.geometry) {
+  if (typeof locationId !== "string") {
     return args;
   }
 
   interface LandscapeQueryResult {
     rows: { id: string }[];
   }
-  // Query the database to find landscapes that have a location within the specified geometry
+
+  // An unknown location matches no landscape
   const result = (await req.payload.db.drizzle.execute(sql`
-          SELECT s.id FROM landscapes s
-          WHERE EXISTS (
-              SELECT 1 FROM locations l
-              WHERE l.id = '${location.id}' AND ST_Within(s.location,l.geometry_4326)
-          )
-        `)) as LandscapeQueryResult;
+    SELECT landscapes.id FROM landscapes
+    JOIN locations ON ST_Within(landscapes.geo_location, locations.geometry_4326)
+    WHERE locations.id = ${locationId}
+  `)) as LandscapeQueryResult;
 
-  const landscapesIDs = result.rows.map((row) => row.id);
-
-  // Add the landscapes within the specified location to the query
-  if ("where" in args) {
-    args.where = {
-      ...args.where,
-      id: {
-        in: landscapesIDs,
-      },
-    };
-  }
+  args.where = {
+    and: [where, { id: { in: result.rows.map((row) => row.id) } }],
+  };
 
   return args;
 };
