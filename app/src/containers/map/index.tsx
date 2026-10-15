@@ -16,7 +16,10 @@ import {
   useSyncLayers,
   useSyncLayersSettings,
   useSyncLocation,
+  useSyncRegion,
 } from "@/app/(frontend)/[locale]/(app)/store";
+
+import { useGlobalLocations } from "@/hooks/use-global-locations";
 
 import { Layers } from "@/containers/layers";
 import LandscapeMarker from "@/containers/map/landscape-marker";
@@ -28,6 +31,7 @@ import { BasemapControl, BASEMAPS } from "@/components/map/controls/settings/bas
 import ZoomControl from "@/components/map/controls/zoom";
 import { LayerManager } from "@/components/map/layer-manager";
 import { LocationLayer } from "@/components/map/layers/location";
+import { RegionsLayer } from "@/components/map/layers/regions";
 
 import { env } from "@/env";
 import { Landscape } from "@/payload-types";
@@ -39,6 +43,7 @@ type MapContainerProps = {
 export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
   const [loaded, setLoaded] = useState(false);
   const [bbox, setBbox] = useSyncBbox();
+  const [region] = useSyncRegion();
   const [basemap, setBasemap] = useSyncBasemap();
   const [tmpBbox, setTmpBbox] = useAtom(tmpBboxAtom);
   const [layers] = useSyncLayers();
@@ -47,6 +52,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
   const [landscapeLayer] = useSyncLandscapeLayer();
 
   const { exploreMap } = useMap();
+  const { unionBbox } = useGlobalLocations();
 
   const MAP_STYLE = useMemo(() => {
     return BASEMAPS[basemap].mapStyle;
@@ -123,7 +129,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
         id="exploreMap"
         mapboxAccessToken={env.NEXT_PUBLIC_MAPBOX_TOKEN}
         initialViewState={{
-          bounds: bbox as LngLatBoundsLike,
+          bounds: (bbox ?? unionBbox) as LngLatBoundsLike,
           fitBoundsOptions: {
             padding: {
               top: 50,
@@ -153,7 +159,7 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
 
         {loaded && (
           <LayerManager layers={layers} layersSettings={layersSettings}>
-            <LocationLayer location={location} />
+            {region ? <LocationLayer location={location} /> : <RegionsLayer />}
           </LayerManager>
         )}
 

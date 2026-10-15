@@ -7,6 +7,9 @@ import { getLocale } from "next-intl/server";
 
 import { ClientProviders } from "@/app/(frontend)/[locale]/(app)/providers";
 
+import { globalLocationsQueryOptions } from "@/hooks/use-global-locations";
+import { regionsQueryOptions } from "@/hooks/use-regions";
+
 import { Language } from "@/containers/language";
 import { MapContainer } from "@/containers/map";
 import MapLegend from "@/containers/map/map-legend";
@@ -34,6 +37,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       },
     },
   });
+
+  await queryClient.prefetchQuery(regionsQueryOptions(locale));
+
+  // The map needs it before mounting, for its initial bounds
+  await queryClient.prefetchQuery(globalLocationsQueryOptions(locale));
 
   await queryClient.prefetchQuery(
     collectionQueryOptions("categories", {

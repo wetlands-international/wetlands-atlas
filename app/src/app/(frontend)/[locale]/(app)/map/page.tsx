@@ -13,6 +13,8 @@ import { IndicatorsList } from "@/containers/indicators/list";
 import { Locations } from "@/containers/locations";
 import { LocationsList } from "@/containers/locations/list";
 import { LocationsSearch } from "@/containers/locations/search";
+import { Regions } from "@/containers/regions";
+import { RegionsList } from "@/containers/regions/list";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("metadata");
@@ -34,6 +36,10 @@ export default async function AppPage() {
         </Header>
 
         <Suspense>
+          <Regions>
+            <RegionsList />
+          </Regions>
+
           <Categories>
             <CategoriesList />
           </Categories>
