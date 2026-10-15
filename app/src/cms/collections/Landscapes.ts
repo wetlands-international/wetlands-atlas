@@ -16,7 +16,7 @@ import {
   UploadFeature,
 } from "@payloadcms/richtext-lexical";
 
-import { PublicAccessControl } from "@/cms/access/public";
+import { EditorAccessControl } from "@/cms/access/editor";
 import { VideoEmbedBlock } from "@/cms/blocks/video-embed";
 import { ChartField } from "@/cms/fields/chart-field";
 import { MapField } from "@/cms/fields/map";
@@ -40,7 +40,7 @@ export const Landscapes: CollectionConfig = {
     },
   },
   defaultSort: ["-createdAt"],
-  access: PublicAccessControl, // TODO revise permissions and uncomment later
+  access: EditorAccessControl,
   fields: [
     SlugIDField(),
     {

@@ -192,6 +192,8 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * Managed from the repository (app-initial-data) and updated by the seed. Read-only in the CMS.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "regions".
  */
@@ -213,6 +215,8 @@ export interface Region {
   createdAt: string;
 }
 /**
+ * Managed from the repository (app-initial-data) and updated by the seed. Read-only in the CMS.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
@@ -248,6 +252,8 @@ export interface Category {
   createdAt: string;
 }
 /**
+ * Managed from the repository (app-initial-data) and updated by the seed. Read-only in the CMS.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "indicators".
  */
@@ -457,6 +463,8 @@ export interface Landscape {
   createdAt: string;
 }
 /**
+ * Managed from the repository (app-initial-data) and updated by the seed. Read-only in the CMS.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "locations".
  */
@@ -488,6 +496,8 @@ export interface Location {
   createdAt: string;
 }
 /**
+ * Managed from the repository (app-initial-data) and updated by the seed. Read-only in the CMS.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "indicator-data".
  */
