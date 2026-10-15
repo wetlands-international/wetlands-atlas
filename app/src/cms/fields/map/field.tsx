@@ -4,18 +4,26 @@ import { FieldDescription, FieldLabel } from "@payloadcms/ui";
 
 import { MapFieldLayers } from "@/cms/fields/map/layers";
 import { MapfieldMap } from "@/cms/fields/map/map";
+import { getCategoryRegion, landscapeMapLayersWhere } from "@/cms/utils/landscape-region";
 
 export const MapFieldComponent: JSONFieldServerComponent = async ({
   payload,
+  req,
+  data,
   clientField,
   path,
 }) => {
+  // The field is only rendered when the form loads or a step is added, so a change of category is only reflected after
+  // that
+  const regionId = await getCategoryRegion(req, data?.category);
   const layers = await payload.find({
     collection: "layers",
     depth: 0,
-    limit: 100,
+    pagination: false,
     sort: "name",
     locale: "en",
+    where: landscapeMapLayersWhere(regionId),
+    req,
   });
 
   return (

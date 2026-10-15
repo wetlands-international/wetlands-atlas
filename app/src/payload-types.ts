@@ -351,6 +351,9 @@ export interface Layer {
     }[];
     [k: string]: unknown;
   };
+  /**
+   * Once a first indicator is selected, only the indicators of the same region are offered.
+   */
   indicators?: (string | Indicator)[] | null;
   type: 'indicator' | 'contextual' | 'landscape';
   region?: (string | null) | Region;
@@ -403,6 +406,9 @@ export interface Landscape {
    * @maxItems 2
    */
   geoLocation: [number, number];
+  /**
+   * Only the locations of the category's region are offered. Select a category first.
+   */
   location?: (string | null) | Location;
   /**
    * Uncheck to hide this landscape from the public view.
@@ -435,7 +441,13 @@ export interface Landscape {
         };
         chart?: {
           title: string;
+          /**
+           * Only the indicators of the landscape category's region are offered. Select a category first.
+           */
           indicator: string | Indicator;
+          /**
+           * Only the locations of the landscape category's region are offered. Select a category first.
+           */
           location: string | Location;
         };
         id?: string | null;

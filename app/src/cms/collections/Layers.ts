@@ -7,7 +7,9 @@ import { LegendConfigField } from "@/cms/fields/legend-config";
 import { ParamsConfigField } from "@/cms/fields/params-config-field";
 import { RenderingConfigField } from "@/cms/fields/rendering-config";
 import { SlugIDField } from "@/cms/fields/slug";
+import { getCategoryRegion } from "@/cms/utils/landscape-region";
 import { LayerTypeValidation } from "@/cms/utils/layer-validation";
+import { Layer } from "@/payload-types";
 
 export const enum LAYER_TYPE {
   INDICATOR = "indicator",
@@ -47,7 +49,34 @@ export const Layers: CollectionConfig = {
       type: "relationship",
       relationTo: "indicators",
       hasMany: true,
+      filterOptions: async ({ siblingData, req }) => {
+        // Once a first indicator is selected, only offer the indicators of the same region
+        const [firstIndicator] = (siblingData as Partial<Layer>)?.indicators ?? [];
+        if (!firstIndicator) {
+          return true;
+        }
+
+        const indicator =
+          typeof firstIndicator === "object"
+            ? firstIndicator
+            : await req.payload.findByID({
+                collection: "indicators",
+                id: firstIndicator,
+                depth: 0,
+                disableErrors: true,
+                req,
+              });
+
+        const regionId = await getCategoryRegion(req, indicator?.category);
+        if (!regionId) {
+          return true;
+        }
+
+        return { "category.region": { equals: regionId } };
+      },
       admin: {
+        description:
+          "Once a first indicator is selected, only the indicators of the same region are offered.",
         condition: (_, siblingData) => {
           // Don't show this field if the layer type is CONTEXTUAL
           return siblingData?.type === LAYER_TYPE.INDICATOR;
