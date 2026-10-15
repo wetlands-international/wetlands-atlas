@@ -1,7 +1,5 @@
 "use client";
 
-import { useSyncRegion } from "@/app/(frontend)/[locale]/(app)/store";
-
 import { useLandscapes } from "@/hooks/use-landscapes";
 
 import { LandscapesListItem } from "@/containers/landscapes/item";
@@ -9,8 +7,7 @@ import { LandscapesListItem } from "@/containers/landscapes/item";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const LandscapesList = () => {
-  const [region] = useSyncRegion();
-  const { data: landscapes } = useLandscapes(region);
+  const { data: landscapes } = useLandscapes();
 
   return (
     <ScrollArea
