@@ -68,11 +68,6 @@ export const useSyncLandscapeLayer = () => {
 // LANDSCAPES
 export const landscapesAtom = atom<{
   search?: string;
-  filters?: {
-    highlighted?: boolean;
-    insight: string[];
-    location: string[];
-  };
   enabled: boolean;
 }>({
   search: "",

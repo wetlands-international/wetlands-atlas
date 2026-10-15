@@ -10,6 +10,7 @@ import { createLoader, type SearchParams } from "nuqs/server";
 import { regionParser } from "@/app/(frontend)/[locale]/(app)/parsers";
 
 import { categoriesQueryOptions } from "@/hooks/use-categories";
+import { landscapesQueryOptions } from "@/hooks/use-landscapes";
 
 import { Categories } from "@/containers/categories";
 import { CategoriesList } from "@/containers/categories/list";
@@ -42,6 +43,9 @@ export default async function AppPage({ searchParams }: { searchParams: Promise<
   if (region) {
     await queryClient.prefetchQuery(categoriesQueryOptions(locale, region));
   }
+
+  // The map's landscape markers
+  await queryClient.prefetchQuery(landscapesQueryOptions(locale, region));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

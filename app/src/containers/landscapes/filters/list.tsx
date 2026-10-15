@@ -6,7 +6,9 @@ import { useAtomValue } from "jotai";
 import { useLocale } from "next-intl";
 import { useDebounceValue } from "usehooks-ts";
 
-import { landscapesAtom } from "@/app/(frontend)/[locale]/(app)/store";
+import { landscapesAtom, useSyncRegion } from "@/app/(frontend)/[locale]/(app)/store";
+
+import { getLandscapesRegionWhere } from "@/hooks/use-landscapes";
 
 import { LandscapesItem } from "@/containers/landscapes/filters/item";
 
@@ -17,6 +19,7 @@ import { collectionQueryOptions } from "@/services/sdk-query";
 export const LandscapesFilteredList = () => {
   const locale = useLocale();
   const landscapes = useAtomValue(landscapesAtom);
+  const [region] = useSyncRegion();
 
   const [search] = useDebounceValue(landscapes.search, 100);
 
@@ -39,6 +42,7 @@ export const LandscapesFilteredList = () => {
         published: {
           equals: true,
         },
+        ...getLandscapesRegionWhere(region),
         ...(!!search && {
           "name.root.children.children.text": {
             like: search,

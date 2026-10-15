@@ -1,30 +1,16 @@
-import { getPayload } from "payload";
+"use client";
 
-import { getLocale } from "next-intl/server";
+import { useSyncRegion } from "@/app/(frontend)/[locale]/(app)/store";
+
+import { useLandscapes } from "@/hooks/use-landscapes";
 
 import { LandscapesListItem } from "@/containers/landscapes/item";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-import payloadConfig from "@/payload.config";
-
-export const LandscapesList = async () => {
-  const locale = await getLocale();
-  const payload = await getPayload({ config: payloadConfig });
-
-  const landscapes = await payload.find({
-    collection: "landscapes",
-    depth: 1,
-    limit: 100,
-    page: 1,
-    sort: "-createdAt",
-    locale,
-    where: {
-      published: {
-        equals: true,
-      },
-    },
-  });
+export const LandscapesList = () => {
+  const [region] = useSyncRegion();
+  const { data: landscapes } = useLandscapes(region);
 
   return (
     <ScrollArea

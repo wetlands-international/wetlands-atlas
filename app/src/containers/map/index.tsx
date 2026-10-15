@@ -1,8 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-
-import { convertLexicalToPlaintext } from "@payloadcms/richtext-lexical/plaintext";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 
 import { useAtom } from "jotai";
 import Map, { LngLatBoundsLike, MapProps, useMap } from "react-map-gl/mapbox";
@@ -22,7 +20,7 @@ import { useGlobalLocation, useGlobalLocations } from "@/hooks/use-global-locati
 import { useLocationId } from "@/hooks/use-location-id";
 
 import { Layers } from "@/containers/layers";
-import LandscapeMarker from "@/containers/map/landscape-marker";
+import LandscapeMarkers from "@/containers/map/landscape-markers";
 
 import Controls from "@/components/map/controls";
 import LayersControl from "@/components/map/controls/layers";
@@ -34,13 +32,8 @@ import { LocationLayer } from "@/components/map/layers/location";
 import { RegionsLayer } from "@/components/map/layers/regions";
 
 import { env } from "@/env";
-import { Landscape } from "@/payload-types";
 
-type MapContainerProps = {
-  landscapes: Landscape[];
-} & MapProps;
-
-export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
+export const MapContainer = (props: MapProps) => {
   const [loaded, setLoaded] = useState(false);
   const [bbox, setBbox] = useSyncBbox();
   const [region] = useSyncRegion();
@@ -147,16 +140,12 @@ export const MapContainer = ({ landscapes, ...props }: MapContainerProps) => {
         onLoad={handleLoad}
         {...props}
       >
-        {landscapeLayer &&
-          landscapes.map((s) => (
-            <LandscapeMarker
-              key={`landscape-marker-${s.id}`}
-              name={convertLexicalToPlaintext({ data: s.name })}
-              location={s.geoLocation}
-              href={`/landscapes/${s.id}`}
-              media={s.cover && typeof s.cover === "object" ? s.cover : undefined}
-            />
-          ))}
+        {landscapeLayer && (
+          // The markers suspend while a new region's landscapes load, without unmounting the map
+          <Suspense>
+            <LandscapeMarkers />
+          </Suspense>
+        )}
 
         {loaded && (
           <LayerManager layers={layers} layersSettings={layersSettings}>
