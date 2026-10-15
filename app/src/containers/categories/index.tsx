@@ -6,15 +6,20 @@ import { useAtomValue } from "jotai";
 
 import { cn } from "@/lib/utils";
 
-import { locationsAtom, useSyncInsight } from "@/app/(frontend)/[locale]/(app)/store";
+import {
+  locationsAtom,
+  useSyncInsight,
+  useSyncRegion,
+} from "@/app/(frontend)/[locale]/(app)/store";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export const Categories = ({ children }: PropsWithChildren) => {
   const { enabled } = useAtomValue(locationsAtom);
+  const [region] = useSyncRegion();
   const [insight] = useSyncInsight();
 
-  const visible = !enabled && !insight;
+  const visible = !enabled && !!region && !insight;
 
   if (!visible) {
     return null;

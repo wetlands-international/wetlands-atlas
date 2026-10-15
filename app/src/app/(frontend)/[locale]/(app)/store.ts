@@ -12,6 +12,7 @@ import {
   layersParser,
   layersSettingsParser,
   locationParser,
+  regionParser,
 } from "./parsers";
 
 // MAP
@@ -22,6 +23,12 @@ export const tmpBboxAtom = atom<number[]>();
 
 export const useSyncBasemap = () => {
   return useQueryState("basemap", basemapParser);
+};
+
+// REGIONS
+export const useSyncRegion = () => {
+  // Not shallow, so that the server prefetches the region's data again
+  return useQueryState("region", regionParser.withOptions({ shallow: false }));
 };
 
 // INSIGHTS
@@ -78,6 +85,7 @@ export const landscapesAtom = atom<{
 export const persistedSearchParamsSerializer = createSerializer({
   bbox: bboxParser,
   basemap: basemapParser,
+  region: regionParser,
   insight: insightParser,
   location: locationParser,
 });
@@ -85,12 +93,14 @@ export const persistedSearchParamsSerializer = createSerializer({
 export const useGetSearchParams = () => {
   const [bbox] = useSyncBbox();
   const [basemap] = useSyncBasemap();
+  const [region] = useSyncRegion();
   const [insight] = useSyncInsight();
   const [location] = useSyncLocation();
 
   return persistedSearchParamsSerializer({
     bbox,
     basemap,
+    region,
     insight,
     location,
   });

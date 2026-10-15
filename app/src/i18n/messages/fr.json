@@ -14,6 +14,7 @@
   "insights": {
     "title": "Découvrir les zones humides",
     "description": "Plongez au cœur des différents sujets qui définissent ces écosystèmes uniques et découvrez leur impact significatif sur notre environnement.",
+    "focus-area": "Zone d'intérêt",
     "widgets": {
       "wetlands": "Zones humides",
       "non-wetlands": "Zones non humides",
@@ -191,6 +192,7 @@
     }
   },
   "common": {
+    "back": "Retour",
     "reset": "Réinitialiser"
   }
 }

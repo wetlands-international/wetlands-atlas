@@ -14,6 +14,7 @@
   "insights": {
     "title": "Discover wetlands",
     "description": "Dive into different topics that define these unique ecosystems and uncover their significant impact on our environment.",
+    "focus-area": "Focus area",
     "widgets": {
       "wetlands": "Wetlands",
       "non-wetlands": "Non-wetlands",
@@ -191,6 +192,7 @@
     }
   },
   "common": {
+    "back": "Back",
     "reset": "Reset"
   }
 }
