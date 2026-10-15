@@ -2,7 +2,7 @@ import { revalidatePath } from "next/cache";
 
 import { CollectionConfig } from "payload";
 
-import { PublicAccessControl } from "@/cms/access/public";
+import { EditorAccessControl } from "@/cms/access/editor";
 import { LegendConfigField } from "@/cms/fields/legend-config";
 import { ParamsConfigField } from "@/cms/fields/params-config-field";
 import { RenderingConfigField } from "@/cms/fields/rendering-config";
@@ -24,7 +24,7 @@ export const Layers: CollectionConfig = {
     defaultColumns: ["id", "name", "type"],
   },
   defaultSort: ["name"],
-  access: PublicAccessControl, // TODO revise permissions and uncomment later
+  access: EditorAccessControl,
   hooks: {
     beforeValidate: [LayerTypeValidation],
     afterChange: [

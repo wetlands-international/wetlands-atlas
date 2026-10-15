@@ -2,7 +2,7 @@ import { CollectionConfig, TextFieldSingleValidation } from "payload";
 
 import { text } from "payload/shared";
 
-import { PublicAccessControl } from "@/cms/access/public";
+import { READ_ONLY_COLLECTION_DESCRIPTION, ReadOnlyAccessControl } from "@/cms/access/read-only";
 
 const validateColor: TextFieldSingleValidation = (value, args) => {
   if (typeof value === "string" && !/^#[0-9A-Fa-f]{6}$/.test(value)) {
@@ -15,11 +15,12 @@ const validateColor: TextFieldSingleValidation = (value, args) => {
 export const Regions: CollectionConfig = {
   slug: "regions",
   admin: {
+    description: READ_ONLY_COLLECTION_DESCRIPTION,
     useAsTitle: "name",
     defaultColumns: ["id", "name", "order"],
   },
   defaultSort: ["order"],
-  access: PublicAccessControl, // TODO revise permissions and uncomment later
+  access: ReadOnlyAccessControl,
   fields: [
     {
       name: "id",

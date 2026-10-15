@@ -1,6 +1,6 @@
 import { CollectionConfig } from "payload";
 
-import { PublicAccessControl } from "@/cms/access/public";
+import { READ_ONLY_COLLECTION_DESCRIPTION, ReadOnlyAccessControl } from "@/cms/access/read-only";
 import { BBoxField } from "@/cms/fields/bbox-field";
 
 export const LOCATION_TYPE = {
@@ -14,12 +14,13 @@ export const LOCATION_TYPE = {
 export const Locations: CollectionConfig = {
   slug: "locations",
   admin: {
+    description: READ_ONLY_COLLECTION_DESCRIPTION,
     useAsTitle: "name",
     defaultColumns: ["id", "name", "type"],
   },
   defaultSort: ["name"],
   indexes: [{ unique: true, fields: ["region", "type", "code"] }],
-  access: PublicAccessControl, // TODO revise permissions and uncomment later
+  access: ReadOnlyAccessControl,
   fields: [
     {
       name: "id",

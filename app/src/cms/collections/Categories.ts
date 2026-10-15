@@ -1,18 +1,17 @@
-import { revalidatePath } from "next/cache";
-
 import { CollectionConfig } from "payload";
 
-import { PublicAccessControl } from "@/cms/access/public";
+import { READ_ONLY_COLLECTION_DESCRIPTION, ReadOnlyAccessControl } from "@/cms/access/read-only";
 import { SlugIDField } from "@/cms/fields/slug";
 
 export const Categories: CollectionConfig = {
   slug: "categories",
   admin: {
+    description: READ_ONLY_COLLECTION_DESCRIPTION,
     useAsTitle: "name",
     defaultColumns: ["id", "name", "order"],
   },
   defaultSort: ["order"],
-  access: PublicAccessControl, // TODO revise permissions and uncomment later
+  access: ReadOnlyAccessControl,
   fields: [
     SlugIDField(),
     {
@@ -92,12 +91,4 @@ export const Categories: CollectionConfig = {
       },
     },
   ],
-
-  hooks: {
-    afterChange: [
-      async () => {
-        revalidatePath("/", "layout");
-      },
-    ],
-  },
 };

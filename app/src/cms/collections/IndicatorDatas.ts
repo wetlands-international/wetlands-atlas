@@ -1,14 +1,14 @@
 import { CollectionConfig } from "payload";
 
-import { PublicAccessControl } from "@/cms/access/public";
+import { READ_ONLY_COLLECTION_DESCRIPTION, ReadOnlyAccessControl } from "@/cms/access/read-only";
 
-// This entity will be seeded manually and is it not intended to be changed manually
 export const IndicatorDatas: CollectionConfig = {
   slug: "indicator-data",
   admin: {
+    description: READ_ONLY_COLLECTION_DESCRIPTION,
     defaultColumns: ["id", "indicator", "location"],
   },
-  access: PublicAccessControl, // TODO revise permissions and uncomment later
+  access: ReadOnlyAccessControl,
   fields: [
     {
       name: "id",

@@ -1,5 +1,3 @@
-import { revalidatePath } from "next/cache";
-
 import { CollectionConfig } from "payload";
 
 import {
@@ -12,17 +10,18 @@ import {
   UnorderedListFeature,
 } from "@payloadcms/richtext-lexical";
 
-import { PublicAccessControl } from "@/cms/access/public";
+import { READ_ONLY_COLLECTION_DESCRIPTION, ReadOnlyAccessControl } from "@/cms/access/read-only";
 import { NumberBlock } from "@/cms/blocks/number";
 import { SlugIDField } from "@/cms/fields/slug";
 
 export const Indicators: CollectionConfig = {
   slug: "indicators",
   admin: {
+    description: READ_ONLY_COLLECTION_DESCRIPTION,
     useAsTitle: "name",
     defaultColumns: ["slug_id", "name", "category", "layers", "order"],
   },
-  access: PublicAccessControl, // TODO revise permissions and uncomment later
+  access: ReadOnlyAccessControl,
   defaultSort: ["order"],
   fields: [
     SlugIDField(),
@@ -105,11 +104,4 @@ export const Indicators: CollectionConfig = {
       },
     },
   ],
-  hooks: {
-    afterChange: [
-      async () => {
-        revalidatePath("/", "layout");
-      },
-    ],
-  },
 };

@@ -1,6 +1,6 @@
 import { CollectionConfig } from "payload";
 
-import { PublicAccessControl } from "@/cms/access/public";
+import { EditorAccessControl } from "@/cms/access/editor";
 import { SlugIDField } from "@/cms/fields/slug";
 
 export const Faqs: CollectionConfig = {
@@ -10,7 +10,7 @@ export const Faqs: CollectionConfig = {
     defaultColumns: ["question", "answer", "order"],
   },
   defaultSort: ["order"],
-  access: PublicAccessControl,
+  access: EditorAccessControl,
   fields: [
     SlugIDField("id", "question"),
     {
