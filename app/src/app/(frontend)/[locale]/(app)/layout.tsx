@@ -1,7 +1,5 @@
 import { Suspense } from "react";
 
-import { getPayload } from "payload";
-
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { getLocale } from "next-intl/server";
 
@@ -15,28 +13,11 @@ import { MapContainer } from "@/containers/map";
 import MapLegend from "@/containers/map/map-legend";
 import { Toggle } from "@/containers/toogle";
 
-import payloadConfig from "@/payload.config";
-
 import { collectionQueryOptions } from "@/services/sdk-query";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
   const queryClient = new QueryClient();
-  const payload = await getPayload({ config: payloadConfig });
-
-  const landscapes = await payload.find({
-    collection: "landscapes",
-    depth: 1,
-    limit: 100,
-    page: 1,
-    sort: "-createdAt",
-    locale,
-    where: {
-      published: {
-        equals: true,
-      },
-    },
-  });
 
   await queryClient.prefetchQuery(regionsQueryOptions(locale));
 
@@ -76,7 +57,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           </div>
 
           <Suspense>
-            <MapContainer landscapes={landscapes.docs} />
+            <MapContainer />
           </Suspense>
 
           <div className="pointer-events-none fixed right-5 bottom-7 z-10">
