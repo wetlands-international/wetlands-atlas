@@ -22,6 +22,7 @@ import { ChartField } from "@/cms/fields/chart-field";
 import { MapField } from "@/cms/fields/map";
 import { SlugIDField } from "@/cms/fields/slug";
 import { landscapesReadLocationCriteriaExtension } from "@/cms/hooks/landscapes-read-location-criteria-extension";
+import { landscapeRegionFilterOptions } from "@/cms/utils/landscape-region";
 import { env } from "@/env";
 
 export const Landscapes: CollectionConfig = {
@@ -82,6 +83,11 @@ export const Landscapes: CollectionConfig = {
       relationTo: "locations",
       hasMany: false,
       required: false,
+      filterOptions: landscapeRegionFilterOptions("region"),
+      admin: {
+        description:
+          "Only the locations of the category's region are offered. Select a category first.",
+      },
     },
     {
       name: "published",
@@ -161,7 +167,8 @@ export const Landscapes: CollectionConfig = {
           hooks: {
             beforeChange: [
               ({ value, siblingData }) => {
-                if (siblingData.type !== "chart") return null;
+                // Payload can't traverse the sub-fields of a `null` group, so an empty one clears the chart instead
+                if (siblingData.type !== "chart") return {};
 
                 return value;
               },
