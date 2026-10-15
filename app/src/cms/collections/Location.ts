@@ -2,7 +2,6 @@ import { CollectionConfig } from "payload";
 
 import { PublicAccessControl } from "@/cms/access/public";
 import { BBoxField } from "@/cms/fields/bbox-field";
-import { formatCompoundSlug } from "@/cms/utils/formatSlug";
 
 export const LOCATION_TYPE = {
   ADMIN_REGION: "admin_region",
@@ -19,7 +18,7 @@ export const Locations: CollectionConfig = {
     defaultColumns: ["id", "name", "type"],
   },
   defaultSort: ["name"],
-  indexes: [{ unique: true, fields: ["type", "code"] }],
+  indexes: [{ unique: true, fields: ["region", "type", "code"] }],
   access: PublicAccessControl, // TODO revise permissions and uncomment later
   fields: [
     {
@@ -31,17 +30,18 @@ export const Locations: CollectionConfig = {
       admin: {
         position: "sidebar",
         readOnly: true,
-        description: `This field is automatically generated from 'type' and 'code' fields. It is usually used to create a URL-friendly version of the name.`,
-      },
-      hooks: {
-        beforeValidate: [formatCompoundSlug("type", "code")],
       },
     },
     {
       name: "name",
       type: "text",
       localized: true,
-      unique: true,
+      required: true,
+    },
+    {
+      name: "region",
+      type: "relationship",
+      relationTo: "regions",
       required: true,
     },
     {

@@ -74,5 +74,17 @@ export const Layers: CollectionConfig = {
       defaultValue: LAYER_TYPE.CONTEXTUAL,
       required: true,
     },
+    {
+      name: "region",
+      type: "relationship",
+      relationTo: "regions",
+      required: true,
+      admin: {
+        condition: (_, siblingData) => {
+          // Indicator layers get their region from their indicators, and landscape layers have none
+          return siblingData?.type === LAYER_TYPE.CONTEXTUAL;
+        },
+      },
+    },
   ],
 };

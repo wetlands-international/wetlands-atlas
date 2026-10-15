@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    regions: Region;
     categories: Category;
     indicators: Indicator;
     layers: Layer;
@@ -82,6 +83,9 @@ export interface Config {
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
+    regions: {
+      categories: 'categories';
+    };
     categories: {
       indicators: 'indicators';
       landscapes: 'landscapes';
@@ -93,6 +97,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    regions: RegionsSelect<false> | RegionsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     indicators: IndicatorsSelect<false> | IndicatorsSelect<true>;
     layers: LayersSelect<false> | LayersSelect<true>;
@@ -188,6 +193,27 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regions".
+ */
+export interface Region {
+  id: string;
+  name: string;
+  description?: string | null;
+  introTitle: string;
+  introDescription: string;
+  cover?: (number | null) | Media;
+  color: string;
+  order: number;
+  categories?: {
+    docs?: (string | Category)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
 export interface Category {
@@ -196,6 +222,7 @@ export interface Category {
    */
   id: string;
   name: string;
+  region: string | Region;
   description?: string | null;
   order: number;
   /**
@@ -326,6 +353,7 @@ export interface Layer {
   };
   indicators?: (string | Indicator)[] | null;
   type: 'indicator' | 'contextual' | 'landscape';
+  region?: (string | null) | Region;
   updatedAt: string;
   createdAt: string;
 }
@@ -421,11 +449,9 @@ export interface Landscape {
  * via the `definition` "locations".
  */
 export interface Location {
-  /**
-   * This field is automatically generated from 'type' and 'code' fields. It is usually used to create a URL-friendly version of the name.
-   */
   id: string;
   name: string;
+  region: string | Region;
   /**
    * A unique identifying code for the location. Could be an ISO code or any other unique identifier, depending on the type of location.
    */
@@ -529,6 +555,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'regions';
+        value: string | Region;
       } | null)
     | ({
         relationTo: 'categories';
@@ -645,11 +675,29 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "regions_select".
+ */
+export interface RegionsSelect<T extends boolean = true> {
+  id?: T;
+  name?: T;
+  description?: T;
+  introTitle?: T;
+  introDescription?: T;
+  cover?: T;
+  color?: T;
+  order?: T;
+  categories?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
   id?: T;
   name?: T;
+  region?: T;
   description?: T;
   order?: T;
   published?: T;
@@ -690,6 +738,7 @@ export interface LayersSelect<T extends boolean = true> {
   legend_config?: T;
   indicators?: T;
   type?: T;
+  region?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -712,6 +761,7 @@ export interface IndicatorDataSelect<T extends boolean = true> {
 export interface LocationsSelect<T extends boolean = true> {
   id?: T;
   name?: T;
+  region?: T;
   code?: T;
   geometry?: T;
   bbox?: T;

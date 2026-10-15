@@ -4,7 +4,8 @@ import { LAYER_TYPE } from "@/cms/collections/Layers";
 import { Layer } from "@/payload-types";
 
 // This validation function checks that the Layer is associated with an indicator if it is of type INDICATOR,
-// or that it does not have an indicator if it is of type CONTEXTUAL.
+// or that it does not have an indicator if it is of type CONTEXTUAL. It also removes the region of the layers that
+// are not CONTEXTUAL, which the hidden field would otherwise keep after a change of type.
 export const LayerTypeValidation: CollectionBeforeValidateHook<Layer> = (args) => {
   const { data } = args;
   if (data && data.type === LAYER_TYPE.INDICATOR && !data.indicators) {
@@ -32,5 +33,10 @@ export const LayerTypeValidation: CollectionBeforeValidateHook<Layer> = (args) =
       ],
     });
   }
+
+  if (data?.type && data.type !== LAYER_TYPE.CONTEXTUAL) {
+    data.region = null;
+  }
+
   return data;
 };
