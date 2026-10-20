@@ -22,10 +22,16 @@ export const LEGACY_REGION_ID = "sahel";
 
 const LEGACY_GLOBAL_LOCATION_ID = `global_${LEGACY_REGION_ID}`;
 
-/** Separator of the region prefix: `-` for slugs, `_` for location IDs (`{region}_{type}_{code}`) */
-const SEPARATOR = { category: "-", indicator: "-", layer: "-", location: "_" } as const;
+/** The kinds of records whose IDs carry the region prefix */
+export type RegionIdKind = "category" | "indicator" | "layer" | "location";
 
-export type RegionIdKind = keyof typeof SEPARATOR;
+/** Separator of the region prefix: `-` for slugs, `_` for location IDs (`{region}_{type}_{code}`) */
+const SEPARATOR: Record<RegionIdKind, string> = {
+  category: "-",
+  indicator: "-",
+  layer: "-",
+  location: "_",
+};
 
 /** Whether `id` already carries the prefix of the legacy region for this kind of record */
 export const isRegionId = (kind: RegionIdKind, id: string) =>
@@ -68,3 +74,30 @@ export const toRegionIdList = (kind: RegionIdKind, legacyIds: string) =>
     .filter(Boolean)
     .map((id) => toRegionId(kind, id))
     .join(",");
+
+/**
+ * Region-prefixed copy of a landscape step's `map` field, whose `layers` array holds layer IDs. The column is JSON:
+ * older versions of the app stored it as a JSON string and the current one as an object, so the copy comes back in
+ * the encoding it came in. Landscape layers keep their IDs, `isLandscapeLayer` tells them apart from the indicator
+ * and contextual layers. Returns `undefined` when nothing changes.
+ */
+export const toRegionStepMap = (map: unknown, isLandscapeLayer: (layerId: string) => boolean) => {
+  const isEncoded = typeof map === "string";
+  const decoded: unknown = isEncoded ? JSON.parse(map) : map;
+  if (
+    !decoded ||
+    typeof decoded !== "object" ||
+    !Array.isArray((decoded as { layers?: unknown }).layers)
+  ) {
+    return undefined;
+  }
+
+  const { layers } = decoded as { layers: string[] };
+  const mapped = layers.map((id) => (isLandscapeLayer(id) ? id : toRegionId("layer", id)));
+  if (mapped.every((id, index) => id === layers[index])) {
+    return undefined;
+  }
+
+  const result = { ...decoded, layers: mapped };
+  return isEncoded ? JSON.stringify(result) : result;
+};
