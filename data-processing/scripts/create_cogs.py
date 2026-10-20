@@ -2,6 +2,8 @@
 Script to create Cloud Optimized GeoTIFFs (COGs) from TIFF files.
 """
 
+import sys
+
 from rich.console import Console
 
 from processing.config import INPUT_COG_DIR, OUTPUT_COG_DIR
@@ -38,6 +40,27 @@ DATASETS = {
         "resampling": "nearest",
         "upload_to_gcs": False,
     },
+    "Europe Wetlands (by type)": {
+        "source": INPUT_COG_DIR / "Europe wetland inventory_EXT&EWM_3857.tif",
+        "output": OUTPUT_COG_DIR / "europe_wetlands_by_type_cog.tif",
+        "resampling": "nearest",
+        "nodata_value": 0,
+        "upload_to_gcs": False,
+    },
+    "Europe Wetlands (3 classes)": {
+        "source": INPUT_COG_DIR / "Europe_wetland_inventory_3classes_3857.tif",
+        "output": OUTPUT_COG_DIR / "europe_wetlands_3classes_cog.tif",
+        "resampling": "nearest",
+        "nodata_value": 0,
+        "upload_to_gcs": False,
+    },
+    "Europe Floodplains (classes 1-2)": {
+        "source": INPUT_COG_DIR / "Europe_classes1_2_floodplains_nodata_3857.tif",
+        "output": OUTPUT_COG_DIR / "europe_floodplains_classes1_2_cog.tif",
+        "resampling": "nearest",
+        "nodata_value": 255,
+        "upload_to_gcs": False,
+    },
 }
 
 
@@ -47,7 +70,15 @@ def main():
 
     OUTPUT_COG_DIR.mkdir(parents=True, exist_ok=True)
 
-    for name, paths in DATASETS.items():
+    selected = sys.argv[1:]
+    unknown = [name for name in selected if name not in DATASETS]
+    if unknown:
+        console.print(f"[red]Unknown dataset(s): {', '.join(unknown)}[/red]")
+        console.print(f"Available datasets: {', '.join(DATASETS)}")
+        sys.exit(1)
+    datasets = {k: v for k, v in DATASETS.items() if not selected or k in selected}
+
+    for name, paths in datasets.items():
         console.print(f"\nProcessing {name} dataset...")
         source_path = paths["source"]
         output_path = paths["output"]

@@ -200,6 +200,19 @@ To create Cloud Optimized GeoTIFFs (COGs) from the processed raster data, run th
 python scripts/create_cogs.py
 ```
 
+To process only some datasets, pass their names (keys of `DATASETS` in the script) as arguments:
+
+```bash
+python scripts/create_cogs.py "Europe Wetlands (3 classes)" "Europe Floodplains (classes 1-2)"
+```
+
+Source rasters are read from `data/raw/rasters/` and must already be in EPSG:3857. Reproject them first if needed, e.g.:
+
+```bash
+gdalwarp -t_srs EPSG:3857 -r near -srcnodata 0 -dstnodata 0 -multi -wo NUM_THREADS=ALL_CPUS \
+  -co TILED=YES -co COMPRESS=DEFLATE -co BIGTIFF=IF_SAFER input.tif data/raw/rasters/input_3857.tif
+```
+
 This script will:
 
 1. **Convert TIFF to COG format** for optimized cloud access and performance
@@ -212,3 +225,6 @@ This script will:
 The script generates the following COG files:
 
 - `data/processed/cogs/IUCN_Classified_Sahel_2019-2023.tif` - Cloud optimized wetlands classification raster
+- `data/processed/cogs/europe_wetlands_by_type_cog.tif` - Europe wetland inventory (EXT & EWM)
+- `data/processed/cogs/europe_wetlands_3classes_cog.tif` - Europe wetland inventory, 3 classes (nodata 0)
+- `data/processed/cogs/europe_floodplains_classes1_2_cog.tif` - Europe floodplains, classes 1–2 (nodata 255)
