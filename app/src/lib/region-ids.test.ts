@@ -6,6 +6,7 @@ import {
   toRegionId,
   toRegionIdList,
   toRegionIndicatorDataId,
+  toRegionStepMap,
 } from "./region-ids";
 
 describe("region-ids", () => {
@@ -86,6 +87,45 @@ describe("region-ids", () => {
         ),
       ).toBe("sahel-wetlands-mitigation-potential,sahel-wetlands-simplified-classification");
       expect(toRegionIdList("layer", "")).toBe("");
+    });
+  });
+
+  describe("toRegionStepMap", () => {
+    const isLandscapeLayer = (id: string) => id.endsWith("-landscape-boundary");
+    const map = {
+      bbox: [38.54, 7.47, 39.26, 8.06],
+      layers: ["ziway-shalla-landscape-boundary", "wetlands-layer"],
+      basemap: "satellite",
+    };
+
+    it("prefixes the indicator and contextual layers and keeps the landscape layers", () => {
+      expect(toRegionStepMap(map, isLandscapeLayer)).toEqual({
+        ...map,
+        layers: ["ziway-shalla-landscape-boundary", "sahel-wetlands-layer"],
+      });
+    });
+
+    it("returns a JSON string when the map was stored as one", () => {
+      const result = toRegionStepMap(JSON.stringify(map), isLandscapeLayer);
+
+      expect(typeof result).toBe("string");
+      expect(JSON.parse(result as string)).toEqual({
+        ...map,
+        layers: ["ziway-shalla-landscape-boundary", "sahel-wetlands-layer"],
+      });
+    });
+
+    it("returns undefined when nothing changes", () => {
+      const migrated = {
+        ...map,
+        layers: ["ziway-shalla-landscape-boundary", "sahel-wetlands-layer"],
+      };
+
+      expect(toRegionStepMap(migrated, isLandscapeLayer)).toBeUndefined();
+      expect(toRegionStepMap(JSON.stringify(migrated), isLandscapeLayer)).toBeUndefined();
+      expect(toRegionStepMap({ ...map, layers: [] }, isLandscapeLayer)).toBeUndefined();
+      expect(toRegionStepMap({ bbox: map.bbox }, isLandscapeLayer)).toBeUndefined();
+      expect(toRegionStepMap(null, isLandscapeLayer)).toBeUndefined();
     });
   });
 });
