@@ -15,8 +15,6 @@ import MapLegend from "@/containers/map/map-legend";
 import { Toggle } from "@/containers/toogle";
 import { UrlParamsValidator } from "@/containers/url-params-validator";
 
-import { collectionQueryOptions } from "@/services/sdk-query";
-
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const locale = await getLocale();
   const queryClient = new QueryClient();
@@ -28,25 +26,6 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   // The map needs it before mounting, for its initial bounds
   await queryClient.prefetchQuery(globalLocationsQueryOptions(locale));
-
-  // Default locations
-  await queryClient.prefetchQuery(
-    collectionQueryOptions("locations", {
-      depth: 1,
-      limit: 0,
-      page: 1,
-      sort: "name",
-      // Must match the query in `LocationsList`, which searches in English (see the comment there)
-      locale: "en",
-      select: {
-        id: true,
-        name: true,
-        type: true,
-        code: true,
-        bbox: true,
-      },
-    }),
-  );
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -57,7 +57,8 @@ export default async function AppPage({ searchParams }: { searchParams: Promise<
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <aside className="absolute top-0 left-0 z-10 h-[calc(100svh_-_theme(space.16))] w-full max-w-md overflow-hidden">
+      {/* Wide enough for the search placeholder that lists every region */}
+      <aside className="absolute top-0 left-0 z-10 h-[calc(100svh_-_theme(space.16))] w-full max-w-[472px] overflow-hidden">
         <Command className="flex h-full w-full flex-col gap-2.5 p-4" shouldFilter={false}>
           <Header>
             <Suspense>

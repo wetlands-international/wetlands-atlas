@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CommandInput } from "cmdk";
 import { useAtom, useSetAtom } from "jotai";
 import { LucideXCircle, SearchIcon } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { LuMapPin, LuSearch } from "react-icons/lu";
 
 import { cn } from "@/lib/utils";
@@ -20,6 +20,7 @@ import {
 
 import { useGlobalLocation } from "@/hooks/use-global-locations";
 import { useLocationId } from "@/hooks/use-location-id";
+import { useRegions } from "@/hooks/use-regions";
 
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -30,6 +31,7 @@ export const LocationsSearch = () => {
 
   const locale = useLocale();
   const t = useTranslations();
+  const format = useFormatter();
 
   const [region] = useSyncRegion();
   const [, setLocation] = useSyncLocation();
@@ -37,6 +39,16 @@ export const LocationsSearch = () => {
   const globalLocation = useGlobalLocation(region);
   const [locations, setLocations] = useAtom(locationsAtom);
   const setTmpBbox = useSetAtom(tmpBboxAtom);
+  const { data: regionsData } = useRegions();
+
+  // Names the searched regions: every region on the selection screen, the current one inside a region
+  const searchPlaceholder = t("locations.placeholder", {
+    regions: format.list(
+      regionsData.docs.filter(({ id }) => !region || id === region).map(({ name }) => name),
+      // "Sahel & Europe" in English, as in the design
+      { type: "conjunction", style: "short" },
+    ),
+  });
 
   const { data: locationsIdData } = useQuery({
     ...collectionByIdQueryOptions("locations", location ?? "", {
@@ -115,7 +127,8 @@ export const LocationsSearch = () => {
         id="location-search"
         ref={inputRef}
         className={cn({
-          "h-full w-full rounded-4xl px-16 transition-colors duration-300": true,
+          "h-full w-full rounded-4xl pr-12 pl-15 text-sm text-ellipsis transition-colors duration-300":
+            true,
           "text-background placeholder:text-muted-foreground outline-0": locations.enabled,
           "text-foreground placeholder:text-foreground outline-0": !locations.enabled,
         })}
@@ -126,7 +139,7 @@ export const LocationsSearch = () => {
         }
         placeholder={cn({
           [`${locationsIdData?.name}`]: !locations.enabled && locationsIdData?.name,
-          "Search for a location...": locations.enabled || !location,
+          [searchPlaceholder]: locations.enabled || !location,
         })}
         onValueChange={handleValueChange}
         onKeyUp={handleKeyUp}
@@ -149,12 +162,14 @@ export const LocationsSearch = () => {
         <button
           type="button"
           className={cn({
-            "cursor-pointer": true,
+            // Positioned like the other buttons, in the input's right padding
+            "absolute top-3 right-3 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full":
+              true,
             hidden: locationsIdData && locationsIdData?.type !== "global",
           })}
           onClick={() => inputRef.current?.focus()}
         >
-          <SearchIcon className="mr-4 h-6 w-6 text-current" />
+          <SearchIcon className="h-6 w-6 text-current" />
         </button>
       )}
 

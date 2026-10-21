@@ -5,48 +5,56 @@ import { useMemo } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { CommandEmpty, CommandGroup, CommandList } from "cmdk";
 import { useAtomValue } from "jotai";
+import { useTranslations } from "next-intl";
 import { useDebounceValue } from "usehooks-ts";
 
-import { locationsAtom } from "@/app/(frontend)/[locale]/(app)/store";
+import { locationsAtom, useSyncRegion } from "@/app/(frontend)/[locale]/(app)/store";
+
+import { useRegions } from "@/hooks/use-regions";
 
 import { LocationsItem } from "@/containers/locations/item";
 
 import { Loader } from "@/components/ui/loader";
 
-import { LOCATION_TYPE } from "@/cms/collections/Location";
 import type { Location } from "@/payload-types";
 
 import { collectionQueryOptions } from "@/services/sdk-query";
 
-const typeOrder: Record<string, number> = {
-  [LOCATION_TYPE.ADMIN_REGION]: 1,
-  [LOCATION_TYPE.HYDRO_BASIN]: 2,
-  [LOCATION_TYPE.ECO_REGION]: 3,
-  [LOCATION_TYPE.WDPA]: 4,
-  [LOCATION_TYPE.GLOBAL]: 5,
-} as const;
+// In the order of the groups. Global locations aren't searchable: the region cards and the reset
+// button already select them.
+const SEARCHABLE_TYPES = [
+  "admin_region",
+  "hydro_basin",
+  "eco_region",
+  "wdpa",
+] as const satisfies readonly Location["type"][];
 
-const typeLabels: Record<string, string> = {
-  [LOCATION_TYPE.ADMIN_REGION]: "Countries",
-  [LOCATION_TYPE.HYDRO_BASIN]: "Basins",
-  [LOCATION_TYPE.ECO_REGION]: "Ecoregions",
-  [LOCATION_TYPE.WDPA]: "WDPA",
-  [LOCATION_TYPE.GLOBAL]: "Global",
-} as const;
+// Maximum number of results per group (type and region), so that each one gets the same space
+const GROUP_LIMIT = 10;
 
 export const LocationsList = () => {
+  const t = useTranslations("locations");
   const locations = useAtomValue(locationsAtom);
+  const [region] = useSyncRegion();
+  const { data: regionsData } = useRegions();
 
   const [search] = useDebounceValue(locations.search, 300);
 
-  const {
-    data: locationsData,
-    isFetched,
-    isFetching,
-  } = useQuery({
-    ...collectionQueryOptions("locations", {
+  // Inside a region, only its locations are searched
+  const groups = useMemo(
+    () =>
+      SEARCHABLE_TYPES.flatMap((type) =>
+        regionsData.docs
+          .filter(({ id }) => !region || id === region)
+          .map((groupRegion) => ({ type, region: groupRegion })),
+      ),
+    [regionsData.docs, region],
+  );
+
+  const groupsQueryOptions = groups.map(({ type, region: groupRegion }) =>
+    collectionQueryOptions("locations", {
       depth: 1,
-      limit: 0,
+      limit: GROUP_LIMIT,
       page: 1,
       sort: "name",
       // Location names are only seeded in English and Payload doesn't apply the fallback locale to
@@ -55,79 +63,88 @@ export const LocationsList = () => {
       select: {
         id: true,
         name: true,
-        type: true,
-        code: true,
         bbox: true,
+        parent: true,
       },
-      // Only set `where` when searching so the query key matches the one prefetched in the layout
-      ...(!!search && {
-        where: {
-          name: {
-            like: `%${search}%`,
-          },
+      // Only the parent's name is needed, to show the country of WDPAs
+      populate: {
+        locations: {
+          name: true,
         },
-      }),
+      },
+      where: {
+        type: {
+          equals: type,
+        },
+        region: {
+          equals: groupRegion.id,
+        },
+        name: {
+          like: `%${search}%`,
+        },
+      },
     }),
+  );
+
+  // A single query that runs every group's query in parallel, because `useQueries` doesn't support
+  // `keepPreviousData`
+  const {
+    data: groupsData,
+    isFetched,
+    isFetching,
+  } = useQuery({
+    queryKey: ["locations-search", ...groupsQueryOptions.map(({ queryKey }) => queryKey)],
+    queryFn: () =>
+      Promise.all(
+        groups.map(async (group, index) => ({
+          ...group,
+          // The database's collation ignores spaces and punctuation, unlike `localeCompare`
+          locations: (await groupsQueryOptions[index].queryFn()).docs.sort((a, b) =>
+            a.name.localeCompare(b.name),
+          ),
+        })),
+      ),
+    enabled: !!search,
     placeholderData: keepPreviousData,
   });
-
-  const groupedLocations = useMemo(() => {
-    if (!locationsData?.docs) return {} as Record<string, Location[]>;
-
-    const grouped = locationsData.docs.reduce(
-      (acc, location) => {
-        const type = location.type;
-        if (!acc[type]) {
-          acc[type] = [];
-        }
-        acc[type].push(location);
-        return acc;
-      },
-      {} as Record<string, Location[]>,
-    );
-
-    // Sort locations within each group alphabetically
-    Object.keys(grouped).forEach((type) => {
-      grouped[type].sort((a, b) => a.name.localeCompare(b.name));
-    });
-
-    return grouped;
-  }, [locationsData?.docs]);
-
-  const orderedGroups = useMemo(() => {
-    return Object.keys(groupedLocations)
-      .filter((type) => typeOrder[type] !== undefined)
-      .sort((a, b) => (typeOrder[a] ?? 999) - (typeOrder[b] ?? 999));
-  }, [groupedLocations]);
 
   return (
     <CommandList className="bg-foreground relative rounded-4xl p-6">
       <Loader isLoading={isFetching} />
 
-      {!isFetching && isFetched && (
+      {/* Not debounced, so that the hint disappears as soon as the user types */}
+      {!locations.search && <span className="text-muted-foreground">{t("hint")}</span>}
+
+      {!!locations.search && !!search && !isFetching && isFetched && (
         <CommandEmpty>
-          <span className="text-muted-foreground">No locations found</span>
+          <span className="text-muted-foreground">{t("empty")}</span>
         </CommandEmpty>
       )}
 
-      {orderedGroups.map((type) => {
-        const locations = groupedLocations[type];
-        if (!locations) return null;
+      {!!locations.search &&
+        !!search &&
+        groupsData?.map(({ type, region: groupRegion, locations }) => {
+          if (!locations.length) return null;
 
-        return (
-          <CommandGroup
-            key={type}
-            heading={typeLabels[type] ?? type}
-            className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-bold [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:uppercase"
-          >
-            <div className="py-2">
-              {locations.map((location) => (
-                <LocationsItem key={location.id} {...location} />
-              ))}
-            </div>
-          </CommandGroup>
-        );
-      })}
+          // On the selection screen, results from several regions are listed
+          const heading = region
+            ? t(`types.${type}`)
+            : t("group", { type: t(`types.${type}`), region: groupRegion.name });
+
+          return (
+            <CommandGroup
+              key={`${type}-${groupRegion.id}`}
+              heading={heading}
+              className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-bold [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:uppercase"
+            >
+              <div className="py-2">
+                {locations.map((location) => (
+                  <LocationsItem key={location.id} location={location} region={groupRegion.id} />
+                ))}
+              </div>
+            </CommandGroup>
+          );
+        })}
     </CommandList>
   );
 };
