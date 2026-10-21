@@ -85,26 +85,15 @@ const groupLocales = (
 };
 
 /**
- * The `locale` block of a record: its translations, without the `en` values of `topLevelFields`, which are exported at
- * the top level of the record. `en` only appears when it has other localized fields (e.g. the labels of an indicator).
- * Records without translations have no block.
+ * The `locale` block of a record: its translations, i.e. every locale but `en`, whose values are exported at the top
+ * level of the record. Records without translations have no block.
  */
-const translationsOf = (
-  locales: Record<string, Record<string, unknown>> | undefined,
-  topLevelFields: string[],
-) => {
+const translationsOf = (locales: Record<string, Record<string, unknown>> | undefined) => {
   const translations: Record<string, Record<string, unknown>> = {};
 
   for (const [locale, localizedValues] of Object.entries(locales ?? {})) {
-    const translatedValues =
-      locale === "en"
-        ? Object.fromEntries(
-            Object.entries(localizedValues).filter(([field]) => !topLevelFields.includes(field)),
-          )
-        : localizedValues;
-
-    if (Object.keys(translatedValues).length > 0) {
-      translations[locale] = translatedValues;
+    if (locale !== "en" && Object.keys(localizedValues).length > 0) {
+      translations[locale] = localizedValues;
     }
   }
 
@@ -136,7 +125,7 @@ const exportRegions = async (db: DB) => {
       color: row.color,
       order: row.order,
       published: row.published ?? false,
-      locale: translationsOf(locales.get(row.id), REGION_FIELDS),
+      locale: translationsOf(locales.get(row.id)),
     };
   });
 
@@ -165,7 +154,7 @@ const exportLocations = async (db: DB) => {
       bbox: row.bbox,
       type: row.type,
       parent: row.parent ?? null,
-      locale: translationsOf(locales.get(row.id), LOCATION_FIELDS),
+      locale: translationsOf(locales.get(row.id)),
     };
   });
 
@@ -204,16 +193,14 @@ const exportCategories = async (db: DB) => {
       order: row.order,
       published: row.published ?? false,
       defaultIndicators: relsMap.get(row.id) ?? [],
-      locale: translationsOf(locales.get(row.id), CATEGORY_FIELDS),
+      locale: translationsOf(locales.get(row.id)),
     };
   });
 
   await writeJSON("categories.json", data);
 };
 
-/** `labels` has no top-level field: the `en` labels stay in the `locale` block, as the seed reads them */
 const INDICATOR_FIELDS = ["name", "unit", "description", "widget", "labels"];
-const INDICATOR_TOP_LEVEL_FIELDS = ["name", "unit", "description", "widget"];
 
 const exportIndicators = async (db: DB) => {
   const rows = await db.query.indicators.findMany();
@@ -229,8 +216,9 @@ const exportIndicators = async (db: DB) => {
       description: en.description ?? null,
       category: row.category,
       widget: en.widget ?? null,
+      labels: en.labels ?? null,
       order: row.order,
-      locale: translationsOf(locales.get(row.id), INDICATOR_TOP_LEVEL_FIELDS),
+      locale: translationsOf(locales.get(row.id)),
     };
   });
 
