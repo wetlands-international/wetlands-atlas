@@ -1,7 +1,7 @@
 # ============================
 # 🛠️ Build Stage for Node.js
 # ============================
-FROM node:22-bookworm-slim AS node-build
+FROM node:22.23.2-bookworm-slim AS node-build
 
 ARG PAYLOAD_SECRET
 ARG PREVIEW_SECRET
