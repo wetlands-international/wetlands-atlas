@@ -196,6 +196,18 @@
     "empty": "No layers available",
     "clear": "Clear selection"
   },
+  "locations": {
+    "placeholder": "Search location ({regions})",
+    "hint": "Type the name of a country, basin, ecoregion or protected area",
+    "empty": "No locations found",
+    "group": "{type} · {region}",
+    "types": {
+      "admin_region": "Countries",
+      "hydro_basin": "Basins",
+      "eco_region": "Ecoregions",
+      "wdpa": "WDPAs"
+    }
+  },
   "common": {
     "back": "Back",
     "reset": "Reset"

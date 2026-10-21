@@ -1,4 +1,4 @@
-import type { CollectionSlug, PaginatedDocs, SelectType, Sort, Where } from "payload";
+import type { CollectionSlug, PaginatedDocs, PopulateType, SelectType, Sort, Where } from "payload";
 
 import type { Config } from "@/payload-types";
 
@@ -14,6 +14,7 @@ interface FindParams {
   locale: "all" | Locale;
   page?: number;
   pagination?: boolean;
+  populate?: PopulateType;
   select?: SelectType;
   sort?: Sort;
   where?: Where;
