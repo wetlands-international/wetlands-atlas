@@ -156,7 +156,9 @@ export const MapContainer = (props: MapProps) => {
         <Controls>
           <ZoomControl />
           <LayersControl>
-            <Layers />
+            <Suspense>
+              <Layers />
+            </Suspense>
           </LayersControl>
           <SettingsControl>
             <BasemapControl basemap={basemap} onBasemapChange={setBasemap} />

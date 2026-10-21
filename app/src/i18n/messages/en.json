@@ -191,6 +191,11 @@
       "description": "A collection of landscapes about wetlands."
     }
   },
+  "layers": {
+    "title": "{region} · contextual layers",
+    "empty": "No layers available",
+    "clear": "Clear selection"
+  },
   "common": {
     "back": "Back",
     "reset": "Reset"

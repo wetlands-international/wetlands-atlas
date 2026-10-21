@@ -191,6 +191,11 @@
       "description": "Une collection de paysages sur les zones humides."
     }
   },
+  "layers": {
+    "title": "{region} · couches contextuelles",
+    "empty": "Aucune couche disponible",
+    "clear": "Effacer la sélection"
+  },
   "common": {
     "back": "Retour",
     "reset": "Réinitialiser"
