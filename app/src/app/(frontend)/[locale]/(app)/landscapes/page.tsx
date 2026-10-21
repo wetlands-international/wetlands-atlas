@@ -13,6 +13,7 @@ import {
   regionParser,
 } from "@/app/(frontend)/[locale]/(app)/parsers";
 
+import { categoriesQueryOptions } from "@/hooks/use-categories";
 import { landscapesQueryOptions } from "@/hooks/use-landscapes";
 
 import { Header } from "@/containers/header";
@@ -44,6 +45,11 @@ export default async function LandscapesPage({
   const locale = await getLocale();
   const filters = await loadSearchParams(searchParams);
   const queryClient = new QueryClient();
+
+  // Used by `UrlParamsValidator` to check the insight
+  if (filters.region) {
+    await queryClient.prefetchQuery(categoriesQueryOptions(locale, filters.region));
+  }
 
   // Shared by the list and the map's landscape markers
   await queryClient.prefetchQuery(landscapesQueryOptions(locale, filters));

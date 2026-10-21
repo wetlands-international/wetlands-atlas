@@ -12,6 +12,7 @@ import { Language } from "@/containers/language";
 import { MapContainer } from "@/containers/map";
 import MapLegend from "@/containers/map/map-legend";
 import { Toggle } from "@/containers/toogle";
+import { UrlParamsValidator } from "@/containers/url-params-validator";
 
 import { collectionQueryOptions } from "@/services/sdk-query";
 
@@ -46,6 +47,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <ClientProviders>
+        <Suspense>
+          <UrlParamsValidator />
+        </Suspense>
+
         <main className="relative flex h-[100svh] flex-col overflow-hidden">
           {children}
 
