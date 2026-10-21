@@ -17,7 +17,7 @@ export const Regions: CollectionConfig = {
   admin: {
     description: READ_ONLY_COLLECTION_DESCRIPTION,
     useAsTitle: "name",
-    defaultColumns: ["id", "name", "order"],
+    defaultColumns: ["id", "name", "order", "published"],
   },
   defaultSort: ["order"],
   access: ReadOnlyAccessControl,
@@ -72,6 +72,16 @@ export const Regions: CollectionConfig = {
       type: "number",
       required: true,
       min: 0,
+    },
+    {
+      name: "published",
+      type: "checkbox",
+      defaultValue: false,
+      admin: {
+        position: "sidebar",
+        description:
+          "An unpublished region is hidden from the public view, but its landscapes are still shown on the global map.",
+      },
     },
     {
       name: "categories",
