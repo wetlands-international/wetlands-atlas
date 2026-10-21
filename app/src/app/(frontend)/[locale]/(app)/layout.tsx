@@ -5,6 +5,7 @@ import { getLocale } from "next-intl/server";
 
 import { ClientProviders } from "@/app/(frontend)/[locale]/(app)/providers";
 
+import { contextualLayersQueryOptions } from "@/hooks/use-contextual-layers";
 import { globalLocationsQueryOptions } from "@/hooks/use-global-locations";
 import { regionsQueryOptions } from "@/hooks/use-regions";
 
@@ -21,6 +22,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery(regionsQueryOptions(locale));
+
+  // Read by the layers menu and by `UrlParamsValidator`, to remove the layers of other regions
+  await queryClient.prefetchQuery(contextualLayersQueryOptions(locale));
 
   // The map needs it before mounting, for its initial bounds
   await queryClient.prefetchQuery(globalLocationsQueryOptions(locale));
