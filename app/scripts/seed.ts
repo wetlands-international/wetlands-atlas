@@ -137,7 +137,7 @@ const seedRegions = async (db: DB, tx: TX) => {
   const regionsLocales = db.query.regions_locales.table;
   const now = new Date().toISOString();
 
-  const region = { color: "#ADBC3D", order: 0 };
+  const region = { color: "#ADBC3D", order: 0, published: true };
   const regionLocales = {
     name: "Sahel",
     introTitle: "Discover Sahel wetlands",

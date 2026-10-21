@@ -206,6 +206,10 @@ export interface Region {
   cover?: (number | null) | Media;
   color: string;
   order: number;
+  /**
+   * An unpublished region is hidden from the public view, but its landscapes are still shown on the global map.
+   */
+  published?: boolean | null;
   categories?: {
     docs?: (string | Category)[];
     hasNextPage?: boolean;
@@ -708,6 +712,7 @@ export interface RegionsSelect<T extends boolean = true> {
   cover?: T;
   color?: T;
   order?: T;
+  published?: T;
   categories?: T;
   updatedAt?: T;
   createdAt?: T;
