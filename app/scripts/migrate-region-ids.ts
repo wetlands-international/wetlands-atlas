@@ -227,10 +227,10 @@ const migrate = async (tx: TX) => {
   console.log("\nPrimary keys");
 
   const mappings: Record<RenamedKind, Mapping> = {
-    location: await renameIds(tx, RENAMED_TABLES.location, (row) => toRegionId("location", row.id)),
-    category: await renameIds(tx, RENAMED_TABLES.category, (row) => toRegionId("category", row.id)),
+    location: await renameIds(tx, RENAMED_TABLES.location, (row) => toRegionId(row.id, "location")),
+    category: await renameIds(tx, RENAMED_TABLES.category, (row) => toRegionId(row.id, "category")),
     indicator: await renameIds(tx, RENAMED_TABLES.indicator, (row) =>
-      toRegionId("indicator", row.id),
+      toRegionId(row.id, "indicator"),
     ),
     indicatorData: await renameIds(
       tx,
@@ -239,7 +239,7 @@ const migrate = async (tx: TX) => {
       { columns: ["id", "location_id"] },
     ),
     // Landscape layers keep their IDs: they belong to no region and are only reached through a landscape
-    layer: await renameIds(tx, RENAMED_TABLES.layer, (row) => toRegionId("layer", row.id), {
+    layer: await renameIds(tx, RENAMED_TABLES.layer, (row) => toRegionId(row.id, "layer"), {
       where: sql`WHERE type <> 'landscape'`,
     }),
   };
@@ -248,7 +248,7 @@ const migrate = async (tx: TX) => {
   const globalCode = await getRowCount(
     tx,
     sql`UPDATE locations SET code = ${LEGACY_REGION_ID}
-        WHERE id = ${toRegionId("location", `global_${LEGACY_REGION_ID}`)} AND code <> ${LEGACY_REGION_ID}`,
+        WHERE id = ${toRegionId(`global_${LEGACY_REGION_ID}`, "location")} AND code <> ${LEGACY_REGION_ID}`,
   );
   log("locations.code (global)", globalCode);
 

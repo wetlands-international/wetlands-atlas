@@ -33,13 +33,17 @@ const SEPARATOR: Record<RegionIdKind, string> = {
   location: "_",
 };
 
+/** Whether `id` carries the prefix of the region `regionId` for this kind of record */
+export const hasRegionPrefix = (id: string, regionId: string, kind: RegionIdKind) =>
+  id.startsWith(`${regionId}${SEPARATOR[kind]}`);
+
 /** Whether `id` already carries the prefix of the legacy region for this kind of record */
-export const isRegionId = (kind: RegionIdKind, id: string) =>
-  id.startsWith(`${LEGACY_REGION_ID}${SEPARATOR[kind]}`);
+export const isRegionId = (id: string, kind: RegionIdKind) =>
+  hasRegionPrefix(id, LEGACY_REGION_ID, kind);
 
 /** Region-prefixed ID of a legacy category, indicator, layer or location ID */
-export const toRegionId = (kind: RegionIdKind, legacyId: string) => {
-  if (isRegionId(kind, legacyId)) {
+export const toRegionId = (legacyId: string, kind: RegionIdKind) => {
+  if (isRegionId(legacyId, kind)) {
     return legacyId;
   }
 
@@ -55,13 +59,13 @@ export const toRegionId = (kind: RegionIdKind, legacyId: string) => {
  * mapped; the rows without a location in their ID (`costs-0`, `roi-ben`) get the region prefix instead.
  */
 export const toRegionIndicatorDataId = (legacyId: string, legacyLocationId: string) => {
-  if (isRegionId("indicator", legacyId) || isRegionId("location", legacyLocationId)) {
+  if (isRegionId(legacyId, "indicator") || isRegionId(legacyLocationId, "location")) {
     return legacyId;
   }
 
   const suffix = `-${legacyLocationId}`;
   if (legacyId.endsWith(suffix)) {
-    return `${legacyId.slice(0, -suffix.length)}-${toRegionId("location", legacyLocationId)}`;
+    return `${legacyId.slice(0, -suffix.length)}-${toRegionId(legacyLocationId, "location")}`;
   }
 
   return `${LEGACY_REGION_ID}-${legacyId}`;
@@ -75,11 +79,11 @@ export const toBaseId = <T extends string>(id: string, baseIds: readonly T[]) =>
   baseIds.find((baseId) => id === baseId || id.endsWith(`-${baseId}`));
 
 /** Maps a comma-separated list of legacy IDs, as found in the `indicators` and `layers` URL params */
-export const toRegionIdList = (kind: RegionIdKind, legacyIds: string) =>
+export const toRegionIdList = (legacyIds: string, kind: RegionIdKind) =>
   legacyIds
     .split(",")
     .filter(Boolean)
-    .map((id) => toRegionId(kind, id))
+    .map((id) => toRegionId(id, kind))
     .join(",");
 
 /**
@@ -100,7 +104,7 @@ export const toRegionStepMap = (map: unknown, isLandscapeLayer: (layerId: string
   }
 
   const { layers } = decoded as { layers: string[] };
-  const mapped = layers.map((id) => (isLandscapeLayer(id) ? id : toRegionId("layer", id)));
+  const mapped = layers.map((id) => (isLandscapeLayer(id) ? id : toRegionId(id, "layer")));
   if (mapped.every((id, index) => id === layers[index])) {
     return undefined;
   }

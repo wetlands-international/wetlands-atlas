@@ -17,42 +17,42 @@ describe("region-ids", () => {
 
   describe("toRegionId", () => {
     it("prefixes slugs with a dash", () => {
-      expect(toRegionId("category", "climate-mitigation-potential")).toBe(
+      expect(toRegionId("climate-mitigation-potential", "category")).toBe(
         "sahel-climate-mitigation-potential",
       );
-      expect(toRegionId("indicator", "wetlands-mitigation-potential")).toBe(
+      expect(toRegionId("wetlands-mitigation-potential", "indicator")).toBe(
         "sahel-wetlands-mitigation-potential",
       );
-      expect(toRegionId("layer", "mitigation-potential")).toBe("sahel-mitigation-potential");
+      expect(toRegionId("mitigation-potential", "layer")).toBe("sahel-mitigation-potential");
     });
 
     it("prefixes location IDs with an underscore", () => {
-      expect(toRegionId("location", "adminregion_ben")).toBe("sahel_adminregion_ben");
-      expect(toRegionId("location", "hydrobasin_niger_basin")).toBe("sahel_hydrobasin_niger_basin");
-      expect(toRegionId("location", "wdpa_1243")).toBe("sahel_wdpa_1243");
+      expect(toRegionId("adminregion_ben", "location")).toBe("sahel_adminregion_ben");
+      expect(toRegionId("hydrobasin_niger_basin", "location")).toBe("sahel_hydrobasin_niger_basin");
+      expect(toRegionId("wdpa_1243", "location")).toBe("sahel_wdpa_1243");
     });
 
     it("renames the global location", () => {
-      expect(toRegionId("location", "global_sahel")).toBe("sahel_global");
+      expect(toRegionId("global_sahel", "location")).toBe("sahel_global");
     });
 
     it("returns an already prefixed ID unchanged", () => {
-      expect(toRegionId("category", "sahel-climate-mitigation-potential")).toBe(
+      expect(toRegionId("sahel-climate-mitigation-potential", "category")).toBe(
         "sahel-climate-mitigation-potential",
       );
-      expect(toRegionId("location", "sahel_global")).toBe("sahel_global");
-      expect(toRegionId("location", "sahel_adminregion_ben")).toBe("sahel_adminregion_ben");
+      expect(toRegionId("sahel_global", "location")).toBe("sahel_global");
+      expect(toRegionId("sahel_adminregion_ben", "location")).toBe("sahel_adminregion_ben");
     });
   });
 
   describe("isRegionId", () => {
     it("checks the separator of the kind", () => {
-      expect(isRegionId("category", "sahel-climate-mitigation-potential")).toBe(true);
-      expect(isRegionId("category", "climate-mitigation-potential")).toBe(false);
-      expect(isRegionId("location", "sahel_global")).toBe(true);
-      expect(isRegionId("location", "global_sahel")).toBe(false);
+      expect(isRegionId("sahel-climate-mitigation-potential", "category")).toBe(true);
+      expect(isRegionId("climate-mitigation-potential", "category")).toBe(false);
+      expect(isRegionId("sahel_global", "location")).toBe(true);
+      expect(isRegionId("global_sahel", "location")).toBe(false);
       // A location named like a slug would still be a legacy ID
-      expect(isRegionId("location", "sahel-foo")).toBe(false);
+      expect(isRegionId("sahel-foo", "location")).toBe(false);
     });
   });
 
@@ -99,11 +99,11 @@ describe("region-ids", () => {
     it("maps every ID of a comma-separated URL param", () => {
       expect(
         toRegionIdList(
-          "indicator",
           "wetlands-mitigation-potential,wetlands-simplified-classification",
+          "indicator",
         ),
       ).toBe("sahel-wetlands-mitigation-potential,sahel-wetlands-simplified-classification");
-      expect(toRegionIdList("layer", "")).toBe("");
+      expect(toRegionIdList("", "layer")).toBe("");
     });
   });
 
