@@ -113,6 +113,9 @@ const getRows = async (tx: TX, query: ReturnType<typeof sql>) =>
 const getRowCount = async (tx: TX, query: ReturnType<typeof sql>) =>
   (await tx.execute(query)).rowCount ?? 0;
 
+const getIds = async (tx: TX, query: ReturnType<typeof sql>) =>
+  (await getRows(tx, query)).map((row) => row.id as string);
+
 /** Makes the foreign keys pointing at the renamed tables deferrable, and defers them for the transaction */
 const deferForeignKeys = async (tx: TX) => {
   const constraints = await getRows(
@@ -224,23 +227,56 @@ const rewriteStepMaps = async (tx: TX, landscapeLayerIds: Set<string>) => {
 const migrate = async (tx: TX) => {
   await deferForeignKeys(tx);
 
+  // The records of the other regions keep their IDs, such as the hidden `other-other` category inserted by the
+  // `regions_published` migration. Indicators and indicator data have no region: they follow their category and
+  // location, read before the renames since the deferred foreign keys still hold the old IDs afterwards.
+  const foreignCategoryIds = await getIds(
+    tx,
+    sql`SELECT id FROM categories WHERE region_id <> ${LEGACY_REGION_ID}`,
+  );
+  const foreignLocationIds = await getIds(
+    tx,
+    sql`SELECT id FROM locations WHERE region_id <> ${LEGACY_REGION_ID}`,
+  );
+
   console.log("\nPrimary keys");
 
   const mappings: Record<RenamedKind, Mapping> = {
-    location: await renameIds(tx, RENAMED_TABLES.location, (row) => toRegionId(row.id, "location")),
-    category: await renameIds(tx, RENAMED_TABLES.category, (row) => toRegionId(row.id, "category")),
-    indicator: await renameIds(tx, RENAMED_TABLES.indicator, (row) =>
-      toRegionId(row.id, "indicator"),
+    location: await renameIds(
+      tx,
+      RENAMED_TABLES.location,
+      (row) => toRegionId(row.id, "location"),
+      {
+        where: sql`WHERE region_id = ${LEGACY_REGION_ID}`,
+      },
+    ),
+    category: await renameIds(
+      tx,
+      RENAMED_TABLES.category,
+      (row) => toRegionId(row.id, "category"),
+      {
+        where: sql`WHERE region_id = ${LEGACY_REGION_ID}`,
+      },
+    ),
+    indicator: await renameIds(
+      tx,
+      RENAMED_TABLES.indicator,
+      (row) => toRegionId(row.id, "indicator"),
+      { where: sql`WHERE category_id <> ALL(${sql.param(foreignCategoryIds)}::text[])` },
     ),
     indicatorData: await renameIds(
       tx,
       RENAMED_TABLES.indicatorData,
       (row) => toRegionIndicatorDataId(row.id, row.location_id),
-      { columns: ["id", "location_id"] },
+      {
+        columns: ["id", "location_id"],
+        where: sql`WHERE location_id <> ALL(${sql.param(foreignLocationIds)}::text[])`,
+      },
     ),
-    // Landscape layers keep their IDs: they belong to no region and are only reached through a landscape
+    // Landscape layers keep their IDs: they belong to no region and are only reached through a landscape. Indicator
+    // layers have no region either, and the contextual layers of the other regions keep theirs.
     layer: await renameIds(tx, RENAMED_TABLES.layer, (row) => toRegionId(row.id, "layer"), {
-      where: sql`WHERE type <> 'landscape'`,
+      where: sql`WHERE type <> 'landscape' AND (region_id = ${LEGACY_REGION_ID} OR region_id IS NULL)`,
     }),
   };
 
@@ -260,8 +296,8 @@ const migrate = async (tx: TX) => {
     }
   }
 
-  const landscapeLayerIds = new Set<string>(
-    (await getRows(tx, sql`SELECT id FROM layers WHERE type = 'landscape'`)).map((row) => row.id),
+  const landscapeLayerIds = new Set(
+    await getIds(tx, sql`SELECT id FROM layers WHERE type = 'landscape'`),
   );
 
   await rewriteStepMaps(tx, landscapeLayerIds);
