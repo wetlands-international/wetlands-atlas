@@ -38,6 +38,15 @@ The database schema is managed with Payload migrations (`app/src/migrations`), a
 - `pnpm payload migrate:create check --skip-empty` must not create any file; if it does, a migration is missing.
 - In development, Payload pushes the schema to the database on start (`pnpm dev`, seed script), which hides missing migrations. To test migrations, start from an empty database, run `pnpm payload migrate`, then seed it with `PAYLOAD_MIGRATING=true pnpm data:seed:dev`.
 
+## Seeding
+
+The read-only collections (regions, locations, categories, indicators, indicator data) are seeded from the files of `app-initial-data`, which are their only source of truth:
+
+- `pnpm data:seed:<env>` validates the five files first (every reference resolves, the IDs carry their region, one global location per published region, the covers are uploaded in the CMS and referenced by filename), then upserts every record with every locale it carries. The run prints the target database before writing.
+- The rows and translations found in the database but not in the files make the run fail with their list. `--delete-orphans` deletes them, unless a layer or a landscape still references them. `--dry-run` rolls everything back at the end.
+- Media, layers, landscapes and FAQs are edited in the CMS and never seeded. For local work, restore a staging backup.
+- `pnpm data:export:<env>` regenerates the files from a database, translations included.
+
 ## Deployment
 
 ### Architecture
