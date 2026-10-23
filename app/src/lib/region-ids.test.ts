@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   isRegionId,
   LEGACY_REGION_ID,
+  toBaseId,
   toRegionId,
   toRegionIdList,
   toRegionIndicatorDataId,
@@ -75,6 +76,22 @@ describe("region-ids", () => {
       expect(
         toRegionIndicatorDataId("mitigation-sahel_adminregion_ben", "sahel_adminregion_ben"),
       ).toBe("mitigation-sahel_adminregion_ben");
+    });
+  });
+
+  describe("toBaseId", () => {
+    const baseIds = ["wetland-types-get", "ndp-water"] as const;
+
+    it("matches the base ID with or without a region prefix", () => {
+      expect(toBaseId("wetland-types-get", baseIds)).toBe("wetland-types-get");
+      expect(toBaseId("sahel-wetland-types-get", baseIds)).toBe("wetland-types-get");
+      expect(toBaseId("east-africa-ndp-water", baseIds)).toBe("ndp-water");
+    });
+
+    it("returns undefined when no base ID matches", () => {
+      expect(toBaseId("sahel-peatlands", baseIds)).toBeUndefined();
+      expect(toBaseId("sahel-wetland-types-get-2", baseIds)).toBeUndefined();
+      expect(toBaseId("sahelndp-water", baseIds)).toBeUndefined();
     });
   });
 

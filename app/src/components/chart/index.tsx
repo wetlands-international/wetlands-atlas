@@ -2,6 +2,8 @@ import { FC } from "react";
 
 import { useTranslations } from "next-intl";
 
+import { toBaseId } from "@/lib/region-ids";
+
 import { IndicatorChartData } from "@/containers/indicators/types";
 
 import PieChart from "@/components/chart/pie";
@@ -11,6 +13,17 @@ import {
   RankingChartSection,
   RankingSection,
 } from "@/components/chart/ranking";
+
+/** The indicators with a chart, by their ID without the region prefix */
+const CHART_INDICATORS = [
+  "wetlands-mitigation-potential",
+  "cost-of-intervention",
+  "return-on-investment",
+  "wetland-types-get",
+  "wetland-types-ramsar",
+  "ndp-composite",
+  "ndp-water",
+] as const;
 
 type ValidIndicatorData = IndicatorChartData & { value: number };
 const getValidData = (data: IndicatorChartData[]): ValidIndicatorData[] => {
@@ -25,7 +38,7 @@ interface WidgetChartProps {
 const WidgetChart: FC<WidgetChartProps> = ({ indicator, data }) => {
   const t = useTranslations("insights.widgets");
 
-  switch (indicator) {
+  switch (toBaseId(indicator, CHART_INDICATORS)) {
     case "wetlands-mitigation-potential": {
       const validData = getValidData(data);
       const maxValue = Math.max(...validData.map((d) => d.value));

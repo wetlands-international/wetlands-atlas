@@ -67,6 +67,13 @@ export const toRegionIndicatorDataId = (legacyId: string, legacyLocationId: stri
   return `${LEGACY_REGION_ID}-${legacyId}`;
 };
 
+/**
+ * The one of `baseIds` that `id` is, with or without the prefix of any region (`{region}-{base id}`), so that code
+ * keyed on a record's slug works for every region. Returns `undefined` when none matches.
+ */
+export const toBaseId = <T extends string>(id: string, baseIds: readonly T[]) =>
+  baseIds.find((baseId) => id === baseId || id.endsWith(`-${baseId}`));
+
 /** Maps a comma-separated list of legacy IDs, as found in the `indicators` and `layers` URL params */
 export const toRegionIdList = (kind: RegionIdKind, legacyIds: string) =>
   legacyIds
