@@ -104,3 +104,25 @@ These are configured on each Heroku app and serve as the single source of truth:
 | `GCS_SERVICE_ACCOUNT_KEY` | GCS service account credentials | Yes | Yes |
 
 > **Important:** `NEXT_PUBLIC_*` variables are embedded in the JavaScript bundle at build time. Changing them on Heroku requires a **redeploy** to take effect.
+
+### Rolling out the region model (WM-99)
+
+One-time procedure for the region model: the prefixed IDs, the schema and the front end ship together, because the old IDs break the map. Staging first, then production once the QA on staging has passed.
+
+1. **Back up the database** with the `DATABASE_URI` of the Heroku app: `pg_dump -Fc "$DATABASE_URI" > <env>-$(date +%F).dump`. The dump holds the users' password hashes, keep it private.
+2. **Deploy**: push `staging` (`main` for production). The migrations run during the build. From here until step 4 is done, the map shows nothing for the old IDs.
+3. **Upload the Sahel region cover** in the CMS, put its filename in the `cover` of `app-initial-data/regions.json` and commit it. The seed resolves covers by filename and clears every cover missing from the files, so an upload without the commit is undone by the next seed.
+4. **Rename, then seed**, from `app/` with a `.env.<env>` file holding the `DATABASE_URI` of the app, each script with `--dry-run` first:
+
+   ```bash
+   pnpm data:migrate-region-ids:<env> --dry-run   # WM-98: renames every Sahel ID in place, idempotent
+   pnpm data:migrate-region-ids:<env>
+   pnpm data:seed:<env> --dry-run
+   pnpm data:seed:<env>
+   ```
+
+   On the staging backup of 21 October 2026 the rename changes 17090 rows and the seed writes 6348 rows with no orphan. An orphan listed by the seed is content of the database that the files don't have: find out where it comes from before running with `--delete-orphans`.
+
+5. **Smoke test**: the map with `?region=sahel`, every category, the indicator charts, in English and French; the landscapes list and one landscape with its steps and map layers; the CMS still refuses to edit the seeded collections. There is no cache to revalidate: the pages read the collections through the API on every request.
+
+Then WM-116, the QA on staging, before repeating on production.
