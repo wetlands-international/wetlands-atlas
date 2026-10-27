@@ -46,18 +46,26 @@ RUN pnpm prune --prod --ignore-scripts
 # ============================
 # 🐍 Build Stage for tiler
 # ============================
-FROM python:3.11-slim AS python-build
+FROM python:3.13-slim AS python-build
 
-# Install Python dependencies
+# Install uv (keep in sync with the uv version used locally)
+COPY --from=ghcr.io/astral-sh/uv:0.13.5 /uv /bin/uv
+
+# Use the Python of the image, compile the bytecode, keep no cache in the layer
+ENV UV_PYTHON_DOWNLOADS=never \
+    UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_NO_CACHE=1
+
+# Install the tiler from its lockfile into /tiler/.venv
 WORKDIR /tiler
 COPY tiler/ ./
-RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+RUN uv sync --locked --no-dev
 
 # ============================
 # 🧼 Final Production Stage
 # ============================
-FROM python:3.11-slim AS final
+FROM python:3.13-slim AS final
 
 ARG PAYLOAD_SECRET
 ARG PREVIEW_SECRET
@@ -87,9 +95,7 @@ RUN apt-get update && \
         nginx supervisor curl gettext && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install only runtime Python deps for tiler
-COPY --from=python-build /usr/local/lib/python3.11 /usr/local/lib/python3.11
-COPY --from=python-build /usr/local/bin /usr/local/bin
+# Copy the tiler with its virtualenv
 COPY --from=python-build /tiler /tiler
 
 # Copy Node & npm from node-runtime
