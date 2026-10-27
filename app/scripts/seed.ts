@@ -263,12 +263,11 @@ const findEditableReferences = async (
   collection: SeedCollection,
   removedIds: string[],
 ) => {
-  const referenceErrors: string[] = [];
-
   if (removedIds.length === 0) {
-    return referenceErrors;
+    return [];
   }
 
+  const referenceErrors: string[] = [];
   for (const [table, column] of editableReferences[collection]) {
     const referencingRows = await getRows(
       tx,
@@ -343,6 +342,25 @@ const deleteOrphanRows = async (
   }
 };
 
+/** The locations ordered so that every parent comes before its children: `parent` is a foreign key checked per batch */
+const sortParentsFirst = (locations: LocationRecord[]) => {
+  const parentById = new Map(locations.map((location) => [location.id, location.parent]));
+
+  const depthOf = (location: LocationRecord) => {
+    let depth = 0;
+
+    for (let parentId = location.parent; parentId; parentId = parentById.get(parentId) ?? null) {
+      depth += 1;
+    }
+
+    return depth;
+  };
+
+  return [...locations].sort(
+    (location, otherLocation) => depthOf(location) - depthOf(otherLocation),
+  );
+};
+
 const seedRegions = async (
   tx: TX,
   seedFiles: SeedFiles,
@@ -383,25 +401,6 @@ const seedRegions = async (
   );
 
   log("regions upserted", regionRows.length);
-};
-
-/** The locations ordered so that every parent comes before its children: `parent` is a foreign key checked per batch */
-const sortParentsFirst = (locations: LocationRecord[]) => {
-  const parentById = new Map(locations.map((location) => [location.id, location.parent]));
-
-  const depthOf = (location: LocationRecord) => {
-    let depth = 0;
-
-    for (let parentId = location.parent; parentId; parentId = parentById.get(parentId) ?? null) {
-      depth += 1;
-    }
-
-    return depth;
-  };
-
-  return [...locations].sort(
-    (location, otherLocation) => depthOf(location) - depthOf(otherLocation),
-  );
 };
 
 const seedLocations = async (tx: TX, seedFiles: SeedFiles) => {
