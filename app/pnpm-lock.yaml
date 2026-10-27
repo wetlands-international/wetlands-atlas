@@ -246,7 +246,7 @@ importers:
         version: 0.176.0
       '@vitejs/plugin-react':
         specifier: 4.7.0
-        version: 4.7.0(vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))
+        version: 4.7.0(vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))
       eslint:
         specifier: 9.39.5
         version: 9.39.5(jiti@2.4.2)
@@ -290,14 +290,14 @@ importers:
         specifier: 5.7.3
         version: 5.7.3
       vite:
-        specifier: 6.4.3
-        version: 6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
+        specifier: 6.4.4
+        version: 6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
       vite-tsconfig-paths:
         specifier: 5.1.4
-        version: 5.1.4(typescript@5.7.3)(vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))
+        version: 5.1.4(typescript@5.7.3)(vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))
       vitest:
         specifier: 4.1.11
-        version: 4.1.11(@types/node@22.14.0)(happy-dom@20.14.5)(jsdom@26.1.0)(vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))
+        version: 4.1.11(@types/node@22.14.0)(happy-dom@20.14.5)(jsdom@26.1.0)(vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))
       webpack:
         specifier: 5.104.1
         version: 5.104.1(esbuild@0.25.9)
@@ -7061,8 +7061,8 @@ packages:
       vite:
         optional: true
 
-  vite@6.4.3:
-    resolution: {integrity: sha512-NTKlcQjlAK7MlQoyb6LgaqHc8sso/pVyUJYWMws3jg21uTJw/LddqIFPcPqP6PzpgbIcZyKI85sFE4HBrQDA8A==}
+  vite@6.4.4:
+    resolution: {integrity: sha512-xGjU/SyjeNyb0E4KxXBvYz/1C+3JXuujvf2hXNOtnlcE+58o5ajd9N2/n2VhkiJvpCP2qQasnUpx5PXNeI+p1Q==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -10470,7 +10470,7 @@ snapshots:
       react: 19.0.1
       react-dom: 19.0.1(react@19.0.1)
 
-  '@vitejs/plugin-react@4.7.0(vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))':
+  '@vitejs/plugin-react@4.7.0(vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))':
     dependencies:
       '@babel/core': 7.29.7
       '@babel/plugin-transform-react-jsx-self': 7.29.7(@babel/core@7.29.7)
@@ -10478,7 +10478,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
+      vite: 6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -10491,13 +10491,13 @@ snapshots:
       chai: 6.3.0
       tinyrainbow: 3.2.0
 
-  '@vitest/mocker@4.1.11(vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))':
+  '@vitest/mocker@4.1.11(vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))':
     dependencies:
       '@vitest/spy': 4.1.11
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
+      vite: 6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
 
   '@vitest/pretty-format@4.1.11':
     dependencies:
@@ -14292,18 +14292,18 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)):
+  vite-tsconfig-paths@5.1.4(typescript@5.7.3)(vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)):
     dependencies:
       debug: 4.4.3
       globrex: 0.1.2
       tsconfck: 3.1.5(typescript@5.7.3)
     optionalDependencies:
-      vite: 6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
+      vite: 6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3):
+  vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3):
     dependencies:
       esbuild: 0.25.9
       fdir: 6.5.0(picomatch@4.0.4)
@@ -14320,10 +14320,10 @@ snapshots:
       terser: 5.44.0
       tsx: 4.20.3
 
-  vitest@4.1.11(@types/node@22.14.0)(happy-dom@20.14.5)(jsdom@26.1.0)(vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)):
+  vitest@4.1.11(@types/node@22.14.0)(happy-dom@20.14.5)(jsdom@26.1.0)(vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)):
     dependencies:
       '@vitest/expect': 4.1.11
-      '@vitest/mocker': 4.1.11(vite@6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))
+      '@vitest/mocker': 4.1.11(vite@6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3))
       '@vitest/pretty-format': 4.1.11
       '@vitest/runner': 4.1.11
       '@vitest/snapshot': 4.1.11
@@ -14340,7 +14340,7 @@ snapshots:
       tinyexec: 1.3.1
       tinyglobby: 0.2.15
       tinyrainbow: 3.2.0
-      vite: 6.4.3(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
+      vite: 6.4.4(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.77.4)(terser@5.44.0)(tsx@4.20.3)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.14.0
