@@ -32,7 +32,8 @@ describe("seed file schemas", () => {
     const result = regionSchema.safeParse({ ...region, locale: { en: { name: "Sahel" } } });
 
     expect(result.success).toBe(false);
-    expect(issuePaths(result)).toContain("locale.en");
+    expect(issuePaths(result)).toContain("locale");
+    expect(result.error?.issues.map((issue) => issue.message)).toContain('Unrecognized key: "en"');
   });
 
   it("reports every invalid field of a region", () => {
