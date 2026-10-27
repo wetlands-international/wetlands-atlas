@@ -19,6 +19,6 @@ savePrefix: ""
 verifyDepsBeforeRun: install
 
 overrides:
-  "payload>undici": "7.29.1"
   "next>postcss": "8.5.29"
+  "@lexical/headless>happy-dom": "21.0.4"
   "@esbuild-kit/core-utils>esbuild": "0.25.0"
