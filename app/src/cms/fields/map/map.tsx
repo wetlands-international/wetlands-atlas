@@ -126,8 +126,9 @@ export const MapfieldMapInner = ({ layers, path }: { layers: iLayer[]; path: str
   const handleMovedDebounced = useDebounceCallback(handleMove, 500);
   const LAYERS = useMemo(() => {
     if (!value?.layers) return [];
-    return value.layers.map((l) => l).toReversed();
-  }, [value?.layers]);
+    // The saved layers that aren't offered for the landscape's region are hidden, and removed on save
+    return value.layers.filter((l) => layers.some((layer) => layer.id === l)).toReversed();
+  }, [value?.layers, layers]);
 
   if (isWithinCollapsible && collapsed) return null;
 
