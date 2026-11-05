@@ -26,6 +26,7 @@ import { Media } from "@/cms/collections/Media";
 import { Regions } from "@/cms/collections/Regions";
 import { Users } from "@/cms/collections/Users";
 import { plugins } from "@/cms/plugins";
+import { withUnaccent } from "@/cms/utils/unaccent";
 import { env } from "@/env";
 import { routing } from "@/i18n/routing";
 
@@ -72,34 +73,36 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(dirname, "payload-types.ts"),
   },
-  db: postgresAdapter({
-    pool: {
-      connectionString: env.DATABASE_URI,
-      ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
-    },
-    extensions: ["postgis", "uuid-ossp"],
-    migrationDir: path.resolve(dirname, "migrations"),
-    afterSchemaInit: [
-      async ({ schema, extendTable }) => {
-        const { customType } = await import("drizzle-orm/pg-core");
-        // Hack to make the geometry(multiPolygon) column work with Postgres
-        const multiPolygonGeometryColumn = (name: string) =>
-          customType<{ data: string }>({
-            dataType() {
-              return "geometry(MultiPolygon,4326)";
-            },
-          })(name);
-
-        extendTable({
-          table: schema.tables.locations,
-          columns: {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            geometry_4326: multiPolygonGeometryColumn("geometry_4326") as any,
-          },
-        });
-        return schema;
+  db: withUnaccent(
+    postgresAdapter({
+      pool: {
+        connectionString: env.DATABASE_URI,
+        ssl: process.env.NODE_ENV === "production" ? { rejectUnauthorized: false } : undefined,
       },
-    ],
-  }),
+      extensions: ["postgis", "uuid-ossp", "unaccent"],
+      migrationDir: path.resolve(dirname, "migrations"),
+      afterSchemaInit: [
+        async ({ schema, extendTable }) => {
+          const { customType } = await import("drizzle-orm/pg-core");
+          // Hack to make the geometry(multiPolygon) column work with Postgres
+          const multiPolygonGeometryColumn = (name: string) =>
+            customType<{ data: string }>({
+              dataType() {
+                return "geometry(MultiPolygon,4326)";
+              },
+            })(name);
+
+          extendTable({
+            table: schema.tables.locations,
+            columns: {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              geometry_4326: multiPolygonGeometryColumn("geometry_4326") as any,
+            },
+          });
+          return schema;
+        },
+      ],
+    }),
+  ),
   plugins,
 });

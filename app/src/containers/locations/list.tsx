@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { CommandEmpty, CommandGroup, CommandList } from "cmdk";
 import { useAtomValue } from "jotai";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useDebounceValue } from "usehooks-ts";
 
 import { locationsAtom, useSyncRegion } from "@/app/(frontend)/[locale]/(app)/store";
@@ -34,6 +34,7 @@ const GROUP_LIMIT = 10;
 
 export const LocationsList = () => {
   const t = useTranslations("locations");
+  const locale = useLocale();
   const locations = useAtomValue(locationsAtom);
   const [region] = useSyncRegion();
   const { data: regionsData } = useRegions();
@@ -57,9 +58,9 @@ export const LocationsList = () => {
       limit: GROUP_LIMIT,
       page: 1,
       sort: "name",
-      // Location names are only seeded in English and Payload doesn't apply the fallback locale to
-      // filters, so searching in another locale would return no results
-      locale: "en",
+      // Only the countries' names are translated and Payload doesn't apply the fallback locale to
+      // filters, so searching the other types in another locale would return no results
+      locale: type === "admin_region" ? locale : "en",
       select: {
         id: true,
         name: true,
