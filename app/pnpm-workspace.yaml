@@ -19,6 +19,5 @@ savePrefix: ""
 verifyDepsBeforeRun: install
 
 overrides:
-  "payload>undici": "7.29.1"
   "next>postcss": "8.5.29"
   "@esbuild-kit/core-utils>esbuild": "0.25.0"
