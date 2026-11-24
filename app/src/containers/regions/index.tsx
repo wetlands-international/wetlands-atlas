@@ -25,7 +25,8 @@ export const Regions = ({ children }: PropsWithChildren) => {
       className={cn(
         "fill-mode-forwards relative flex w-full grow flex-col overflow-hidden duration-300",
         {
-          "animate-in fade-in slide-in-from-left-25 pointer-events-auto": visible,
+          // Only in the sidebar of the large screens: not in the bottom sheet of the small ones
+          "lg:animate-in lg:fade-in lg:slide-in-from-left-25 pointer-events-auto": visible,
           "animate-out fade-out slide-out-to-left-25 pointer-events-none": !visible,
         },
       )}

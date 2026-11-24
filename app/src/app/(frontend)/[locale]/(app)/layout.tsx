@@ -39,9 +39,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <MapContainer />
           </Suspense>
 
-          <div className="pointer-events-none fixed right-5 bottom-7 z-10">
-            <MapLegend />
-          </div>
+          <MapLegend />
         </main>
       </ClientProviders>
     </HydrationBoundary>
