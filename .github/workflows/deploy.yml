@@ -52,7 +52,7 @@ jobs:
 
       - name: 🏗 Build Docker image
         run: |
-          docker buildx build --platform=linux/amd64 \
+          docker buildx build --platform=linux/amd64 --provenance=false --sbom=false \
             --build-arg PAYLOAD_SECRET=$PAYLOAD_SECRET \
             --build-arg PREVIEW_SECRET=$PREVIEW_SECRET \
             --build-arg DATABASE_URI=$DATABASE_URI \
