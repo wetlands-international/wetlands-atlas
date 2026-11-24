@@ -56,10 +56,9 @@ export const Header = ({
     >
       <h1
         className={cn(
-          "relative flex size-16 shrink-0 items-center justify-center rounded-full",
+          // Smaller on the small screens, on every page: as high as the map pages' navigation
+          "relative flex size-10 shrink-0 items-center justify-center rounded-full lg:size-16",
           "after:absolute after:top-0 after:left-0 after:-z-10 after:h-full after:w-full after:rounded-full after:bg-white/10 after:backdrop-blur-lg",
-          // As high as the navigation, on its row
-          withMapNavigation && "size-10 lg:size-16",
         )}
       >
         <Link
@@ -67,7 +66,7 @@ export const Header = ({
           className="relative z-10 block items-center space-x-2"
           aria-label={t("header.title")}
         >
-          <HomeIcon className={cn(withMapNavigation && "size-8 lg:size-[50px]")} />
+          <HomeIcon className="size-8 lg:size-[50px]" />
         </Link>
       </h1>
 

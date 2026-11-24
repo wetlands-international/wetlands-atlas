@@ -2,6 +2,7 @@
 import { FC, useState } from "react";
 
 import { ArrowDownIcon, ArrowUpIcon } from "lucide-react";
+import { useMediaQuery } from "usehooks-ts";
 
 import { cn } from "@/lib/utils";
 
@@ -11,13 +12,17 @@ import { Button } from "@/components/ui/button";
 import LandscapesLegendItem from "./item";
 
 export const LandscapesLegend: FC<{ layers: string[] }> = ({ layers }) => {
-  const [showLegend, setShowLegend] = useState<boolean>(true);
+  // Open at first on the large screens only: on the small ones, it would cover the map and the step dots
+  const isDesktop = useMediaQuery("(min-width: 64rem)", { initializeWithValue: false });
+  const [toggledLegend, setShowLegend] = useState<boolean>();
+  const showLegend = toggledLegend ?? isDesktop;
 
   return (
     <div className="pointer-events-auto">
       <div
         className={cn({
-          "bg-popover text-popover-foreground legend-container pointer-events-none absolute bottom-16 left-1/2 z-50 w-xs -translate-x-10/12 translate-y-full rounded-lg opacity-0 transition-all duration-500 ease-in-out":
+          // On the small screens, from the right, and narrow enough not to reach the step dots
+          "bg-popover text-popover-foreground legend-container pointer-events-none absolute right-0 bottom-16 z-50 w-[min(20rem,calc(100vw-4.5rem))] translate-y-full rounded-lg opacity-0 transition-all duration-500 ease-in-out lg:right-auto lg:left-1/2 lg:w-xs lg:-translate-x-10/12":
             true,
           "pointer-events-auto translate-y-0 opacity-100": showLegend,
         })}
@@ -41,7 +46,7 @@ export const LandscapesLegend: FC<{ layers: string[] }> = ({ layers }) => {
             true,
           "pointer-events-auto translate-y-0 border-2 opacity-100": layers.length > 0,
         })}
-        onClick={() => setShowLegend((prev) => !prev)}
+        onClick={() => setShowLegend(!showLegend)}
       >
         <span
           className={`flex items-center gap-1 transition-opacity duration-300 ${showLegend ? "opacity-100" : "pointer-events-none absolute opacity-0"} `}
