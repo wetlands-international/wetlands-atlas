@@ -10,7 +10,7 @@ on:
 jobs:
   set_environment_name:
     name: Set Environment
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       env_name: ${{ steps.set_env.outputs.env_name }}
     steps:
@@ -21,7 +21,7 @@ jobs:
     needs: [set_environment_name]
     environment:
       name: ${{ needs.set_environment_name.outputs.env_name }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       HEROKU_APP_NAME: ${{ vars.HEROKU_APP_NAME }}
