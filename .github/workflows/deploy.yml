@@ -33,7 +33,7 @@ jobs:
         id: heroku-vars
         run: |
           echo "Fetching Heroku config vars..."
-          response=$(curl -s -f -n -H "Authorization: Bearer $HEROKU_API_KEY" \
+          response=$(curl -s -f -H "Authorization: Bearer $HEROKU_API_KEY" \
             -H "Accept: application/vnd.heroku+json; version=3" \
             https://api.heroku.com/apps/$HEROKU_APP_NAME/config-vars)
 
@@ -69,7 +69,7 @@ jobs:
 
       - name: 🚀 Release to Heroku
         run: |
-          curl -n -X PATCH https://api.heroku.com/apps/$HEROKU_APP_NAME/formation \
+          curl -X PATCH https://api.heroku.com/apps/$HEROKU_APP_NAME/formation \
             -H "Content-Type: application/json" \
             -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
             -H "Authorization: Bearer $HEROKU_API_KEY" \
