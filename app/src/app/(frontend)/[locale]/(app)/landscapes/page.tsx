@@ -56,9 +56,10 @@ export default async function LandscapesPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <aside className="absolute top-0 left-0 z-10 w-full max-w-md">
+      {/* As wide as the screen on the small screens, for the navigation in the header's row */}
+      <aside className="absolute top-0 left-0 z-10 w-full lg:max-w-md">
         <Command className="flex w-full flex-col gap-2.5 p-4" shouldFilter={false}>
-          <Header>
+          <Header withMapNavigation>
             <Suspense>
               <LandscapesSearch />
             </Suspense>
@@ -72,7 +73,8 @@ export default async function LandscapesPage({
         </Command>
       </aside>
 
-      <aside className="absolute bottom-12 left-4 z-10 flex w-[calc(100%_-_theme(spacing.8))] flex-col gap-2.5">
+      {/* On the short screens, not under the map controls, which reach the bottom */}
+      <aside className="short:right-16 absolute right-4 bottom-12 left-4 z-10 flex flex-col gap-2.5">
         <Suspense>
           <Landscapes />
         </Suspense>

@@ -38,7 +38,7 @@ export const Language = () => {
   };
 
   return (
-    <div className="pointer-events-auto">
+    <div className="pointer-events-auto shrink-0">
       <Select value={locale} onValueChange={onLocaleChange} defaultValue="en" disabled={isPending}>
         <SelectTrigger className="bg-background rounded-4xl px-4 py-4 text-sm">
           <span className="text-sm font-medium uppercase">{locale}</span>

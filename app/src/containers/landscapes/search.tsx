@@ -55,13 +55,14 @@ export const LandscapesSearch = () => {
   return (
     <div
       className={cn(
-        "flex h-16 w-full cursor-pointer items-center justify-start gap-2 rounded-4xl text-left",
+        // As high as the navigation on its row, on the small screens
+        "flex h-10 w-full cursor-pointer items-center justify-start gap-2 rounded-4xl text-left lg:h-16",
         landscapes.enabled && "bg-foreground outline-0",
       )}
     >
       <div
         className={cn(
-          "bg-primary text-foreground pointer-events-none absolute top-2 left-2 flex size-12 shrink-0 items-center justify-center rounded-full",
+          "bg-primary text-foreground pointer-events-none absolute top-1 left-1 flex size-8 shrink-0 items-center justify-center rounded-full lg:top-2 lg:left-2 lg:size-12",
 
           landscapes.enabled && "bg-foreground text-background",
         )}
@@ -77,9 +78,11 @@ export const LandscapesSearch = () => {
         id="landscapes-search"
         ref={inputRef}
         className={cn({
-          "h-full w-full rounded-4xl px-16 transition-colors duration-300": true,
-          "text-background placeholder:text-muted-foreground outline-0": landscapes.enabled,
-          "text-foreground placeholder:text-foreground outline-0": !landscapes.enabled,
+          "h-full w-full rounded-4xl pl-11 transition-colors duration-300 lg:pl-16": true,
+          // Room for the close button, only when it's shown
+          "text-background placeholder:text-muted-foreground pr-10 outline-0 lg:pr-16":
+            landscapes.enabled,
+          "text-foreground placeholder:text-foreground pr-4 outline-0": !landscapes.enabled,
         })}
         value={cn({
           "Search or filter landscape...": !landscapes.enabled,
@@ -94,12 +97,12 @@ export const LandscapesSearch = () => {
       {landscapes.enabled && (
         <button
           className={cn(
-            "bg-foreground text-background animate-in fade-in absolute top-3 right-3 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150",
+            "bg-foreground text-background animate-in fade-in absolute top-1 right-1 flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150 lg:top-3 lg:right-3 lg:size-10",
             "hover:text-destructive",
           )}
           onClick={handleClose}
         >
-          <LucideXCircle className="h-6 w-6 text-current" />
+          <LucideXCircle className="size-5 text-current lg:size-6" />
         </button>
       )}
     </div>

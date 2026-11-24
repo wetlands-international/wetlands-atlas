@@ -36,7 +36,8 @@ export const Indicators = ({ children }: PropsWithChildren) => {
         },
       )}
     >
-      <ScrollArea className="relative flex w-full overflow-auto rounded-4xl px-2.5">
+      {/* Not inset on the small screens, where the header above it reaches the sides of the screen */}
+      <ScrollArea className="relative flex w-full overflow-auto rounded-4xl lg:px-2.5">
         {children}
       </ScrollArea>
     </section>

@@ -153,7 +153,8 @@ export const MapContainer = (props: MapProps) => {
           </LayerManager>
         )}
 
-        <Controls>
+        {/* Below the pages' header, which has two rows in portrait */}
+        <Controls className="absolute top-30 right-4 sm:top-18 lg:top-20">
           <ZoomControl />
           <LayersControl>
             <Suspense>
