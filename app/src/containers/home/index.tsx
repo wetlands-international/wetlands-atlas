@@ -33,7 +33,8 @@ export default function Home({
   return (
     <main
       ref={scrollContainerRef}
-      className="relative h-screen snap-y snap-mandatory overflow-y-scroll"
+      // On a phone, the page scrolls freely: a section can be taller than the screen
+      className="relative h-screen overflow-y-scroll lg:snap-y lg:snap-mandatory"
     >
       <div className="fixed inset-0 z-0">
         <AnimatePresence>
@@ -58,8 +59,9 @@ export default function Home({
         </AnimatePresence>
       </div>
 
+      {/* Too big for a phone: the sections show their own droplet in portrait, and none in landscape */}
       {currentImageUrl && (
-        <div className="pointer-events-none fixed inset-0 z-50">
+        <div className="pointer-events-none fixed inset-0 z-50 hidden lg:block">
           <div className="absolute top-0 right-20 bottom-0 flex h-full flex-col items-center justify-center gap-6">
             <div className="pointer-events-none">
               <DropletImage imageUrl={currentImageUrl} />

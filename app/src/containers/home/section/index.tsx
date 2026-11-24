@@ -3,8 +3,9 @@ import React, { FC, PropsWithChildren, useRef } from "react";
 
 import { useSetAtom } from "jotai";
 import { motion, useAnimation } from "motion/react";
-import { useIntersectionObserver } from "usehooks-ts";
+import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
 
+import DropletImage from "@/containers/home/section/droplet-image";
 import { currentSectionIdAtom } from "@/containers/home/store";
 
 export interface HomeSectionProps extends PropsWithChildren {
@@ -16,6 +17,7 @@ export interface HomeSectionProps extends PropsWithChildren {
 
 const HomeSectionContainer: FC<HomeSectionProps> = ({
   id,
+  imageUrl,
   children,
   supContent,
   scrollContainerRef,
@@ -23,6 +25,8 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({
   const setCurrentSectionId = useSetAtom(currentSectionIdAtom);
   const controls = useAnimation();
   const lastScrollY = useRef(0);
+  // Tailwind's `lg` breakpoint. False on the server and the first render, to match the server's HTML.
+  const isDesktop = useMediaQuery("(min-width: 64rem)", { initializeWithValue: false });
 
   const { ref } = useIntersectionObserver({
     threshold: 0.4,
@@ -42,6 +46,11 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({
   };
 
   const handleViewportEnter = () => {
+    // On a phone, the page scrolls freely: the sections don't slide in
+    if (!isDesktop) {
+      return;
+    }
+
     const currentScrollY = getScrollTop();
     const scrollDirection = currentScrollY > lastScrollY.current ? "down" : "up";
 
@@ -52,17 +61,28 @@ const HomeSectionContainer: FC<HomeSectionProps> = ({
   };
 
   return (
-    <section id={id} className="relative min-h-screen snap-start overflow-hidden px-20 pt-28">
+    <section
+      id={id}
+      className="relative snap-start overflow-clip px-4 pt-24 pb-8 lg:min-h-screen lg:px-20 lg:pt-28 lg:pb-0"
+    >
       <motion.div
-        className="grid-row-2 gap-4transform-gpu relative mx-auto grid min-h-[calc(100vh-7rem)] w-full grid-cols-[40%_60%] will-change-transform"
+        className="relative mx-auto grid w-full transform-gpu grid-cols-1 gap-4 will-change-transform lg:min-h-[calc(100vh-7rem)] lg:grid-cols-[40%_60%]"
         animate={controls}
         onViewportEnter={handleViewportEnter}
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       >
         <div>
-          <div className="flex h-full flex-col justify-center gap-9">{children}</div>
+          <div className="flex h-full flex-col justify-center gap-9">
+            {/* On a phone held upright, the section shows its droplet: the one pinned on the side is too big */}
+            <DropletImage
+              imageUrl={imageUrl}
+              className="mx-auto hidden h-auto w-full max-w-64 portrait:block lg:portrait:hidden"
+            />
+            {children}
+          </div>
         </div>
-        <div className="flex flex-col items-end justify-center">
+        {/* Watched to know the current section: on top of the section when it's a single column */}
+        <div className="order-first flex flex-col items-end justify-center lg:order-none">
           <div className="flex flex-col items-center" ref={ref} />
         </div>
         {supContent}

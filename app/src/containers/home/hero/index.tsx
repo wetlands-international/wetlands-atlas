@@ -29,9 +29,12 @@ export const Hero = () => {
   return (
     <section
       ref={ref}
-      className="relative mt-[theme(spacing.16)] grid min-h-screen snap-start items-center justify-items-center overflow-hidden"
+      // On the small screens, the hero fills the screen under the navbar (4.5rem), so that its content is centered in
+      // what's visible. On the short ones, it starts at the top, under the navbar.
+      className="short:items-start relative grid min-h-[calc(100svh-4.5rem)] snap-start items-center justify-items-center overflow-clip py-6 lg:mt-[theme(spacing.16)] lg:min-h-screen lg:py-0"
     >
-      <div className="absolute top-1/2 left-1/2 container h-full w-full -translate-x-1/2 -translate-y-1/2 transform 2xl:max-w-full">
+      {/* On the small screens, the scattered bubbles would be cut by the edges and under the text */}
+      <div className="absolute top-1/2 left-1/2 container hidden h-full w-full -translate-x-1/2 -translate-y-1/2 transform lg:block 2xl:max-w-full">
         <Circle size="l" className="absolute top-0 left-[5%] 2xl:top-[5%] 2xl:left-[15%]" />
         <Circle size="s" className="absolute top-[15%] left-[90%]" />
         <Circle
@@ -69,17 +72,29 @@ export const Hero = () => {
 
         <Circle size="xl" className="absolute top-[90%] left-[10%]" enableAnimation={false} />
       </div>
-      <div className="z-10 container max-w-3xl space-y-8 text-center">
+      <div className="z-10 container max-w-3xl space-y-8 px-4 text-center">
+        {/* On the small screens, the sections' bubbles are in a row instead, if the screen is tall enough */}
+        <ul className="short:hidden flex justify-center gap-3 lg:hidden">
+          {homeSections.map(({ id, imageUrl }) => (
+            <li key={id}>
+              <Circle
+                className="relative size-14"
+                section={{ id, imageUrl }}
+                enableAnimation={false}
+              />
+            </li>
+          ))}
+        </ul>
         <header className="space-y-2">
           <h3 className="mb-2 text-base font-semibold text-blue-300 uppercase">{t("kicker")}</h3>
-          <h1 className="font-display text-6xl font-bold">{t("title")}</h1>
-          <p className="text-lg font-normal">
+          <h1 className="font-display text-4xl font-bold sm:text-5xl lg:text-6xl">{t("title")}</h1>
+          <p className="text-base font-normal lg:text-lg">
             {t.rich("description", {
               strong: (chunk) => <strong>{chunk}</strong>,
             })}
           </p>
         </header>
-        <div className="flex justify-center gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
           <Button size="lg" variant="outline" className="rounded-full" asChild>
             <Link href={`#${homeSections[0].id}`}>{t("discover-button")}</Link>
           </Button>
@@ -88,7 +103,8 @@ export const Hero = () => {
           </Button>
         </div>
       </div>
-      <ScrollArrow />
+      {/* On a phone, the page obviously scrolls */}
+      <ScrollArrow className="hidden lg:flex" />
     </section>
   );
 };

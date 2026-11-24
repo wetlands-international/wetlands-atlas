@@ -9,7 +9,7 @@ import { useSetAtom } from "jotai";
 import { CircleArrowRightIcon, MapPinIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { useIntersectionObserver } from "usehooks-ts";
+import { useIntersectionObserver, useMediaQuery } from "usehooks-ts";
 
 import { isValidLocation, isValidMedia } from "@/lib/utils";
 
@@ -23,6 +23,8 @@ import { Landscape } from "@/payload-types";
 
 const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
   const t = useTranslations("home.landscapes");
+  // Tailwind's `lg` breakpoint. False on the server and the first render, to match the server's HTML.
+  const isDesktop = useMediaQuery("(min-width: 64rem)", { initializeWithValue: false });
   const setCurrentSectionId = useSetAtom(currentSectionIdAtom);
   const { ref } = useIntersectionObserver({
     threshold: 0.4,
@@ -37,7 +39,7 @@ const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
   return (
     <section
       ref={ref}
-      className="relative min-h-[calc(100vh-7rem)] snap-start overflow-hidden pt-28 pl-20"
+      className="relative snap-start overflow-clip px-4 pt-24 pb-8 lg:min-h-[calc(100vh-7rem)] lg:pt-28 lg:pr-0 lg:pb-0 lg:pl-20"
     >
       <motion.div
         initial={{ scale: 3 }}
@@ -53,10 +55,13 @@ const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
           className="h-full w-full bg-gray-300 object-cover"
         />
       </motion.div>
-      <div className="grid-row-2 relative grid min-h-[calc(100vh-7rem)] w-full grid-cols-[30%_70%] gap-4">
+      <div className="relative grid w-full grid-cols-1 gap-4 lg:min-h-[calc(100vh-7rem)] lg:grid-cols-[30%_70%]">
         <motion.div
+          // Slides in on the desktop only: on a phone, it would start out of the section, which never shows it. Mounted
+          // again once the desktop is known, for its initial state to apply.
+          key={`landscapes-text-${isDesktop}`}
           className="flex flex-col items-start justify-center"
-          initial={{ x: "-50%", opacity: 0 }}
+          initial={isDesktop ? { x: "-50%", opacity: 0 } : false}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
@@ -72,8 +77,9 @@ const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
           </Button>
         </motion.div>
         <motion.div
-          className="flex flex-col items-start justify-end pb-20"
-          initial={{ y: "100%", opacity: 0 }}
+          key={`landscapes-carousel-${isDesktop}`}
+          className="flex flex-col items-start justify-end lg:pb-20"
+          initial={isDesktop ? { y: "100%", opacity: 0 } : false}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
@@ -82,7 +88,7 @@ const Landscapes: FC<{ data: Landscape[] }> = ({ data }) => {
               {data.map((item) => (
                 <CarouselItem
                   key={`landscape-carousel-item-${item.id}`}
-                  className="basis-[40%] pl-4"
+                  className="basis-[85%] pl-4 sm:basis-[60%] lg:basis-[40%]"
                 >
                   <div className="group relative flex h-full flex-col items-start justify-between gap-4 rounded-4xl border border-[rgba(169,169,169,0.34)] bg-[rgba(125,125,125,0.32)] p-6 text-white backdrop-blur-lg select-none">
                     {isValidMedia(item.cover) ? (
