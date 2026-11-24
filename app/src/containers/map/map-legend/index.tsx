@@ -13,9 +13,12 @@ import Legend from "@/components/map/legend";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
+import { usePathname } from "@/i18n/navigation";
+
 const MapLegend: FC = () => {
   const [showLegend, setShowLegend] = useState<boolean>(false);
   const [layers, setLayers] = useSyncLayers();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (layers.length > 0) {
@@ -30,10 +33,18 @@ const MapLegend: FC = () => {
   }, [layers, showLegend]);
 
   return (
-    <div className="pointer-events-auto">
+    // Ignores the pointer, for what's below it while the legend is hidden: its panel and button handle it only while
+    // they're shown. On the insights page's small screens, above the bar that opens the panels.
+    <div
+      className={cn(
+        "pointer-events-none fixed right-5 bottom-7 z-10",
+        pathname === "/map" && "right-4 bottom-26 lg:right-5 lg:bottom-7",
+      )}
+    >
       <div
         className={cn({
-          "legend-container pointer-events-none absolute bottom-16 left-1/2 z-50 w-xs -translate-x-10/12 translate-y-full opacity-0 transition-all duration-500 ease-in-out":
+          // On the small screens, from the right, before the map's controls, and as wide as the screen allows
+          "legend-container pointer-events-none absolute right-12 bottom-16 z-50 w-[min(20rem,calc(100vw-6rem))] translate-y-full opacity-0 transition-all duration-500 ease-in-out lg:right-auto lg:left-1/2 lg:w-xs lg:-translate-x-10/12":
             true,
           "pointer-events-auto translate-y-0 opacity-100": showLegend,
         })}

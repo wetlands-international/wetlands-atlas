@@ -44,7 +44,8 @@ export const LocationsItem = ({
         });
       }}
     >
-      <span className="truncate">{location.name}</span>
+      {/* Can shrink below its text, for the ellipsis */}
+      <span className="min-w-0 truncate">{location.name}</span>
 
       {typeof location.parent === "object" && !!location.parent?.name && (
         <span className="text-muted-foreground shrink-0 text-xs">{location.parent.name}</span>

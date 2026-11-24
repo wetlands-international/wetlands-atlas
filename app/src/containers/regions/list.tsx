@@ -11,7 +11,8 @@ export const RegionsList = () => {
   const { data: regionsData } = useRegions();
 
   return (
-    <div className="bg-background space-y-4 rounded-4xl p-6">
+    // Below the sheet's close button on the small screens
+    <div className="bg-background space-y-4 rounded-4xl p-6 pt-12 lg:pt-6">
       <h1 className="font-display text-4xl text-blue-300">{t("title")}</h1>
       <p className="text-foreground text-sm">{t("description")}</p>
 

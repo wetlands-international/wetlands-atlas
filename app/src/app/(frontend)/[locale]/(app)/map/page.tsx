@@ -24,6 +24,7 @@ import { IndicatorsList } from "@/containers/indicators/list";
 import { Locations } from "@/containers/locations";
 import { LocationsList } from "@/containers/locations/list";
 import { LocationsSearch } from "@/containers/locations/search";
+import { MapPanels } from "@/containers/map/panels";
 import { Regions } from "@/containers/regions";
 import { RegionsList } from "@/containers/regions/list";
 
@@ -57,27 +58,31 @@ export default async function AppPage({ searchParams }: { searchParams: Promise<
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      {/* Wide enough for the search placeholder that lists every region */}
-      <aside className="absolute top-0 left-0 z-10 h-[calc(100svh_-_theme(space.16))] w-full max-w-[472px] overflow-hidden">
-        <Command className="flex h-full w-full flex-col gap-2.5 p-4" shouldFilter={false}>
-          <Header>
+      {/* Wide enough for the search placeholder that lists every region. As wide as the screen on the small screens,
+          for the navigation in the header's row, and only as high as the search and its results: the panels are in a
+          bottom sheet there. */}
+      <aside className="absolute top-0 left-0 z-10 w-full overflow-hidden lg:h-[calc(100svh_-_theme(space.16))] lg:max-w-[472px]">
+        <Command className="flex h-full max-h-svh w-full flex-col gap-2.5 p-4" shouldFilter={false}>
+          <Header withMapNavigation>
             <Suspense>
               <LocationsSearch />
             </Suspense>
           </Header>
 
           <Suspense>
-            <Regions>
-              <RegionsList />
-            </Regions>
+            <MapPanels>
+              <Regions>
+                <RegionsList />
+              </Regions>
 
-            <Categories>
-              <CategoriesList />
-            </Categories>
+              <Categories>
+                <CategoriesList />
+              </Categories>
 
-            <Indicators>
-              <IndicatorsList />
-            </Indicators>
+              <Indicators>
+                <IndicatorsList />
+              </Indicators>
+            </MapPanels>
 
             <Locations>
               <LocationsList />

@@ -93,7 +93,8 @@ export const LandscapeMapContainer = (props: Landscape) => {
 
       <StepDots steps={steps} />
 
-      <div className="pointer-events-none absolute right-5 bottom-7 z-10">
+      {/* Above Mapbox's attribution button, which is shown when the map is narrow, and above the step dots */}
+      <div className="pointer-events-none absolute right-5 bottom-12 z-40">
         <LandscapesLegend layers={LAYERS} />
       </div>
     </div>

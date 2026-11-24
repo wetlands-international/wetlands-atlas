@@ -9,10 +9,8 @@ import { contextualLayersQueryOptions } from "@/hooks/use-contextual-layers";
 import { globalLocationsQueryOptions } from "@/hooks/use-global-locations";
 import { regionsQueryOptions } from "@/hooks/use-regions";
 
-import { Language } from "@/containers/language";
 import { MapContainer } from "@/containers/map";
 import MapLegend from "@/containers/map/map-legend";
-import { Toggle } from "@/containers/toogle";
 import { UrlParamsValidator } from "@/containers/url-params-validator";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -37,20 +35,11 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <main className="relative flex h-[100svh] flex-col overflow-hidden">
           {children}
 
-          <div className="pointer-events-none fixed top-4 right-4 z-10 flex items-center gap-2">
-            <Suspense>
-              <Language />
-              <Toggle />
-            </Suspense>
-          </div>
-
           <Suspense>
             <MapContainer />
           </Suspense>
 
-          <div className="pointer-events-none fixed right-5 bottom-7 z-10">
-            <MapLegend />
-          </div>
+          <MapLegend />
         </main>
       </ClientProviders>
     </HydrationBoundary>

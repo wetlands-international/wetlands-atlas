@@ -47,13 +47,15 @@ export default async function LandscapesIdPage({ params }: LandscapesIdPageProps
 
   return (
     <>
-      <aside className="z-10 w-xl shrink-0">
+      {/* In portrait, the header is over the visual and the article below it: the aside doesn't wrap them */}
+      <aside className="z-10 w-[45%] shrink-0 lg:w-xl portrait:contents">
         <LandscapesIdHeader {...landscape} />
         <LandscapesIdArticle {...landscape} />
       </aside>
 
       <Suspense>
-        <div className="sticky top-0 left-0 flex h-svh w-full">
+        {/* In portrait, at the top of the screen, above the article, which scrolls in its own container */}
+        <div className="sticky top-0 left-0 flex h-svh w-full portrait:static portrait:order-first portrait:h-[45svh] portrait:shrink-0">
           <LandscapeMapContainer {...landscape} />
           <LandscapeChartContainer {...landscape} />
         </div>

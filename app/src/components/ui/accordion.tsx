@@ -75,11 +75,11 @@ function AccordionTrigger({
       >
         {children}
         {isOpen ? (
-          <div className="bg-secondary flex h-8 w-8 items-center justify-center rounded-full p-1">
+          <div className="bg-secondary flex h-8 w-8 shrink-0 items-center justify-center rounded-full p-1">
             <MinusIcon className="h-3.5 w-3.5" />
           </div>
         ) : (
-          <div className="flex items-center rounded-full bg-gradient-to-r from-[#D5EB4E] to-[#5AC4C6] p-1">
+          <div className="flex shrink-0 items-center rounded-full bg-gradient-to-r from-[#D5EB4E] to-[#5AC4C6] p-1">
             <PlusIcon className="text-accent-foreground h-6 w-6" />
           </div>
         )}

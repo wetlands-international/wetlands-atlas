@@ -1,7 +1,9 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useId } from "react";
 
 import { motion } from "motion/react";
+
+import { cn } from "@/lib/utils";
 
 const SIZE = 600;
 const RADIUS = 250;
@@ -41,13 +43,18 @@ function circleBulgePath(
 
 interface DropletImageProps {
   imageUrl: string;
+  /** Sizes the droplet, which scales: 600px wide by default */
+  className?: string;
 }
 
-const DropletImage: React.FC<DropletImageProps> = ({ imageUrl }) => {
+const DropletImage: React.FC<DropletImageProps> = ({ imageUrl, className }) => {
   const [pointerAngle, setPointerAngle] = useState<number | null>(null);
   const [bulge, setBulge] = useState(0);
-  const clipPathId = `circle-bulge-${imageUrl}`;
-  const gradientId = `circle-bg-gradient-${imageUrl}`;
+  // Unique per droplet: several droplets can show the same image. Without the colons of React's IDs, which `url()`
+  // references don't accept.
+  const id = useId().replace(/[^\w-]/g, "");
+  const clipPathId = `circle-bulge-${id}`;
+  const gradientId = `circle-bg-gradient-${id}`;
   const path = circleBulgePath(SIZE / 2, SIZE / 2, RADIUS, pointerAngle, bulge);
 
   const onPointerMove = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
@@ -78,7 +85,8 @@ const DropletImage: React.FC<DropletImageProps> = ({ imageUrl }) => {
     <svg
       width={SIZE}
       height={SIZE}
-      className="block cursor-pointer"
+      viewBox={`0 0 ${SIZE} ${SIZE}`}
+      className={cn("block cursor-pointer", className)}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
     >

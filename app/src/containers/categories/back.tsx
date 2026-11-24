@@ -5,8 +5,8 @@ import { useCallback } from "react";
 import Image from "next/image";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { useLocale } from "next-intl";
-import { LuX } from "react-icons/lu";
+import { useLocale, useTranslations } from "next-intl";
+import { LuChevronLeft, LuX } from "react-icons/lu";
 
 import { cn, isValidMedia } from "@/lib/utils";
 
@@ -20,6 +20,7 @@ import { collectionQueryOptions } from "@/services/sdk-query";
 
 export const CategoriesBack = () => {
   const locale = useLocale();
+  const t = useTranslations("common");
   const [insight, setInsight] = useSyncInsight();
   const [, setIndicators] = useSyncIndicators();
   const [, setLayers] = useSyncLayers();
@@ -77,6 +78,11 @@ export const CategoriesBack = () => {
         )}
       >
         <header className="relative flex min-h-28 w-full flex-col justify-center">
+          {/* On the small screens, where the cross would be next to the sheet's: like the region's back button */}
+          <span className="text-2xs mb-2 flex h-8 items-center gap-1 font-medium text-[#5AC4C6] uppercase lg:hidden">
+            <LuChevronLeft className="size-4" aria-hidden />
+            {t("back")}
+          </span>
           <div className="relative w-full space-y-2">
             <h2 className="font-display text-2xl">{category?.name}</h2>
             {!!category?.description && (
@@ -93,7 +99,7 @@ export const CategoriesBack = () => {
         </header>
 
         {!!category?.indicators?.docs?.length && (
-          <div className="bg-background/50 group-hover:bg-primary relative flex size-12 shrink-0 items-center justify-center rounded-full backdrop-blur-xs transition-colors duration-500">
+          <div className="bg-background/50 group-hover:bg-primary relative hidden size-12 shrink-0 items-center justify-center rounded-full backdrop-blur-xs transition-colors duration-500 lg:flex">
             <span className="bg-primary absolute top-1/2 left-1/2 hidden h-9/12 w-9/12 -translate-1/2 rounded-full group-hover:block group-hover:animate-ping" />
             <LuX className="text-foreground relative z-10 size-5" />
           </div>

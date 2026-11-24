@@ -4,6 +4,8 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
+/* The screens with little height, like a phone held sideways */
+@custom-variant short (@media (max-height: 30rem));
 
 @utility container {
   margin-inline: auto;

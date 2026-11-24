@@ -20,7 +20,7 @@ export const LandscapesListItem = ({ id, name, cover }: Landscape) => {
     <Link
       href={`/landscapes/${id}`}
       className={cn(
-        "group bg-background relative flex h-full w-72 shrink-0 cursor-pointer justify-between rounded-4xl p-4",
+        "group bg-background relative flex h-full w-48 shrink-0 cursor-pointer justify-between rounded-4xl p-4 sm:w-56 lg:w-72",
         {
           "backdrop-blur-sm": !!thumbnailStyle,
         },
@@ -31,7 +31,7 @@ export const LandscapesListItem = ({ id, name, cover }: Landscape) => {
         <div className="pointer-events-none absolute inset-0 rounded-4xl bg-[rgba(5,21,29,0.5)] opacity-0 backdrop-blur-[1px] transition-opacity group-hover:opacity-100" />
       )}
       <div className="relative flex flex-col justify-end">
-        <h2 className="text-foreground text-base font-medium">
+        <h2 className="text-foreground text-sm font-medium lg:text-base">
           <RichText data={name} />
         </h2>
       </div>

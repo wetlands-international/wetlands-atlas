@@ -22,8 +22,9 @@ export const ScrollIndicator = () => {
   }, []);
 
   return (
+    // Only on the large screens, like the home page's: on the small ones, it would be over the text
     <motion.div
-      className="from-background/0 to-background pointer-events-none fixed bottom-0 left-0 z-30 flex w-xl flex-col items-center bg-gradient-to-b pt-16 pb-8"
+      className="from-background/0 to-background pointer-events-none fixed bottom-0 left-0 z-30 hidden w-xl flex-col items-center bg-gradient-to-b pt-16 pb-8 lg:flex"
       animate={{ opacity: visible ? 1 : 0 }}
       transition={{ duration: 0.3 }}
     >

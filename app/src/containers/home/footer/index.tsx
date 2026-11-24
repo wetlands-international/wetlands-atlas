@@ -11,8 +11,8 @@ const Footer: FC = () => {
   const t = useTranslations("home.footer");
 
   return (
-    <footer className="snap-start px-28 pt-20 pb-10 text-[14px]">
-      <div className="flex justify-between">
+    <footer className="snap-start px-4 pt-20 pb-10 text-[14px] lg:px-28">
+      <div className="flex flex-col gap-8 lg:flex-row lg:justify-between">
         <div className="space-y-6">
           <h2 className="text-3xl font-normal whitespace-pre-line">
             {t("title.prefix")} <span className="block">{t("title.highlight")}</span>
@@ -24,7 +24,7 @@ const Footer: FC = () => {
         <p className="max-w-md">{t("description")}</p>
       </div>
       <Separator className="my-10 bg-gradient-to-r from-[rgba(133,148,157,0)] via-[#85949D] to-[rgba(133,148,157,0)]" />
-      <div className="flex justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:justify-between">
         <p>Copyright 2025</p>
         <nav>
           <ul className="flex gap-8">

@@ -105,13 +105,14 @@ export const LocationsSearch = () => {
   return (
     <div
       className={cn(
-        "flex h-16 w-full cursor-pointer items-center justify-start gap-2 rounded-4xl text-left",
+        // As high as the navigation on its row, on the small screens
+        "flex h-10 w-full cursor-pointer items-center justify-start gap-2 rounded-4xl text-left lg:h-16",
         locations.enabled && "bg-foreground outline-0",
       )}
     >
       <div
         className={cn(
-          "bg-primary text-foreground pointer-events-none absolute top-2 left-2 flex size-12 shrink-0 items-center justify-center rounded-full",
+          "bg-primary text-foreground pointer-events-none absolute top-1 left-1 flex size-8 shrink-0 items-center justify-center rounded-full lg:top-2 lg:left-2 lg:size-12",
 
           locations.enabled && "bg-foreground text-background",
         )}
@@ -127,7 +128,7 @@ export const LocationsSearch = () => {
         id="location-search"
         ref={inputRef}
         className={cn({
-          "h-full w-full rounded-4xl pr-12 pl-15 text-sm text-ellipsis transition-colors duration-300":
+          "h-full w-full rounded-4xl pr-10 pl-11 text-sm text-ellipsis transition-colors duration-300 lg:pr-12 lg:pl-15":
             true,
           "text-background placeholder:text-muted-foreground outline-0": locations.enabled,
           "text-foreground placeholder:text-foreground outline-0": !locations.enabled,
@@ -149,12 +150,12 @@ export const LocationsSearch = () => {
       {locations.enabled && (
         <button
           className={cn(
-            "bg-foreground text-background animate-in fade-in absolute top-3 right-3 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150",
+            "bg-foreground text-background animate-in fade-in absolute top-1 right-1 flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150 lg:top-3 lg:right-3 lg:size-10",
             "hover:text-destructive",
           )}
           onClick={handleClose}
         >
-          <LucideXCircle className="h-6 w-6 text-current" />
+          <LucideXCircle className="size-5 text-current lg:size-6" />
         </button>
       )}
 
@@ -163,13 +164,13 @@ export const LocationsSearch = () => {
           type="button"
           className={cn({
             // Positioned like the other buttons, in the input's right padding
-            "absolute top-3 right-3 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full":
+            "absolute top-1 right-1 flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full lg:top-3 lg:right-3 lg:size-10":
               true,
             hidden: locationsIdData && locationsIdData?.type !== "global",
           })}
           onClick={() => inputRef.current?.focus()}
         >
-          <SearchIcon className="h-6 w-6 text-current" />
+          <SearchIcon className="size-5 text-current lg:size-6" />
         </button>
       )}
 
@@ -179,11 +180,11 @@ export const LocationsSearch = () => {
             <button
               onClick={handleReset}
               className={cn(
-                "text-foreground animate-in fade-in absolute top-3 right-3 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150",
+                "text-foreground animate-in fade-in absolute top-1 right-1 flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors duration-150 lg:top-3 lg:right-3 lg:size-10",
                 "hover:text-accent",
               )}
             >
-              <LucideXCircle className="h-6 w-6 text-current" />
+              <LucideXCircle className="size-5 text-current lg:size-6" />
             </button>
           </TooltipTrigger>
 
