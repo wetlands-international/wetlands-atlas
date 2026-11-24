@@ -22,8 +22,8 @@ const Faqs: FC<{ items: Faq[] }> = ({ items }) => {
   const t = useTranslations("faqs");
 
   return (
-    <section className="flex min-h-screen justify-between border-b px-28 py-32">
-      <section className="flex flex-1 flex-col justify-between">
+    <section className="flex flex-col gap-12 border-b px-4 py-16 sm:py-24 lg:min-h-screen lg:flex-row lg:justify-between lg:gap-0 lg:px-28 lg:py-32">
+      <section className="flex flex-1 flex-col justify-between gap-8">
         <header>
           <h3 className="mb-4 text-base font-semibold text-blue-300 uppercase">
             {t("header.kicker")}
@@ -31,16 +31,18 @@ const Faqs: FC<{ items: Faq[] }> = ({ items }) => {
           <h1 className="font-display mb-6 text-[40px] leading-10 font-normal">
             {t("header.title")}
           </h1>
-          <p className="w-1/2 max-w-2xl text-lg font-normal">{t("header.description")}</p>
+          <p className="max-w-2xl text-base font-normal sm:text-lg lg:w-1/2">
+            {t("header.description")}
+          </p>
         </header>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
           <p>{t("aside.title")}</p>
           <Button className="rounded-full leading-5 font-normal" size="lg" asChild>
             <Link href="/contact">{t("aside.button")}</Link>
           </Button>
         </div>
       </section>
-      <section className="flex-1 pl-10">
+      <section className="flex-1 lg:pl-10">
         <Accordion
           type="single"
           collapsible
@@ -52,7 +54,7 @@ const Faqs: FC<{ items: Faq[] }> = ({ items }) => {
             <AccordionItem
               key={item.id}
               value={item.id}
-              className="rounded-4xl border-b-0 bg-white/5 p-6"
+              className="rounded-4xl border-b-0 bg-white/5 p-4 sm:p-6"
             >
               <AccordionTrigger
                 className="cursor-pointer text-base font-semibold select-none"

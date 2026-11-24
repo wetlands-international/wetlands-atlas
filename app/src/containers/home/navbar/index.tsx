@@ -48,7 +48,10 @@ const Navbar: FC = () => {
       >
         <Link
           href="/"
-          className="relative z-10 block shrink-0 items-center space-x-2"
+          className={cn(
+            "relative z-10 block shrink-0 items-center space-x-2 transition-colors duration-300",
+            { "text-background": isLight },
+          )}
           aria-label={t("header.title")}
         >
           <LogoText />

@@ -9,7 +9,7 @@ export default function NotFoundPage() {
 
   return (
     <main className="relative flex h-[100svh] flex-col items-center justify-center gap-4 overflow-hidden p-4 text-center">
-      <h1 className="font-display text-7xl text-blue-300">{t("title")}</h1>
+      <h1 className="font-display text-5xl text-blue-300 sm:text-7xl">{t("title")}</h1>
       <p className="text-lg">{t("description")}</p>
 
       <Link href="/">
